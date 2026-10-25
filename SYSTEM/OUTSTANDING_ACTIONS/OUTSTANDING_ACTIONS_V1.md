@@ -1,3 +1,13 @@
+---
+id: DOC-SELAH-0005
+type: REGISTER
+status: CURRENT
+feature: GOVERNANCE
+purpose: SELAH's open and closed actions (OA-SELAH-…); search by ID, do not read whole
+links: []
+owner: Fable
+---
+
 # Selah outstanding actions
 
 Only the Founder approves. This register tracks Selah, not another company.

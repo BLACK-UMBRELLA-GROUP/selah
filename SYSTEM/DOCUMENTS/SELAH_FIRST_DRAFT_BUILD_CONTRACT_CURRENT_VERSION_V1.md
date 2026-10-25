@@ -1,3 +1,13 @@
+---
+id: DOC-SELAH-0003
+type: STANDARD
+status: CURRENT
+feature: FIRST_DRAFT
+purpose: The build rules for the first draft: separate source tree, allowlisted ZYRA code only, no backend or live data
+links: [OA-SELAH-001, OA-AIOS-403]
+owner: Fable
+---
+
 # Selah first draft — build contract
 
 Status: implementation constraints for the Founder-requested private draft.

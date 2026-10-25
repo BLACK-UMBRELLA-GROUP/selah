@@ -1,3 +1,13 @@
+---
+id: DOC-SELAH-0002
+type: SPEC
+status: CURRENT
+feature: FIRST_DRAFT
+purpose: What the first private phone draft must show and what it must not do
+links: [OA-SELAH-001]
+owner: Founder
+---
+
 # Selah first phone draft — product specification
 
 Status: Founder-requested first draft; presentation for private testing.

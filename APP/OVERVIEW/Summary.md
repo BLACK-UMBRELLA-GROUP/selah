@@ -1,3 +1,13 @@
+---
+id: DOC-SELAH-0001
+type: SPEC
+status: CURRENT
+feature: OVERVIEW
+purpose: The approved concept for SELAH, a Christian marriage app: name, audience and core idea
+links: [OA-SELAH-001]
+owner: Founder
+---
+
 PROJECT
 SELAH
 Christian Marriage Application

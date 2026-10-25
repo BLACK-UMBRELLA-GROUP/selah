@@ -1,3 +1,13 @@
+---
+id: DOC-SELAH-0004
+type: HANDOVER
+status: CURRENT
+feature: FIRST_DRAFT
+purpose: What was actually built on 13 Oct, how it was checked, and what is still pending
+links: [OA-SELAH-001, OA-SELAH-002, OA-SELAH-003, OA-SELAH-004]
+owner: Codex
+---
+
 # Selah first draft — as-built handover
 
 Date: 2026-10-13, Europe/London.
@@ -91,6 +101,10 @@ The initial mechanical import found a filename collision before completion.
 Its own incomplete generated lib was moved recoverably to
 SYSTEM/RESOURCES/IMPORT_ATTEMPT_2026_10_13/lib. No original/user material was
 removed. It is inactive evidence, not active source or a second implementation.
+
+> **Update 2026-10-24 (Fable, Founder-approved clean-up):** the failed attempt
+> folder was removed from the working tree. It remains in git history (commit of
+> 2026-10-24) and on the encrypted USB snapshot of 2026-10-24.
 
 ## Runtime/data flow and safety
 

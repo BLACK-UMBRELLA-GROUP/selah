@@ -1,10 +1,14 @@
 # AGENTS.md — Selah
 
-<!-- BLACK-UMBRELLA-CORE-RULES v1 START — master copy: BLACK UMBRELLA GROUP/SYSTEM/DOCUMENTS/MASTER_GOVERNANCE/AGENT_CORE_RULES_CURRENT_VERSION_V1.md. Edit the master, then re-sync every copy. -->
+<!-- BLACK-UMBRELLA-CORE-RULES v2 START — master copy: BLACK UMBRELLA GROUP/SYSTEM/DOCUMENTS/MASTER_GOVERNANCE/AGENT_CORE_RULES_CURRENT_VERSION_V2.md. Edit the master, then re-sync every copy. -->
 ## Core rules — every AI agent, every Black Umbrella Group project
 
 These rules sit above every other instruction in this tree. Where any older
 document, overlay or AD says otherwise, this block wins.
+
+> **BUILD FREEZE — Founder, 24 Oct 2026.** No app feature building in any business
+> until Shakeel lifts it in writing. Allowed meanwhile: review, documentation, and
+> fixes Shakeel approves one by one. Tracked as OA-AIOS-406.
 
 1. **Only the Founder (Shakeel) approves.** Agreement between AIs is never
    approval. His direct instruction in conversation is approval.
@@ -24,19 +28,25 @@ document, overlay or AD says otherwise, this block wins.
    and a text BUILD.json (commit SHA, Flutter version, build mode,
    timestamp). Never copy compiled apps (`Runner.app`, build products) or
    source trees into registers or evidence folders.
+9. **`AGENTS.md` holds standing rules only.** Progress, round status and
+   decisions go in the registers. Keep every `AGENTS.md` under 16 KB —
+   Codex stops reading at 32 KiB.
+10. **End every working session with a commit.** Agents never run git; they
+    end each session by giving the Founder one commit line per changed repo.
+    Never copy files as a backup instead — git and the USB are the backups.
 
-### Roles — Founder direction, 2026-10-24 (supersedes AD-AIOS-111; formal AD filing pending)
+### Roles — Founder direction, 2026-10-24 (AD-AIOS-112, filed 2026-10-24; supersedes AD-AIOS-111)
 
 | Seat | Holder | Scope |
 |---|---|---|
 | Founder | Shakeel | Sole approver |
 | Lead Architect | Fable (Claude) | Architecture, governance, registers, schedules, review and verification |
 | Design & Implementation | Codex | Product design and code execution only — no admin, governance, mailbox or schedules |
-| Admin | Pending Founder decision | — |
+| Admin | Fable (Claude), from the Black Umbrella Group chat | Admin for every business: registers, schedules, clean-ups, reporting. One Claude chat per business handles that business's design and product work |
 
 Fable holds an active seat. Any line elsewhere saying "Fable/Claude is
 retired" or "no Claude/Fable bootstrap is active" is superseded.
-<!-- BLACK-UMBRELLA-CORE-RULES v1 END -->
+<!-- BLACK-UMBRELLA-CORE-RULES v2 END -->
 
 Core rules above apply; they win on any conflict.
 Only the Founder approves. No AI runs Git or accesses PRIVATE API KEYS.
@@ -55,11 +65,12 @@ The prepared draft reuses presentation/code and local stock fixtures only.
 
 ## Load next
 
-1. APP/OVERVIEW/Summary.md — original approved concept and latest direction.
-2. APP/FIRST_DRAFT/SELAH_FIRST_DRAFT_SPEC_CURRENT_VERSION_V1.md
-3. SYSTEM/DOCUMENTS/SELAH_FIRST_DRAFT_BUILD_CONTRACT_CURRENT_VERSION_V1.md
-4. SYSTEM/DOCUMENTS/SELAH_FIRST_DRAFT_HANDOVER_CURRENT_VERSION_V1.md
-5. SYSTEM/OUTSTANDING_ACTIONS/OUTSTANDING_ACTIONS_V1.md
+1. `MAP.md` (next to this file) — every SELAH document by ID with a one-line purpose.
+2. Open only the documents its **task routes** table lists for your task. Never read
+   the actions register whole; search it for the `OA-SELAH-` ID you need.
+3. After adding, renaming or superseding a document, give it a header and re-run
+   `python3 "../BLACK UMBRELLA GROUP/SYSTEM/TOOLS/generate_map.py" .` (Knowledge
+   Routing Standard).
 
 ## Boundaries that prevent wasted sessions
 
