@@ -16,7 +16,7 @@ task-routes block by hand, then re-run the tool.
 | Reusing anything from ZYRA | DOC-SELAH-0003 and group action OA-AIOS-403 (Founder decision pending) — stop and ask |
 <!-- ROUTES END -->
 
-## Documents (6)
+## Documents (5)
 
 ### FIRST_DRAFT
 
@@ -30,7 +30,6 @@ task-routes block by hand, then re-run the tool.
 
 | ID | Document | Type | Status | Purpose | Links | KB |
 |---|---|---|---|---|---|---|
-| DOC-SELAH-0005 | [Selah outstanding actions](SYSTEM/OUTSTANDING_ACTIONS/OUTSTANDING_ACTIONS_V1.md) | REGISTER | CURRENT | SELAH's open and closed actions (OA-SELAH-…); search by ID, do not read whole |  | 5 |
 | INDEX-OUTSTANDING_ACTIONS_V1 | [OUTSTANDING_ACTIONS_V1 — INDEX (generated)](SYSTEM/OUTSTANDING_ACTIONS/OUTSTANDING_ACTIONS_V1_INDEX.md) | INDEX | CURRENT | Generated one-line index of OUTSTANDING_ACTIONS_V1.md; find the ID here, then search the register for it |  | 1 |
 
 ### OVERVIEW
