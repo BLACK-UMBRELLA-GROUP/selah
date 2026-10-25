@@ -12,11 +12,11 @@ task-routes block by hand, then re-run the tool.
 | Any task | `AGENTS.md`, then this map |
 | Product question — what SELAH is or what the draft should show | DOC-SELAH-0001, DOC-SELAH-0002 |
 | Build, run or fix the draft | DOC-SELAH-0003, DOC-SELAH-0004 (as-built), then `SOURCE/run.sh` |
-| What is open or next | DOC-SELAH-0005 — search for `OA-SELAH-` IDs; don't read it whole |
+| What is open or next | `SYSTEM/OUTSTANDING_ACTIONS/OUTSTANDING_ACTIONS_V1_INDEX.md`, then DOC-SELAH-0005 for the ID you need |
 | Reusing anything from ZYRA | DOC-SELAH-0003 and group action OA-AIOS-403 (Founder decision pending) — stop and ask |
 <!-- ROUTES END -->
 
-## Documents (5)
+## Documents (6)
 
 ### FIRST_DRAFT
 
@@ -31,6 +31,7 @@ task-routes block by hand, then re-run the tool.
 | ID | Document | Type | Status | Purpose | Links | KB |
 |---|---|---|---|---|---|---|
 | DOC-SELAH-0005 | [Selah outstanding actions](SYSTEM/OUTSTANDING_ACTIONS/OUTSTANDING_ACTIONS_V1.md) | REGISTER | CURRENT | SELAH's open and closed actions (OA-SELAH-…); search by ID, do not read whole |  | 5 |
+| INDEX-OUTSTANDING_ACTIONS_V1 | [OUTSTANDING_ACTIONS_V1 — INDEX (generated)](SYSTEM/OUTSTANDING_ACTIONS/OUTSTANDING_ACTIONS_V1_INDEX.md) | INDEX | CURRENT | Generated one-line index of OUTSTANDING_ACTIONS_V1.md; find the ID here, then search the register for it |  | 1 |
 
 ### OVERVIEW
 
