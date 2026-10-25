@@ -1,0 +1,6 @@
+{
+  "scope": "Selah SOURCE only; static checks, not compile/runtime/install/payment/auth validation",
+  "checks": 19711,
+  "passed": 19711,
+  "findings": []
+}

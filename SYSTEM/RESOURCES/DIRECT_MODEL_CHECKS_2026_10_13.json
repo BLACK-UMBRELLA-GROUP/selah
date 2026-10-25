@@ -1,0 +1,7 @@
+{
+  "timestamp": "2026-10-13T10:54:20.850Z",
+  "entry": "direct native Dart VM; pure Dart only",
+  "exitCode": 0,
+  "stdout": "PASS: 193 pure local model, question-bank and history checks.\n",
+  "stderr": ""
+}

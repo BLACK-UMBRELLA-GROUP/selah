@@ -1,0 +1,1445 @@
+// Chapter 2 — Your Profile. 8 topics per Questions Section 2 Profile
+// Information.md: Photos, Location, Sect, Revert Status, Country of
+// Birth, Nationality, Ethnicity, Languages Spoken. Each (except Photos)
+// follows About You -> Compatibility -> Flexibility, with a dynamic Hard
+// Requirement where the spec supports it. This chapter keeps the
+// interleaved About+Compatibility pattern the restructure explicitly
+// preserved for Chapter 2 (only Ch3/Ch4 were separated).
+
+import 'package:flutter/material.dart';
+import '../../widgets/selah_profile_image.dart';
+import '../../data/selah_reference_data.dart';
+import '../../models/onboarding_question.dart';
+import '../../services/selah_auth.dart';
+import '../../services/selah_account_state.dart';
+import '../../services/selah_consent_service.dart';
+import '../../services/selah_developer_access.dart';
+import '../../services/selah_internal_preview_client.dart';
+import '../../services/selah_photo_service.dart';
+import '../../services/selah_profile_service.dart';
+import '../../services/selah_seeker_details_service.dart';
+import 'article9_consent_screen.dart';
+import '../profile/selah_photo_batch_flow.dart';
+import '../../state/app_state.dart';
+import '../../theme/selah_colors.dart';
+import '../../theme/selah_text.dart';
+import '../../widgets/flexibility_choice.dart';
+import '../../widgets/onboarding_scaffold.dart';
+import '../../widgets/selah_onboarding_choice_card.dart';
+import '../../widgets/privacy_indicator.dart';
+import '../../widgets/searchable_list_picker.dart';
+import '../../widgets/selah_state_widgets.dart';
+import '../../widgets/selah_loading.dart';
+import 'traffic_light_question_screen.dart';
+import 'bio_onboarding_flow.dart';
+import 'onboarding_stage_intro_screen.dart';
+import 'seeker_setup_navigation.dart';
+
+const int _totalSteps = 21;
+
+class Chapter2Flow extends StatefulWidget {
+  final String? gender;
+  final bool devPreview;
+
+  const Chapter2Flow({
+    super.key,
+    required this.gender,
+    this.devPreview = false,
+  });
+
+  @override
+  State<Chapter2Flow> createState() => _Chapter2FlowState();
+}
+
+class _Chapter2FlowState extends State<Chapter2Flow> {
+  int _step = 0;
+  bool _restoring = false;
+  bool _saving = false;
+  bool _leaving = false;
+  String? _owner;
+  late int _ownerGeneration;
+  String? _restoreError;
+  String? _saveError;
+
+  // Latch the requested mode. Revocation must never turn this route into a
+  // live persistence path while an old preview callback is still mounted.
+  bool get _devPreview => widget.devPreview;
+  bool get _canProceed =>
+      mounted &&
+      !_leaving &&
+      (!_devPreview || SelahDeveloperAccess.canUseDeveloperTools) &&
+      (_devPreview ||
+          (_owner != null &&
+              SelahAuth.currentUser?.id == _owner &&
+              SelahAccountState.isCurrent(_owner!, _ownerGeneration)));
+
+  final List<String> _photos = [];
+  String? _location;
+  String? _distancePref;
+  TrafficLight? _distanceFlex;
+
+  String? _sect;
+  String _sectOther = '';
+  Map<String, TrafficLight> _sectMatrix = {};
+
+  /// Sect labels never to be introduced to. Per-OPTION since 2026-08-10
+  /// (OA-SELAH-185) — Chapter 2 now matches Chapter 4.
+  Set<String> _sectHard = {};
+  TrafficLight? _sectOutsideFlex;
+
+  String? _revertStatus;
+  TrafficLight? _revertFlex;
+
+  String? _countryOfBirth;
+  List<String> _countryPrefs = [];
+  bool _countrySkipped = false;
+  TrafficLight? _countryFlex;
+
+  String? _nationality;
+  List<String> _nationalityPrefs = [];
+  bool _nationalitySkipped = false;
+  TrafficLight? _nationalityFlex;
+
+  String? _ethnicity;
+  List<String> _ethnicityPrefs = [];
+  bool _ethnicitySkipped = false;
+  TrafficLight? _ethnicityFlex;
+
+  List<String> _languages = [];
+  List<String> _languagePrefs = [];
+  bool _languageSkipped = false;
+  TrafficLight? _languageFlex;
+
+  @override
+  void initState() {
+    super.initState();
+    _ownerGeneration = SelahAccountState.generation;
+    if (!_devPreview) {
+      try {
+        _owner = SelahAuth.currentUser?.id;
+      } catch (_) {
+        /* Restore fails closed. */
+      }
+    }
+    _location = AppState.instance.location;
+    if (_devPreview) _photos.addAll(AppState.instance.photos);
+    if (!_devPreview) _restoreSavedProgress();
+  }
+
+  Future<void> _restoreSavedProgress() async {
+    setState(() => _restoring = true);
+    try {
+      final results = await Future.wait<dynamic>([
+        SelahSeekerDetailsService.fetchOwn(
+          expectedUserId: _owner,
+          throwOnError: true,
+        ),
+        SelahPhotoService.fetchOwnPhotos(
+          expectedUserId: _owner,
+          throwOnError: true,
+        ),
+        SelahConsentService.currentArticle9Decision(
+          expectedUserId: _owner,
+          throwOnError: true,
+        ),
+      ]).timeout(const Duration(seconds: 10));
+      if (!_canProceed) throw StateError('Account changed.');
+
+      final details = results[0] as SeekerDetails?;
+      final photos = results[1] as List<String>;
+      final consentDecision = results[2] as bool?;
+      _photos
+        ..clear()
+        ..addAll(photos);
+      _article9Consent = consentDecision;
+      if (details != null) _applySavedDetails(details);
+      _step = _firstIncompleteStep();
+      setState(() {
+        _restoring = false;
+        _restoreError = null;
+      });
+    } catch (_) {
+      if (mounted) {
+        setState(() {
+          _restoring = false;
+          _restoreError =
+              'Your saved profile could not be loaded. Try again before continuing.';
+        });
+      }
+    }
+  }
+
+  TrafficLight? _light(Object? value) => switch (value) {
+    'green' => TrafficLight.green,
+    'yellow' => TrafficLight.yellow,
+    'red' => TrafficLight.red,
+    _ => null,
+  };
+
+  void _applySavedDetails(SeekerDetails details) {
+    _sect = details.sect;
+    _revertStatus = details.revertStatus == null
+        ? null
+        : details.revertStatus!
+        ? 'Yes'
+        : 'No';
+    _countryOfBirth = details.countryOfBirth;
+    _nationality = details.nationality;
+    _ethnicity = details.ethnicity;
+    _languages = List<String>.from(details.languages);
+
+    final p = details.preferences;
+    final location = p['location'] as Map?;
+    _distancePref = selahNameFor(
+      selahLocationPreferences,
+      location?['preference'] as String?,
+    );
+    _distanceFlex = _light(location?['flexibility']);
+
+    final sect = p['sect'] as Map?;
+    final rawMatrix = sect?['matrix'];
+    if (rawMatrix is Map) {
+      _sectMatrix = {
+        for (final entry in rawMatrix.entries)
+          if (entry.key is String && _light(entry.value) != null)
+            switch (entry.key as String) {
+              'sunni' => 'Sunni',
+              'shia' => 'Shia',
+              _ => entry.key as String,
+            }: _light(
+              entry.value,
+            )!,
+      };
+    }
+    final rawHard = sect?['hard_requirement'];
+    if (rawHard is List) {
+      _sectHard = {
+        for (final value in rawHard.whereType<String>())
+          switch (value) {
+            'sunni' => 'Sunni',
+            'shia' => 'Shia',
+            _ => value,
+          },
+      };
+    }
+    _sectOutsideFlex = _light(sect?['outside_flexibility']);
+    _revertFlex = _light((p['revert'] as Map?)?['flexibility']);
+
+    _restoreReferencePreference(
+      p['country_of_birth'],
+      labelFor: (code) => selahNameFor([
+        for (final country in selahCountries)
+          SelahRefItem(country.code, country.name),
+      ], code),
+      assignValues: (values) => _countryPrefs = values,
+      assignSkipped: (value) => _countrySkipped = value,
+      assignLight: (value) => _countryFlex = value,
+    );
+    _restoreReferencePreference(
+      p['nationality'],
+      labelFor: (code) {
+        for (final country in selahCountries) {
+          if (country.code == code) return country.nationality;
+        }
+        return null;
+      },
+      assignValues: (values) => _nationalityPrefs = values,
+      assignSkipped: (value) => _nationalitySkipped = value,
+      assignLight: (value) => _nationalityFlex = value,
+    );
+    _restoreReferencePreference(
+      p['ethnicity'],
+      labelFor: (code) => selahNameFor(selahEthnicities, code),
+      assignValues: (values) => _ethnicityPrefs = values,
+      assignSkipped: (value) => _ethnicitySkipped = value,
+      assignLight: (value) => _ethnicityFlex = value,
+    );
+    _restoreReferencePreference(
+      p['languages'],
+      labelFor: (code) => selahNameFor(selahLanguages, code),
+      assignValues: (values) => _languagePrefs = values,
+      assignSkipped: (value) => _languageSkipped = value,
+      assignLight: (value) => _languageFlex = value,
+    );
+  }
+
+  void _restoreReferencePreference(
+    Object? raw, {
+    required String? Function(String code) labelFor,
+    required ValueChanged<List<String>> assignValues,
+    required ValueChanged<bool> assignSkipped,
+    required ValueChanged<TrafficLight?> assignLight,
+  }) {
+    final map = raw as Map?;
+    final values = <String>[];
+    final preferred = map?['preferred'];
+    if (preferred is List) {
+      for (final code in preferred.whereType<String>()) {
+        final label = labelFor(code);
+        if (label != null) values.add(label);
+      }
+    }
+    assignValues(values);
+    assignSkipped(map?['skipped'] == true);
+    assignLight(_light(map?['flexibility']));
+  }
+
+  SelahBackgroundVariant get _background {
+    if (widget.gender == 'male') return SelahBackgroundVariant.male;
+    if (widget.gender == 'female') return SelahBackgroundVariant.female;
+    return SelahBackgroundVariant.neutral;
+  }
+
+  List<String> get _sectOptions => [
+    'Sunni',
+    'Shia',
+    if (_sect == 'Other' && _sectOther.isNotEmpty) _sectOther else 'Other',
+  ];
+
+  void _goto(int step) {
+    if (!_canProceed || _saving) return;
+    setState(() => _step = step);
+  }
+
+  SeekerDetails get _currentDetails => SeekerDetails(
+    sect: _sect == 'Other' ? _sectOther : _sect,
+    revertStatus: _revertStatus == null ? null : _revertStatus == 'Yes',
+    countryOfBirth: _countryOfBirth,
+    nationality: _nationality,
+    ethnicity: _ethnicity,
+    languages: _languages,
+    preferences: SelahSeekerDetailsService.buildPreferences(
+      distancePref: _distancePref,
+      distanceFlex: _distanceFlex,
+      sectMatrix: _sectMatrix,
+      sectHard: _sectHard,
+      sectOutsideFlex: _sectOutsideFlex,
+      revertFlex: _revertFlex,
+      countryPrefs: _countryPrefs,
+      countrySkipped: _countrySkipped,
+      countryFlex: _countryFlex,
+      nationalityPrefs: _nationalityPrefs,
+      nationalitySkipped: _nationalitySkipped,
+      nationalityFlex: _nationalityFlex,
+      ethnicityPrefs: _ethnicityPrefs,
+      ethnicitySkipped: _ethnicitySkipped,
+      ethnicityFlex: _ethnicityFlex,
+      languagePrefs: _languagePrefs,
+      languageSkipped: _languageSkipped,
+      languageFlex: _languageFlex,
+    ),
+  );
+
+  Future<void> _finishLater() async {
+    if (!_canProceed || _saving || _restoring || _restoreError != null) return;
+    setState(() {
+      _saving = true;
+      _saveError = null;
+    });
+    // Save the valid draft fields, without inventing answers to unfinished questions.
+    final step = _step;
+    bool saved = true;
+    if (_photos.isNotEmpty) saved = await _persistCheckpoint(0);
+    if (saved && (_location ?? '').trim().isNotEmpty) {
+      saved = await _persistCheckpoint(1);
+    }
+    if (saved && _article9Consent == true) {
+      saved = await _persistCheckpoint(step < 4 ? 4 : step);
+    }
+    if (!mounted) return;
+    if (saved && _canProceed) {
+      final opened = await returnToMySelah(
+        context,
+        devPreview: _devPreview,
+        expectedUserId: _owner,
+        expectedGeneration: _ownerGeneration,
+      );
+      if (opened) return;
+    }
+    if (mounted) {
+      setState(() {
+        _saving = false;
+        _saveError = 'Your progress could not be confirmed. Please try again.';
+      });
+    }
+  }
+
+  Future<bool> _persistCheckpoint(
+    int step, {
+    bool finalCheckpoint = false,
+  }) async {
+    if (_devPreview) return true;
+    if (!_canProceed) return false;
+    if ((step == 0 || finalCheckpoint) &&
+        !await SelahPhotoService.syncPhotosConfirmed(
+          List.of(_photos),
+          expectedUserId: _owner,
+        )) {
+      return false;
+    }
+    if (!_canProceed) return false;
+    if ((step == 1 || finalCheckpoint) &&
+        !await SelahProfileService.saveLocation(
+          _location,
+          expectedUserId: _owner,
+        )) {
+      return false;
+    }
+    if (!_canProceed) return false;
+    // Respect refusal. The existing service cannot store special-category
+    // details without consent, and the server still owns readiness.
+    if (_article9Consent == true && (step >= 4 || finalCheckpoint)) {
+      if (!await SelahSeekerDetailsService.saveDetails(
+        _currentDetails,
+        expectedUserId: _owner,
+      )) {
+        return false;
+      }
+    }
+    return _canProceed;
+  }
+
+  Future<void> _goToBioTransition() async {
+    if (!_canProceed || _saving || ModalRoute.of(context)?.isCurrent != true) {
+      return;
+    }
+    setState(() => _saving = true);
+    final saved = await _persistCheckpoint(_step, finalCheckpoint: true);
+    if (!mounted) return;
+    if (!saved || !_canProceed || ModalRoute.of(context)?.isCurrent != true) {
+      setState(() {
+        _saving = false;
+        _saveError = 'Your profile could not be saved. Please try again.';
+      });
+      return;
+    }
+    final gender = widget.gender;
+    final devPreview = _devPreview;
+    final owner = _owner;
+    final ownerGeneration = _ownerGeneration;
+    var stageLeaving = false;
+    AppState.instance.saveChapter2(
+      photos: _photos,
+      location: _location,
+      sect: _sect == 'Other' ? _sectOther : _sect,
+    );
+    setState(() => _leaving = true);
+    Navigator.of(context).pushReplacement(
+      MaterialPageRoute(
+        builder: (stageContext) {
+          void openBio() {
+            if (stageLeaving ||
+                !stageContext.mounted ||
+                ModalRoute.of(stageContext)?.isCurrent != true) {
+              return;
+            }
+            if (devPreview
+                ? !SelahDeveloperAccess.canUseDeveloperTools
+                : owner == null ||
+                      SelahAuth.currentUser?.id != owner ||
+                      !SelahAccountState.isCurrent(owner, ownerGeneration)) {
+              return;
+            }
+            stageLeaving = true;
+            Navigator.of(stageContext).pushReplacement(
+              MaterialPageRoute(
+                builder: (_) =>
+                    BioOnboardingFlow(gender: gender, devPreview: devPreview),
+              ),
+            );
+          }
+
+          return OnboardingStageIntroScreen(
+            stage: SeekerOnboardingStage.journeyBio,
+            devPreview: devPreview,
+            onDevSkip: devPreview ? openBio : null,
+            onContinue: openBio,
+          );
+        },
+      ),
+    );
+  }
+
+  /// True once the user has been asked for Article 9 consent this session.
+  /// Null means not yet asked.
+  bool? _article9Consent;
+
+  /// Steps 4–17 are the special-category block: sect, revert status,
+  /// country of birth, nationality and ethnicity, with their preference
+  /// and flexibility questions. Step 18 (languages) is NOT special
+  /// category, which is why the decline path lands there rather than
+  /// ending the chapter.
+  static const int _firstArticle9Step = 4;
+  static const int _firstNonArticle9Step = 18;
+
+  /// Shown once, immediately before the first special-category question.
+  ///
+  /// Consent has to precede collection, so this sits between the location
+  /// block and the faith/background block rather than at the end of the
+  /// chapter. Declining is a real path: it skips to languages and the
+  /// chapter completes normally. A decline that dead-ended would make the
+  /// consent not freely given, and therefore not valid consent at all.
+  Future<void> _askArticle9Consent() async {
+    if (!_canProceed) return;
+    await Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (_) => Article9ConsentScreen(
+          background: _background,
+          devPreview: _devPreview,
+          onDecision: (granted) {
+            if (!_canProceed) return;
+            Navigator.of(context).pop();
+            setState(() {
+              _article9Consent = granted;
+              _step = granted ? _firstArticle9Step : _firstNonArticle9Step;
+            });
+          },
+        ),
+      ),
+    );
+  }
+
+  Future<void> _next() async {
+    if (!_canProceed ||
+        ModalRoute.of(context)?.isCurrent != true ||
+        _saving ||
+        _restoring ||
+        _restoreError != null ||
+        (!_devPreview && !_canContinue)) {
+      return;
+    }
+    setState(() {
+      _saving = true;
+      _saveError = null;
+    });
+    final saved = await _persistCheckpoint(_step);
+    if (!mounted) return;
+    setState(() => _saving = false);
+    if (!saved || !_canProceed || ModalRoute.of(context)?.isCurrent != true) {
+      setState(
+        () => _saveError = 'Your profile could not be saved. Please try again.',
+      );
+      return;
+    }
+    // Gate on the way IN to the special-category block. Placed here rather
+    // than on a step boundary so any future reordering that lands on step 4
+    // still passes through it.
+    if (_step == _firstArticle9Step - 1 && _article9Consent == null) {
+      _askArticle9Consent();
+      return;
+    }
+    if (_step == _firstArticle9Step - 1 && _article9Consent == false) {
+      _goto(_firstNonArticle9Step);
+      return;
+    }
+
+    switch (_step) {
+      case 10: // Country compatibility -> skip Flexibility if skipped
+        _goto(_countrySkipped ? 12 : 11);
+        return;
+      case 13: // Nationality compatibility
+        _goto(_nationalitySkipped ? 15 : 14);
+        return;
+      case 16: // Ethnicity compatibility
+        _goto(_ethnicitySkipped ? 18 : 17);
+        return;
+      case 19: // Languages compatibility
+        if (_languageSkipped) {
+          _goToBioTransition();
+          return;
+        }
+        _goto(20);
+        return;
+      case 20:
+        _goToBioTransition();
+        return;
+      default:
+        if (_step < _totalSteps - 1) {
+          _goto(_step + 1);
+        } else {
+          _goToBioTransition();
+        }
+    }
+  }
+
+  void _devSkipCurrentQuestion() {
+    if (!_devPreview || !_canProceed) return;
+    if (_step == _firstArticle9Step - 1 && _article9Consent == null) {
+      setState(() {
+        // Developer preview never persists these answers, so it may bypass
+        // the consent ceremony while still visiting each question in order.
+        _article9Consent = true;
+        _step = _firstArticle9Step;
+      });
+      return;
+    }
+    _next();
+  }
+
+  /// Swipe-right-to-go-back — mirrors _next()'s conditional skip jumps
+  /// in reverse (Onboarding Rules & UX §SCREEN ANATOMY; see
+  /// onboarding_scaffold.dart's onSwipeBack doc comment for why this was
+  /// missing). Steps 12/15/18 have two possible predecessors depending
+  /// on whether that section's preference step was skipped; every other
+  /// step has exactly one, so a plain decrement is correct there.
+  void _back() {
+    if (!_canProceed || _saving) return;
+    switch (_step) {
+      case 12:
+        _goto(_countrySkipped ? 10 : 11);
+        return;
+      case 15:
+        _goto(_nationalitySkipped ? 13 : 14);
+        return;
+      case 18:
+        // THREE possible predecessors here since 2026-08-04. Someone who
+        // declined Article 9 consent jumped 3 -> 18 and never saw steps
+        // 4–17, so walking them backwards into questions they chose not to
+        // answer would be wrong twice over: it contradicts their decision,
+        // and it is the nagging that stops consent being freely given.
+        if (_article9Consent == false) {
+          _goto(_firstArticle9Step - 1);
+          return;
+        }
+        _goto(_ethnicitySkipped ? 16 : 17);
+        return;
+      default:
+        if (_step > 0) _goto(_step - 1);
+    }
+  }
+
+  int _firstIncompleteStep() {
+    for (final step in _activeStepIds) {
+      if (!_isStepComplete(step)) return step;
+    }
+    return _activeStepIds.last;
+  }
+
+  bool get _canContinue =>
+      !_saving &&
+      !_restoring &&
+      _restoreError == null &&
+      _isStepComplete(_step);
+
+  bool _isStepComplete(int step) {
+    switch (step) {
+      case 0:
+        return _photos.length >= 3;
+      case 1:
+        return (_location ?? '').trim().isNotEmpty;
+      case 2:
+        return _distancePref != null;
+      case 3:
+        return _distanceFlex != null;
+      case 4:
+        return _sect != null &&
+            (_sect != 'Other' || _sectOther.trim().isNotEmpty);
+      case 5:
+        return _sectOptions.every((o) => _sectMatrix.containsKey(o));
+      case 6:
+        return _sectOutsideFlex != null;
+      case 7:
+        return _revertStatus != null;
+      case 8:
+        return _revertFlex != null;
+      case 9:
+        return (_countryOfBirth ?? '').isNotEmpty;
+      case 10:
+        return _countrySkipped || _countryPrefs.isNotEmpty;
+      case 11:
+        return _countryFlex != null;
+      case 12:
+        return (_nationality ?? '').isNotEmpty;
+      case 13:
+        return _nationalitySkipped || _nationalityPrefs.isNotEmpty;
+      case 14:
+        return _nationalityFlex != null;
+      case 15:
+        return (_ethnicity ?? '').isNotEmpty;
+      case 16:
+        return _ethnicitySkipped || _ethnicityPrefs.isNotEmpty;
+      case 17:
+        return _ethnicityFlex != null;
+      case 18:
+        return _languages.isNotEmpty;
+      case 19:
+        return _languageSkipped || _languagePrefs.isNotEmpty;
+      case 20:
+        return _languageFlex != null;
+      default:
+        return false;
+    }
+  }
+
+  // Article 9 refusal and explicit no-preference answers remove questions
+  // from this person's path. The displayed position must describe that path,
+  // rather than count skipped questions as completed work. Before the consent
+  // decision, the possible full path remains the provisional denominator.
+  List<int> get _activeStepIds {
+    final steps = <int>[0, 1, 2, 3];
+    if (_article9Consent != false) {
+      steps.addAll([
+        for (
+          var step = _firstArticle9Step;
+          step < _firstNonArticle9Step;
+          step++
+        )
+          step,
+      ]);
+    }
+    steps.addAll([18, 19, 20]);
+    if (_countrySkipped) steps.remove(11);
+    if (_nationalitySkipped) steps.remove(14);
+    if (_ethnicitySkipped) steps.remove(17);
+    if (_languageSkipped) steps.remove(20);
+    return steps;
+  }
+
+  int get _activeStepPosition {
+    final index = _activeStepIds.indexOf(_step);
+    return index < 0 ? _step + 1 : index + 1;
+  }
+
+  double get _progress => _activeStepPosition / _activeStepIds.length;
+
+  @override
+  Widget build(BuildContext context) => ListenableBuilder(
+    listenable: SelahDeveloperAccess.authorizationChanges,
+    builder: (context, _) {
+      if (_devPreview && !SelahDeveloperAccess.canUseDeveloperTools) {
+        return Scaffold(
+          key: const ValueKey('chapter2_preview_denied'),
+          backgroundColor: SelahColors.modalSheetSurface,
+          body: const SizedBox.expand(),
+        );
+      }
+      return _buildFlow(context);
+    },
+  );
+
+  Widget _buildFlow(BuildContext context) {
+    if (_restoring) {
+      return const SelahLoading.fullScreen(
+        label: 'Restoring your saved profile…',
+      );
+    }
+    if (_restoreError != null) {
+      return Scaffold(
+        body: SafeArea(
+          child: Center(
+            child: Padding(
+              padding: const EdgeInsets.all(24),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Text(
+                    _restoreError!,
+                    textAlign: TextAlign.center,
+                    style: SelahText.body(),
+                  ),
+                  TextButton(
+                    onPressed: _restoreSavedProgress,
+                    child: const Text('Try again'),
+                  ),
+                  TextButton(
+                    onPressed: () => Navigator.of(context).maybePop(),
+                    child: const Text('Back'),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ),
+      );
+    }
+    late String question;
+    String? subtext;
+    Widget content;
+    PrivacyLevel privacy = PrivacyLevel.unlock;
+
+    switch (_step) {
+      case 0:
+        question = _photos.isEmpty ? 'Add your photos' : 'Add more photos';
+        subtext = _photos.isEmpty
+            ? 'At least 3 required, up to 6. First photo becomes your main profile photo.'
+            : 'Your first photo is already here. Complete your profile with at least 3 photos, up to 6.';
+        privacy = PrivacyLevel.public;
+        content = Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            _PhotoGrid(
+              photos: _photos,
+              devPreview: _devPreview,
+              onChanged: (p) => setState(
+                () => _photos
+                  ..clear()
+                  ..addAll(p),
+              ),
+            ),
+            if (_photos.length < 3)
+              const SelahDisabledHint(
+                'Choose at least 3 photos so others can get to know you.',
+              ),
+          ],
+        );
+        break;
+      case 1:
+        question = 'Where do you currently live?';
+        privacy = PrivacyLevel.public;
+        content = _TextField(
+          hint: 'Search for your city…',
+          value: _location,
+          onChanged: (v) => setState(() => _location = v),
+        );
+        break;
+      // CHANGED 2026-08-01 (Founder decision): mileage bands replaced by
+      // coarse location preferences.
+      //
+      // The old options — Within 10 / 25 / 50 / 100 miles — could never be
+      // honoured. `_location` above is a free-text field; there is no
+      // geocoding, no latitude, no longitude and no plan for any. A Seeker
+      // answering "Within 10 miles" was giving SELAH something it had no
+      // way to act on, and free text meant "London", "london" and "Greater
+      // London" were three different places even for exact matching.
+      //
+      // Same city / region / country / anywhere needs no coordinates and
+      // is closer to how families actually think about this.
+      case 2:
+        question = 'Where would you ideally like your future spouse to live?';
+        content = _LargeSelect(
+          options: selahLocationPreferenceNames,
+          value: _distancePref,
+          onChanged: (v) => setState(() => _distancePref = v),
+        );
+        break;
+      // COPY FIXED 2026-08-01 alongside the change above. "Outside your
+      // preferred distance" described mileage bands that no longer exist —
+      // the question now sets a location scope, not a radius.
+      case 3:
+        question =
+            'Would you be happy for SELAH to introduce people outside your preferred area if they appear to be a strong match?';
+        content = FlexibilityChoice(
+          greenText: "Yes, I'd be happy to consider them.",
+          yellowText: 'Maybe, depending on the person.',
+          redText: "No, I'd prefer to stay within my preferred area.",
+          value: _distanceFlex,
+          onChanged: (v) => setState(() => _distanceFlex = v),
+        );
+        break;
+      case 4:
+        question = 'Which Christian sect do you identify with?';
+        privacy = PrivacyLevel.unlock;
+        content = Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            _LargeSelect(
+              options: const ['Sunni', 'Shia', 'Other'],
+              value: _sect,
+              onChanged: (v) => setState(() => _sect = v),
+            ),
+            if (_sect == 'Other') ...[
+              SizedBox(height: 10),
+              _TextField(
+                hint: 'Please specify…',
+                value: _sectOther,
+                onChanged: (v) => setState(() => _sectOther = v),
+              ),
+            ],
+          ],
+        );
+        break;
+      case 5:
+        question =
+            'Which Christian sects would you be comfortable matching with?';
+        // Per-OPTION since 2026-08-10 (OA-SELAH-185, Founder decision).
+        // Chapter 4's Hard Requirements went per-option that morning and
+        // Chapter 2 followed the same afternoon, so the temporary
+        // HardRequirementScope carve-out is gone — both chapters use one
+        // model now. seeker_details.preferences stores
+        // {sect: {hard_requirement: ["Shia", ...]}} and score_candidates()
+        // tests it independently of the light, exactly as Chapter 4 does.
+        content = TrafficLightQuestionScreen(
+          key: const ValueKey('ch2_sect_matrix'),
+          yourAnswer: _sect == 'Other' ? _sectOther : (_sect ?? ''),
+          options: _sectOptions,
+          initialValues: _sectMatrix,
+          initialHardRequirement: _sectHard,
+          onChanged: (v) => setState(() => _sectMatrix = v),
+          onHardRequirementChanged: (v) => setState(() => _sectHard = v),
+        );
+        break;
+      case 6:
+        question =
+            'How would you feel about matching with someone from outside your preferred sect?';
+        content = FlexibilityChoice(
+          greenText: "I'd be happy to consider someone from another sect.",
+          yellowText: 'It depends on the individual.',
+          redText: "I'd prefer to stay within my preferred sect.",
+          value: _sectOutsideFlex,
+          onChanged: (v) => setState(() => _sectOutsideFlex = v),
+        );
+        break;
+      case 7:
+        question = 'Have you reverted to Christianity?';
+        privacy = PrivacyLevel.unlock;
+        content = _LargeSelect(
+          options: const ['Yes', 'No'],
+          value: _revertStatus,
+          onChanged: (v) => setState(() => _revertStatus = v),
+        );
+        break;
+      case 8:
+        question =
+            'How would you feel about matching with someone who is a revert?';
+        content = FlexibilityChoice(
+          greenText: "I'd be happy to match with someone who is a revert.",
+          yellowText: 'It depends on the individual.',
+          redText: "I'd prefer not to match with someone who is a revert.",
+          value: _revertFlex,
+          onChanged: (v) => setState(() => _revertFlex = v),
+        );
+        break;
+      case 9:
+        question = 'Which country were you born in?';
+        privacy = PrivacyLevel.unlock;
+        content = _SearchPickButton(
+          label: _countryOfBirth ?? 'Search countries…',
+          onTap: () async {
+            final result = await showSingleSearchPicker(
+              context,
+              selahCountryNames,
+              current: _countryOfBirth,
+            );
+            if (result != null && mounted) {
+              setState(() => _countryOfBirth = result);
+            }
+          },
+        );
+        break;
+      case 10:
+        question =
+            'Do you have any preferred countries of birth for your future spouse?';
+        content = _MultiPrefPicker(
+          selected: _countryPrefs,
+          skipped: _countrySkipped,
+          items: selahCountryNames,
+          onPick: (v) => setState(() {
+            _countryPrefs = v;
+            _countrySkipped = false;
+          }),
+          onSkip: () => setState(() {
+            _countryPrefs = [];
+            _countrySkipped = true;
+          }),
+        );
+        break;
+      case 11:
+        question =
+            'Would you be happy for SELAH to introduce people born outside your preferred countries if they appear to be a strong match?';
+        content = FlexibilityChoice(
+          greenText: "Yes, I'd be happy to consider them.",
+          yellowText: 'Maybe, depending on the person.',
+          redText: "No, I'd prefer to stay within my preferred countries.",
+          value: _countryFlex,
+          onChanged: (v) => setState(() => _countryFlex = v),
+        );
+        break;
+      case 12:
+        question = 'What is your nationality?';
+        privacy = PrivacyLevel.unlock;
+        content = _SearchPickButton(
+          label: _nationality ?? 'Search nationalities…',
+          onTap: () async {
+            final result = await showSingleSearchPicker(
+              context,
+              selahNationalityNames,
+              current: _nationality,
+            );
+            if (result != null && mounted) {
+              setState(() => _nationality = result);
+            }
+          },
+        );
+        break;
+      case 13:
+        question =
+            'Do you have any preferred nationalities for your future spouse?';
+        content = _MultiPrefPicker(
+          selected: _nationalityPrefs,
+          skipped: _nationalitySkipped,
+          items: selahNationalityNames,
+          onPick: (v) => setState(() {
+            _nationalityPrefs = v;
+            _nationalitySkipped = false;
+          }),
+          onSkip: () => setState(() {
+            _nationalityPrefs = [];
+            _nationalitySkipped = true;
+          }),
+        );
+        break;
+      case 14:
+        question =
+            'Would you be happy for SELAH to introduce people with other nationalities if they appear to be a strong match?';
+        content = FlexibilityChoice(
+          greenText: "Yes, I'd be happy to consider them.",
+          yellowText: 'Maybe, depending on the person.',
+          redText: "No, I'd prefer to stay within my preferred nationalities.",
+          value: _nationalityFlex,
+          onChanged: (v) => setState(() => _nationalityFlex = v),
+        );
+        break;
+      case 15:
+        question = 'Which ethnic background do you identify with?';
+        privacy = PrivacyLevel.unlock;
+        content = _SearchPickButton(
+          label: _ethnicity ?? 'Search ethnic backgrounds…',
+          onTap: () async {
+            final result = await showSingleSearchPicker(
+              context,
+              selahEthnicityNames,
+              current: _ethnicity,
+            );
+            if (result != null && mounted) setState(() => _ethnicity = result);
+          },
+        );
+        break;
+      case 16:
+        question =
+            'Do you have any preferred ethnic backgrounds for your future spouse?';
+        content = _MultiPrefPicker(
+          selected: _ethnicityPrefs,
+          skipped: _ethnicitySkipped,
+          items: selahEthnicityNames,
+          onPick: (v) => setState(() {
+            _ethnicityPrefs = v;
+            _ethnicitySkipped = false;
+          }),
+          onSkip: () => setState(() {
+            _ethnicityPrefs = [];
+            _ethnicitySkipped = true;
+          }),
+        );
+        break;
+      case 17:
+        question =
+            'Would you be happy for SELAH to introduce people from other ethnic backgrounds if they appear to be a strong match?';
+        content = FlexibilityChoice(
+          greenText: "Yes, I'd be happy to consider them.",
+          yellowText: 'Maybe, depending on the person.',
+          redText:
+              "No, I'd prefer to stay within my preferred ethnic backgrounds.",
+          value: _ethnicityFlex,
+          onChanged: (v) => setState(() => _ethnicityFlex = v),
+        );
+        break;
+      case 18:
+        question = 'Which languages do you speak fluently?';
+        privacy = PrivacyLevel.unlock;
+        content = _MultiPrefPicker(
+          selected: _languages,
+          skipped: false,
+          items: selahLanguageNames,
+          onPick: (v) => setState(() => _languages = v),
+          onSkip: null,
+          label: 'Select languages…',
+        );
+        break;
+      case 19:
+        question =
+            'Do you have any preferred languages for your future spouse?';
+        content = _MultiPrefPicker(
+          selected: _languagePrefs,
+          skipped: _languageSkipped,
+          items: selahLanguageNames,
+          onPick: (v) => setState(() {
+            _languagePrefs = v;
+            _languageSkipped = false;
+          }),
+          onSkip: () => setState(() {
+            _languagePrefs = [];
+            _languageSkipped = true;
+          }),
+        );
+        break;
+      case 20:
+      default:
+        question =
+            "Would you be happy for SELAH to introduce people who don't speak your preferred languages if they appear to be a strong match?";
+        content = FlexibilityChoice(
+          greenText: "Yes, I'd be happy to consider them.",
+          yellowText: 'Maybe, depending on the person.',
+          redText: "No, I'd prefer to stay within my preferred languages.",
+          value: _languageFlex,
+          onChanged: (v) => setState(() => _languageFlex = v),
+        );
+        break;
+    }
+
+    final standaloneChoices = const {
+      2,
+      3,
+      4,
+      6,
+      7,
+      8,
+      11,
+      14,
+      17,
+      20,
+    }.contains(_step);
+    return OnboardingScaffold(
+      background: _background,
+      chapterName: 'Your Profile',
+      frameContent: !standaloneChoices,
+      chapterProgress: _progress,
+      progressLabel: 'STEP $_activeStepPosition OF ${_activeStepIds.length}',
+      question: question,
+      subtext: subtext,
+      privacy: privacy,
+      fabActive: _canContinue,
+      onContinue: _next,
+      devPreview: _devPreview,
+      onDevSkip: _devSkipCurrentQuestion,
+      onSwipeBack: _step > 0 ? _back : null,
+      onFinishLater: _finishLater,
+      content: IgnorePointer(
+        ignoring: _saving,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            if (_saveError != null)
+              Padding(
+                padding: const EdgeInsets.only(bottom: 12),
+                child: Text(
+                  _saveError!,
+                  style: SelahText.subtext(color: SelahColors.destructive),
+                ),
+              ),
+            if (standaloneChoices)
+              SelahOnboardingChoiceEntrance(
+                key: ValueKey('profile_choice_entrance_$_step'),
+                child: content,
+              )
+            else
+              content,
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class _TextField extends StatelessWidget {
+  final String hint;
+  final String? value;
+  final ValueChanged<String> onChanged;
+  const _TextField({
+    required this.hint,
+    required this.value,
+    required this.onChanged,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return TextField(
+      controller: TextEditingController(text: value)
+        ..selection = TextSelection.collapsed(offset: (value ?? '').length),
+      onChanged: onChanged,
+      style: SelahText.body(size: 16, color: SelahColors.foreground),
+      decoration: InputDecoration(
+        hintText: hint,
+        hintStyle: SelahText.body(size: 16, color: SelahColors.ink(0.24)),
+        enabledBorder: UnderlineInputBorder(
+          borderSide: BorderSide(color: SelahColors.ink(0.24)),
+        ),
+        focusedBorder: const UnderlineInputBorder(
+          borderSide: BorderSide(color: SelahColors.royalPurple),
+        ),
+      ),
+    );
+  }
+}
+
+class _LargeSelect extends StatelessWidget {
+  final List<String> options;
+  final String? value;
+  final ValueChanged<String> onChanged;
+  const _LargeSelect({
+    required this.options,
+    required this.value,
+    required this.onChanged,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: options.map((o) {
+        final selected = value == o;
+        return Padding(
+          padding: const EdgeInsets.only(bottom: 14),
+          child: SelahOnboardingChoiceCard(
+            key: ValueKey('profile_choice_$o'),
+            label: o,
+            selected: selected,
+            onTap: () => onChanged(o),
+          ),
+        );
+      }).toList(),
+    );
+  }
+}
+
+class _SearchPickButton extends StatelessWidget {
+  final String label;
+  final VoidCallback onTap;
+  const _SearchPickButton({required this.label, required this.onTap});
+
+  @override
+  Widget build(BuildContext context) {
+    return InkWell(
+      borderRadius: BorderRadius.circular(14),
+      onTap: onTap,
+      child: Container(
+        width: double.infinity,
+        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
+        decoration: BoxDecoration(
+          color: SelahColors.iconButtonBg,
+          border: Border.all(color: SelahColors.iconButtonBorder, width: 0.5),
+          borderRadius: BorderRadius.circular(14),
+        ),
+        child: Row(
+          children: [
+            Icon(Icons.search, color: SelahColors.ink(0.38), size: 18),
+            SizedBox(width: 10),
+            Expanded(child: Text(label, style: SelahText.body(size: 15))),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class _MultiPrefPicker extends StatelessWidget {
+  final List<String> selected;
+  final bool skipped;
+  final List<String> items;
+  final ValueChanged<List<String>> onPick;
+  final VoidCallback? onSkip;
+  final String label;
+
+  const _MultiPrefPicker({
+    required this.selected,
+    required this.skipped,
+    required this.items,
+    required this.onPick,
+    required this.onSkip,
+    this.label = 'Select preferences…',
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        _SearchPickButton(
+          label: skipped
+              ? 'No preference'
+              : (selected.isEmpty ? label : selected.join(', ')),
+          onTap: () async {
+            final result = await showMultiSearchPicker(
+              context,
+              items,
+              current: selected,
+            );
+            if (result != null) onPick(result);
+          },
+        ),
+        if (onSkip != null) ...[
+          SizedBox(height: 10),
+          TextButton(
+            onPressed: onSkip,
+            child: Text(
+              'Skip — no preference',
+              style: SelahText.subtext(size: 12.5),
+            ),
+          ),
+        ],
+      ],
+    );
+  }
+}
+
+// Real device photo picking + Storage upload (OA-104) — replaced the
+// original mock 6-photo picsum pool picker on 2026-07-18 now that a
+// real Storage bucket exists. Developer Preview selects and processes a
+// real device photo locally, without uploading it or touching live data.
+class _PhotoGrid extends StatefulWidget {
+  final List<String> photos;
+  final bool devPreview;
+  final ValueChanged<List<String>> onChanged;
+  const _PhotoGrid({
+    required this.photos,
+    required this.devPreview,
+    required this.onChanged,
+  });
+
+  @override
+  State<_PhotoGrid> createState() => _PhotoGridState();
+}
+
+class _PhotoGridState extends State<_PhotoGrid> {
+  bool _uploading = false;
+  String? _uploadError;
+
+  Future<void> _addPhoto() async {
+    if (widget.photos.length >= 6 ||
+        _uploading ||
+        (widget.devPreview && !SelahDeveloperAccess.canUseDeveloperTools)) {
+      return;
+    }
+    setState(() {
+      _uploading = true;
+      _uploadError = null;
+    });
+
+    final result = await runSelahPhotoBatchFlow(
+      context,
+      remaining: 6 - widget.photos.length,
+      localPreview:
+          widget.devPreview ||
+          (!SelahAuth.isSignedIn && SelahInternalPreviewClient.isActive),
+      onProgress: (_) {},
+    );
+    if (!mounted) return;
+    if (widget.devPreview && !SelahDeveloperAccess.canUseDeveloperTools) return;
+    setState(() => _uploading = false);
+    switch (result.outcome) {
+      case SelahPhotoBatchOutcome.added:
+        widget.onChanged([...widget.photos, ...result.urls]);
+        return;
+      case SelahPhotoBatchOutcome.cancelled:
+        return; // not an error — nothing to show
+      case SelahPhotoBatchOutcome.error:
+        setState(() => _uploadError = result.memberErrorMessage);
+        return;
+    }
+  }
+
+  void _removePhoto(String url) {
+    widget.onChanged(widget.photos.where((p) => p != url).toList());
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final tileCount = widget.photos.length + (widget.photos.length < 6 ? 1 : 0);
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        GridView.builder(
+          shrinkWrap: true,
+          physics: const NeverScrollableScrollPhysics(),
+          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+            crossAxisCount: 3,
+            mainAxisSpacing: 8,
+            crossAxisSpacing: 8,
+          ),
+          itemCount: tileCount,
+          itemBuilder: (context, index) {
+            if (index < widget.photos.length) {
+              final url = widget.photos[index];
+              return GestureDetector(
+                onTap: () => _removePhoto(url),
+                child: Stack(
+                  fit: StackFit.expand,
+                  children: [
+                    ClipRRect(
+                      borderRadius: BorderRadius.circular(12),
+                      // Uses SelahProfileImage for the shared error fallback, not for
+                      // colour support — these are the user's OWN uploads and are
+                      // always real Storage URLs. Swapped so "one place renders a
+                      // profile photo" is literally true rather than nearly true.
+                      child: SelahProfileImage(url),
+                    ),
+                    Positioned(
+                      top: 6,
+                      right: 6,
+                      child: Container(
+                        padding: const EdgeInsets.all(3),
+                        decoration: BoxDecoration(
+                          color: Colors.black54,
+                          shape: BoxShape.circle,
+                        ),
+                        child: Icon(Icons.close, size: 14, color: Colors.white),
+                      ),
+                    ),
+                    if (index == 0)
+                      Positioned(
+                        bottom: 6,
+                        left: 6,
+                        child: Container(
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 6,
+                            vertical: 2,
+                          ),
+                          decoration: BoxDecoration(
+                            color: Colors.black54,
+                            borderRadius: BorderRadius.circular(6),
+                          ),
+                          child: const Text(
+                            'Main',
+                            style: TextStyle(fontSize: 10, color: Colors.white),
+                          ),
+                        ),
+                      ),
+                  ],
+                ),
+              );
+            }
+            // "Add photo" tile.
+            return GestureDetector(
+              onTap: _addPhoto,
+              child: DecoratedBox(
+                decoration: BoxDecoration(
+                  color: SelahColors.iconButtonBg,
+                  border: Border.all(
+                    color: SelahColors.iconButtonBorder,
+                    width: 0.5,
+                  ),
+                  borderRadius: BorderRadius.circular(12),
+                ),
+                child: Center(
+                  child: _uploading
+                      ? SizedBox(
+                          width: 20,
+                          height: 20,
+                          child: CircularProgressIndicator(
+                            strokeWidth: 2,
+                            color: SelahColors.ink(0.54),
+                          ),
+                        )
+                      : Icon(
+                          Icons.add_photo_alternate_outlined,
+                          color: SelahColors.ink(0.54),
+                          size: 26,
+                        ),
+                ),
+              ),
+            );
+          },
+        ),
+        if (_uploadError != null) ...[
+          SizedBox(height: 10),
+          SelahErrorBanner(
+            message: _uploadError!,
+            onRetry: () {
+              setState(() => _uploadError = null);
+              _addPhoto();
+            },
+            onDismiss: () => setState(() => _uploadError = null),
+          ),
+        ],
+      ],
+    );
+  }
+}

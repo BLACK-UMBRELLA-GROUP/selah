@@ -14,6 +14,16 @@ APP NAME
 
 Working Name: Selah
 
+Current Founder direction — 2026-10-13:
+  Selah is a separate application and separate-company workstream.
+  The first private phone draft reuses existing app foundations and
+  adapts Christian content. It must not reuse the source app's live
+  member accounts, backend, provider identities or signing material.
+  The older shared-ecosystem/single-codebase options below are historical
+  planning, not authority to merge the two products or companies.
+  Implementation truth lives in the Selah FIRST_DRAFT specification,
+  build contract, handover and its own outstanding-actions register.
+
 Meaning:
   • Pause
   • Reflect

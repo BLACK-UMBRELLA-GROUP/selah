@@ -1,0 +1,45 @@
+#!/usr/bin/env bash
+# Minimal offline resolver for the exact Apple toolchain programs used by
+# Selah's Dart-layer assembly. Everything else is rejected.
+set -euo pipefail
+
+SELAH_TOOLCHAIN='/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin'
+
+tool_path() {
+  case "$1" in
+    dsymutil|strip|lipo|install_name_tool|otool|clang|ar|ld|cc)
+      printf '%s/%s\n' "$SELAH_TOOLCHAIN" "$1"
+      ;;
+    codesign)
+      printf '%s\n' '/usr/bin/codesign'
+      ;;
+    *)
+      printf 'Selah delivery blocked an unexpected xcrun tool: %s\n' "$1" >&2
+      exit 86
+      ;;
+  esac
+}
+
+if [[ $# -eq 2 && "$1" == '--find' ]]; then
+  tool_path "$2"
+  exit 0
+fi
+
+if [[ $# -eq 3 && "$1" == '--sdk' && "$2" == 'iphoneos' && "$3" == '--show-sdk-path' ]]; then
+  printf '%s\n' '/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS27.0.sdk'
+  exit 0
+fi
+
+if [[ $# -eq 3 && "$1" == '--show-sdk-path' && "$2" == '--sdk' && "$3" == 'iphoneos' ]]; then
+  printf '%s\n' '/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS27.0.sdk'
+  exit 0
+fi
+
+[[ $# -ge 1 ]] || {
+  printf '%s\n' 'Selah delivery blocked an empty xcrun request.' >&2
+  exit 86
+}
+
+SELAH_TOOL="$(tool_path "$1")"
+shift
+exec "$SELAH_TOOL" "$@"

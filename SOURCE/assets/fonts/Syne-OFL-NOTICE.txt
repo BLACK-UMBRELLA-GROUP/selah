@@ -1,0 +1,18 @@
+Copyright 2019 The Syne Project Authors
+(https://gitlab.com/bonjour-monde/fonderie/syne-typeface)
+
+Syne is distributed under the SIL Open Font License, Version 1.1.
+The full OFL 1.1 licence text and the official upstream copyright notice
+are bundled alongside this notice in assets/fonts/Syne-OFL.txt.
+
+Packaged static font: Syne-SemiBold.ttf, embedded version 2.200.
+Its embedded copyright notice uses 2019. The official upstream OFL notice
+uses 2017; the official upstream version 2.200 binary uses 2019.
+Both published notices are preserved without rewriting either year.
+Exact static-font acquisition/build lineage remains to be reconciled;
+this notice is not an acquisition or instancing receipt.
+
+Official licence source:
+https://raw.githubusercontent.com/google/fonts/54fb97bd69162b95b2aa2c3996ffd71466c1aec2/ofl/syne/OFL.txt
+Official version-matching variable-font reference, not a byte-identity claim:
+https://raw.githubusercontent.com/google/fonts/54fb97bd69162b95b2aa2c3996ffd71466c1aec2/ofl/syne/Syne%5Bwght%5D.ttf

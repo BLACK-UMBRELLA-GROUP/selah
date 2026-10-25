@@ -1,0 +1,3 @@
+#!/bin/sh
+printf '%s\n' 'Selah delivery blocked an unexpected Git subprocess.' >&2
+exit 86

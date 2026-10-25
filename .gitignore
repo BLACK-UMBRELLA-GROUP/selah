@@ -1,0 +1,23 @@
+# SELAH repo
+# Secrets — never commit (OA-AIOS-307 Finding 2, 2026-08-18)
+*.env
+*.key
+*.pem
+*.secret
+
+# Generated local builds and resolutions are not company source records.
+SOURCE/.dart_tool/
+SOURCE/.flutter-plugins*
+SOURCE/build/
+SOURCE/ios/Pods/
+SOURCE/ios/.symlinks/
+SOURCE/ios/Flutter/Generated.xcconfig
+SOURCE/ios/Flutter/flutter_export_environment.sh
+SOURCE/ios/Flutter/ephemeral/
+SOURCE/ios/Runner/GeneratedPluginRegistrant.*
+SOURCE/ios/Runner/GoogleService-Info.plist
+SOURCE/.env*
+*.mobileprovision
+*.p12
+*.xcuserstate
+**/xcuserdata/

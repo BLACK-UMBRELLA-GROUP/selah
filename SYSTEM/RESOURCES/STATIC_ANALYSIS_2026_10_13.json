@@ -1,0 +1,12 @@
+{
+  "timestamp": "2026-10-13T11:31:23.330Z",
+  "scope": "direct native static analyzer, no Flutter build",
+  "executable": "/opt/homebrew/share/flutter/bin/cache/dart-sdk/bin/dartaotruntime",
+  "snapshot": "/opt/homebrew/share/flutter/bin/cache/dart-sdk/bin/snapshots/analysis_server_aot.dart.snapshot",
+  "analyzedFiles": 322,
+  "errors": 0,
+  "warnings": 0,
+  "infos": 0,
+  "diagnostics": [],
+  "stderr": ""
+}
