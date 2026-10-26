@@ -59,6 +59,10 @@ from this chat without a later explicit scoped instruction. Legal company
 formation, name clearance and production infrastructure are not established
 by source creation or Apple development signing.
 
+> **Decision 26 Oct 2026 (AD-AIOS-113):** `SOURCE/` is a **frozen demo** - a 13 Oct copy of ZYRA's code with
+> names and faith words replaced. Build nothing more on it. After ZYRA launches, SELAH is rebuilt on one shared
+> engine with ZYRA (OA-AIOS-414); the code licence between the companies is set up at incorporation.
+
 The Founder requested the first phone draft by reusing the current app core,
 adapting Muslim-specific content to Christian content, then iterating together.
 The prepared draft reuses presentation/code and local stock fixtures only.

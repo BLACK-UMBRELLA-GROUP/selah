@@ -15,7 +15,7 @@ re-run the tool.
 | Product question — what SELAH is or what the draft should show | DOC-SELAH-0001, DOC-SELAH-0002 |
 | Build, run or fix the draft | DOC-SELAH-0003, DOC-SELAH-0004 (as-built), then `SOURCE/run.sh` |
 | What is open or next | `SYSTEM/OUTSTANDING_ACTIONS/OUTSTANDING_ACTIONS_V1_INDEX.md`, then DOC-SELAH-0005 for the ID you need |
-| Reusing anything from ZYRA | DOC-SELAH-0003 and group action OA-AIOS-403 (Founder decision pending) — stop and ask |
+| Reusing anything from ZYRA | Decided 26 Oct (AD-AIOS-113): the current source is a frozen demo; one shared engine after ZYRA launches (OA-AIOS-414) — build nothing on the copy |
 <!-- ROUTES END -->
 
 ## Route paths (generated)
