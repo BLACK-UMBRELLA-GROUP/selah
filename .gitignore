@@ -21,3 +21,6 @@ SOURCE/.env*
 *.p12
 *.xcuserstate
 **/xcuserdata/
+
+# Left-overs a mounted drive creates when an open file is deleted (lesson S12, 25 Oct 2026)
+.fuse_hidden*

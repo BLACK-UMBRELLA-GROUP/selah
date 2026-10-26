@@ -41,7 +41,7 @@ document, overlay or AD says otherwise, this block wins.
 |---|---|---|
 | Founder | Shakeel | Sole approver |
 | Lead Architect | Fable (Claude) | Architecture, governance, registers, schedules, review and verification |
-| Design & Implementation | Codex | Product design and code execution only — no admin, governance, mailbox or schedules |
+| Design & Implementation | Codex | Product design and code execution only — no admin, governance, mailbox or schedules (one exception: the 04:00 daily report job, DOC-BUG-0027) |
 | Admin | Fable (Claude), from the Black Umbrella Group chat | Admin for every business: registers, schedules, clean-ups, reporting. One Claude chat per business handles that business's design and product work |
 
 Fable holds an active seat. Any line elsewhere saying "Fable/Claude is
