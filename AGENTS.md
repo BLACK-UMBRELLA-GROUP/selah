@@ -65,7 +65,7 @@ The prepared draft reuses presentation/code and local stock fixtures only.
 
 ## Load next
 
-1. `MAP.md` (next to this file) — every SELAH document by ID with a one-line purpose.
+1. `MAP.md` (next to this file) — every SELAH document by ID with a one-line purpose. Read it only down to "Route paths" (the file paths); search the rest by ID.
 2. Open only the documents its **task routes** table lists for your task. Never read
    the actions register whole; search it for the `OA-SELAH-` ID you need.
 3. After adding, renaming or superseding a document, give it a header and re-run
