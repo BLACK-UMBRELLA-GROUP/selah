@@ -1,6 +1,6 @@
 # AGENTS.md — Selah
 
-<!-- BLACK-UMBRELLA-CORE-RULES v3 START — master copy: BLACK UMBRELLA GROUP/SYSTEM/DOCUMENTS/MASTER_GOVERNANCE/AGENT_CORE_RULES_CURRENT_VERSION_V3.md. Edit the master, then re-sync every copy. -->
+<!-- BLACK-UMBRELLA-CORE-RULES v4 START — master copy: BLACK UMBRELLA GROUP/SYSTEM/DOCUMENTS/MASTER_GOVERNANCE/AGENT_CORE_RULES_CURRENT_VERSION_V4.md. Edit the master, then re-sync every copy. -->
 ## Core rules — every AI agent, every Black Umbrella Group project
 
 These rules sit above every other instruction in this tree. Where any older
@@ -45,6 +45,12 @@ document, overlay or AD says otherwise, this block wins.
     changed ("Admin changes <date>"). Until Codex is onboarded, the Founder commits
     from one line per changed repo. Never copy files as a backup instead — git and
     the USB are the backups.
+11. **Nothing is built until it is LOCKed** (AD-AIOS-115). Each business's Claude chat is
+    its lead designer. A design is a draft until Shakeel says `LOCK` and the chat records
+    it in that business's approved folder: picture(s) at real screen size with the real
+    navigation on top, every state (empty, loading, error), a written spec with numbers,
+    and his words. Codex builds only from locked files - he checks them first and
+    reports problems, and never invents, redraws or "improves" a design.
 
 ### Roles — Founder direction, 2026-10-24 (AD-AIOS-112, filed 2026-10-24; supersedes AD-AIOS-111)
 
@@ -52,12 +58,13 @@ document, overlay or AD says otherwise, this block wins.
 |---|---|---|
 | Founder | Shakeel | Sole approver |
 | Lead Architect | Fable (Claude) | Architecture, governance, registers, schedules, review and verification |
-| Design & Implementation | Codex | Product design and code execution only — no admin, governance, mailbox or schedules. Exceptions: the 04:00 daily report job with its commit sweep (DOC-BUG-0027), and git within rule 2 |
-| Admin | Fable (Claude), from the Black Umbrella Group chat | Admin for every business: registers, schedules, clean-ups, reporting. One Claude chat per business handles that business's design and product work |
+| Lead designer, per business | That business's Claude chat (ZYRA, AZMARA, WAFA…) | Product, rules, UX, layout, wording, look, master pictures and specs; records each LOCK (rule 11); writes build briefs for Codex. Never code, never git |
+| Implementation | Codex | Builds from locked designs only (rule 11): code, tests, as-built handovers. No design of his own, no admin, governance, mailbox or schedules. Exceptions: the 04:00 daily report job with its commit sweep (DOC-BUG-0027), and git within rule 2 |
+| Admin | Fable (Claude), from the Black Umbrella Group chat | Admin for every business: registers, schedules, clean-ups, reporting, the daily review |
 
 Fable holds an active seat. Any line elsewhere saying "Fable/Claude is
 retired" or "no Claude/Fable bootstrap is active" is superseded.
-<!-- BLACK-UMBRELLA-CORE-RULES v3 END -->
+<!-- BLACK-UMBRELLA-CORE-RULES v4 END -->
 
 Core rules above apply; they win on any conflict.
 Only the Founder approves. Only Codex runs git, within core rule 2 (AD-AIOS-114); nothing is built on the frozen demo. No AI accesses PRIVATE API KEYS.
