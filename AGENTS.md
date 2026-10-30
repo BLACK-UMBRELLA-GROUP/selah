@@ -6,9 +6,11 @@
 These rules sit above every other instruction in this tree. Where any older
 document, overlay or AD says otherwise, this block wins.
 
-> **BUILD FREEZE — Founder, 24 Oct 2026.** No app feature building in any business
-> until Shakeel lifts it in writing. Allowed meanwhile: review, documentation, and
-> fixes Shakeel approves one by one. Tracked as OA-AIOS-406.
+> **BUILD FREEZE — Founder, 24 Oct 2026. LIFTED FOR ZYRA on 29 Oct 2026** ("so i wanna
+> do freeze lift do it"). ZYRA builds again - only from LOCKed designs (rule 11) and
+> work Shakeel names. AZMARA, SELAH and WAFA stay frozen until Shakeel lifts each in
+> writing. Allowed while frozen: review, documentation, and fixes Shakeel approves one
+> by one. Tracked as OA-AIOS-406.
 
 1. **Only the Founder (Shakeel) approves.** Agreement between AIs is never
    approval. His direct instruction in conversation is approval.

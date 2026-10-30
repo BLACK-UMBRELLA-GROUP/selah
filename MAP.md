@@ -30,7 +30,7 @@ re-run the tool.
 
 _Stop here unless you need to look up another ID._
 
-## Documents (5 live)
+## Documents (6 live)
 
 ### FIRST_DRAFT
 
@@ -42,9 +42,10 @@ _Stop here unless you need to look up another ID._
 
 ### GOVERNANCE
 
-| ID | File | Type | Purpose | KB |
-|---|---|---|---|---|
-| INDEX-OUTSTANDING_ACTIONS_V1 | `SYSTEM/OUTSTANDING_ACTIONS/OUTSTANDING_ACTIONS_V1_INDEX.md` | INDEX | Generated one-line index of OUTSTANDING_ACTIONS_V1.md; find the ID here, then search the register for it | 1 |
+| ID | File | Type | Purpose | Links | KB |
+|---|---|---|---|---|---|
+| DOC-SELAH-0006 | `APP/APPROVED/BUILD_QUEUE.md` | REGISTER | Build queue - every LOCKed brief waits here; Codex builds WAITING lines at 04:00 or on GO (charters rule 9) | AD-AIOS-115 | 1 |
+| INDEX-OUTSTANDING_ACTIONS_V1 | `SYSTEM/OUTSTANDING_ACTIONS/OUTSTANDING_ACTIONS_V1_INDEX.md` | INDEX | Generated one-line index of OUTSTANDING_ACTIONS_V1.md; find the ID here, then search the register for it |  | 1 |
 
 ### OVERVIEW
 
