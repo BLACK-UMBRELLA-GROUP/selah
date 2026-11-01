@@ -2,7 +2,7 @@
 
 SELAH is a Christian marriage application concept. This repository contains a **frozen demo**, copied from ZYRA on 13 October 2026 with names and faith content replaced. The current copy is not the planned production foundation. After ZYRA launches, SELAH is planned to be rebuilt on a shared engine with ZYRA, subject to Founder approval.
 
-The app remains frozen. This repository preparation does not authorize further app development or a public release. The repository remains private until a separate publication instruction.
+Development is paused until ZYRA launches; the demo is kept so the Christian version of the product can be reviewed and designed in the meantime.
 
 ## What the demo does
 
@@ -12,7 +12,7 @@ The draft has no configured member backend. Account and service integrations are
 
 Sample profile pictures are free stock photos, not real members.
 
-The historical handover records successful static and pure-Dart checks and a corrected compiled/signed artifact. Corrected device installation, first Flutter frame, stable runtime, unplugged launch and Founder visual acceptance remain pending. No TestFlight or App Store delivery is claimed.
+The first-draft handover records passing static and pure-Dart checks and a signed build; on-device checks are still pending. No TestFlight or App Store delivery yet.
 
 ## Repository layout
 
@@ -25,7 +25,7 @@ The current implementation and measured limits are described in `SYSTEM/DOCUMENT
 
 ## Private delivery route
 
-`SOURCE/run.sh` is a specialized private iPhone delivery route. It depends on a prepared local environment, a retained signed native base and matching local signing/provisioning material. It is not a fresh-clone setup script. Do not run it while the app is frozen without a separate, explicit instruction authorizing that delivery.
+`SOURCE/run.sh` is a specialized private iPhone delivery route. It depends on a prepared local environment, a retained signed native base and matching local signing/provisioning material. It is not a fresh-clone setup script.
 
 The source tooling pins cached Flutter **3.44.2** and Dart **3.12.2**; `SOURCE/pubspec.yaml` declares the Dart constraint `^3.12.2`. Review the project-local integration before changing those versions. The launcher checks its required local artifacts and stops when prerequisites do not match.
 
@@ -47,13 +47,11 @@ SELAH_DEVICE=YOUR_PAIRED_DEVICE_ID \
 
 `--device YOUR_PAIRED_DEVICE_ID` overrides `SELAH_DEVICE`. `--build-only` requires `SELAH_TEAM_ID` and `SELAH_SIGN_ID` but does not require a device; it prepares the local artifact without installation or launch. These are shell environment inputs; the launcher does not read a dotenv file. Keep your actual identifiers out of committed files and reports.
 
-The route validates and compiles the Profile Dart layer against its retained native shell. It is not authorization to install an SDK, rebuild native projects, change signing accounts or activate a backend. No real launcher, Flutter or installer execution was performed for this repository preparation.
+The route validates and compiles the Profile Dart layer against its retained native shell.
 
-## Contributions and approvals
+## How work is done
 
-The Founder must lift SELAH's build freeze in writing before app work resumes. The SELAH lead designer records each Founder `LOCK` under `APP/APPROVED/<FEATURE>/`, including real-size pictures, every state, a measured specification and the Founder's words in `LOCK_RECORD.md`. A build brief and a `WAITING` entry in `APP/APPROVED/BUILD_QUEUE.md` define authorized implementation. Implementation follows those locked files exactly.
-
-A roadmap entry is not a build approval. Backend setup, production assets, company formation, store submission and publication require their own Founder decisions.
+The Founder designs with an AI design assistant and locks each design under `APP/APPROVED/<FEATURE>/` (real-size pictures, every state, a measured specification, a lock record in his words). An AI coding assistant builds only from those locked files; every change is a line in `APP/APPROVED/BUILD_QUEUE.md` pointing at its brief. See `ROADMAP.md` for what comes next.
 
 ## Licence and branding
 
