@@ -24,20 +24,20 @@ re-run the tool.
 |---|---|---|
 | DOC-SELAH-0001 | `APP/OVERVIEW/Summary.md` | 6 |
 | DOC-SELAH-0002 | `APP/FIRST_DRAFT/SELAH_FIRST_DRAFT_SPEC_CURRENT_VERSION_V1.md` | 2 |
-| DOC-SELAH-0003 | `SYSTEM/DOCUMENTS/SELAH_FIRST_DRAFT_BUILD_CONTRACT_CURRENT_VERSION_V1.md` | 3 |
+| DOC-SELAH-0003 | `SYSTEM/DOCUMENTS/SELAH_FIRST_DRAFT_BUILD_CONTRACT_CURRENT_VERSION_V1.md` | 4 |
 | DOC-SELAH-0004 | `SYSTEM/DOCUMENTS/SELAH_FIRST_DRAFT_HANDOVER_CURRENT_VERSION_V1.md` | 15 |
 | DOC-SELAH-0005 (register - search by ID) | `SYSTEM/OUTSTANDING_ACTIONS/OUTSTANDING_ACTIONS_V1.md` | 5 |
 
 _Stop here unless you need to look up another ID._
 
-## Documents (7 live)
+## Documents (8 live)
 
 ### FIRST_DRAFT
 
 | ID | File | Type | Purpose | Links | KB |
 |---|---|---|---|---|---|
 | DOC-SELAH-0002 | `APP/FIRST_DRAFT/SELAH_FIRST_DRAFT_SPEC_CURRENT_VERSION_V1.md` | SPEC | What the first private phone draft must show and what it must not do | OA-SELAH-001 | 2 |
-| DOC-SELAH-0003 | `SYSTEM/DOCUMENTS/SELAH_FIRST_DRAFT_BUILD_CONTRACT_CURRENT_VERSION_V1.md` | STANDARD | The build rules for the first draft: separate source tree, allowlisted ZYRA code only, no backend or live data | OA-SELAH-001, OA-AIOS-403 | 3 |
+| DOC-SELAH-0003 | `SYSTEM/DOCUMENTS/SELAH_FIRST_DRAFT_BUILD_CONTRACT_CURRENT_VERSION_V1.md` | STANDARD | The build rules for the first draft: separate source tree, allowlisted ZYRA code only, no backend or live data | OA-SELAH-001, OA-AIOS-403 | 4 |
 | DOC-SELAH-0004 | `SYSTEM/DOCUMENTS/SELAH_FIRST_DRAFT_HANDOVER_CURRENT_VERSION_V1.md` | HANDOVER | What was actually built on 13 Oct, how it was checked, and what is still pending | OA-SELAH-001, OA-SELAH-002, OA-SELAH-003, OA-SELAH-004 | 15 |
 
 ### GOVERNANCE
@@ -46,6 +46,7 @@ _Stop here unless you need to look up another ID._
 |---|---|---|---|---|---|
 | DOC-SELAH-0006 | `APP/APPROVED/BUILD_QUEUE.md` | REGISTER | Build queue - every LOCKed brief waits here; Codex builds WAITING lines at 01:00 or on GO (charters rule 9) | AD-AIOS-115 | 1 |
 | DOC-SELAH-0007 | `APP/APPROVED/QUESTIONS.md` | REGISTER | Codex's questions for the SELAH chat - Codex never asks Shakeel in chat; he files the question here, marks… | AD-AIOS-116 | 1 |
+| DOC-SELAH-0008 | `ROADMAP.md` | PLAN | Approval-gated roadmap for the frozen SELAH demo and later shared-engine rebuild | OA-SELAH-001, OA-SELAH-002, OA-SELAH-003, OA-SELAH-004, OA-AIOS-414 | 4 |
 | INDEX-OUTSTANDING_ACTIONS_V1 | `SYSTEM/OUTSTANDING_ACTIONS/OUTSTANDING_ACTIONS_V1_INDEX.md` | INDEX | Generated one-line index of OUTSTANDING_ACTIONS_V1.md; find the ID here, then search the register for it |  | 1 |
 
 ### OVERVIEW

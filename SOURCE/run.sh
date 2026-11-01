@@ -5,15 +5,16 @@ set -euo pipefail
 unset CDPATH
 
 SELAH_PROJECT_ROOT="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd -P)"
-SELAH_DEVICE='00008130-001A2C1E26F8001C'
+SELAH_DEVICE="${SELAH_DEVICE:-}"
 SELAH_BUNDLE_ID='com.blackumbrella.selah.draft'
-SELAH_TEAM_ID='9Y7Z8F36SJ'
+SELAH_TEAM_ID="${SELAH_TEAM_ID:-}"
+SELAH_SIGN_ID="${SELAH_SIGN_ID:-}"
 SELAH_DISPLAY_NAME='Selah'
 SELAH_BUILD_ONLY=false
 
 usage() {
   printf '%s\n' \
-    'Usage: ./run.sh [--device PAIRED_DEVICE_ID] [--build-only]' \
+    'Usage: SELAH_TEAM_ID=YOUR_APPLE_TEAM_ID SELAH_SIGN_ID=YOUR_SIGNING_IDENTITY ./run.sh [--device PAIRED_DEVICE_ID] [--build-only]' \
     'Builds the Profile Dart layer inside the preserved verified native shell.' \
     'Without --build-only it verifies, installs, launches and post-queries the intended iPhone.'
 }
@@ -43,6 +44,19 @@ while [[ $# -gt 0 ]]; do
       ;;
   esac
 done
+
+if [[ -z "$SELAH_TEAM_ID" ]]; then
+  printf '%s\n' 'Set SELAH_TEAM_ID to your Apple development team before running this private delivery route.' >&2
+  exit 2
+fi
+if [[ -z "$SELAH_SIGN_ID" ]]; then
+  printf '%s\n' 'Set SELAH_SIGN_ID to your available Apple development signing identity.' >&2
+  exit 2
+fi
+if [[ "$SELAH_BUILD_ONLY" != true && -z "$SELAH_DEVICE" ]]; then
+  printf '%s\n' 'Set SELAH_DEVICE or pass --device with your paired-device ID.' >&2
+  exit 2
+fi
 
 cd -- "$SELAH_PROJECT_ROOT"
 unset \
@@ -184,7 +198,7 @@ fi
 /usr/bin/plutil -extract ProvisionedDevices xml1 \
   -o "$SELAH_RECEIPT_DIR/profile-devices.plist" \
   "$SELAH_RECEIPT_DIR/embedded-profile.plist"
-if ! /usr/bin/grep -Fq "$SELAH_DEVICE" \
+if ! /usr/bin/grep -Fq -- "$SELAH_DEVICE" \
      "$SELAH_RECEIPT_DIR/profile-devices.plist"; then
   printf '%s\n' 'Embedded profile does not contain the intended iPhone. No install was attempted.' >&2
   exit 1

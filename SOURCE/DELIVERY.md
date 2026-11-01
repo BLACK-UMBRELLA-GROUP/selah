@@ -12,12 +12,16 @@ command into Terminal.
 - entry point: `lib/main.dart`
 - compile-time isolation: `SELAH_DRAFT_LOCAL_ONLY=true`
 - bundle identifier: `com.blackumbrella.selah.draft`
-- development team: `9Y7Z8F36SJ`
-- default target: the Founder's paired iPhone
+- development team: caller-supplied `SELAH_TEAM_ID`
+- device target: caller-supplied `SELAH_DEVICE` or `--device`
 
-The routine command is `./run.sh`. `./run.sh --build-only` performs the same
-artifact checks but stops before device access. An explicit paired-device ID
-can be supplied with `--device` when the intended device changes.
+Export `SELAH_SIGN_ID` with your existing Apple development signing identity,
+`SELAH_TEAM_ID` with your Apple development team and `SELAH_DEVICE` with
+your paired-device identifier before `./run.sh`. `--device` overrides the device
+variable. `./run.sh --help` needs no private inputs. `./run.sh --build-only`
+requires the signing identity and team but does not require a device; it performs the artifact checks
+and stops before device access. These are shell environment variables; the
+route does not read a dotenv file. Public preparation does not authorize a run.
 
 ## What the route does
 
@@ -28,11 +32,10 @@ can be supplied with `--device` when the intended device changes.
 3. Generates the exact draft Xcode settings directly from the pinned local
    SDK manifest and project version. It does not enter Flutter's iOS project
    command or Swift-package resolution path.
-4. Builds through Xcode with automatic package resolution and package updates
-   disabled, exact prepared checkouts required, external proxy routes pointed
-   to a closed loopback endpoint and a project-local Git execution blocker at
-   the head of Xcode's PATH. It does not pass provisioning-update or
-   device-registration flags.
+4. Compiles the Profile Dart layer inside the bounded local sandbox, stages
+   it in a copy of the preserved verified native shell and re-signs that staged
+   app. Network, Git and Xcode-project builds are denied during compilation.
+   It does not pass provisioning-update or device-registration flags.
 5. Rejects an artifact unless its source fingerprint, display name, bundle,
    delivery mode, code signature, signing team, application identifier,
    embedded profile and intended device all match.

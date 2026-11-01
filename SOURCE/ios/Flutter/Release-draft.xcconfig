@@ -3,7 +3,7 @@
 // Local identity only: no App Store/TestFlight release is approved.
 APP_BUNDLE_NAME = Selah
 APP_DISPLAY_NAME = Selah
-DEVELOPMENT_TEAM = 9Y7Z8F36SJ
+DEVELOPMENT_TEAM = $(SELAH_TEAM_ID)
 PRODUCT_BUNDLE_IDENTIFIER = com.blackumbrella.selah.draft
 CURRENT_PROJECT_VERSION = $(FLUTTER_BUILD_NUMBER)
 

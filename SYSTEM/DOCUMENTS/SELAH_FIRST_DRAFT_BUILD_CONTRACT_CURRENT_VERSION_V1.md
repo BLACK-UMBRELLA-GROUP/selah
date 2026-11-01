@@ -29,8 +29,9 @@ As-built owner: SELAH_FIRST_DRAFT_HANDOVER_CURRENT_VERSION_V1.md.
    selah/* native channels; no old OAuth, Apple-login capability, shared groups,
    signing credentials or alternate source-product icon identifiers.
 7. Private development signing is limited to bundle
-   com.blackumbrella.selah.draft and team 9Y7Z8F36SJ under the Founder's exact
-   private-test approval. The route must not create/update provisioning,
+   com.blackumbrella.selah.draft and team `${SELAH_TEAM_ID}` under the Founder's exact
+   private-test approval. The caller's `SELAH_SIGN_ID` must select the existing
+   approved development signing identity. The route must not create/update provisioning,
    register a device, upload an artifact or imply public/release authority.
 8. SOURCE/run.sh is the internally verified project-local no-Git delivery route
    and may be operated by Codex after exact Founder GO. It must use Profile-draft,
