@@ -17,7 +17,7 @@ document, overlay or AD says otherwise, this block wins.
 2. **Only Codex runs git, and only within these limits** (AD-AIOS-114). Allowed:
    `git status`, `git add`, `git commit`, and `git push` to `origin` on the current
    branch - in the repo of the project he is working in, at the end of a task whose
-   tests passed; plus the 04:00 job's sweep, which commits and pushes what is left in
+   tests passed; plus the 01:00 job's sweep, which commits and pushes what is left in
    every repo. Never: force-push, reset, rebase, amend or rewrite pushed history,
    `git clean`, checkout/restore over working files, delete branches, change remotes or
    git config, or commit a file over 50 MB or anything from the keys folder.
@@ -43,7 +43,7 @@ document, overlay or AD says otherwise, this block wins.
    Codex stops reading at 32 KiB.
 10. **Every finished task ends in a commit.** Codex commits and pushes his own work
     at the end of each task (message: what changed, with the OA/DR IDs) and lists the
-    commit in his task note. The 04:00 sweep commits what Fable and the business chats
+    commit in his task note. The 01:00 sweep commits what Fable and the business chats
     changed ("Admin changes <date>"). Until Codex is onboarded, the Founder commits
     from one line per changed repo. Never copy files as a backup instead — git and
     the USB are the backups.
@@ -61,7 +61,7 @@ document, overlay or AD says otherwise, this block wins.
 | Founder | Shakeel | Sole approver |
 | Lead Architect | Fable (Claude) | Architecture, governance, registers, schedules, review and verification |
 | Lead designer, per business | That business's Claude chat (ZYRA, AZMARA, WAFA…) | Product, rules, UX, layout, wording, look, master pictures and specs; records each LOCK (rule 11); writes build briefs for Codex. Never code, never git |
-| Implementation | Codex | Builds from locked designs only (rule 11): code, tests, as-built handovers. No design of his own, no admin, governance, mailbox or schedules. Exceptions: the 04:00 daily report job with its commit sweep (DOC-BUG-0027), and git within rule 2 |
+| Implementation | Codex | Builds from locked designs only (rule 11): code, tests, as-built handovers. No design of his own, no admin, governance, mailbox or schedules. Exceptions: the 01:00 daily report job with its commit sweep (DOC-BUG-0027), and git within rule 2 |
 | Admin | Fable (Claude), from the Black Umbrella Group chat | Admin for every business: registers, schedules, clean-ups, reporting, the daily review |
 
 Fable holds an active seat. Any line elsewhere saying "Fable/Claude is
@@ -70,6 +70,21 @@ retired" or "no Claude/Fable bootstrap is active" is superseded.
 
 Core rules above apply; they win on any conflict.
 Only the Founder approves. Only Codex runs git, within core rule 2 (AD-AIOS-114); nothing is built on the frozen demo. No AI accesses PRIVATE API KEYS.
+
+## Locked design workflow (core rule 11, AD-AIOS-115; charters V6 rule 11 - the same system as ZYRA)
+
+| Step | Who | Where |
+|---|---|---|
+| Brief | Shakeel | SELAH chat (Claude) - the **lead designer** |
+| 2-5 options, one picture at a time, each with "what changed"; shown in the business's **one interactive prototype** (Artifact page Shakeel can tap through) | SELAH chat | Chat + prototype |
+| Pick and tweak, then `LOCK`; the other options leave the prototype the same day | Shakeel | Chat |
+| Record the LOCK: pictures at real size with every state, a spec with numbers, and a `LOCK_RECORD.md` line with Shakeel's words and the date | SELAH chat | `APP/APPROVED/<FEATURE>/` |
+| Build brief: locked file paths, "copy exactly, no improvements", what not to touch, checks; then one WAITING line in `APP/APPROVED/BUILD_QUEUE.md` | SELAH chat | `APP/APPROVED/<FEATURE>/BUILD_BRIEF_<YYYY-MM-DD>.md`. Codex builds the queue at 01:00 or at once on any message from Shakeel in the SELAH Codex chat (charters rule 9); he never asks Shakeel - a question goes in `APP/APPROVED/QUESTIONS.md` and the line waits as QUESTION (rule 10) |
+| Check the locked files first, report problems, then build exactly | Codex | Task note: "Built from: <paths>" plus a screenshot of the built screen beside the master |
+| Compare the build with the master (MATCH or each difference); answer `QUESTIONS.md`; update the prototype to the real app | SELAH chat | Its chat note; Fable files the decision at 04:15 |
+| Morning check task (copy of ZYRA's 05:36) | Fable sets it up when the business is unfrozen | Scheduled task |
+
+Until the Founder lifts this business's build freeze in writing, design and prototype work continues but no queue line is built.
 
 ## Current scope — Founder instruction, 2026-10-13
 
