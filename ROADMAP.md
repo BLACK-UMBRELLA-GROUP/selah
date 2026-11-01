@@ -3,14 +3,14 @@ id: DOC-SELAH-0008
 type: PLAN
 status: CURRENT
 feature: GOVERNANCE
-purpose: Approval-gated roadmap for the frozen SELAH demo and later shared-engine rebuild
+purpose: Approval-gated roadmap for the paused SELAH demo and later shared-engine rebuild
 links: [OA-SELAH-001, OA-SELAH-002, OA-SELAH-003, OA-SELAH-004, OA-AIOS-414]
 owner: SELAH
 ---
 
 # SELAH roadmap
 
-Status: frozen demo; private repository preparation only. Updated 1 November 2026.
+Status: demo (development paused); private repository preparation only. Updated 1 November 2026.
 
 The current source is a ZYRA-derived local demo. The Founder has directed a later shared-engine rebuild after ZYRA launches. Nothing below authorizes development, deployment, incorporation, spending or publication.
 
