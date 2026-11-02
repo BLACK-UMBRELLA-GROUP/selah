@@ -22,12 +22,17 @@ document, overlay or AD says otherwise, this block wins.
    `git clean`, checkout/restore over working files, delete branches, change remotes or
    git config, or commit a file over 50 MB or anything from the keys folder.
    `ZYRA/SITE`: commit, but never push until Shakeel's Cloudflare check (OA-AIOS-407).
+   Read-only commands are always allowed (`git log`, `git rev-list`, `git show`, `git diff`,
+   `git ls-files`, `git branch -a`) and so are read-only scanners such as gitleaks; the
+   limits above are about writing (Founder, 1 Nov 2026: "Yes, permanently" - AD-AIOS-120).
    Claude chats (Fable and the business chats) never run git.
 3. **Never touch `PRIVATE — API KEYS — DO NOT SYNC`** — never open, list,
    copy or quote it, wherever it lives. Never put keys, tokens or
    credentials in a conversation.
-4. **Never delete.** Move unwanted files into a `_to_delete` folder; the
-   Founder empties it. If `_to_delete` is missing, create it.
+4. **Never delete.** Move unwanted files to `~/_to_delete/<WHAT>_<date>/` on the Mac,
+   or `BLACK UMBRELLA GROUP/tmp/_to_delete/<BUSINESS>_<date>/` for repo files;
+   **never a `_to_delete` inside a business repo** (S22). The Founder empties it.
+   If the folder is missing, create it.
 5. **Findings become actions** — every finding gets an OA number or a
    written refusal.
 6. **One CURRENT_VERSION per document system.** Register entries append
