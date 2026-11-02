@@ -39,7 +39,7 @@ untouched and do not connect Selah to its accounts or live member data.
 Retain the existing purple/gold, Poppins/Syne, card, navigation and motion
 foundation for this first draft. Own Selah wordmark and icon identify the app.
 Adapt greetings and Christian questions semantically. No invented Bible
-quotation or relabelled Islamic teaching is permitted.
+quotation or relabelled teaching from ZYRA's faith community is permitted.
 
 ## Explicitly not established
 

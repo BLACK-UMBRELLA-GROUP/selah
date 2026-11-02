@@ -73,7 +73,7 @@ Selah is NOT a replacement or rebrand of ZYRA.
 Selah is a completely separate application built
 specifically for the Christian community.
 
-ZYRA remains the dedicated Muslim marriage platform.
+ZYRA remains the dedicated marriage platform for its faith community.
 
 Both apps share the same core technology, AI systems,
 safety features and overall philosophy, but each is
@@ -93,7 +93,7 @@ Functionality remains identical.
 Only the wording and presentation change to fit a
 Christian audience.
 
-  Muslim App:    My Wali
+  ZYRA App:      My Wali
   Christian App: My Shepherd
 
 MY SHEPHERD
@@ -160,7 +160,7 @@ BRANDING
 
 The pairing creates a distinct Christian identity while
 preserving the exact mechanics of the Wali feature in
-the Muslim version.
+the ZYRA version.
 
 ------------------------------------------------------------
 CORE BRAND MESSAGE
@@ -174,9 +174,9 @@ you throughout your journey."
 CURRENT POSITION
 ------------------------------------------------------------
 
-✓ ZYRA remains the Muslim marriage app.
+✓ ZYRA remains the marriage app for its faith community.
 ✓ Selah is a separate Christian marriage app.
-✓ Muslim app retains "My Wali".
+✓ ZYRA retains "My Wali".
 ✓ Christian app uses "My Shepherd".
 ✓ Functionality remains identical across both apps.
 ✓ Only terminology, presentation and faith-specific
@@ -191,7 +191,7 @@ APPROVED TO-DO LIST
 • Trademark review.
 • App Store name availability.
 • Define Christian-specific onboarding content and
-  faith questions (equivalent to ZYRA's Islamic questions).
+  faith questions (equivalent to ZYRA's faith questions).
 • Define Christian-specific milestone wording and
   Journey language.
 • Define how My Shepherd feature is introduced during

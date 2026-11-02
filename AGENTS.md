@@ -104,7 +104,8 @@ by source creation or Apple development signing.
 > engine with ZYRA (OA-AIOS-414); the code licence between the companies is set up at incorporation.
 
 The Founder requested the first phone draft by reusing the current app core,
-adapting Muslim-specific content to Christian content, then iterating together.
+adapting content for ZYRA's faith community to Christian content, then
+iterating together.
 The prepared draft reuses presentation/code and local stock fixtures only.
 
 ## Load next

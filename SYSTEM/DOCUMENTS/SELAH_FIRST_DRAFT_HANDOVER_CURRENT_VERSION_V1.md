@@ -46,11 +46,12 @@ old-app Option 1 exit was removed: Selah has no route back into another app.
 Private current/white appearance comparisons remain local controls.
 
 Christian adaptation uses original prose, not invented Bible quotes or a
-relabelling of an Islamic attribution. First greetings use “Say hello”;
-faith questions address Christian prayer, Bible reading, church, service,
-traditions and devotional life. Mahr, polygamy, halal-only diet, Du’a and
-“half my faith” assumptions were adapted. Shepherd relationship choices include
-parent, mother/father, pastor, mentor, church elder and mature Christian support.
+relabelling of a religious attribution from ZYRA's source content. First
+greetings use “Say hello”; faith questions address Christian prayer, Bible
+reading, church, service, traditions and devotional life. Mahr, polygamy,
+halal-only diet, Du’a and “half my faith” assumptions were adapted. Shepherd
+relationship choices include parent, mother/father, pastor, mentor, church
+elder and mature Christian support.
 All 104 unique question IDs are retained, including the two Q26 renderer
 variants with identical commitment wording. Church attendance is all-gender.
 
