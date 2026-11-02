@@ -10,6 +10,8 @@ owner: SELAH
 
 # SELAH roadmap
 
+**Overall:** roughly **150 hours** of work once SELAH is rebuilt on the shared engine after ZYRA launches (content, onboarding, Shepherd flows, backend, tests). The table below is the first slice.
+
 Status: demo (development paused); private repository preparation only. Updated 1 November 2026.
 
 The current source is a ZYRA-derived local demo. The Founder has directed a later shared-engine rebuild after ZYRA launches. Nothing below authorizes development, deployment, incorporation, spending or publication.
