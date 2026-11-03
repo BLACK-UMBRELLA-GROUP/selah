@@ -1,8 +1,8 @@
 # SELAH
 
-SELAH is a Christian marriage application concept. This repository contains a **demo (development paused)**, copied from ZYRA on 13 October 2026 with names and faith content replaced. The current copy is not the planned production foundation. After ZYRA launches, SELAH is planned to be rebuilt on a shared engine with ZYRA, subject to Founder approval.
+SELAH is a Christian marriage application concept. This repository contains a demo that began on 13 October 2026 as a copy of ZYRA (the same owner's matrimonial app) with names and faith content replaced. **Since 3 November 2026 SELAH is being given its own identity** - Christian content and questions, its own look, and its Shepherd and onboarding flows - so its code moves away from ZYRA wherever SELAH differs.
 
-Development is paused until ZYRA launches; the demo is kept so the Christian version of the product can be reviewed and designed in the meantime.
+Each change is designed and approved (locked) before it is built; see `APP/APPROVED/BUILD_QUEUE.md`.
 
 ## What the demo does
 
@@ -16,7 +16,7 @@ The first-draft handover records passing static and pure-Dart checks and a signe
 
 ## Repository layout
 
-- `SOURCE/` — the Flutter package (development paused), local fixtures, tests and private delivery tooling.
+- `SOURCE/` — the Flutter package, local fixtures, tests and private delivery tooling.
 - `APP/` — product documents, the first-draft specification and approved design workflow.
 - `SYSTEM/` — build contract, as-built handover, actions and supporting records.
 - `ROADMAP.md` — tentative major work remaining, with approval gates and effort ranges.

@@ -3,24 +3,24 @@ id: DOC-SELAH-0008
 type: PLAN
 status: CURRENT
 feature: GOVERNANCE
-purpose: Approval-gated roadmap for the paused SELAH demo and later shared-engine rebuild
+purpose: Approval-gated roadmap for SELAH - its own identity from 3 Nov 2026, then member services and launch preparation
 links: [OA-SELAH-001, OA-SELAH-002, OA-SELAH-003, OA-SELAH-004, OA-AIOS-414]
 owner: SELAH
 ---
 
 # SELAH roadmap
 
-**Overall:** roughly **150 hours** of work once SELAH is rebuilt on the shared engine after ZYRA launches (content, onboarding, Shepherd flows, backend, tests). The table below is the first slice.
+**Overall:** roughly **150 hours** of work to give SELAH its own identity and product (content, onboarding, Shepherd flows, backend, tests). The table below is the first slice.
 
-Status: demo (development paused); private repository preparation only. Updated 1 November 2026.
+Status: demo; active again from 3 November 2026 - SELAH's own identity is being designed and built (Founder decision, 3 Nov 2026). Updated 3 November 2026.
 
-The current source is a ZYRA-derived local demo. The Founder has directed a later shared-engine rebuild after ZYRA launches. Nothing below authorizes development, deployment, incorporation, spending or publication.
+The current source is a ZYRA-derived local demo. From 3 November 2026 it moves away from ZYRA wherever SELAH differs; any later sharing of an engine with ZYRA is a separate decision. Nothing below authorizes development, deployment, incorporation, spending or publication.
 
 These are tentative engineering/preparation estimates for major unfinished work streams, each exceeding 20 hours. They are planning ranges rather than commitments or an approved backlog. Locked designs and detailed discovery may change the estimates. External decisions, professional advice, fees and waiting time are excluded.
 
 | Major work stream | Tentative effort | Existing basis and scope | Required gate |
 |---|---:|---|---|
-| Shared-engine rebuild and private delivery acceptance | 32–48 hours | OA-AIOS-414 and OA-SELAH-001. Replace the copied demo foundation with the planned shared engine after ZYRA launches. Preserve SELAH's separate product identity. Plan migration and verify the approved private delivery, first frame, stable runtime, unplugged launch and Founder visual acceptance. | ZYRA launch; written SELAH unfreeze; Founder-approved architecture; locked SELAH designs and a named build brief. |
+| SELAH's own identity and private delivery acceptance | 32–48 hours | OA-AIOS-414 and OA-SELAH-001. From 3 Nov 2026 (Founder): replace the copied ZYRA foundation with SELAH's own design and code wherever SELAH differs - Christian content and questions, look, Shepherd and onboarding flows. Plan migration and verify the approved private delivery, first frame, stable runtime, unplugged launch and Founder visual acceptance. | Locked SELAH designs and a named build brief for each step; Founder visual acceptance. |
 | Independent real-member services | 48–80 hours | OA-SELAH-002. Design and prepare independent authentication, database, photo storage/moderation, verification, safety/reporting, request lifecycle, messaging permissions, compatibility consent/scoring and receipt/credit authority. The demo activates none of these. No other company's accounts, records or service identities are to be reused. | Founder-approved service design and separate setup/deployment decisions, followed by locked product states and scoped implementation briefs. |
 | Christian content and production experience | 24–40 hours | OA-SELAH-003. Review Christian onboarding/questions and Shepherd semantics, denomination scope, compatibility validity, original production content, runtime layout and accessibility. Keep the approved free-stock sample portraits as demo fixtures; production content and visual acceptance remain separate work. | Founder content and visual acceptance; approved production assets; locked designs; written unfreeze before app changes. |
 | Separate company and commercial preparation | 24–32 hours | OA-SELAH-004. Prepare the separate company, name/domain/trademark/store availability decisions, independent privacy/support identity, pricing/products and real commerce configuration. This estimate covers bounded preparation, not legal outcomes or purchases. | Founder decisions and separate authority for any filing, purchase, registration, commerce setup, deployment or release. |
@@ -29,7 +29,7 @@ These are tentative engineering/preparation estimates for major unfinished work 
 
 ## Current boundaries
 
-The app feature freeze remains in force. The repository-preparation task changes documentation and approved identifier/configuration hygiene only. It does not start the roadmap, run the installer, build native code, change SDKs or activate live services.
+SELAH is active from 3 November 2026 under Founder decision AD-AIOS-123; every app change still needs locked designs and a named build brief. The repository-preparation task changes documentation and approved identifier/configuration hygiene only. It does not start the roadmap, run the installer, build native code, change SDKs or activate live services.
 
 The previous corrected device delivery was not executed because the intended phone was unavailable. The historical compiled/signed result and static/model checks do not prove device acceptance. Historical records remain evidence of their measured snapshot; they are not new test results.
 
