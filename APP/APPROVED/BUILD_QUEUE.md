@@ -17,3 +17,4 @@ that every BUILT line has a LOCK record. Newest line at the bottom. A line block
 
 | # | Added | Brief path | Status (WAITING / BUILT / FAILED / QUESTION) | Built on | Note |
 |---|---|---|---|---|---|
+| 1 | 2026-11-03 | `APP/APPROVED/LOOK/BRIEFS/BUILD_BRIEF_2026-11-03_V1.md` | QUESTION | 2026-11-03 | **LOCKed build** - LOCK 1 V4 Look: Still Water (Founder 3 Nov: "A · Still Water — LOCK it"). After: none. LOCK record `APP/APPROVED/LOOK/RECORD/LOCK_RECORD.md`. ROADMAP row: SELAH's own identity and private delivery acceptance |
