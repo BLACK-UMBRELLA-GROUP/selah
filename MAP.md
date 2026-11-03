@@ -46,7 +46,7 @@ _Stop here unless you need to look up another ID._
 |---|---|---|---|---|---|
 | DOC-SELAH-0006 | `APP/APPROVED/BUILD_QUEUE.md` | REGISTER | Build queue - every LOCKed brief waits here; Codex builds WAITING lines at 01:00 or on GO (charters rule 9) | AD-AIOS-115 | 1 |
 | DOC-SELAH-0007 | `APP/APPROVED/QUESTIONS.md` | REGISTER | Codex's questions for the SELAH chat - Codex never asks Shakeel in chat; he files the question here, marks… | AD-AIOS-116 | 1 |
-| DOC-SELAH-0008 | `ROADMAP.md` | PLAN | Approval-gated roadmap for the frozen SELAH demo and later shared-engine rebuild | OA-SELAH-001, OA-SELAH-002, OA-SELAH-003, OA-SELAH-004, OA-AIOS-414 | 4 |
+| DOC-SELAH-0008 | `ROADMAP.md` | PLAN | Approval-gated roadmap for the paused SELAH demo and later shared-engine rebuild | OA-SELAH-001, OA-SELAH-002, OA-SELAH-003, OA-SELAH-004, OA-AIOS-414 | 4 |
 | INDEX-OUTSTANDING_ACTIONS_V1 | `SYSTEM/OUTSTANDING_ACTIONS/OUTSTANDING_ACTIONS_V1_INDEX.md` | INDEX | Generated one-line index of OUTSTANDING_ACTIONS_V1.md; find the ID here, then search the register for it |  | 1 |
 
 ### OVERVIEW
