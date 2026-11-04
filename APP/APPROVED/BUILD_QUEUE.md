@@ -17,4 +17,5 @@ that every BUILT line has a LOCK record. Newest line at the bottom. A line block
 
 | # | Added | Brief path | Status (WAITING / BUILT / FAILED / QUESTION) | Built on | Note |
 |---|---|---|---|---|---|
-| 1 | 2026-11-03 | `APP/APPROVED/LOOK/BRIEFS/BUILD_BRIEF_2026-11-03_V1.md` | QUESTION | 2026-11-03 | **LOCKed build** - LOCK 1 V4 Look: Still Water (Founder 3 Nov: "A · Still Water — LOCK it"). After: none. LOCK record `APP/APPROVED/LOOK/RECORD/LOCK_RECORD.md`. ROADMAP row: SELAH's own identity and private delivery acceptance |
+| 1 | 2026-11-03 | `APP/APPROVED/LOOK/BRIEFS/BUILD_BRIEF_2026-11-03_V1.md` | QUESTION | 2026-11-04 | **LOCKed build** - LOCK 1 V4 Look: Still Water (Founder 3 Nov: "A · Still Water — LOCK it") + LOCK 2 V5 loading/error states (Founder 3 Nov: "Yes — LOCK it"); QUESTIONS row 1 answered. After: none. LOCK record `APP/APPROVED/LOOK/RECORD/LOCK_RECORD.md`. ROADMAP row: SELAH's own identity and private delivery acceptance |
+| 2 | 2026-11-04 | `APP/APPROVED/SHEPHERD_INVITE/BRIEFS/BUILD_BRIEF_2026-11-04_V1.md` | WAITING |  | **LOCKed build** - LOCK 3 V7 Shepherd invite, browse while waiting (Founder 4 Nov: "A · Browse while waiting — LOCK it"). After: 1 (waits for line 1 if not BUILT). LOCK record `APP/APPROVED/SHEPHERD_INVITE/RECORD/LOCK_RECORD.md`. ROADMAP row: SELAH's own identity and private delivery acceptance |
