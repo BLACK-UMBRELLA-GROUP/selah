@@ -1,0 +1,77 @@
+{
+  "commit_sha": "74ab3af62079a8a05ad9d12289f1fab75a342619",
+  "source_fingerprint_sha256": "4ed790334281e0084d7eaa15cff18218de9e1327d9d146da30e91af1c06b34c7",
+  "flutter_version": "3.44.2",
+  "dart_version": "3.12.2",
+  "build_mode": "debug widget capture/replay; actual widgets and draft admission",
+  "build_timestamp_utc": "2026-11-06T14:52:25.092348+00:00",
+  "target": "430x932 logical @3x; top59/bottom34 safe areas, light/text scale1.0",
+  "status": "BUILT; Founder acceptance and native phone delivery pending",
+  "brief": "APP/APPROVED/REPAIRS/BRIEFS/FIX_BRIEF_2026-11-06_INVITE_NAME_ERROR_V1.md",
+  "built_from": [
+    "SHEPHERD_INVITE/RECORD/SELAH_SHEPHERD_INVITE_SPEC_CURRENT_VERSION_V4.md row3e",
+    "SHEPHERD_INVITE/MASTERS/L03_signup_invite__name_error.png",
+    "SHEPHERD_INVITE/MASTERS/L03_shepherd_invitation.png (corrected real tabs)",
+    "SHEPHERD_INVITE/RECORD/LOCK_RECORD.md"
+  ],
+  "change": "Getter shows latched name error only while trimmed-empty; typing a valid name hides it, valid next send clears latch. Capture validates empty state before typing. Review UI unchanged; only corrected master comparison.",
+  "checks": {
+    "pure_models": "396 passed",
+    "invite_controller": "11/11 targeted passed",
+    "affected_capture": "2/2 passed",
+    "combined_replay": "77/77 passed, exit0",
+    "flutter_analyze": "0errors/0warnings/10 pre-existing infos; --no-fatal-infos exit0",
+    "cached_analyzer": "344files,0errors/0warnings/1 old info",
+    "draft_boundaries": "20300/20300 passed",
+    "lockfile_sha256": "adf4a5d8e8e3e3d9366b0be138f72b6a33564c35dc15e1fce1a585c1638f7ce8"
+  },
+  "supersedes": [
+    "V1/L03_signup_invite__name_error__build.png and comparison",
+    "V1/L03_shepherd_invitation__build.png and comparison"
+  ],
+  "history": "All historical V1 files remain intact; other10 invite captures still use V1. Earlier Faith combined-regression mismatch was corrected LEFT review master only, actual RIGHT pixels unchanged.",
+  "limits": [
+    "Widget evidence only; no native/device/keyboard claim",
+    "Existing typography/safe-area/photo-crop/icon differences remain in actual widget comparison; no pixel-MATCH or Founder acceptance claim",
+    "No SDK/package/native/tooling/version/network changes"
+  ],
+  "files_removed_or_moved": [],
+  "images": [
+    {
+      "file": "L03_shepherd_invitation__build.png",
+      "bytes": 281119,
+      "sha256": "2b065b40e07b4e7b08e766eb32d1bd6e680c9b45933bb2bca4fd422c51baed8f",
+      "physical_size": [
+        1290,
+        2796
+      ]
+    },
+    {
+      "file": "L03_shepherd_invitation__master_beside_build.png",
+      "bytes": 555656,
+      "sha256": "c2e0878bd623d1b5a6a006d6adb132816d59c82ee864ba1c5caa2201f2cc45e5",
+      "physical_size": [
+        2580,
+        2796
+      ]
+    },
+    {
+      "file": "L03_signup_invite__name_error__build.png",
+      "bytes": 177454,
+      "sha256": "1071e16f6a9560492fbb4b7714c52b0dcdb7789bf78fa907e26acbe2ead50741",
+      "physical_size": [
+        1290,
+        2796
+      ]
+    },
+    {
+      "file": "L03_signup_invite__name_error__master_beside_build.png",
+      "bytes": 366501,
+      "sha256": "66cb7f006aedecb6cb9dc0f1ce03bc53d45595b3c1e749885956aecef3f8740f",
+      "physical_size": [
+        2580,
+        2796
+      ]
+    }
+  ]
+}

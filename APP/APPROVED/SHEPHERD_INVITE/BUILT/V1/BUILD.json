@@ -262,5 +262,14 @@
         2796
       ]
     }
-  ]
+  ],
+  "superseded_by_queue14": {
+    "source_commit_sha": "74ab3af62079a8a05ad9d12289f1fab75a342619",
+    "receipt": "../V1_1/BUILD.json",
+    "states": [
+      "L03_signup_invite__name_error",
+      "L03_shepherd_invitation"
+    ],
+    "other_states": "Other10 V1 capture routes unchanged; final77/77 passed"
+  }
 }

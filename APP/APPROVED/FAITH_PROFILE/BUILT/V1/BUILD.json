@@ -27,7 +27,7 @@
     "pure_models": "396 passed",
     "faith_feature": "20/20 capture/replay;16masters +required/optional/Back/save/Profile/new-session behaviors",
     "controller_adapter_session": "12/12 targeted passed",
-    "combined_regression": "76 passed,1 known failure: old invite Review V1 LEFT master changed; actual RIGHT build0changedpixels, queued fix14; not a full-pass claim",
+    "combined_regression": "Initial76pass/1historicalLEFTmaster failure, resolved by queue14; see regression_after_queue14",
     "flutter_analyze": "0errors/0warnings/10 pre-existing infos; --no-fatal-infos exit0",
     "cached_analyzer": "344files,0errors/0warnings/1 old info",
     "draft_boundaries": "20300/20300 passed",
@@ -341,5 +341,10 @@
         2796
       ]
     }
-  ]
+  ],
+  "regression_after_queue14": {
+    "commit_sha": "74ab3af62079a8a05ad9d12289f1fab75a342619",
+    "timestamp_utc": "2026-11-06T14:52:25.092348+00:00",
+    "result": "77/77 passed after queue14 corrected name error and LEFT review master; no remaining code/test failure"
+  }
 }
