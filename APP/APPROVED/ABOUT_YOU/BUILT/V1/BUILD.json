@@ -1,0 +1,169 @@
+{
+  "commit_sha": "13605e25248302adec99b93202edb4b303c14560",
+  "source_fingerprint_sha256": "e93aa63f889c8facfb1882f2bb64da1cb2a66ddb3dc2fe60ca0a1e2ff9bd98df",
+  "flutter_version": "3.44.2",
+  "dart_version": "3.12.2",
+  "build_mode": "debug real-widget tests; exact draft admission; bundled fonts;430x932@3x",
+  "timestamp_utc": "2026-11-06T17:05:05.994737+00:00",
+  "checks": {
+    "pure_models": "900 passed",
+    "full_flutter_suite": "346 passed, 2 explicit skips, exit0",
+    "skips": {
+      "browse_in_a_journey": "Question9: current discovery excludes own reserved/active pair",
+      "larger_text": "LOOK V2 leaves Larger Text undecided;320x568/text2 header overflows24px; written refusal OA-SELAH-003"
+    },
+    "flutter_analyze": "0 errors,0 warnings,10 pre-existing infos;exit0",
+    "cached_analyzer": "369 files,0 errors,0 warnings,1 pre-existing info",
+    "draft_boundaries": "20750/20750 passed",
+    "lockfile_sha256": "adf4a5d8e8e3e3d9366b0be138f72b6a33564c35dc15e1fce1a585c1638f7ce8"
+  },
+  "limits": [
+    "No native build, phone installation, live backend or Founder visual acceptance proved.",
+    "No pixel-identical MATCH claim; current protected headers/navigation/status-safe-area/portrait context differ from exemplar masters.",
+    "No SDK/package/lockfile/native/signing/run.sh/tooling changes."
+  ],
+  "queue_line": 15,
+  "status": "BUILT",
+  "built_from": [
+    "APP/APPROVED/ABOUT_YOU/BRIEFS/BUILD_BRIEF_2026-11-06_V1.md",
+    "APP/APPROVED/ABOUT_YOU/RECORD/SELAH_ABOUT_YOU_SPEC_CURRENT_VERSION_V1.md",
+    "APP/APPROVED/ABOUT_YOU/RECORD/LOCK_RECORD.md",
+    "APP/APPROVED/ABOUT_YOU/MASTERS/L14_*.png"
+  ],
+  "fields": [
+    "existing SeekerDetails.languages"
+  ],
+  "steps_retired": [
+    9,
+    10,
+    11,
+    12,
+    13,
+    14,
+    15,
+    16,
+    17,
+    19,
+    20
+  ],
+  "scope": "Faith→Marriage→Languages→Browse; existing184 languages in order; at least1 required; Profile AboutYou card. Removed background prompts/displays/filters/completion requirements. Stored background values remain.",
+  "compatibility_category": "culture_location now Location & Language; only location/languages Chapter2 keys.",
+  "removed_displays": [
+    "Browse shared presenter and accessibility facts",
+    "own Profile preview background labels",
+    "Nationality/Ethnicity filter entry controls",
+    "retained Chapter2 reference screens"
+  ],
+  "nonfaith_save": "saveNonFaithDetails merges only asked marriage_values/location preferences and languages, with owner/generation/read-write guards. Existing special-category saveDetails consent rule unchanged. Unasked saved maps preserved; final save happens once with visible failure/retry.",
+  "evidence": "6 pairs; master languages are examples; actual first two Abkhazian/Afar differ from English/Yoruba.",
+  "images": [
+    {
+      "file": "L14_languages__chosen__build.png",
+      "bytes": 170856,
+      "sha256": "b05d6f1ae2b2a2470031c6a54c74c8681a030023df4e6ef468394486f88bd93f",
+      "physical_size": [
+        1290,
+        2796
+      ]
+    },
+    {
+      "file": "L14_languages__chosen__master_beside_build.png",
+      "bytes": 350073,
+      "sha256": "e373a6d51e307c4354d19d088826520902d53518e234fc5541f86b41d9e4e6de",
+      "physical_size": [
+        2580,
+        2796
+      ]
+    },
+    {
+      "file": "L14_languages__didnt_save__build.png",
+      "bytes": 185684,
+      "sha256": "17ef362e93bf96bc44dea82f8d86992df6d159fc5475bfe00513b31f8075215e",
+      "physical_size": [
+        1290,
+        2796
+      ]
+    },
+    {
+      "file": "L14_languages__didnt_save__master_beside_build.png",
+      "bytes": 392787,
+      "sha256": "ffc56bfe7c7aa99e1703f06085b6fd51a267ffc3ab50bf46d30b9d1dfcfd00a3",
+      "physical_size": [
+        2580,
+        2796
+      ]
+    },
+    {
+      "file": "L14_languages__empty__build.png",
+      "bytes": 169494,
+      "sha256": "21d830cf6633a5caf6404dc3a393277835ed3b3f20cfe87864efc39463d90db4",
+      "physical_size": [
+        1290,
+        2796
+      ]
+    },
+    {
+      "file": "L14_languages__empty__master_beside_build.png",
+      "bytes": 345281,
+      "sha256": "c461c3370e9b4548b9d4c3282a31c28d0291452ce240eb63c16a023f90ac41ac",
+      "physical_size": [
+        2580,
+        2796
+      ]
+    },
+    {
+      "file": "L14_languages__no_answer__build.png",
+      "bytes": 179621,
+      "sha256": "28540461da982a10ce6dfc562dbb0d55bc77e214a4ed673224bc1393d4f82922",
+      "physical_size": [
+        1290,
+        2796
+      ]
+    },
+    {
+      "file": "L14_languages__no_answer__master_beside_build.png",
+      "bytes": 369411,
+      "sha256": "bdfa664995be7b4f1a4e7b3035afc4a7e453136d7b118bb944ef8a0d580fa017",
+      "physical_size": [
+        2580,
+        2796
+      ]
+    },
+    {
+      "file": "L14_languages__saving__build.png",
+      "bytes": 166585,
+      "sha256": "e5daff49186d6a4c6c6ba6c822d65877861a2eef64cbbfa4f3176b25ad6772cb",
+      "physical_size": [
+        1290,
+        2796
+      ]
+    },
+    {
+      "file": "L14_languages__saving__master_beside_build.png",
+      "bytes": 342219,
+      "sha256": "0113ca47d4bbd1c3be5a743f717e27e2461f3a83d72eb5a8ec30d0e51a7a3612",
+      "physical_size": [
+        2580,
+        2796
+      ]
+    },
+    {
+      "file": "L14_profile_about_you__build.png",
+      "bytes": 204036,
+      "sha256": "d4ee9aaee7cfc50eeba3b746c794fdd5a03a12d54b919577b721b9042d9cc3b3",
+      "physical_size": [
+        1290,
+        2796
+      ]
+    },
+    {
+      "file": "L14_profile_about_you__master_beside_build.png",
+      "bytes": 497113,
+      "sha256": "46b691210dbf6572f691a605d4571cbc41c9f7f0bed4b06c6e5a732f8a25de69",
+      "physical_size": [
+        2580,
+        2796
+      ]
+    }
+  ]
+}

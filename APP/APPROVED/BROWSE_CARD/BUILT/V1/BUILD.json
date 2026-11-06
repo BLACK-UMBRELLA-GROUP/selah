@@ -1,0 +1,162 @@
+{
+  "commit_sha": "13605e25248302adec99b93202edb4b303c14560",
+  "source_fingerprint_sha256": "e93aa63f889c8facfb1882f2bb64da1cb2a66ddb3dc2fe60ca0a1e2ff9bd98df",
+  "flutter_version": "3.44.2",
+  "dart_version": "3.12.2",
+  "build_mode": "debug real-widget tests; exact draft admission; bundled fonts;430x932@3x",
+  "timestamp_utc": "2026-11-06T17:05:05.994737+00:00",
+  "checks": {
+    "pure_models": "900 passed",
+    "full_flutter_suite": "346 passed, 2 explicit skips, exit0",
+    "skips": {
+      "browse_in_a_journey": "Question9: current discovery excludes own reserved/active pair",
+      "larger_text": "LOOK V2 leaves Larger Text undecided;320x568/text2 header overflows24px; written refusal OA-SELAH-003"
+    },
+    "flutter_analyze": "0 errors,0 warnings,10 pre-existing infos;exit0",
+    "cached_analyzer": "369 files,0 errors,0 warnings,1 pre-existing info",
+    "draft_boundaries": "20750/20750 passed",
+    "lockfile_sha256": "adf4a5d8e8e3e3d9366b0be138f72b6a33564c35dc15e1fce1a585c1638f7ce8"
+  },
+  "limits": [
+    "No native build, phone installation, live backend or Founder visual acceptance proved.",
+    "No pixel-identical MATCH claim; current protected headers/navigation/status-safe-area/portrait context differ from exemplar masters.",
+    "No SDK/package/lockfile/native/signing/run.sh/tooling changes."
+  ],
+  "queue_line": 9,
+  "status": "QUESTION: tested five-state candidate; Q9",
+  "built_from": [
+    "APP/APPROVED/BROWSE_CARD/BRIEFS/BUILD_BRIEF_2026-11-06_V1.md",
+    "APP/APPROVED/BROWSE_CARD/ARCHIVE/SELAH_BROWSE_CARD_SPEC_2026-11-06_V2.md",
+    "APP/APPROVED/BROWSE_CARD/RECORD/LOCK_RECORD.md",
+    "APP/APPROVED/BROWSE_CARD/MASTERS/L08_*.png"
+  ],
+  "scope": "Exact faith chips/own-words quote, fictional Christian cast, natural frontier exhaustion and existing filters CTA. No discovery/admission change.",
+  "held": "Own active/reserved profiles excluded by discoverableProfiles→peerOccupied, so In a Journey Browse picture cannot be reached. Sixth capture explicitly skipped; real exclusion test passes. Current V3 marriage disclosure is separate WAITING queue19.",
+  "cast_changes": {
+    "Amira Rahman": "Grace Clarke",
+    "Sara Ahmed": "Esther Mensah",
+    "Aisha Khan": "Naomi Fernandes",
+    "Maryam Hussain": "Abigail Reyes",
+    "Hana Saeed": "Ruth Adeyemi",
+    "Noor Patel": "Lydia Thomas",
+    "Zainab Malik": "Phoebe Wright",
+    "Safiya Ali": "Chloe Bennett",
+    "Adam Khan / Adam Rahman": "James Carter",
+    "Hassan Rahman": "David Okafor",
+    "Yusuf Ali": "Joseph Clarke",
+    "Layla / Zara": "Miriam",
+    "Aaliyah / Inaya": "Rebecca",
+    "Sumayyah": "Joanna",
+    "Khadija": "Priscilla",
+    "Hamza": "Daniel",
+    "Zayd": "Samuel",
+    "Idris": "Joel",
+    "Omar": "Caleb",
+    "Bilal": "Nathan",
+    "Ibrahim": "Matthew",
+    "Yusuf": "Elijah",
+    "Umar": "Isaac",
+    "Rayyan": "Andrew",
+    "Zakariya": "Jonah",
+    "Abdul": "Peter",
+    "Kamran": "Mark",
+    "Ismail": "Joseph",
+    "Nuh": "David",
+    "Adnan": "Mark",
+    "Tariq": "Peter"
+  },
+  "cast_rules": "Closed gendered family-relation invariant passes, including corrected James/father,Daniel/brother,Peter/grandfather,Joel/father,Mark/brother. Opaque historic IDs and historical comments remain; no old visible cast names.",
+  "evidence": "5 pairs; no fabricated sixth capture. Existing absent Shepherd-line geometry retained, CTA wraps; prototype marriage disclosure remains queue19.",
+  "images": [
+    {
+      "file": "L08_browse__no_one_new__build.png",
+      "bytes": 103118,
+      "sha256": "fed0bb4b482b3f6b3b5d5b2c75a3c1d3dc1f58845be338603b3fef693cf3008f",
+      "physical_size": [
+        1290,
+        2796
+      ]
+    },
+    {
+      "file": "L08_browse__no_one_new__master_beside_build.png",
+      "bytes": 211810,
+      "sha256": "df5d057fa23a1657a30e80e6a7586b04a257a14d789d2df1ecee247b1e01cc21",
+      "physical_size": [
+        2580,
+        2796
+      ]
+    },
+    {
+      "file": "L08_browse_card__abigail__build.png",
+      "bytes": 1003474,
+      "sha256": "9844c9fa18757208760a00cb62bb45569c258be733971c33e64f265e8dedc295",
+      "physical_size": [
+        1290,
+        2796
+      ]
+    },
+    {
+      "file": "L08_browse_card__abigail__master_beside_build.png",
+      "bytes": 1814937,
+      "sha256": "43d26687007fe135e784f8efc75f0469244a058588fac9707a55ff2a92b86c0a",
+      "physical_size": [
+        2580,
+        2796
+      ]
+    },
+    {
+      "file": "L08_browse_card__esther__build.png",
+      "bytes": 1027831,
+      "sha256": "8390fae88cf1993ad2405c6fb4eceb783bed0cbdf4fd696738243349fea91b63",
+      "physical_size": [
+        1290,
+        2796
+      ]
+    },
+    {
+      "file": "L08_browse_card__esther__master_beside_build.png",
+      "bytes": 1824786,
+      "sha256": "1eaf85f52f93724161b2cb21a5adaeeb99a8d0de4852bcd666bc1a7ec055554e",
+      "physical_size": [
+        2580,
+        2796
+      ]
+    },
+    {
+      "file": "L08_browse_card__grace__build.png",
+      "bytes": 1060589,
+      "sha256": "53f5309ebd295409b2a6317ef09de15cc02a934d9151b01dec0d3afa99f8e262",
+      "physical_size": [
+        1290,
+        2796
+      ]
+    },
+    {
+      "file": "L08_browse_card__grace__master_beside_build.png",
+      "bytes": 1772826,
+      "sha256": "d28e5a6fd36b870dcc18d0c196997abdcb3825d509dbe839d6df217deeda2976",
+      "physical_size": [
+        2580,
+        2796
+      ]
+    },
+    {
+      "file": "L08_browse_card__naomi__build.png",
+      "bytes": 1417294,
+      "sha256": "f818efb50a8c99af3bf9864a44ccad9064db6d8dc089ebe8c239942ea0f87a45",
+      "physical_size": [
+        1290,
+        2796
+      ]
+    },
+    {
+      "file": "L08_browse_card__naomi__master_beside_build.png",
+      "bytes": 2990794,
+      "sha256": "37a6f09ad8ea3c44b3807909ec82407497cbd964e4de64ca755d12c23aafeebe",
+      "physical_size": [
+        2580,
+        2796
+      ]
+    }
+  ]
+}

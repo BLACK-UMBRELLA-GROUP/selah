@@ -1,0 +1,110 @@
+{
+  "commit_sha": "13605e25248302adec99b93202edb4b303c14560",
+  "source_fingerprint_sha256": "e93aa63f889c8facfb1882f2bb64da1cb2a66ddb3dc2fe60ca0a1e2ff9bd98df",
+  "flutter_version": "3.44.2",
+  "dart_version": "3.12.2",
+  "build_mode": "debug real-widget tests; exact draft admission; bundled fonts;430x932@3x",
+  "timestamp_utc": "2026-11-06T17:05:05.994737+00:00",
+  "checks": {
+    "pure_models": "900 passed",
+    "full_flutter_suite": "346 passed, 2 explicit skips, exit0",
+    "skips": {
+      "browse_in_a_journey": "Question9: current discovery excludes own reserved/active pair",
+      "larger_text": "LOOK V2 leaves Larger Text undecided;320x568/text2 header overflows24px; written refusal OA-SELAH-003"
+    },
+    "flutter_analyze": "0 errors,0 warnings,10 pre-existing infos;exit0",
+    "cached_analyzer": "369 files,0 errors,0 warnings,1 pre-existing info",
+    "draft_boundaries": "20750/20750 passed",
+    "lockfile_sha256": "adf4a5d8e8e3e3d9366b0be138f72b6a33564c35dc15e1fce1a585c1638f7ce8"
+  },
+  "limits": [
+    "No native build, phone installation, live backend or Founder visual acceptance proved.",
+    "No pixel-identical MATCH claim; current protected headers/navigation/status-safe-area/portrait context differ from exemplar masters.",
+    "No SDK/package/lockfile/native/signing/run.sh/tooling changes."
+  ],
+  "queue_line": 6,
+  "status": "BUILT",
+  "built_from": [
+    "APP/APPROVED/CONSENT/BRIEFS/BUILD_BRIEF_2026-11-06_V1.md",
+    "APP/APPROVED/CONSENT/RECORD/SELAH_CONSENT_SPEC_CURRENT_VERSION_V2.md",
+    "APP/APPROVED/CONSENT/RECORD/LOCK_RECORD.md",
+    "APP/APPROVED/CONSENT/MASTERS/L06_*.png"
+  ],
+  "scope": "InviteSent→Consent→Faith or Marriage; Back destinations; policy2026-11-06; exact words/error/retry. Existing real record and Settings withdrawal contracts retained; detached preview records no real decision.",
+  "consent_revisit": "Skip clears collected Faith from the same draft owner and replaces only the transient Faith editor; Marriage/languages/location/photos/raw retired bank storage survive. Actual Back→Skip→Agree regression and stale-editor denial pass.",
+  "evidence": "4 pairs; Profile context and legacy navigation remain.",
+  "images": [
+    {
+      "file": "L06_consent__build.png",
+      "bytes": 298757,
+      "sha256": "a187fd8e239003491a9826106e34f6459910e7a6c3d1aa0f1ca23e77fb89a147",
+      "physical_size": [
+        1290,
+        2796
+      ]
+    },
+    {
+      "file": "L06_consent__didnt_save__build.png",
+      "bytes": 325936,
+      "sha256": "dfce300b1476576bfab8b0186542923c64eb6671e950e3df337713381ec1bd9a",
+      "physical_size": [
+        1290,
+        2796
+      ]
+    },
+    {
+      "file": "L06_consent__didnt_save__master_beside_build.png",
+      "bytes": 668857,
+      "sha256": "9f13aa0b70b51b1abbc69efe3f0ca58b5f76e65b8bab15cd9a92f52308ba25f4",
+      "physical_size": [
+        2580,
+        2796
+      ]
+    },
+    {
+      "file": "L06_consent__master_beside_build.png",
+      "bytes": 613685,
+      "sha256": "896d26b3059430603304f637a0ac539e538e5e4891549438f26305fbf0d996a3",
+      "physical_size": [
+        2580,
+        2796
+      ]
+    },
+    {
+      "file": "L06_consent__saving__build.png",
+      "bytes": 282377,
+      "sha256": "15f61b7a61e3892d7ef6aea9bbbb114b4891c9f2b2e3f52e789e44af23021fcc",
+      "physical_size": [
+        1290,
+        2796
+      ]
+    },
+    {
+      "file": "L06_consent__saving__master_beside_build.png",
+      "bytes": 580650,
+      "sha256": "a67b5bb93976c13c7c9deae6145d9fd888ea2d591e8c9e069999d2cc1bc0c3d0",
+      "physical_size": [
+        2580,
+        2796
+      ]
+    },
+    {
+      "file": "L06_profile_faith__skipped__build.png",
+      "bytes": 264251,
+      "sha256": "21a79e94d23d9eb96712c8f71677c90dc4fd8cc5426457f47c707db76b571d77",
+      "physical_size": [
+        1290,
+        2796
+      ]
+    },
+    {
+      "file": "L06_profile_faith__skipped__master_beside_build.png",
+      "bytes": 537170,
+      "sha256": "36d1efdb5d9c1945e1520c9f4f3612c613ada26bbeb9dc76b58ffc96992fcf17",
+      "physical_size": [
+        2580,
+        2796
+      ]
+    }
+  ]
+}

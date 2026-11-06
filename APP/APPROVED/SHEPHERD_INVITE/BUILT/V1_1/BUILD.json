@@ -73,5 +73,17 @@
         2796
       ]
     }
+  ],
+  "comparison_updates": [
+    {
+      "commit_sha": "13605e25248302adec99b93202edb4b303c14560",
+      "receipt": "APP/APPROVED/SHEPHERD_INVITE/BUILT/V1_1/BUILD_AFTER_GO_2026-11-06.json",
+      "masters": [
+        "L03_seeker_browse__waiting_for_shepherd",
+        "L03_shepherd_invitation",
+        "L03_signup_invite__name_error"
+      ],
+      "reason": "Current profile/cast/local Pause context; historical images retained"
+    }
   ]
 }

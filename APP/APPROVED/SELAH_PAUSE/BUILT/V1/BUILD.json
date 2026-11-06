@@ -1,0 +1,225 @@
+{
+  "commit_sha": "13605e25248302adec99b93202edb4b303c14560",
+  "source_fingerprint_sha256": "e93aa63f889c8facfb1882f2bb64da1cb2a66ddb3dc2fe60ca0a1e2ff9bd98df",
+  "flutter_version": "3.44.2",
+  "dart_version": "3.12.2",
+  "build_mode": "debug real-widget tests; exact draft admission; bundled fonts;430x932@3x",
+  "timestamp_utc": "2026-11-06T17:05:05.994737+00:00",
+  "checks": {
+    "pure_models": "900 passed",
+    "full_flutter_suite": "346 passed, 2 explicit skips, exit0",
+    "skips": {
+      "browse_in_a_journey": "Question9: current discovery excludes own reserved/active pair",
+      "larger_text": "LOOK V2 leaves Larger Text undecided;320x568/text2 header overflows24px; written refusal OA-SELAH-003"
+    },
+    "flutter_analyze": "0 errors,0 warnings,10 pre-existing infos;exit0",
+    "cached_analyzer": "369 files,0 errors,0 warnings,1 pre-existing info",
+    "draft_boundaries": "20750/20750 passed",
+    "lockfile_sha256": "adf4a5d8e8e3e3d9366b0be138f72b6a33564c35dc15e1fce1a585c1638f7ce8"
+  },
+  "limits": [
+    "No native build, phone installation, live backend or Founder visual acceptance proved.",
+    "No pixel-identical MATCH claim; current protected headers/navigation/status-safe-area/portrait context differ from exemplar masters.",
+    "No SDK/package/lockfile/native/signing/run.sh/tooling changes."
+  ],
+  "queue_line": 8,
+  "status": "QUESTION: tested local candidate; Q10",
+  "built_from": [
+    "APP/APPROVED/SELAH_PAUSE/BRIEFS/BUILD_BRIEF_2026-11-06_V1.md",
+    "APP/APPROVED/SELAH_PAUSE/RECORD/SELAH_PAUSE_SPEC_CURRENT_VERSION_V3.md",
+    "APP/APPROVED/SELAH_PAUSE/RECORD/LOCK_RECORD.md",
+    "APP/APPROVED/SELAH_PAUSE/MASTERS/L07_*.png"
+  ],
+  "scope": "Ask/Accept/End/atomic local Replace; no-Shepherd rules, immediate NotYet,6s ease-in-out breath, ReducedMotion, private state controls.",
+  "active_action_sites": [
+    "concept _toggleInvitation: Browse and expanded profile",
+    "concept _acceptInvitation: MySelah incoming request",
+    "concept capacity replacement after existing chooser",
+    "concept _confirmEnd: options/blocked card/individual Journey"
+  ],
+  "owned_modal_fix": "Retained local ViewRequestDraftScreen admits only its exact owned foreground Pause route via same owner/Navigator/active lifetime. Ordinary covered-screen guards unchanged; unrelated-route, stale,revocation,ABA,generation checks pass. Presets apply after their owned sheet closes.",
+  "held": "Named retained server paths still use separate End/promote RPCs and include Basic capacity1; cannot promise both/neither or use three-Journey wording. Own linked-Shepherd identity/unavailable plumbing also needs scoped instruction. Q10; no backend activation or rewritten server confirmations.",
+  "evidence": "10 pairs,9 controller/component tests,13 root capture/behavior checks; real names David/Grace/Esther vs exemplar PastorDavid; blocked End preserves User not found; ReducedMotion bar full vs master partial.",
+  "images": [
+    {
+      "file": "L07_pause_accept__build.png",
+      "bytes": 122388,
+      "sha256": "e71c69945262e66c1e2102f64c144d92e0a2e7ae387ccf195a370f96ac5e4808",
+      "physical_size": [
+        1290,
+        2796
+      ]
+    },
+    {
+      "file": "L07_pause_accept__master_beside_build.png",
+      "bytes": 253761,
+      "sha256": "e8e18669a6dcf50c052513b00ed58f05b6ff572d1863f69714f82ce67c0f8b0b",
+      "physical_size": [
+        2580,
+        2796
+      ]
+    },
+    {
+      "file": "L07_pause_ask__build.png",
+      "bytes": 128042,
+      "sha256": "42a0b41248ba223356ba7df62d6f6e5dfe21d935dd703136ebaab71099496835",
+      "physical_size": [
+        1290,
+        2796
+      ]
+    },
+    {
+      "file": "L07_pause_ask__didnt_send__build.png",
+      "bytes": 152898,
+      "sha256": "e4e8f53867bc86faaf1a99486bb7b60308bd29781c7606b47485ac129934b542",
+      "physical_size": [
+        1290,
+        2796
+      ]
+    },
+    {
+      "file": "L07_pause_ask__didnt_send__master_beside_build.png",
+      "bytes": 322868,
+      "sha256": "7e5af91b8ac0252b935cf601394f71b94fbb97a4dd6f560f7cd8e00b48234599",
+      "physical_size": [
+        2580,
+        2796
+      ]
+    },
+    {
+      "file": "L07_pause_ask__master_beside_build.png",
+      "bytes": 272149,
+      "sha256": "cf1d7470ff5a9be2a618ae40b48c6cb39f0d0dd37e4198811601c66e989a0255",
+      "physical_size": [
+        2580,
+        2796
+      ]
+    },
+    {
+      "file": "L07_pause_ask__sending__build.png",
+      "bytes": 126940,
+      "sha256": "e14a7f6db05b3d83d4e87d0f7f6d5ea5349a3ec35749e4207428d970a8a7e097",
+      "physical_size": [
+        1290,
+        2796
+      ]
+    },
+    {
+      "file": "L07_pause_ask__sending__master_beside_build.png",
+      "bytes": 268491,
+      "sha256": "4081844fb6bf20b9bf6ffa8123b0ea0d97b76f08748502d62de7033220bbd4c2",
+      "physical_size": [
+        2580,
+        2796
+      ]
+    },
+    {
+      "file": "L07_pause_end__build.png",
+      "bytes": 119909,
+      "sha256": "b4c0586f0451ba0a4d05ff2d7f68eae8ec518e469abd712e896cc615edeb887d",
+      "physical_size": [
+        1290,
+        2796
+      ]
+    },
+    {
+      "file": "L07_pause_end__ending__build.png",
+      "bytes": 117867,
+      "sha256": "f52d99520ce4ace2626667cc889d146b316123227f9e03c1be728350d8269c35",
+      "physical_size": [
+        1290,
+        2796
+      ]
+    },
+    {
+      "file": "L07_pause_end__ending__master_beside_build.png",
+      "bytes": 241692,
+      "sha256": "952eb7e19dd8f1c482062aad585e4cff0214b81fb6bc9f4a4f7fe3a3b8de5585",
+      "physical_size": [
+        2580,
+        2796
+      ]
+    },
+    {
+      "file": "L07_pause_end__master_beside_build.png",
+      "bytes": 246191,
+      "sha256": "6f4c672ace165982749d8ff16a6e81b729c8d3a6598586b3fc6c9f4eec17add3",
+      "physical_size": [
+        2580,
+        2796
+      ]
+    },
+    {
+      "file": "L07_pause_end__no_shepherd__build.png",
+      "bytes": 106543,
+      "sha256": "f851c460c476315d4aaa77db2e7f1bcdaaa6366261a708941cd366898a70616b",
+      "physical_size": [
+        1290,
+        2796
+      ]
+    },
+    {
+      "file": "L07_pause_end__no_shepherd__master_beside_build.png",
+      "bytes": 215104,
+      "sha256": "64c06e0c605a2f6f6e7818ea100a02e8ed8f2fbb8bb4a573f70afab8f1dd6370",
+      "physical_size": [
+        2580,
+        2796
+      ]
+    },
+    {
+      "file": "L07_pause_replace__build.png",
+      "bytes": 150143,
+      "sha256": "0f6ad8489ba7b81b1994a486f61801453630e6a1cf704b519bbe33fe9d106cb1",
+      "physical_size": [
+        1290,
+        2796
+      ]
+    },
+    {
+      "file": "L07_pause_replace__didnt_go_through__build.png",
+      "bytes": 183200,
+      "sha256": "675b7701acdf5b7d38476416eb415a657f8481337a4c54e4b41051e5412cbaa4",
+      "physical_size": [
+        1290,
+        2796
+      ]
+    },
+    {
+      "file": "L07_pause_replace__didnt_go_through__master_beside_build.png",
+      "bytes": 381169,
+      "sha256": "ec402f7ca8ebb896657de2480a757fe75412f2c812c5a9d499f2b8d8bf710aa0",
+      "physical_size": [
+        2580,
+        2796
+      ]
+    },
+    {
+      "file": "L07_pause_replace__ending__build.png",
+      "bytes": 147170,
+      "sha256": "df1bf94c573035c052fbe8419b7c999d6eecae03fd1ce47aefba7530fd0abb28",
+      "physical_size": [
+        1290,
+        2796
+      ]
+    },
+    {
+      "file": "L07_pause_replace__ending__master_beside_build.png",
+      "bytes": 308579,
+      "sha256": "67566fbd55149d3c9282faeb6416005eafdfcd673b525b66b83433b15031578b",
+      "physical_size": [
+        2580,
+        2796
+      ]
+    },
+    {
+      "file": "L07_pause_replace__master_beside_build.png",
+      "bytes": 315446,
+      "sha256": "0ad757a15cda25fed106048b58a0cde94de9224220df55bd131ddd7461530d7f",
+      "physical_size": [
+        2580,
+        2796
+      ]
+    }
+  ]
+}

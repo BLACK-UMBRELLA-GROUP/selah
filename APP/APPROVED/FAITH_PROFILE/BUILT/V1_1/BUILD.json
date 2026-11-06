@@ -1,0 +1,65 @@
+{
+  "commit_sha": "13605e25248302adec99b93202edb4b303c14560",
+  "source_fingerprint_sha256": "e93aa63f889c8facfb1882f2bb64da1cb2a66ddb3dc2fe60ca0a1e2ff9bd98df",
+  "flutter_version": "3.44.2",
+  "dart_version": "3.12.2",
+  "build_mode": "debug real-widget tests; exact draft admission; bundled fonts;430x932@3x",
+  "timestamp_utc": "2026-11-06T17:05:05.994737+00:00",
+  "checks": {
+    "pure_models": "900 passed",
+    "full_flutter_suite": "346 passed, 2 explicit skips, exit0",
+    "skips": {
+      "browse_in_a_journey": "Question9: current discovery excludes own reserved/active pair",
+      "larger_text": "LOOK V2 leaves Larger Text undecided;320x568/text2 header overflows24px; written refusal OA-SELAH-003"
+    },
+    "flutter_analyze": "0 errors,0 warnings,10 pre-existing infos;exit0",
+    "cached_analyzer": "369 files,0 errors,0 warnings,1 pre-existing info",
+    "draft_boundaries": "20750/20750 passed",
+    "lockfile_sha256": "adf4a5d8e8e3e3d9366b0be138f72b6a33564c35dc15e1fce1a585c1638f7ce8"
+  },
+  "limits": [
+    "No native build, phone installation, live backend or Founder visual acceptance proved.",
+    "No pixel-identical MATCH claim; current protected headers/navigation/status-safe-area/portrait context differ from exemplar masters.",
+    "No SDK/package/lockfile/native/signing/run.sh/tooling changes.",
+    "Earlier committed V1 images preserved. Current masters may include deferred LOCK16 disclosure; this is not queue19 completion."
+  ],
+  "status": "Current real-widget comparisons after profile flow/cast/local Pause candidate",
+  "images": [
+    {
+      "file": "L04_profile_faith__answered__build.png",
+      "bytes": 264037,
+      "sha256": "77b49aa5e2d8ea94ef3c164b6032b3ee36656eee695ecd497b492c4d9b2f1d07",
+      "physical_size": [
+        1290,
+        2796
+      ]
+    },
+    {
+      "file": "L04_profile_faith__answered__master_beside_build.png",
+      "bytes": 520565,
+      "sha256": "4561954aca11666bb71e21481112f383fc9d69e381c8198b11db27eea3b8af23",
+      "physical_size": [
+        2580,
+        2796
+      ]
+    },
+    {
+      "file": "L04_profile_faith__not_answered__build.png",
+      "bytes": 262125,
+      "sha256": "de677d9e57f9fe527828389a1e77d12b106f0a6bf506ad81fd47448531cbe909",
+      "physical_size": [
+        1290,
+        2796
+      ]
+    },
+    {
+      "file": "L04_profile_faith__not_answered__master_beside_build.png",
+      "bytes": 500170,
+      "sha256": "bb6248ca5a2e13ada54ec5dac57c6f3e4bfc20446cc78aff313e6996df3a9422",
+      "physical_size": [
+        2580,
+        2796
+      ]
+    }
+  ]
+}

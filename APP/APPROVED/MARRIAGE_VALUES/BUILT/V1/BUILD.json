@@ -1,0 +1,298 @@
+{
+  "commit_sha": "13605e25248302adec99b93202edb4b303c14560",
+  "source_fingerprint_sha256": "e93aa63f889c8facfb1882f2bb64da1cb2a66ddb3dc2fe60ca0a1e2ff9bd98df",
+  "flutter_version": "3.44.2",
+  "dart_version": "3.12.2",
+  "build_mode": "debug real-widget tests; exact draft admission; bundled fonts;430x932@3x",
+  "timestamp_utc": "2026-11-06T17:05:05.994737+00:00",
+  "checks": {
+    "pure_models": "900 passed",
+    "full_flutter_suite": "346 passed, 2 explicit skips, exit0",
+    "skips": {
+      "browse_in_a_journey": "Question9: current discovery excludes own reserved/active pair",
+      "larger_text": "LOOK V2 leaves Larger Text undecided;320x568/text2 header overflows24px; written refusal OA-SELAH-003"
+    },
+    "flutter_analyze": "0 errors,0 warnings,10 pre-existing infos;exit0",
+    "cached_analyzer": "369 files,0 errors,0 warnings,1 pre-existing info",
+    "draft_boundaries": "20750/20750 passed",
+    "lockfile_sha256": "adf4a5d8e8e3e3d9366b0be138f72b6a33564c35dc15e1fce1a585c1638f7ce8"
+  },
+  "limits": [
+    "No native build, phone installation, live backend or Founder visual acceptance proved.",
+    "No pixel-identical MATCH claim; current protected headers/navigation/status-safe-area/portrait context differ from exemplar masters.",
+    "No SDK/package/lockfile/native/signing/run.sh/tooling changes."
+  ],
+  "queue_line": 5,
+  "status": "BUILT",
+  "built_from": [
+    "APP/APPROVED/MARRIAGE_VALUES/BRIEFS/BUILD_BRIEF_2026-11-06_V1.md",
+    "APP/APPROVED/MARRIAGE_VALUES/ARCHIVE/SELAH_MARRIAGE_VALUES_SPEC_2026-11-06_V5.md",
+    "APP/APPROVED/MARRIAGE_VALUES/RECORD/LOCK_RECORD.md",
+    "APP/APPROVED/MARRIAGE_VALUES/MASTERS/L05_*.png"
+  ],
+  "fields": [
+    "preferences.marriage_values.marriedBefore",
+    "preferences.marriage_values.children",
+    "preferences.marriage_values.wouldLikeChildren",
+    "preferences.marriage_values.rolesInMarriage",
+    "preferences.marriage_values.openToDivorced",
+    "preferences.marriage_values.whereToLive",
+    "preferences.marriage_values.hopingToMarry"
+  ],
+  "scope": "Seven exact answers, shared Faith/question widget, guarded same-owner persistence, Profile card. Compatibility translation is queue17. LOCK16 disclosure/note is queue19, still WAITING; current V6 and L16 pictures are not a claim of its implementation.",
+  "evidence": "14 pairs; empty reachable Profile differs from prototype partial No; compare Marriage card only.",
+  "images": [
+    {
+      "file": "L05_faith_7__continues_to_marriage__build.png",
+      "bytes": 121731,
+      "sha256": "3eca355efade02873b2afc5bed520f3515ba763dc9d9f8428b8be982c8337cb9",
+      "physical_size": [
+        1290,
+        2796
+      ]
+    },
+    {
+      "file": "L05_faith_7__continues_to_marriage__master_beside_build.png",
+      "bytes": 249004,
+      "sha256": "c3e0c50139ea082f912e127908a138e0c94548cd46d297745499dd01de09b2a4",
+      "physical_size": [
+        2580,
+        2796
+      ]
+    },
+    {
+      "file": "L05_marriage_1_married_before__empty__build.png",
+      "bytes": 108525,
+      "sha256": "f8f126a2aa98a0aa390b2bc42a292b2f61c55d7b63c87b99c61cba16db4a1fd8",
+      "physical_size": [
+        1290,
+        2796
+      ]
+    },
+    {
+      "file": "L05_marriage_1_married_before__empty__master_beside_build.png",
+      "bytes": 227137,
+      "sha256": "12239eec1ae512deb47bac93feec84520a4ebbad58c8e523f6fdfa67012f41af",
+      "physical_size": [
+        2580,
+        2796
+      ]
+    },
+    {
+      "file": "L05_marriage_1_married_before__error__build.png",
+      "bytes": 118748,
+      "sha256": "a1b187a79c37f04c470a3c80faecf1f47b0ef3c47db491a6cef3c757f9598015",
+      "physical_size": [
+        1290,
+        2796
+      ]
+    },
+    {
+      "file": "L05_marriage_1_married_before__error__master_beside_build.png",
+      "bytes": 248235,
+      "sha256": "b6ea97f480b93503c73f5e7ef3a15653ee6ed068eaf22ad1e92ea84c10ffc156",
+      "physical_size": [
+        2580,
+        2796
+      ]
+    },
+    {
+      "file": "L05_marriage_2_children__empty__build.png",
+      "bytes": 88344,
+      "sha256": "cca1a1986b5605fe6ef6200054d7c7c622023ba229b331c484c5709b50650e51",
+      "physical_size": [
+        1290,
+        2796
+      ]
+    },
+    {
+      "file": "L05_marriage_2_children__empty__master_beside_build.png",
+      "bytes": 181488,
+      "sha256": "172c69e0dc02814ad992127ef26a28c3ca85cbb100379974846c5d6842be1bf0",
+      "physical_size": [
+        2580,
+        2796
+      ]
+    },
+    {
+      "file": "L05_marriage_3_want_children__empty__build.png",
+      "bytes": 89496,
+      "sha256": "d66616ba03c9ebb484eb28b768ef3e6feb30274c427870ca2ff0af3a2dd6deda",
+      "physical_size": [
+        1290,
+        2796
+      ]
+    },
+    {
+      "file": "L05_marriage_3_want_children__empty__master_beside_build.png",
+      "bytes": 183281,
+      "sha256": "9eab162ff60773d783ea1101178a6d53a1f7ecf628e2f816b7732ddb8dd5c72b",
+      "physical_size": [
+        2580,
+        2796
+      ]
+    },
+    {
+      "file": "L05_marriage_4_roles__empty__build.png",
+      "bytes": 152672,
+      "sha256": "95c933a19c11f4d88e633bcd0d5248930c05290a5e97389135c9ddcc9a447f43",
+      "physical_size": [
+        1290,
+        2796
+      ]
+    },
+    {
+      "file": "L05_marriage_4_roles__empty__master_beside_build.png",
+      "bytes": 317988,
+      "sha256": "f271d1b5bf52da2c2880e5c1d84e3148df4d1867c313380a5db401ae62531ed2",
+      "physical_size": [
+        2580,
+        2796
+      ]
+    },
+    {
+      "file": "L05_marriage_4_roles__selected__build.png",
+      "bytes": 153449,
+      "sha256": "514cd8d0a1d9c90749b7e1758a236b18a0eb677e0987c37a6a52e6364490f5e1",
+      "physical_size": [
+        1290,
+        2796
+      ]
+    },
+    {
+      "file": "L05_marriage_4_roles__selected__master_beside_build.png",
+      "bytes": 320969,
+      "sha256": "293699d4340020ff0de10bdc20f1dd730a2154e99583479d367a2a17d0288320",
+      "physical_size": [
+        2580,
+        2796
+      ]
+    },
+    {
+      "file": "L05_marriage_5_divorced_partner__empty__build.png",
+      "bytes": 106590,
+      "sha256": "23075201aaa43b613cfcc7d7218c5ea39b46f6c52654303e43f6c52549792abb",
+      "physical_size": [
+        1290,
+        2796
+      ]
+    },
+    {
+      "file": "L05_marriage_5_divorced_partner__empty__master_beside_build.png",
+      "bytes": 222324,
+      "sha256": "cfdd54a9ee19b1d108b463b0052481de2ffe5432247e75cd6cf453111e332139",
+      "physical_size": [
+        2580,
+        2796
+      ]
+    },
+    {
+      "file": "L05_marriage_6_where_to_live__empty__build.png",
+      "bytes": 119220,
+      "sha256": "3a184f11e55220789d55ff6ddcd477243862882b870ae63742bb7f9a72bc0e49",
+      "physical_size": [
+        1290,
+        2796
+      ]
+    },
+    {
+      "file": "L05_marriage_6_where_to_live__empty__master_beside_build.png",
+      "bytes": 245740,
+      "sha256": "4d80958fbc07e3419da6d9235d0f5ca95d3e3b17e2e58db95823b13b5877c60c",
+      "physical_size": [
+        2580,
+        2796
+      ]
+    },
+    {
+      "file": "L05_marriage_7__didnt_save__build.png",
+      "bytes": 135418,
+      "sha256": "0acf7290260f1a6b3c8202ffb9fb7dae892841976dbf07e6d53ef2eabb5ef0f9",
+      "physical_size": [
+        1290,
+        2796
+      ]
+    },
+    {
+      "file": "L05_marriage_7__didnt_save__master_beside_build.png",
+      "bytes": 287146,
+      "sha256": "0efffc7ad7d572b0755217bdf9415e0dd49c02062eb4356ef4ef3a18023259f4",
+      "physical_size": [
+        2580,
+        2796
+      ]
+    },
+    {
+      "file": "L05_marriage_7__saving__build.png",
+      "bytes": 105560,
+      "sha256": "f5540b447efb6a8f3e163449b5e9ac15120952e5d5e0df3cf32e51a4cb3ea9e1",
+      "physical_size": [
+        1290,
+        2796
+      ]
+    },
+    {
+      "file": "L05_marriage_7__saving__master_beside_build.png",
+      "bytes": 222621,
+      "sha256": "b1644afd9eb6ba51b81cf933fc36372cb80423d92550604c7b92c035f5a0a81d",
+      "physical_size": [
+        2580,
+        2796
+      ]
+    },
+    {
+      "file": "L05_marriage_7_when_to_marry__empty__build.png",
+      "bytes": 108312,
+      "sha256": "665f46b2546e56e8120301d6f3716327e7859bece423a32355c3b2319aec266e",
+      "physical_size": [
+        1290,
+        2796
+      ]
+    },
+    {
+      "file": "L05_marriage_7_when_to_marry__empty__master_beside_build.png",
+      "bytes": 227401,
+      "sha256": "a5f42290c28ea496711b3218a6500e3d883f24e99e76483ed72be1be0991a6fa",
+      "physical_size": [
+        2580,
+        2796
+      ]
+    },
+    {
+      "file": "L05_profile_marriage__answered__build.png",
+      "bytes": 252084,
+      "sha256": "c8155b2a15e57e4d8e4eee169c3a0a9a0d6de27e70357b11b0918779837f768c",
+      "physical_size": [
+        1290,
+        2796
+      ]
+    },
+    {
+      "file": "L05_profile_marriage__answered__master_beside_build.png",
+      "bytes": 546051,
+      "sha256": "3f23dc20ab7df4aa3f07fc3b8bb8b57a1feb7d581815f5ff12ca223edf2e3547",
+      "physical_size": [
+        2580,
+        2796
+      ]
+    },
+    {
+      "file": "L05_profile_marriage__not_answered__build.png",
+      "bytes": 215402,
+      "sha256": "d75dd8eafd10ae06c68cbdc5bb0a29208b4437c4f0901993f2f32ab27216719b",
+      "physical_size": [
+        1290,
+        2796
+      ]
+    },
+    {
+      "file": "L05_profile_marriage__not_answered__master_beside_build.png",
+      "bytes": 480583,
+      "sha256": "dc19abfc0878d63e716242e137ebd7ff08fc3f82d7eb8395e148f75afeedb96e",
+      "physical_size": [
+        2580,
+        2796
+      ]
+    }
+  ]
+}
