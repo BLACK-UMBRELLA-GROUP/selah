@@ -76,7 +76,10 @@ No external setup, migration or deployment is authorized by the first draft.
 ## OA-SELAH-003 — Christian content and release-asset readiness
 
 Owner: Codex preparation; Founder content/visual acceptance.
-Status: FIRST-DRAFT COPY IMPLEMENTED; PRODUCTION REVIEW OPEN.
+Status: FIRST-DRAFT COPY IMPLEMENTED; PRODUCTION REVIEW OPEN. Update 4 Nov 2026
+(Fable): LOCK 1 look (Still Water) and LOCK 2 loading/error states recorded
+3 Nov (AD-AIOS-125); queue line 1 QUESTION (QUESTIONS row 1) until the SELAH
+chat reconciles the brief, LOCK_RECORD and the two CURRENT look specs.
 Scope: Christian onboarding/question/Shepherd semantics, denomination scope,
 compatibility scoring validity, accessibility/runtime layout review, photo
 licence/provenance and original production content/assets. Retained stock
@@ -91,8 +94,35 @@ independent legal/privacy/support identity, chosen pricing/products and real
 commerce configuration. No filing, domain purchase, legal registration, public
 release or commercial commitment occurred in this draft.
 
+## OA-SELAH-005 — Demo cast still uses ZYRA-community names
+
+Owner: SELAH chat (design a Christian demo cast and brief it); Codex builds.
+Status: OPEN - raised 4 Nov 2026 by Fable from the SELAH chat note of 3 Nov.
+Scope: `SOURCE/lib/dev/selah_dev_scenario.dart` (about lines 1579-1584 and
+2246-2254) carries names from the ZYRA copy (Abdul, Hassan, Bilal, Aaliyah,
+Umar ...) and mismatched relationships ("Aaliyah - father"). The SELAH chat
+designs the cast after the look LOCK; a queue line then replaces it.
+
+## OA-SELAH-006 — SELAH colour file uses another business's names
+
+Owner: Codex (list during queue line 1); SELAH chat (decide the fix).
+Status: OPEN - raised 4 Nov 2026 by Fable from the SELAH chat note of 3 Nov.
+Scope: `SOURCE/lib/theme/selah_colors.dart` holds `wafa*` colour names.
+The look brief asks Codex to list them; renaming follows LOCK 1.
+
 ---
 
-NEXT IDENTIFIER: OA-SELAH-005
+## OA-SELAH-007 — No approved way to run the SELAH app for queue line 1
+
+Owner: SELAH chat (write a delivery/setup repair brief or name another run route); Founder GO; Codex builds.
+Status: OPEN - raised 5 Nov 2026 by Fable from Codex report 4 Nov task 2 and SELAH QUESTIONS row 2 (OPEN since 4 Nov).
+Scope: prepared package config, iOS build checkouts, Runner.app, plugin Swift package and the pinned iPhoneOS 27.0 SDK
+are missing; `SOURCE/tooling/dart_layer_delivery.sh` pins the old pubspec hash and startup-fix binary. Lines 1 and 2
+cannot build until this is answered. Any install or SDK step must be finished before 21 Nov (OA-AIOS-420: no installs
+while Shakeel is abroad).
+
+---
+
+NEXT IDENTIFIER: OA-SELAH-008
 Register version: V1
-Last updated: 2026-10-13
+Last updated: 2026-11-05 (Fable: OA-SELAH-007 run route)

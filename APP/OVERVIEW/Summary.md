@@ -24,7 +24,20 @@ APP NAME
 
 Working Name: Selah
 
-Current Founder direction — 2026-10-13:
+Founder decision — 2026-11-03 (AD-AIOS-123; SELAH chat session):
+  SELAH gets its own identity now. Where SELAH differs from ZYRA it
+  may have its own features, flows, look and content, not only new
+  wording; the code moves away from ZYRA for those parts. Lines below
+  saying "functionality identical" or "only terminology changes" are
+  superseded where they conflict with this decision.
+  Founder answers, 3 Nov 2026:
+    • Shepherd is needed - "I DONT WANT IT TO BE A DATING APP SO I
+      THINK A SHEPARD IS NEEDED" (every member has a Shepherd).
+    • Audience: all Christians, any denomination.
+    • First design step: SELAH's own look and colours.
+    • Summary updated to allow SELAH's own features ("Yes, update it").
+
+Earlier Founder direction — 2026-10-13:
   Selah is a separate application and separate-company workstream.
   The first private phone draft reuses existing app foundations and
   adapts Christian content. It must not reuse the source app's live
@@ -178,9 +191,11 @@ CURRENT POSITION
 ✓ Selah is a separate Christian marriage app.
 ✓ ZYRA retains "My Wali".
 ✓ Christian app uses "My Shepherd".
-✓ Functionality remains identical across both apps.
-✓ Only terminology, presentation and faith-specific
-  messaging change.
+✓ From 3 Nov 2026 (AD-AIOS-123): SELAH may differ in
+  features, flows, look and content where it is different;
+  each difference is designed and LOCKed by the Founder.
+✓ Every SELAH member has a Shepherd (Founder, 3 Nov 2026).
+✓ Open to all Christians, any denomination (Founder, 3 Nov 2026).
 ✓ Selah is the current approved working name.
 
 ============================================================

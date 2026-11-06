@@ -37,7 +37,8 @@ untouched and do not connect Selah to its accounts or live member data.
   onboarding presentation. Default startup remains the current Browse shell.
 
 Retain the existing purple/gold, Poppins/Syne, card, navigation and motion
-foundation for this first draft. Own Selah wordmark and icon identify the app.
+foundation for this first draft. (Superseded 3 Nov 2026, AD-AIOS-123: SELAH's
+own look and colours are now being designed; the new look applies once LOCKed.) Own Selah wordmark and icon identify the app.
 Adapt greetings and Christian questions semantically. No invented Bible
 quotation or relabelled teaching from ZYRA's faith community is permitted.
 
