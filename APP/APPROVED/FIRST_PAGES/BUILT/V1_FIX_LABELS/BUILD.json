@@ -1,0 +1,113 @@
+{
+  "queue_line": 23,
+  "status": "BUILT",
+  "source_commit": "8f75eca5296c9cbb1e1ec1e2817604a6597fb753",
+  "flutter_version": "3.44.2",
+  "dart_version": "3.12.2",
+  "build_mode": "debug Flutter widget tests; no native app build/install",
+  "timestamp_utc": "2026-11-06T21:38:35.528927+00:00",
+  "built_from": "APP/APPROVED/REPAIRS/BRIEFS/FIX_BRIEF_2026-11-06_LABELS_AND_SHEPHERD_NAME_V1.md",
+  "feature": "FIRST_PAGES",
+  "viewport_logical": [
+    430,
+    932
+  ],
+  "pixel_ratio": 3,
+  "images": [
+    {
+      "file": "L15_opening_1__build.png",
+      "bytes": 105766,
+      "pixels": [
+        1290,
+        2796
+      ],
+      "sha256": "b1916ae08883230647005f2d677a883e6e0f55057f17b4d9c91bdadc58b493b1"
+    },
+    {
+      "file": "L15_opening_1__master_beside_build.png",
+      "bytes": 224538,
+      "pixels": [
+        2580,
+        2796
+      ],
+      "sha256": "efe81d6918741fa8e96817afc8fc8bd68eb571483aae5a17e9a2dba0c54f4b16"
+    },
+    {
+      "file": "L15_opening_2__build.png",
+      "bytes": 105757,
+      "pixels": [
+        1290,
+        2796
+      ],
+      "sha256": "482e6b6416052b14ec974f95f00fb846fa2f701e409c12029325fdfb26d6cf67"
+    },
+    {
+      "file": "L15_opening_2__master_beside_build.png",
+      "bytes": 224536,
+      "pixels": [
+        2580,
+        2796
+      ],
+      "sha256": "453d9a27549c5ab6aa493cd4060398f8ea1e3466e593c133f61dccb106ac41a5"
+    },
+    {
+      "file": "L15_opening_3__build.png",
+      "bytes": 91440,
+      "pixels": [
+        1290,
+        2796
+      ],
+      "sha256": "a2005704d783c638444f6c131307c446b2b91ff3a1a297958bf3ed8bece8998f"
+    },
+    {
+      "file": "L15_opening_3__master_beside_build.png",
+      "bytes": 192838,
+      "pixels": [
+        2580,
+        2796
+      ],
+      "sha256": "2ccc3d688011e6bd6ea873e71ebba8ad2eaabcac4bb619c44204c43944a15781"
+    },
+    {
+      "file": "L15_opening_4__build.png",
+      "bytes": 112716,
+      "pixels": [
+        1290,
+        2796
+      ],
+      "sha256": "843dee734196057f804b07f69bcdd885b60aed723d92f785f8cedf97527841b2"
+    },
+    {
+      "file": "L15_opening_4__master_beside_build.png",
+      "bytes": 239618,
+      "pixels": [
+        2580,
+        2796
+      ],
+      "sha256": "2fe653db6a069a2fd2643019ff5ea9badeb91fbb44263157bb487e2697008243"
+    }
+  ],
+  "image_bytes": 1297209,
+  "checks": {
+    "focused_capture_and_plain_replay": 33,
+    "functional": {
+      "passed": 283,
+      "skipped": 1
+    },
+    "pure": 1170,
+    "flutter_analyze": {
+      "errors": 0,
+      "warnings": 0,
+      "prior_infos": 10
+    },
+    "cached_analysis": {
+      "files": 390,
+      "errors": 0,
+      "warnings": 0,
+      "prior_infos": 1
+    },
+    "boundaries": 20571
+  },
+  "comparison": "Capital labels restored via one shared quiet-frame rendering expression. Real recorded short Shepherd display name reused in Pause/Prayer/events; supplied invite full names preserved. Existing fixture, breath-progress, private-rail and protected-layout differences remain; no full pixel MATCH claim.",
+  "native_delivery": "Blocked on Q14; connected/unlocked phone verified, no install or launch attempted."
+}

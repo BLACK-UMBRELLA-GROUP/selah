@@ -1,0 +1,221 @@
+{
+  "queue_line": 23,
+  "status": "BUILT",
+  "source_commit": "8f75eca5296c9cbb1e1ec1e2817604a6597fb753",
+  "flutter_version": "3.44.2",
+  "dart_version": "3.12.2",
+  "build_mode": "debug Flutter widget tests; no native app build/install",
+  "timestamp_utc": "2026-11-06T21:38:35.531767+00:00",
+  "built_from": "APP/APPROVED/REPAIRS/BRIEFS/FIX_BRIEF_2026-11-06_LABELS_AND_SHEPHERD_NAME_V1.md",
+  "feature": "SELAH_PAUSE",
+  "viewport_logical": [
+    430,
+    932
+  ],
+  "pixel_ratio": 3,
+  "images": [
+    {
+      "file": "L07_pause_accept__build.png",
+      "bytes": 122388,
+      "pixels": [
+        1290,
+        2796
+      ],
+      "sha256": "e71c69945262e66c1e2102f64c144d92e0a2e7ae387ccf195a370f96ac5e4808"
+    },
+    {
+      "file": "L07_pause_accept__master_beside_build.png",
+      "bytes": 253761,
+      "pixels": [
+        2580,
+        2796
+      ],
+      "sha256": "e8e18669a6dcf50c052513b00ed58f05b6ff572d1863f69714f82ce67c0f8b0b"
+    },
+    {
+      "file": "L07_pause_ask__build.png",
+      "bytes": 130776,
+      "pixels": [
+        1290,
+        2796
+      ],
+      "sha256": "cdcbcb4c372584a0db4ac4f646b607f3fba6dda9b33d17b6c7503bf7b5b4a849"
+    },
+    {
+      "file": "L07_pause_ask__didnt_send__build.png",
+      "bytes": 155696,
+      "pixels": [
+        1290,
+        2796
+      ],
+      "sha256": "429f3e44a4a48f9bf58d2555ad0aeb57dae73254c70a25479344ee00cc601258"
+    },
+    {
+      "file": "L07_pause_ask__didnt_send__master_beside_build.png",
+      "bytes": 325226,
+      "pixels": [
+        2580,
+        2796
+      ],
+      "sha256": "2c5720239d3a5ddc012c40529d080cc1d063bfc92f58122953a828c36dc434e0"
+    },
+    {
+      "file": "L07_pause_ask__master_beside_build.png",
+      "bytes": 274573,
+      "pixels": [
+        2580,
+        2796
+      ],
+      "sha256": "940a086e2441339e07e4653dfce941a83c84289909b3e04620a3e6bb06e8f8ce"
+    },
+    {
+      "file": "L07_pause_ask__sending__build.png",
+      "bytes": 129452,
+      "pixels": [
+        1290,
+        2796
+      ],
+      "sha256": "fd2d37e441ce76c561adf43d6839687b00087b8e5506152aaf21247612ae2bcc"
+    },
+    {
+      "file": "L07_pause_ask__sending__master_beside_build.png",
+      "bytes": 270793,
+      "pixels": [
+        2580,
+        2796
+      ],
+      "sha256": "e6bad62161dffd322a0216c27e39a03e4bc1e6db15937972b4d5685fba884706"
+    },
+    {
+      "file": "L07_pause_end__build.png",
+      "bytes": 119583,
+      "pixels": [
+        1290,
+        2796
+      ],
+      "sha256": "3370b09a5c7ff9efcf754c1525af8e1fa50b6135fc7fa9e81e6f1ec1d443f9f9"
+    },
+    {
+      "file": "L07_pause_end__ending__build.png",
+      "bytes": 117493,
+      "pixels": [
+        1290,
+        2796
+      ],
+      "sha256": "f4f1ef9ac46a69b713e85277805cb78b52f4fedeb712ba1aca4d13a80a022577"
+    },
+    {
+      "file": "L07_pause_end__ending__master_beside_build.png",
+      "bytes": 241337,
+      "pixels": [
+        2580,
+        2796
+      ],
+      "sha256": "ba7a4b80fb9e3a1a1522b8cb225220e8bb47219573215bc609cd03502a7bea78"
+    },
+    {
+      "file": "L07_pause_end__master_beside_build.png",
+      "bytes": 245990,
+      "pixels": [
+        2580,
+        2796
+      ],
+      "sha256": "c50398915eb1d6deae0f3015bafb78b3087fc39a613f684f115af9d6bbae9d1a"
+    },
+    {
+      "file": "L07_pause_end__no_shepherd__build.png",
+      "bytes": 106543,
+      "pixels": [
+        1290,
+        2796
+      ],
+      "sha256": "f851c460c476315d4aaa77db2e7f1bcdaaa6366261a708941cd366898a70616b"
+    },
+    {
+      "file": "L07_pause_end__no_shepherd__master_beside_build.png",
+      "bytes": 215104,
+      "pixels": [
+        2580,
+        2796
+      ],
+      "sha256": "64c06e0c605a2f6f6e7818ea100a02e8ed8f2fbb8bb4a573f70afab8f1dd6370"
+    },
+    {
+      "file": "L07_pause_replace__build.png",
+      "bytes": 149521,
+      "pixels": [
+        1290,
+        2796
+      ],
+      "sha256": "1362f8b51de5fc667e70bcd41cb162f899753dd363a8fa598ca4173ba02c406c"
+    },
+    {
+      "file": "L07_pause_replace__didnt_go_through__build.png",
+      "bytes": 182501,
+      "pixels": [
+        1290,
+        2796
+      ],
+      "sha256": "0b1de1339cbca5aa009f96857517a714111a6490edc75730f31d1e064f2c0e6e"
+    },
+    {
+      "file": "L07_pause_replace__didnt_go_through__master_beside_build.png",
+      "bytes": 372596,
+      "pixels": [
+        2580,
+        2796
+      ],
+      "sha256": "23d7f76d7a3649b939c8241796be29d925619ec8967444155d9374d217f7b26b"
+    },
+    {
+      "file": "L07_pause_replace__ending__build.png",
+      "bytes": 146710,
+      "pixels": [
+        1290,
+        2796
+      ],
+      "sha256": "acd85bdb4486358b306b39110a8aa36b57bcc28bca662ff499fb25f0e139a55b"
+    },
+    {
+      "file": "L07_pause_replace__ending__master_beside_build.png",
+      "bytes": 299461,
+      "pixels": [
+        2580,
+        2796
+      ],
+      "sha256": "9fa45d4dfe2df45605d997bbf347078af18d70e4878676cb0eeff6edae923047"
+    },
+    {
+      "file": "L07_pause_replace__master_beside_build.png",
+      "bytes": 307033,
+      "pixels": [
+        2580,
+        2796
+      ],
+      "sha256": "7d14b25ffc0e2605a056ddffe4be7b596703deb23eb7e258c70cea21e5105b17"
+    }
+  ],
+  "image_bytes": 4166537,
+  "checks": {
+    "focused_capture_and_plain_replay": 33,
+    "functional": {
+      "passed": 283,
+      "skipped": 1
+    },
+    "pure": 1170,
+    "flutter_analyze": {
+      "errors": 0,
+      "warnings": 0,
+      "prior_infos": 10
+    },
+    "cached_analysis": {
+      "files": 390,
+      "errors": 0,
+      "warnings": 0,
+      "prior_infos": 1
+    },
+    "boundaries": 20571
+  },
+  "comparison": "Capital labels restored via one shared quiet-frame rendering expression. Real recorded short Shepherd display name reused in Pause/Prayer/events; supplied invite full names preserved. Existing fixture, breath-progress, private-rail and protected-layout differences remain; no full pixel MATCH claim.",
+  "native_delivery": "Blocked on Q14; connected/unlocked phone verified, no install or launch attempted."
+}

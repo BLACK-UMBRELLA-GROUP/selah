@@ -1,0 +1,44 @@
+{
+  "source_commit": "8f75eca5296c9cbb1e1ec1e2817604a6597fb753",
+  "queue_line": 23,
+  "status": "BUILT",
+  "flutter_version": "3.44.2",
+  "dart_version": "3.12.2",
+  "build_mode": "debug Flutter widget tests",
+  "timestamp_utc": "2026-11-06T21:38:35.534672+00:00",
+  "evidence": [
+    {
+      "feature": "FIRST_PAGES",
+      "pngs": 8,
+      "bytes": 1297209
+    },
+    {
+      "feature": "SELAH_PAUSE",
+      "pngs": 20,
+      "bytes": 4166537
+    },
+    {
+      "feature": "PRAYER",
+      "pngs": 14,
+      "bytes": 4544645
+    }
+  ],
+  "changes": [
+    "Quiet presentation uppercases its label in one place; ordinary Selah text unchanged.",
+    "Canonical existing short Shepherd label shared by tab/Pause/Prayer; Pastor David from actual pastor relationship, no invented surname or user name.",
+    "Capture harness additive wordingRevision flag preserves earlier paths and writes exact required V1_FIX_LABELS."
+  ],
+  "pending_questions": {
+    "14": "native route/phone update and icon28",
+    "15": "26/27 other-Main names and stagecaption",
+    "16": "24 local/retained Introduce contract andJoel;25 waits24"
+  },
+  "tests": {
+    "functional_passed": 283,
+    "focused_passed": 33,
+    "existing_skip": 1,
+    "pure_passed": 1170
+  },
+  "candidates": "Unintegrated24view and25files moved SHA-verified to approvedFoundertrash;25existingfilehunks unwound exactly, not delivered.",
+  "founder_decisions": "GO and namedphoneupdate; connected/unlocked confirmed. No Mac software install/download or nativepin relaxation authorized/performed."
+}

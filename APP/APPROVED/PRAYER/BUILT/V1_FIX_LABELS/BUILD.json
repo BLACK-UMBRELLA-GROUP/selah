@@ -1,0 +1,167 @@
+{
+  "queue_line": 23,
+  "status": "BUILT",
+  "source_commit": "8f75eca5296c9cbb1e1ec1e2817604a6597fb753",
+  "flutter_version": "3.44.2",
+  "dart_version": "3.12.2",
+  "build_mode": "debug Flutter widget tests; no native app build/install",
+  "timestamp_utc": "2026-11-06T21:38:35.534468+00:00",
+  "built_from": "APP/APPROVED/REPAIRS/BRIEFS/FIX_BRIEF_2026-11-06_LABELS_AND_SHEPHERD_NAME_V1.md",
+  "feature": "PRAYER",
+  "viewport_logical": [
+    430,
+    932
+  ],
+  "pixel_ratio": 3,
+  "images": [
+    {
+      "file": "L10_seeker_ask_for_prayer__build.png",
+      "bytes": 148287,
+      "pixels": [
+        1290,
+        2796
+      ],
+      "sha256": "1524d5127782be6976972c023667f3ee125c36a71f1c30fb703c34fc391a74a7"
+    },
+    {
+      "file": "L10_seeker_ask_for_prayer__didnt_send__build.png",
+      "bytes": 175675,
+      "pixels": [
+        1290,
+        2796
+      ],
+      "sha256": "dcc4de6b5a7eecb7b61d286d05a3390d258da18c6c9e43c2295e82f86b8889c6"
+    },
+    {
+      "file": "L10_seeker_ask_for_prayer__didnt_send__master_beside_build.png",
+      "bytes": 363772,
+      "pixels": [
+        2580,
+        2796
+      ],
+      "sha256": "e380a3abb6aca62ce2895d6635be7d8f233ef63e16dcc16ab2467cece0fdda46"
+    },
+    {
+      "file": "L10_seeker_ask_for_prayer__master_beside_build.png",
+      "bytes": 306477,
+      "pixels": [
+        2580,
+        2796
+      ],
+      "sha256": "cdb8806e9931168f581506a0d63f492edd8a2dd375c26027ca5b9e7267a2bfe4"
+    },
+    {
+      "file": "L10_seeker_ask_for_prayer__sending__build.png",
+      "bytes": 143064,
+      "pixels": [
+        1290,
+        2796
+      ],
+      "sha256": "f27e2534128888e98c184ced95c58f0f63f3d97a7fb49690c9fa1ac54584ae5b"
+    },
+    {
+      "file": "L10_seeker_ask_for_prayer__sending__master_beside_build.png",
+      "bytes": 295624,
+      "pixels": [
+        2580,
+        2796
+      ],
+      "sha256": "f667861d410a335a0d7e4d3f08c17c8bd039cd53542fc616bc38eb897a8554a5"
+    },
+    {
+      "file": "L10_seeker_my_selah__prayed_update__build.png",
+      "bytes": 171728,
+      "pixels": [
+        1290,
+        2796
+      ],
+      "sha256": "42d76bba27399e2675b52e9346432cb414df8034204ad1d62f1086c0089dfdc6"
+    },
+    {
+      "file": "L10_seeker_my_selah__prayed_update__master_beside_build.png",
+      "bytes": 395664,
+      "pixels": [
+        2580,
+        2796
+      ],
+      "sha256": "300d7e0bcdaadfffd68de0408555bb644025cd729d1c94b3215c91e24d75688c"
+    },
+    {
+      "file": "L10_shepherd_dashboard__no_requests__build.png",
+      "bytes": 294515,
+      "pixels": [
+        1290,
+        2796
+      ],
+      "sha256": "95f9ea39600492dca7cce06bd8b83e72419387c639af07e29d04a6701a544b7d"
+    },
+    {
+      "file": "L10_shepherd_dashboard__no_requests__master_beside_build.png",
+      "bytes": 578777,
+      "pixels": [
+        2580,
+        2796
+      ],
+      "sha256": "12deeb347dff8912ac7def55f18159a6f50dbfab1b58569de9fec04fee59683c"
+    },
+    {
+      "file": "L10_shepherd_dashboard__prayed__build.png",
+      "bytes": 286529,
+      "pixels": [
+        1290,
+        2796
+      ],
+      "sha256": "ed5055b9ec522a5d84e315f2271f18319caf521d1ad80c1f300f009258446f35"
+    },
+    {
+      "file": "L10_shepherd_dashboard__prayed__master_beside_build.png",
+      "bytes": 549694,
+      "pixels": [
+        2580,
+        2796
+      ],
+      "sha256": "d78021d7fd4449368a04552e8519673385a6cbda3ac68d7e8d7113f3a1ca452f"
+    },
+    {
+      "file": "L10_shepherd_dashboard__requests__build.png",
+      "bytes": 285878,
+      "pixels": [
+        1290,
+        2796
+      ],
+      "sha256": "2412d64260f5220b1a87f7b47f514a0cf357f5584e06a88ae9f17f7210b68dd4"
+    },
+    {
+      "file": "L10_shepherd_dashboard__requests__master_beside_build.png",
+      "bytes": 548961,
+      "pixels": [
+        2580,
+        2796
+      ],
+      "sha256": "04975a77331e4970aa19273b9e5515d19a7c7ae2190e1c1c7e0207ecad5f1c5f"
+    }
+  ],
+  "image_bytes": 4544645,
+  "checks": {
+    "focused_capture_and_plain_replay": 33,
+    "functional": {
+      "passed": 283,
+      "skipped": 1
+    },
+    "pure": 1170,
+    "flutter_analyze": {
+      "errors": 0,
+      "warnings": 0,
+      "prior_infos": 10
+    },
+    "cached_analysis": {
+      "files": 390,
+      "errors": 0,
+      "warnings": 0,
+      "prior_infos": 1
+    },
+    "boundaries": 20571
+  },
+  "comparison": "Capital labels restored via one shared quiet-frame rendering expression. Real recorded short Shepherd display name reused in Pause/Prayer/events; supplied invite full names preserved. Existing fixture, breath-progress, private-rail and protected-layout differences remain; no full pixel MATCH claim.",
+  "native_delivery": "Blocked on Q14; connected/unlocked phone verified, no install or launch attempted."
+}
