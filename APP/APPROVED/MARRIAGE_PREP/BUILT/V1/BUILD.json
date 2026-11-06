@@ -1,0 +1,115 @@
+{
+  "commit_sha": "b6ae1ad19d924f17a803fe8c84f03ef717ce7b08",
+  "source_fingerprint_sha256": "718a4a53b5b7b799df1c251df95d3f62929318ecfacef65ee0f4f75d576d2d8b",
+  "flutter_version": "3.44.2",
+  "dart_version": "3.12.2",
+  "build_mode": "debug widget tests; actual app/widgets and real draft admission, no native build",
+  "build_timestamp_utc": "2026-11-06T14:05:15.948377+00:00",
+  "target": "430x932 logical @3x, top59/bottom34, light/text scale1.0",
+  "status": "BUILT; design-chat comparison, Founder visual acceptance and native phone delivery pending",
+  "brief": "APP/APPROVED/MARRIAGE_PREP/BRIEFS/BUILD_BRIEF_2026-11-06_V1.md",
+  "locks": [
+    "MARRIAGE_PREP/RECORD/SELAH_MARRIAGE_PREP_SPEC_CURRENT_VERSION_V1.md",
+    "MARRIAGE_PREP/RECORD/LOCK_RECORD.md #9",
+    "LOOK/RECORD/SELAH_LOOK_SPEC_CURRENT_VERSION_V2.md"
+  ],
+  "local_data": "_DraftJourneyProgress.marriagePrepCompleted: Set<int> per Journey id; immutable shared read, toggler0..2; existing conversationOpen gate; session reset clears held views",
+  "checks": {
+    "models": "305 passed (221 prior +84 new including real stage transitions)",
+    "capture": "6/6 passed:4states +any-order/unmark/reentry and retry behavior",
+    "combined_replay": "45/45 passed (Look10, invite16, switch2, controller11, marriage6)",
+    "flutter_analyze": "0errors/0warnings/10 pre-existing infos; --no-fatal-infos exit0",
+    "cached_analyzer": "337files, 0errors/0warnings/1 pre-existing info",
+    "draft_boundaries": "20093/20093 passed",
+    "lockfile_sha256": "adf4a5d8e8e3e3d9366b0be138f72b6a33564c35dc15e1fce1a585c1638f7ce8"
+  },
+  "behavior": [
+    "Card only at active Open Conversation, below current stage content/buttons",
+    "Ticks freely ordered, unmarkable and retained across actual Journey exit/reentry",
+    "Same local Journey shares facts; separate Journeys isolated",
+    "No edit before conversation, without existing Shepherd/access gates, during pause, after end or block",
+    "Private failure control reached through real authorized Page options; retry preserves existing ticks without toggling again",
+    "All stages reached through real existing actions, no test-only model injection; toast naturally expired before captures"
+  ],
+  "limits": [
+    "Local draft sharing only; no server synchronization or course/link/provider integrations",
+    "Retained backend-only OpenConversationView has no local model caller; left unchanged instead of inventing a second store",
+    "Existing paginated Journey, local controls, cast, buttons and detail navigation preserved; context differs from prototype stage-list/dock",
+    "No whole-screen pixel-MATCH, native status/island render, install or Founder acceptance claim"
+  ],
+  "files_removed_or_moved": [],
+  "images": [
+    {
+      "file": "L09_marriage_prep__all_done__build.png",
+      "bytes": 249852,
+      "sha256": "a07c47e22c81c70259a1d80c0375b4c70e7687aa7d6223062335822dd0ee6500",
+      "physical_size": [
+        1290,
+        2796
+      ]
+    },
+    {
+      "file": "L09_marriage_prep__all_done__master_beside_build.png",
+      "bytes": 575337,
+      "sha256": "64bb66c7d51533fdd2ef70f9559ff0ab0e6b7abe289974c276456082109f8797",
+      "physical_size": [
+        2580,
+        2796
+      ]
+    },
+    {
+      "file": "L09_marriage_prep__didnt_save__build.png",
+      "bytes": 219779,
+      "sha256": "774ab43beb72196a4ceea85b6983722a5f17816819cf03f0a3fad14411866c0e",
+      "physical_size": [
+        1290,
+        2796
+      ]
+    },
+    {
+      "file": "L09_marriage_prep__didnt_save__master_beside_build.png",
+      "bytes": 543955,
+      "sha256": "45336e2e85a3fc141adedbadf6bd1010a81206f9b3c5fef643556e3f7a18dfc7",
+      "physical_size": [
+        2580,
+        2796
+      ]
+    },
+    {
+      "file": "L09_marriage_prep__not_started__build.png",
+      "bytes": 252441,
+      "sha256": "1e4f80088a57d410047ee2f6b5cd2cc43fb42ea1ed6713ac4468e53af0c0d56b",
+      "physical_size": [
+        1290,
+        2796
+      ]
+    },
+    {
+      "file": "L09_marriage_prep__not_started__master_beside_build.png",
+      "bytes": 580080,
+      "sha256": "bdba97bc200eeb2afb4834e8890e2b4730f0332d4ae18fc9e106037d74e06151",
+      "physical_size": [
+        2580,
+        2796
+      ]
+    },
+    {
+      "file": "L09_marriage_prep__one_done__build.png",
+      "bytes": 251710,
+      "sha256": "04aafd7052f9a8584f9628c79f4dd424ae8de4dec5ee4bfed683ef3fbe1594f3",
+      "physical_size": [
+        1290,
+        2796
+      ]
+    },
+    {
+      "file": "L09_marriage_prep__one_done__master_beside_build.png",
+      "bytes": 578770,
+      "sha256": "802c57927b45af335148038d5432f7d1432c6ac481f9a439b143e0b866c49645",
+      "physical_size": [
+        2580,
+        2796
+      ]
+    }
+  ]
+}
