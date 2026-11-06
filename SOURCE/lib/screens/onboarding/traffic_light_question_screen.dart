@@ -28,19 +28,9 @@ import '../../models/onboarding_question.dart';
 import '../../theme/selah_colors.dart';
 import '../../theme/selah_text.dart';
 
-// RETIRED 2026-08-10: `HardRequirementScope`. It existed for a few hours to
-// let Chapter 2 keep a single question-wide checkbox while Chapter 4 moved to
-// per-option exclusions, because seeker_details.preferences still stored
-// {sect: {hard_requirement: bool}} across 144 live rows. Showing the
-// per-option control over that storage would have let someone exclude Ibadi
-// but not Shia while the engine still excluded both — a screen promising
-// precision the server could not honour.
-//
-// Chapter 2 converged the same afternoon (inherited upstream action 185): those rows were
-// converted, a CHECK now rejects the boolean form, and score_candidates()
-// tests the sect exclusion per-option and independently of the light. Both
-// chapters use one model, so the enum and its branch are gone rather than
-// left as a dormant fork nobody would remember the reason for.
+// Both chapters use per-option exclusions independently of their traffic
+// light. A question-wide exclusion would promise precision the stored
+// preferences could not honour, so no separate legacy branch remains.
 
 class TrafficLightQuestionScreen extends StatefulWidget {
   final String yourAnswer; // "Your answer: ..." shown at the top

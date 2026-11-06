@@ -11,13 +11,19 @@ import '../data/selah_reference_data.dart';
 import '../data/selah_journey_pause_state.dart';
 import '../models/seeker_profile.dart';
 import '../models/selah_shepherd_invite.dart';
+import '../models/selah_action_pause.dart';
+import '../models/selah_action_pause_controller.dart';
 import '../services/selah_developer_access.dart';
 import '../widgets/selah_shepherd_invite_scope.dart';
 import '../widgets/selah_shepherd_invite_views.dart';
 import '../widgets/selah_marriage_prep_card.dart';
 import '../widgets/selah_faith_profile_card.dart';
+import '../models/selah_faith_profile.dart';
+import '../widgets/selah_marriage_values_views.dart';
 import '../widgets/selah_profile_image.dart';
 import '../screens/onboarding/selah_shepherd_invite_flow.dart';
+import '../screens/onboarding/selah_languages_flow.dart';
+import '../screens/journey/selah_pause_screen.dart';
 import '../models/selah_dashboard_resolution.dart';
 import '../models/selah_supportive_dashboard.dart';
 import '../services/selah_mentor_link_service.dart'
@@ -49,7 +55,6 @@ import '../widgets/selah_browse_options_button.dart';
 import '../widgets/selah_browse_next_photo_motion.dart';
 import '../widgets/selah_shepherd_dashboard_profile_card.dart';
 import '../widgets/selah_loading.dart';
-import '../widgets/selah_glass_dialog.dart';
 import '../widgets/selah_segmented_toggle.dart';
 import '../widgets/selah_shell_navigation.dart';
 import '../widgets/selah_quiet_dashboard.dart';
@@ -89,6 +94,7 @@ class SelahOneJourneyConceptShell extends StatefulWidget {
   const SelahOneJourneyConceptShell({
     super.key,
     required this.canAct,
+    this.canActOnOwnedPause,
     this.appearanceCanAct,
     required this.onExit,
     this.onOption1,
@@ -99,8 +105,12 @@ class SelahOneJourneyConceptShell extends StatefulWidget {
     this.initialShepherdInviteReview = false,
     this.initialSeekerBasic = false,
     this.initialShepherdBasic = false,
+    this.faithConsentSkipped = false,
   });
   final bool Function() canAct;
+  // Only the exact foreground Pause owned by this shell may use this scope.
+  // Ordinary covered-screen callbacks still require canAct.
+  final bool Function(Route<dynamic> pauseRoute)? canActOnOwnedPause;
   // Appearance survives an owned modal covering the route. Interaction still
   // requires canAct; actual owner/proof loss terminally invalidates the study.
   final bool Function()? appearanceCanAct;
@@ -113,6 +123,7 @@ class SelahOneJourneyConceptShell extends StatefulWidget {
   final bool initialShepherdInviteReview;
   final bool initialSeekerBasic;
   final bool initialShepherdBasic;
+  final bool faithConsentSkipped;
   @override
   State<SelahOneJourneyConceptShell> createState() =>
       _SelahOneJourneyConceptShellState();
@@ -123,6 +134,9 @@ class _SelahOneJourneyConceptShellState
     with SingleTickerProviderStateMixin {
   final _model = ViewRequestDraftModel(capacity: 3);
   final _marriagePrepFailed = <String>{};
+  bool _actionPauseOpen = false;
+  Route<dynamic>? _ownedActionPauseRoute;
+  final _replacementUpdates = <({String ending, String accepted})>[];
   SelahShepherdInviteController? _invite;
   bool _inviteWasPending = false;
   bool get _invitePending => _invite?.pending ?? false;
@@ -157,6 +171,7 @@ class _SelahOneJourneyConceptShellState
   int _browseIndex = 1;
   // Session-only viewing order, never a visibility or request permission.
   final _seenBrowseProfileIds = <String>{};
+  bool _browseExhausted = false;
   final _browseHistory = SelahBrowseHistory();
   // The approved portrait card is the single active Browse direction.
   static const _browseDesign = SelahOneJourneyBrowseDesign.portraitCard;
@@ -170,7 +185,6 @@ class _SelahOneJourneyConceptShellState
   int _networkTab = 0;
   String? _personId;
   String? _shepherdJourneyId;
-  String? _confirmation;
   bool _journeyOptionsOpen = false;
   String? _expandedJourneyOptionsId;
   ({String id, bool incoming})? _capacityRequest;
@@ -435,7 +449,6 @@ class _SelahOneJourneyConceptShellState
 
   void _move(VoidCallback change, {bool preserveCircle = false}) {
     _act(() {
-      _confirmation = null;
       _notice = null;
       _expandedJourneyOptionsId = null;
       _capacityRequest = null;
@@ -779,17 +792,13 @@ class _SelahOneJourneyConceptShellState
                       _uiRevision,
                       _expandedJourneyOptionsId,
                     ),
-                    enabled:
-                        _allowed &&
-                        !_browseOptionsOpen &&
-                        _confirmation == null,
+                    enabled: _allowed && !_browseOptionsOpen,
                     onBack: _bound(() {
                       // A sheet can open before the parent rebuilds. Recheck
                       // current decision ownership at dispatch, not just build.
                       if (!_browseOptionsOpen &&
                           !_journeyOptionsOpen &&
-                          !_capacityConfirmOpen &&
-                          _confirmation == null) {
+                          !_capacityConfirmOpen) {
                         _back();
                       }
                     }),
@@ -946,7 +955,6 @@ class _SelahOneJourneyConceptShellState
     'shepherd_invite_review' => _shepherdInviteReview(),
     'profile' => _profileView(),
     'journey' => _journeyView(),
-    'journey_action' => _journeyActionConfirmation(),
     'request_capacity' => _requestCapacityView(),
     'journey_compatibility' => _journeyCompatibility(),
     'journey_shepherds' => _journeyShepherds(),
@@ -1053,8 +1061,12 @@ class _SelahOneJourneyConceptShellState
     surnameLine: p.surname,
     age: p.age,
     city: p.city,
-    publicNationality: selahBrowseNationalityLabel(p.nationalityCode),
-    publicEthnicity: selahBrowseEthnicityLabel(p.ethnicityCode),
+    faithProfile: SelahFaithProfileAnswers(
+      tradition: p.faithTradition,
+      church: p.churchAttendance,
+      baptised: p.baptised,
+      words: p.faithWords,
+    ),
     gender: 'female',
     photos: _photos?.forIndex(draftProfiles.indexOf(p)) ?? const [],
   );
@@ -1073,11 +1085,192 @@ class _SelahOneJourneyConceptShellState
           : 'Request a Journey',
     DraftJourneyState.sent => 'Journey invitation sent',
     DraftJourneyState.ended => 'Journey archived',
+    DraftJourneyState.preparing || DraftJourneyState.active => 'In a Journey',
     final state => _stateLabel(state),
   };
 
-  void _toggleInvitation(String id) {
+  String? get _actionShepherdName {
+    final people = _conceptShepherdPeople;
+    final person =
+        people.where((person) => person.isMain).firstOrNull ??
+        people.firstOrNull;
+    final name = person?.firstName.trim();
+    return name == null || name.isEmpty ? null : name;
+  }
+
+  String _actionPersonName(DraftProfile person) =>
+      _model.isBlocked(person.id) ? 'User not found' : person.firstName;
+
+  Future<void> _pauseDeveloperOptions(
+    BuildContext pauseContext,
+    SelahActionPauseController controller,
+  ) async {
+    if (!controller.active || !SelahDeveloperAccess.canUseDeveloperTools) {
+      return;
+    }
+    final selected = await showModalBottomSheet<SelahActionPauseState>(
+      context: pauseContext,
+      builder: (sheetContext) {
+        void choose(SelahActionPauseState state) {
+          if (!sheetContext.mounted ||
+              ModalRoute.of(sheetContext)?.isCurrent != true ||
+              !SelahDeveloperAccess.canUseDeveloperTools) {
+            return;
+          }
+          Navigator.of(sheetContext).pop(state);
+        }
+
+        return SafeArea(
+          child: Padding(
+            padding: const EdgeInsets.all(22),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                Text('Page options', style: SelahText.option(size: 18)),
+                TextButton(
+                  key: const ValueKey('pause_state_ready'),
+                  onPressed: () => choose(SelahActionPauseState.ready),
+                  child: const Text('Pause · ready'),
+                ),
+                TextButton(
+                  key: const ValueKey('pause_state_working'),
+                  onPressed: () => choose(SelahActionPauseState.working),
+                  child: Text('Pause · ${controller.pause.workingLabel}'),
+                ),
+                TextButton(
+                  key: const ValueKey('pause_state_failed'),
+                  onPressed: () => choose(SelahActionPauseState.failed),
+                  child: const Text('Pause · didn’t go through'),
+                ),
+              ],
+            ),
+          ),
+        );
+      },
+    );
+    // Revalidate only after this owned sheet uncovers the Pause route.
+    if (selected == null ||
+        !mounted ||
+        !controller.active ||
+        !SelahDeveloperAccess.canUseDeveloperTools) {
+      return;
+    }
+    switch (selected) {
+      case SelahActionPauseState.ready:
+        controller.showReady();
+      case SelahActionPauseState.working:
+        controller.showWorking();
+      case SelahActionPauseState.failed:
+        controller.showFailure();
+      case SelahActionPauseState.done:
+        return;
+    }
+  }
+
+  bool get _canActOnOwnedPause {
+    if (!mounted) return false;
+    final route = _ownedActionPauseRoute;
+    if (!_actionPauseOpen || route == null) return _allowed;
+    if (!route.isActive || !route.isCurrent) return false;
+    return widget.canActOnOwnedPause?.call(route) ?? widget.canAct();
+  }
+
+  bool Function() _actionPauseFreshGuard() {
+    final revision = _uiRevision;
+    final shepherd = _shepherdRole;
+    final page = _page;
+    final tab = _tab;
+    return () =>
+        _canActOnOwnedPause &&
+        revision == _uiRevision &&
+        shepherd == _shepherdRole &&
+        page == _page &&
+        tab == _tab;
+  }
+
+  Future<bool> _presentActionPause({
+    required SelahActionPause pause,
+    required bool Function() current,
+    required bool Function() commit,
+  }) async {
+    if (_actionPauseOpen || !current()) return false;
+    if (!pause.canOpen) {
+      _act(() => _notice = SelahActionPause.noShepherdMessage);
+      return false;
+    }
+    final ownerCurrent = _accountFreshGuard();
+    final pauseCurrent = _actionPauseFreshGuard();
+    _actionPauseOpen = true;
+    late final MaterialPageRoute<bool> route;
+    final controller = SelahActionPauseController(
+      pause: pause,
+      canAct: () =>
+          pauseCurrent() &&
+          _actionPauseOpen &&
+          identical(_ownedActionPauseRoute, route),
+      commit: () => route.isCurrent && current() && commit(),
+    );
+    route = MaterialPageRoute<bool>(
+      builder: (pauseContext) {
+        void close(bool done) {
+          if (pauseContext.mounted && route.isActive && route.isCurrent) {
+            Navigator.of(pauseContext).pop(done);
+          }
+        }
+
+        return SelahPauseScreen(
+          controller: controller,
+          onCancel: () => close(false),
+          onDone: () => close(true),
+          developerControls: SelahDevControlRail(
+            open: false,
+            selected: SelahDevControlSection.actions,
+            visibleSections: const [
+              SelahDevControlSection.home,
+              SelahDevControlSection.actions,
+            ],
+            buttonKeys: const {
+              SelahDevControlSection.home: ValueKey('pause_developer_home'),
+              SelahDevControlSection.actions: ValueKey(
+                'pause_developer_actions',
+              ),
+            },
+            onSelected: (section) {
+              if (!controller.active ||
+                  !SelahDeveloperAccess.canUseDeveloperTools) {
+                return;
+              }
+              if (section == SelahDevControlSection.home) {
+                controller.cancel();
+                close(false);
+                if (_allowed) (widget.onDeveloperHome ?? widget.onExit)();
+              } else {
+                _pauseDeveloperOptions(pauseContext, controller);
+              }
+            },
+          ),
+        );
+      },
+    );
+    _ownedActionPauseRoute = route;
+    try {
+      final committed = await Navigator.of(context).push(route);
+      return committed == true && ownerCurrent();
+    } finally {
+      controller.dispose();
+      _ownedActionPauseRoute = null;
+      _actionPauseOpen = false;
+    }
+  }
+
+  Future<void> _toggleInvitation(String id) async {
     if (!_allowed || !_canToggleInvitation(id)) return;
+    if (_model.stateFor(id) != DraftJourneyState.sent &&
+        _actionShepherdName == null) {
+      _act(() => _notice = SelahActionPause.noShepherdMessage);
+      return;
+    }
     if (_invitePending) {
       _act(
         () => _notice =
@@ -1085,14 +1278,32 @@ class _SelahOneJourneyConceptShellState
       );
       return;
     }
+    if (_model.stateFor(id) == DraftJourneyState.sent) {
+      unawaited(_selectionHaptic());
+      _act(() {
+        _seenBrowseProfileIds.add(id);
+        _model.cancel(id);
+      });
+      return;
+    }
+    final person = draftProfiles.where((person) => person.id == id).firstOrNull;
+    if (person == null) return;
+    final fresh = _actionPauseFreshGuard();
+    final shepherd = _actionShepherdName;
+    final committed = await _presentActionPause(
+      pause: SelahActionPause(
+        kind: SelahActionPauseKind.ask,
+        name: _actionPersonName(person),
+        shepherdName: shepherd,
+      ),
+      current: () => fresh() && _model.canRequest(id) && !_invitePending,
+      commit: () => _model.request(id),
+    );
+    if (!committed) return;
     unawaited(_selectionHaptic());
     _act(() {
       _seenBrowseProfileIds.add(id);
-      if (_model.stateFor(id) == DraftJourneyState.sent) {
-        _model.cancel(id);
-      } else {
-        _model.request(id);
-      }
+      _notice = 'Request sent to ${person.firstName}. $shepherd has been told.';
     });
   }
 
@@ -1196,15 +1407,19 @@ class _SelahOneJourneyConceptShellState
       return;
     }
     _seenBrowseProfileIds.add(people[current].id);
-    // Walk the freshly eligible deck. Sent invitations remain in this deck;
-    // hidden/blocked/occupied people never enter it, even on a later cycle.
-    var next = (current + 1) % people.length;
+    // Neutral Next exhausts the visible frontier without making a decision.
+    // Hidden, blocked and occupied peers never enter the eligible deck.
+    int? next;
     for (var offset = 1; offset < people.length; offset++) {
       final candidate = (current + offset) % people.length;
       if (!_seenBrowseProfileIds.contains(people[candidate].id)) {
         next = candidate;
         break;
       }
+    }
+    if (next == null) {
+      _browseExhausted = true;
+      return;
     }
     _browseIndex = next;
     if (people[next].id != people[current].id) ++_browseNextMotionEpoch;
@@ -1252,41 +1467,16 @@ class _SelahOneJourneyConceptShellState
         ),
       );
     }
-    if (people.isEmpty) {
-      return SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.fromLTRB(20, 16, 20, 110),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              _mainHeading('Browse'),
-              _title('No profiles in this view.', size: 24),
-              const SizedBox(height: 12),
-              _body(
-                _browseFilter.isValid
-                    ? 'Try widening your filters. Occupied profiles stay out of this sample view.'
-                    : 'The selected sample location is unavailable. Clear the radius or reset your filters.',
-              ),
-              const SizedBox(height: 20),
-              _button(
-                'concept_clear_filters',
-                'Clear filters',
-                () => _act(() {
-                  _browseFilter = const SelahBrowseFilter();
-                  _editingBrowseFilter = _browseFilter;
-                  _browseIndex = 0;
-                  _browseHistory.reset();
-                }),
-              ),
-              const SizedBox(height: 12),
-              _button(
-                'concept_edit_filters',
-                'Adjust filters',
-                () => _open('filters'),
-              ),
-            ],
-          ),
-        ),
+    if (people.isEmpty || _browseExhausted) {
+      return SelahOneJourneyBrowseDesigns(
+        profiles: const [],
+        selectedIndex: 0,
+        design: _browseDesign,
+        photoBuilder: _browsePhotoRenderer.build,
+        alignHeaderActions: true,
+        bottomPadding: 100,
+        onFilters: _bound(() => _open('filters')),
+        onBrowseMenu: (_) => _openBrowseOptions(null),
       );
     }
     final index = _browseSelectionIndex(people);
@@ -1710,7 +1900,7 @@ class _SelahOneJourneyConceptShellState
     ];
   }
 
-  void _accept(DraftProfile p, bool incoming) {
+  Future<void> _accept(DraftProfile p, bool incoming) async {
     final expected = incoming
         ? DraftJourneyState.received
         : DraftJourneyState.sent;
@@ -1720,6 +1910,10 @@ class _SelahOneJourneyConceptShellState
         _page != 'requests' ||
         _requestsTab != (incoming ? 0 : 1) ||
         _model.stateFor(p.id) != expected) {
+      return;
+    }
+    if (incoming && _actionShepherdName == null) {
+      _act(() => _notice = SelahActionPause.noShepherdMessage);
       return;
     }
     if (_invitePending) {
@@ -1741,26 +1935,40 @@ class _SelahOneJourneyConceptShellState
       });
       return;
     }
+    bool accepted;
+    if (incoming) {
+      final fresh = _actionPauseFreshGuard();
+      accepted = await _presentActionPause(
+        pause: SelahActionPause(
+          kind: SelahActionPauseKind.accept,
+          name: _actionPersonName(p),
+          shepherdName: _actionShepherdName,
+          otherGender: _displayProfile(p).gender,
+        ),
+        current: () => fresh() && !_invitePending && _model.canAccept(p.id),
+        commit: () => _model.acceptReceived(p.id),
+      );
+    } else {
+      // The existing private control represents the other member's action.
+      accepted = _model.simulateRecipientAccept(p.id);
+    }
+    if (!accepted || !_allowed) return;
     _act(() {
-      final ok = incoming
-          ? _model.acceptReceived(p.id)
-          : _model.simulateRecipientAccept(p.id);
       _result(
-        ok,
+        true,
         'Accepted in this sample. Both places are reserved while you prepare.',
       );
-      if (ok) {
-        _personId = p.id;
-        _pages.add('journey');
-      }
+      _personId = p.id;
+      _pages.add('journey');
     });
   }
 
   bool _currentCapacityRequest(
     ({String id, bool incoming}) request,
-    int revision,
-  ) =>
-      _allowed &&
+    int revision, {
+    bool ownedPause = false,
+  }) =>
+      (ownedPause ? _canActOnOwnedPause : _allowed) &&
       !_shepherdRole &&
       _tab == 2 &&
       _page == 'request_capacity' &&
@@ -1859,7 +2067,7 @@ class _SelahOneJourneyConceptShellState
     final revision = _uiRevision;
     final endingState = _model.stateFor(ending.id);
     bool current() =>
-        _currentCapacityRequest(request, revision) &&
+        _currentCapacityRequest(request, revision, ownedPause: true) &&
         _capacityEndingId == ending.id &&
         _model.stateFor(ending.id) == endingState &&
         _model.canReplaceJourneyForRequest(
@@ -1869,71 +2077,37 @@ class _SelahOneJourneyConceptShellState
         );
     if (_capacityConfirmOpen || !current()) return;
     final target = _person!;
-    final endingName = _model.isBlocked(ending.id)
-        ? 'the unavailable Journey'
-        : 'your Journey with ${ending.firstName}';
     _capacityConfirmOpen = true;
     unawaited(_selectionHaptic());
     try {
-      final confirmed = await showSelahGlassDialog<bool>(
-        context: context,
-        builder: (dialogContext) {
-          void choose(bool value) {
-            if (dialogContext.mounted &&
-                ModalRoute.of(dialogContext)?.isCurrent == true) {
-              Navigator.of(dialogContext).pop(value);
-            }
-          }
-
-          return Column(
-            mainAxisSize: MainAxisSize.min,
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              Text(
-                'End Journey & accept request?',
-                style: SelahText.heading(size: 20),
-              ),
-              const SizedBox(height: 12),
-              Text(
-                'This permanently ends $endingName. Your history stays. '
-                'You and ${target.firstName} can then prepare to begin together.',
-                style: SelahText.subtext(),
-              ),
-              const SizedBox(height: 20),
-              OutlinedButton(
-                key: const ValueKey('request_capacity_confirm'),
-                style: OutlinedButton.styleFrom(
-                  minimumSize: const Size(0, 48),
-                  side: BorderSide(color: SelahColors.destructive),
-                ),
-                onPressed: () => choose(true),
-                child: Text(
-                  'End & accept request',
-                  style: SelahText.button(color: SelahColors.destructive),
-                ),
-              ),
-              TextButton(
-                key: const ValueKey('request_capacity_keep'),
-                onPressed: () => choose(false),
-                child: Text('Keep my Journeys', style: SelahText.button()),
-              ),
-            ],
-          );
-        },
-      );
-      if (confirmed != true || !current()) return;
-      _act(() {
-        final replaced = _model.replaceJourneyForRequest(
+      final committed = await _presentActionPause(
+        pause: SelahActionPause(
+          kind: SelahActionPauseKind.replace,
+          name: _actionPersonName(target),
+          endingName: _actionPersonName(ending),
+          shepherdName: _actionShepherdName,
+        ),
+        current: current,
+        commit: () => _model.replaceJourneyForRequest(
           request.id,
           ending.id,
           incoming: request.incoming,
-        );
-        if (!replaced) return;
+        ),
+      );
+      if (!committed) return;
+      _act(() {
         _pages
-          ..removeLast()
+          ..clear()
           ..add('journey');
+        _tab = 1;
+        _personId = request.id;
         _capacityRequest = null;
         _capacityEndingId = null;
+        _replacementUpdates.add((
+          ending: _actionPersonName(ending),
+          accepted: _actionPersonName(target),
+        ));
+        _notice = 'Journey with ${target.firstName} has begun.';
       });
     } finally {
       _capacityConfirmOpen = false;
@@ -2137,12 +2311,30 @@ class _SelahOneJourneyConceptShellState
     }
   }
 
-  void _showJourneyAction(DraftProfile person, String action) {
+  Future<void> _showJourneyAction(DraftProfile person, String action) async {
     if (action != 'end') return;
-    _move(() {
-      _personId = person.id;
-      _confirmation = action;
-      _pages.add('journey_action');
+    final fresh = _actionPauseFreshGuard();
+    final state = _model.stateFor(person.id);
+    bool current() =>
+        fresh() &&
+        _model.stateFor(person.id) == state &&
+        state != null &&
+        state != DraftJourneyState.received &&
+        state != DraftJourneyState.sent &&
+        state != DraftJourneyState.ended;
+    final committed = await _presentActionPause(
+      pause: SelahActionPause(
+        kind: SelahActionPauseKind.end,
+        name: _actionPersonName(person),
+        shepherdName: _actionShepherdName,
+      ),
+      current: current,
+      commit: () => _model.end(person.id),
+    );
+    if (!committed) return;
+    _act(() {
+      _message.clear();
+      _notice = 'Sample Journey ended. History retained.';
     });
   }
 
@@ -2204,69 +2396,6 @@ class _SelahOneJourneyConceptShellState
           Expanded(child: _shepherds(journeyContextId: person.id)),
         ],
       ),
-    );
-  }
-
-  Widget _journeyActionConfirmation() {
-    final person = _person;
-    final pause = _confirmation == 'pause';
-    if (person == null || (!pause && _confirmation != 'end')) {
-      return _unavailable();
-    }
-    final id = person.id;
-    final state = _model.stateFor(id);
-    final allowed = pause
-        ? state == DraftJourneyState.active
-        : state != null && state != DraftJourneyState.ended;
-    return Column(
-      key: ValueKey('draft_journey_action_$id'),
-      crossAxisAlignment: CrossAxisAlignment.stretch,
-      children: [
-        _heading(
-          _model.isBlocked(id)
-              ? 'End this Journey?'
-              : pause
-              ? 'Request a pause with ${person.firstName}?'
-              : 'End with ${person.firstName}?',
-          '',
-        ),
-        _card([
-          _body(
-            pause
-                ? 'Your place stays occupied while ${person.firstName} chooses whether to pause or continue.'
-                : 'Permanent. Your Timeline together is kept. This ended attempt cannot be reopened.',
-          ),
-          _button(
-            pause ? 'draft_confirm_pause_$id' : 'draft_confirm_end_$id',
-            pause ? 'Request Pause' : 'End Journey',
-            !allowed
-                ? null
-                : () => _act(() {
-                    final ok = pause ? _model.requestPause(id) : _model.end(id);
-                    _result(
-                      ok,
-                      pause
-                          ? 'Sample Pause requested.'
-                          : 'Sample Journey ended. History retained.',
-                    );
-                    if (ok) {
-                      _confirmation = null;
-                      _message.clear();
-                      _pages.removeLast();
-                    }
-                  }),
-            primary: true,
-          ),
-          KeyedSubtree(
-            key: ValueKey('draft_cancel_journey_action_$id'),
-            child: _button(
-              pause ? 'draft_cancel_pause_$id' : 'draft_cancel_end_$id',
-              pause ? 'Not now' : 'Keep this Journey',
-              _back,
-            ),
-          ),
-        ]),
-      ],
     );
   }
 
@@ -3100,6 +3229,15 @@ class _SelahOneJourneyConceptShellState
       fixtureMode: true,
       singlePage: true,
       fixtureCards: [
+        for (var index = 0; index < _replacementUpdates.length; index++)
+          SupportiveCard(
+            id: 'local-journey-replaced-$index',
+            section: SupportiveSection.changed,
+            title:
+                'You ended your Journey with '
+                '${_replacementUpdates[index].ending} and accepted '
+                '${_replacementUpdates[index].accepted}. Both Shepherds were told.',
+          ),
         if (_invite?.accepted ?? false)
           SupportiveCard(
             id: 'local-shepherd-accepted',
@@ -3134,7 +3272,7 @@ class _SelahOneJourneyConceptShellState
           target: SelahDashboardTarget.connectionsActivity,
         ),
       ],
-      firstName: 'Adam',
+      firstName: 'James',
       comparisonClock: DateTime.utc(2026, 10, 9),
       decoration: const BoxDecoration(),
       onRefresh: () async {},
@@ -3228,7 +3366,7 @@ class _SelahOneJourneyConceptShellState
 
   MentorLinkedPerson get _conceptLinkedSeeker => MentorLinkedPerson(
     id: 'draft-self',
-    firstName: 'Adam',
+    firstName: 'James',
     relationship: draftShepherds.first.relationshipCode,
     linkedAt: draftShepherds.first.linkedAt,
     isMain:
@@ -3248,7 +3386,7 @@ class _SelahOneJourneyConceptShellState
       attemptId: 'draft-attempt-${focus.id}',
       matchId: 'draft-match-${focus.id}',
       linkedSeekerId: 'draft-self',
-      linkedSeekerName: 'Adam',
+      linkedSeekerName: 'James',
       partner: SeekerProfile(
         id: focus.id,
         firstName: focus.firstName,
@@ -3340,7 +3478,7 @@ class _SelahOneJourneyConceptShellState
       participants: [
         SelahFamilyCircleParticipant(
           userId: 'draft-self',
-          firstName: 'Adam',
+          firstName: 'James',
           memberRole: 'seeker',
           isMainShepherd: false,
           isCurrentUser: !shepherd,
@@ -3358,7 +3496,7 @@ class _SelahOneJourneyConceptShellState
         SelahFamilyMessage(
           id: 'draft-circle-welcome',
           senderId: 'draft-self',
-          senderFirstName: 'Adam',
+          senderFirstName: 'James',
           senderRoleLabel: 'Seeker',
           body: 'Hello. Let’s discuss the journey together.',
           createdAt: DateTime.utc(2026, 10, 12, 0, 10),
@@ -3389,7 +3527,7 @@ class _SelahOneJourneyConceptShellState
             readBy: [
               SelahFamilyMessageReader(
                 userId: 'draft-self',
-                firstName: 'Adam',
+                firstName: 'James',
                 roleLabel: 'Seeker',
                 readAt: DateTime.utc(2026, 10, 12, 0, 14),
               ),
@@ -3418,17 +3556,17 @@ class _SelahOneJourneyConceptShellState
           id: 'draft-circle-past-$index',
           firstName: const [
             'Elif',
-            'Noor',
+            'Lydia',
             'Hafsa',
-            'Zainab',
+            'Phoebe',
             'Huda',
-            'Safiya',
-            'Mariam',
-            'Amina',
-            'Khadija',
+            'Chloe',
+            'Abigail',
+            'Joanna',
+            'Priscilla',
             'Sumayya',
-            'Layla',
-            'Yasmin',
+            'Miriam',
+            'Joanna',
           ][index],
           kind: SelahCircleTopicKind.past,
           endedOn: DateTime.utc(
@@ -3444,7 +3582,7 @@ class _SelahOneJourneyConceptShellState
         builder: (_) => SelahShepherdCircleScreen(
           key: ValueKey(('request-shepherd-circle', revision, senderId)),
           seekerId: data.seekerId,
-          seekerFirstName: 'Adam',
+          seekerFirstName: 'James',
           viewerIsSeeker: !shepherd,
           preview: true,
           previewData: data,
@@ -3786,7 +3924,7 @@ class _SelahOneJourneyConceptShellState
           _card([_body('No current Journey')])
         else
           _card([
-            _title('Adam & ${journey.partner.firstName}', size: 25),
+            _title('James & ${journey.partner.firstName}', size: 25),
             _body(
               _model.stageFor(journey.partner.id)?.label ??
                   'Journey in progress',
@@ -3879,7 +4017,7 @@ class _SelahOneJourneyConceptShellState
             children: [
               _mainHeading('Shepherd Dashboard'),
               const SizedBox(height: 4),
-              Text('Hello, Hassan.', style: SelahText.subtext(size: 13.5)),
+              Text('Hello, David.', style: SelahText.subtext(size: 13.5)),
             ],
           ),
         ),
@@ -4063,7 +4201,7 @@ class _SelahOneJourneyConceptShellState
             showHeader: _permittedShepherdJourneys.length <= 1,
             profile: _conceptLinkedSeekerProfile,
             person: _conceptLinkedSeeker,
-            shepherdName: 'Hassan',
+            shepherdName: 'David',
             hasShepherdOne: _shepherdMembership == 'Shepherd One',
             currentJourney: _conceptShepherdJourney,
             onProfile: _bound(() => _open('shepherd_linked_profile')),
@@ -4272,13 +4410,13 @@ class _SelahOneJourneyConceptShellState
   // member account, establish verification or grant any purchased access.
   SelahConceptAccountData get _accountData => SelahConceptAccountData(
     shepherd: _shepherdRole,
-    name: _shepherdRole ? 'Hassan Rahman' : 'Adam Khan',
+    name: _shepherdRole ? 'David Okafor' : 'James Carter',
     age: _shepherdRole ? '54' : '30',
     gender: 'Male',
     location: 'London',
     membership: _membership,
     isOne: !_membership.contains('Basic'),
-    relationship: 'Father',
+    relationship: 'Pastor',
     linkedSeekers: _conceptHassanLinked ? '1' : '0',
     shepherdCount: '${_conceptShepherdPeople.length}',
     signedInWith: 'Apple',
@@ -4350,7 +4488,26 @@ class _SelahOneJourneyConceptShellState
       data: _accountData,
       faithProfile: shepherd
           ? null
-          : SelahFaithProfileCard(answers: _accountSession.faithAnswers),
+          : Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                if (widget.faithConsentSkipped) ...[
+                  Text(
+                    'You chose not to share these. You can change this in Settings.',
+                    key: const ValueKey('faith_consent_skipped_note'),
+                    style: SelahText.body(size: 13, color: SelahColors.muted),
+                  ),
+                  const SizedBox(height: 14),
+                ],
+                SelahFaithProfileCard(answers: _accountSession.faithAnswers),
+              ],
+            ),
+      marriageProfile: shepherd
+          ? null
+          : SelahMarriageValuesCard(answers: _accountSession.marriageAnswers),
+      aboutYouProfile: shepherd
+          ? null
+          : SelahAboutYouCard(languages: _accountSession.details.languages),
       simplifiedMethodology: true,
       onAction: (action) {
         if (fresh()) _accountDispatch(action);
@@ -4802,6 +4959,8 @@ class _SelahOneJourneyConceptShellState
     if (!_allowed || _page != 'filters') return;
     _move(() {
       _browseFilter = _editingBrowseFilter;
+      _browseExhausted = false;
+      _seenBrowseProfileIds.clear();
       _browseIndex = 0;
       _browseHistory.reset();
       _pages.removeLast();
@@ -4871,17 +5030,6 @@ class _SelahOneJourneyConceptShellState
           selahBrowseCountryLabel(_editingBrowseFilter.countryCode),
         ),
         const SizedBox(height: 8),
-        _browseFilterPicker(
-          'nationality',
-          'Nationality',
-          selahBrowseNationalityLabel(_editingBrowseFilter.nationalityCode),
-        ),
-        const SizedBox(height: 8),
-        _browseFilterPicker(
-          'ethnicity',
-          'Ethnicity',
-          selahBrowseEthnicityLabel(_editingBrowseFilter.ethnicityCode),
-        ),
         const SizedBox(height: 20),
         _title('Distance', size: 15),
         const SizedBox(height: 6),
@@ -5221,9 +5369,11 @@ class _SelahOneJourneyConceptShellState
               );
               _model.setCapacity(3);
               _model.reset();
+              _replacementUpdates.clear();
               _marriagePrepFailed.clear();
               _invite?.reset();
               _seenBrowseProfileIds.clear();
+              _browseExhausted = false;
               _browseHistory.reset();
               _messages.clear();
               _message.clear();

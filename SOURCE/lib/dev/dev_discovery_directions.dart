@@ -233,6 +233,17 @@ class _ViewRequestDraftScreenState extends State<ViewRequestDraftScreen> {
 
   bool get _canAct =>
       mounted && _owner.current && (ModalRoute.of(context)?.isCurrent ?? false);
+
+  bool _canActOnOwnedPause(Route<dynamic> pauseRoute) {
+    if (!mounted || !_owner.current) return false;
+    final hostRoute = ModalRoute.of(context);
+    return hostRoute != null &&
+        hostRoute.isActive &&
+        !identical(hostRoute, pauseRoute) &&
+        pauseRoute.isCurrent &&
+        identical(hostRoute.navigator, pauseRoute.navigator);
+  }
+
   void _close() {
     if (!_canAct) return;
     if (widget.onExit != null) {
@@ -263,6 +274,7 @@ class _ViewRequestDraftScreenState extends State<ViewRequestDraftScreen> {
     return SelahConceptPreviewBoundary(
       child: SelahOneJourneyConceptShell(
         canAct: () => _canAct,
+        canActOnOwnedPause: _canActOnOwnedPause,
         appearanceCanAct: () => mounted && _owner.current,
         onExit: _close,
         onOption1: widget.onOption1 == null

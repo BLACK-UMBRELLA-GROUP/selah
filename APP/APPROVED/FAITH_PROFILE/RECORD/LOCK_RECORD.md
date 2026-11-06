@@ -16,3 +16,4 @@ owner: SELAH chat
 | 4 (change) | 2026-11-06 13:25 | From LOCK 5: "A · Right after faith — LOCK it (Recommended)" | Spec V2: saved faith profile → marriage question 1 |
 | 4 (change) | 2026-11-06 13:40 | From LOCK 6: "Yes — LOCK it (Recommended)" | Spec V3: Back on question 1 → consent screen |
 | 4 (change) | 2026-11-06 14:35 | From LOCK 8: "A · Faith chips only — LOCK it (Recommended)" | Spec V4: Browse row → BROWSE_CARD spec V1 (fixes "as today" error) |
+| 4 (change) | 2026-11-06 | Clickable "A · Ask once, in sign-up (Recommended)" | Spec V5: compatibility reads Q1, Q2, Q5; bank repeats removed (line 17) |

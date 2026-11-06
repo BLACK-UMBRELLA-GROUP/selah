@@ -7,6 +7,10 @@ import '../lib/models/onboarding_question.dart';
 import 'package:selah/models/seeker_profile_completion.dart';
 import 'package:selah/models/selah_faith_profile.dart';
 import 'package:selah/data/selah_christian_traditions.dart';
+import 'package:selah/data/compatibility_categories.dart';
+import 'package:selah/models/selah_sign_up_compatibility.dart';
+import 'test_ask_once.dart' show runAskOnceChecks;
+import 'test_marriage_values.dart' show runMarriageValuesChecks;
 
 void main() {
   var checks = 0;
@@ -14,6 +18,9 @@ void main() {
     checks++;
     if (!value) throw StateError('FAILED: $label');
   }
+
+  runAskOnceChecks(check);
+  runMarriageValuesChecks(check);
 
   final pending = draftProfiles[4].id;
   final model = ViewRequestDraftModel(capacity: 3);
@@ -113,10 +120,18 @@ void main() {
 
   final questions = chapter3Categories.expand((c) => c.questions).toList();
   final ids = questions.map((q) => q.id).toSet();
-  check(ids.length == 104, 'all retained question IDs present');
+  check(
+    ids.length == 95,
+    'nine sign-up duplicates leave the active Your Values bank',
+  );
   for (var i = 1; i <= 104; i++)
-    check(ids.contains('ch3_q$i'), 'question $i retained');
-  final church = questions.firstWhere((q) => q.id == 'ch3_q39');
+    check(
+      ids.contains('ch3_q$i') == !selahSignUpQuestionIds.contains('ch3_q$i'),
+      'question $i follows the explicit ask-once retirement set',
+    );
+  final church = chapter3CompatibilityCategories
+      .expand((category) => category.questions)
+      .firstWhere((q) => q.id == 'ch3_q39');
   check(
     church.genderVisibility == GenderVisibility.all,
     'church question inclusive of both users',
@@ -129,6 +144,17 @@ void main() {
         copy.contains('Christian') &&
         copy.toLowerCase().contains('church'),
     'Christian question bank is substantive',
+  );
+  check(
+    compatibilityCategories.length == 12,
+    'compatibility keeps twelve categories',
+  );
+  final profileCompatibility = compatibilityCategories.singleWhere(
+    (category) => category.id == 'culture_location',
+  );
+  check(
+    profileCompatibility.chapter2Keys.join('|') == 'location|languages',
+    'profile compatibility reads only location and languages',
   );
   for (final role in [
     'parent',
@@ -316,14 +342,40 @@ void main() {
   final noCountryAnswer = checkpointPreferences();
   noCountryAnswer['country_of_birth'] = {'skipped': true};
   check(
-    !checkpointComplete(countryOfBirth: null, preferences: noCountryAnswer),
-    'country preference skip does not bypass own country answer',
+    checkpointComplete(
+      countryOfBirth: null,
+      nationality: null,
+      ethnicity: null,
+      preferences: noCountryAnswer,
+    ),
+    'removed background answers are no longer required',
   );
   final skippedLanguagePreference = checkpointPreferences();
   skippedLanguagePreference['languages'] = {'skipped': true};
   check(
     checkpointComplete(preferences: skippedLanguagePreference),
     'explicit language preference skip still works',
+  );
+  final languagesOnly = checkpointPreferences();
+  for (final key in [
+    'country_of_birth',
+    'nationality',
+    'ethnicity',
+    'languages',
+  ]) {
+    languagesOnly.remove(key);
+  }
+  check(
+    checkpointComplete(preferences: languagesOnly),
+    'removed background and language preferences do not block completion',
+  );
+  check(
+    !checkpointComplete(preferences: languagesOnly, languages: const []),
+    'one own language remains required',
+  );
+  check(
+    profileCompatibility.name == 'Location & Language',
+    'category uses the locked Location & Language name',
   );
   final legacyFaithOnly = checkpointPreferences();
   legacyFaithOnly.remove('church_background');

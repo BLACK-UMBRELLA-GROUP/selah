@@ -286,7 +286,7 @@ class SelahUnlockService {
   /// This used to be a direct `INSERT INTO profile_unlocks`. The client
   /// decided that an unlock had been paid for, and the database believed
   /// it — so two HTTP requests with the publishable key that ships in this
-  /// app bundle granted anyone another member's sect, revert status,
+  /// app bundle granted anyone another member's faith background and journey,
   /// ethnicity, birth country and nationality.
   ///
   /// `authenticated` no longer holds INSERT, UPDATE or DELETE on

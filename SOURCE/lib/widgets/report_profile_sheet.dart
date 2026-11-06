@@ -3,24 +3,8 @@
 // Replaces the old "Report a Problem" row, which opened the generic Help
 // & Support screen: no subject, no reason, nowhere for a report to go.
 //
-// Structure follows Muzz's reason picker (MUZZ_TEARDOWN_CURRENT_VERSION_
-// V1.md §1.3 — reviewed 2026-08-01) with three deliberate differences:
-//
-//   1. WE SHOW WHO IS BEING REPORTED. Muzz's sheet doesn't, and reporting
-//      the wrong person is a real harm — especially reached by a hidden
-//      long-press where the user may not be certain which card is under
-//      their finger.
-//   2. "I don't want to see this person" is visually separated as a
-//      BLOCK, not a report, and says so. Muzz lists it as reason #1 among
-//      the reports. Same good instinct — most people reaching for
-//      "report" just want the person gone — but presenting it as a report
-//      makes the user think they have accused someone when they haven't.
-//   3. No "intentional false reporting will result in your account being
-//      suspended" footer. Muzz leads the moment of reporting with a
-//      threat aimed at the reporter. The people most deterred by that are
-//      the uncertain and the frightened — exactly the reports we most
-//      need. Deterring bad-faith reports is a moderation problem, not a
-//      copy problem.
+// Show the subject clearly, separate blocking from reporting, and keep
+// moderation warnings out of the reporting flow.
 //
 // Blocking is enforced in profiles_select's RLS, so it applies everywhere
 // at once rather than only on the screen it was triggered from.
@@ -353,7 +337,7 @@ class _ReportProfileSheetState extends State<_ReportProfileSheet> {
                   // screen is not draggable, so a handle would be an
                   // affordance that does nothing.
 
-                  // WHO. Muzz omits this; it matters most on Browse, where
+                  // Show who is being reported, especially on Browse where
                   // this sheet is reached by a hidden long-press and the
                   // user may not be sure which card they were on.
                   Padding(

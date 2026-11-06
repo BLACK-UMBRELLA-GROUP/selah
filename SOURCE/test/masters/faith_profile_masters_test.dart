@@ -51,6 +51,10 @@ final _masters = <String>{
   'L04_profile_faith__not_answered',
 };
 final _capture = MasterCaptureHarness(feature: 'FAITH_PROFILE');
+final _profileCapture = MasterCaptureHarness(
+  feature: 'FAITH_PROFILE',
+  version: 'V1_1',
+);
 
 Finder _key(String value) => find.byKey(ValueKey<String>(value));
 
@@ -127,6 +131,7 @@ Future<void> _inviteToFaith(WidgetTester tester) async {
   await _tap(tester, find.text('THEIR NAME'));
   await _tap(tester, _key('invite_send'));
   await _tap(tester, _key('invite_sent_continue'));
+  await _tap(tester, _key('consent_agree'));
   expect(_key('faith_question_1'), findsOneWidget);
 }
 
@@ -190,6 +195,20 @@ SelahRequestAccountSession _browseSession(WidgetTester tester) => tester
     )
     .accountSession!;
 
+Future<void> _completeMarriage(WidgetTester tester) async {
+  await tester.pump(const Duration(seconds: 5));
+  await tester.pumpAndSettle();
+  expect(_key('marriage_question_1'), findsOneWidget);
+  for (var q = 1; q <= 7; q++) {
+    await _tap(tester, _key('marriage_choice_q${q}_0'));
+    await _tap(tester, _key(q == 7 ? 'marriage_save' : 'marriage_continue'));
+  }
+  await tester.pump(const Duration(seconds: 5));
+  await tester.pumpAndSettle();
+  await _tap(tester, _key('language_choice_0'));
+  await _tap(tester, _key('languages_save'));
+}
+
 Future<void> _showProfile(WidgetTester tester) async {
   // Let the real save SnackBar finish before tapping the dock it can cover.
   await tester.pump(const Duration(seconds: 5));
@@ -213,7 +232,8 @@ Future<void> _captureState(
 ) async {
   await tester.pump(const Duration(seconds: 4));
   await tester.pumpAndSettle();
-  await _capture.capture(tester, screen, master);
+  await (master.startsWith('L04_profile_faith__') ? _profileCapture : _capture)
+      .capture(tester, screen, master);
 }
 
 void main() {
@@ -348,6 +368,7 @@ void main() {
     await _advanceTo(tester, 7);
     await _words(tester, _shortWords);
     await _tap(tester, _key('faith_save'));
+    await _completeMarriage(tester);
     await _waitForBrowse(tester);
     final owner = _browseSession(tester);
     expect(owner.faithAnswers.words, _shortWords);
@@ -381,7 +402,13 @@ void main() {
     );
     await tester.pumpAndSettle();
     await _showProfile(tester);
-    expect(find.text('Not answered'), findsNWidgets(5));
+    expect(
+      find.descendant(
+        of: _key('faith_profile_card'),
+        matching: find.text('Not answered'),
+      ),
+      findsNWidgets(5),
+    );
     expect(_key('faith_profile_quote'), findsNothing);
     await _captureState(tester, root.screen, 'L04_profile_faith__not_answered');
   });
@@ -418,6 +445,7 @@ void main() {
     await _answerQuestion(tester, 6);
     await _tap(tester, _key('faith_continue'));
     await _tap(tester, _key('faith_skip'));
+    await _completeMarriage(tester);
     await _waitForBrowse(tester);
     expect(_browseSession(tester).faithAnswers.serving, isEmpty);
     expect(_browseSession(tester).faithAnswers.words, isEmpty);
@@ -453,6 +481,7 @@ void main() {
     await _advanceTo(tester, 7);
     await _words(tester, _shortWords);
     await _tap(tester, _key('faith_save'));
+    await _completeMarriage(tester);
     await _waitForBrowse(tester);
     final previous = _browseSession(tester);
     final savedAnswers = previous.faithAnswers;

@@ -1,9 +1,6 @@
 // Help centre content.
 //
-// V2 — 2026-08-01, after an independent review by Fable and a second pass
-// by ChatGPT. Six answers in V1 described things that do not exist; three
-// of those were mine transposing Muzz's behaviour into SELAH's help centre
-// while the teardown was fresh. All corrected below and marked.
+// Help answers describe only implemented SELAH behaviour.
 //
 // DATA, NOT SCREENS. Support content is wrong constantly. If the copy is
 // compiled into widgets, every correction needs an App Store review.
@@ -144,10 +141,7 @@ const List<SelahHelpCategory> selahHelpCategories = [
     ),
   ]),
   SelahHelpCategory('Your profile', [
-    // CORRECTED 2026-08-01. V1 said photos "passed review" and identity
-    // "has been verified". Neither exists — both are mocked delays in
-    // profile_ready_screen.dart. This is the answer that most clearly
-    // broke this file's own rule.
+    // Only the implemented age filter is described here.
     SelahHelpEntry(
       'When does my profile go live?',
       'Completing your profile does not by itself verify your identity. '
@@ -284,11 +278,7 @@ const List<SelahHelpCategory> selahHelpCategories = [
           'two of you choose to start again together, you begin from the '
           'beginning — the process is not something you can skip back into.',
     ),
-    // CORRECTED 2026-08-01. V1 named "age, location, sect and ethnicity"
-    // as filters. Only age exists (browse_screen's _minAge/_maxAge). Three
-    // of the four were Muzz's filter list, written in here from memory
-    // while the teardown was fresh. In an answer whose whole job was to
-    // PREVENT support emails.
+    // Only the implemented age filter is described here.
     SelahHelpEntry(
       'Why am I seeing fewer people than expected?',
       'Most often your age filter, which is the one you can set today — '
@@ -391,7 +381,7 @@ const List<SelahHelpCategory> selahHelpCategories = [
           'longer away, pausing is always better than deleting.',
     ),
     // CORRECTED 2026-08-01. V1 said "Settings > Manage account" — that is
-    // Muzz's navigation, not SELAH's. Deletion lives at the bottom of the
+    // an inherited navigation path. Deletion lives at the bottom of the
     // Profile tab (profile_screen.dart), and on the Mentor profile for Mentor
     // accounts. Wrong path, in the one answer where a frustrated user is
     // least willing to hunt.

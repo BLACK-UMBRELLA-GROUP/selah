@@ -161,8 +161,8 @@ class SelahDevLocalPreview {
       final name =
           identityName ??
           (isMentor
-              ? (female ? 'Khadija' : 'Ibrahim')
-              : (female ? 'Maryam' : 'Adam'));
+              ? (female ? 'Ama' : 'David')
+              : (female ? 'Abigail' : 'James'));
       if (isMentor) {
         _shepherdPremium = premium;
       } else {

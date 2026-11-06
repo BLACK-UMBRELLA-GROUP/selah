@@ -7,6 +7,7 @@
 // existing local renderer structure stays consistent while this draft is tested.
 
 import '../models/onboarding_question.dart';
+import '../models/selah_sign_up_compatibility.dart';
 
 const List<OnboardingCategory> _sourceQuestionGroups = [
   OnboardingCategory(
@@ -577,7 +578,8 @@ const List<OnboardingCategory> _sourceQuestionGroups = [
       ),
       OnboardingQuestion(
         id: 'ch3_q48',
-        prompt: 'How important is Christian education for your future children?',
+        prompt:
+            'How important is Christian education for your future children?',
         options: [
           'Essential',
           'Very important',
@@ -611,8 +613,7 @@ const List<OnboardingCategory> _sourceQuestionGroups = [
       ),
       OnboardingQuestion(
         id: 'ch3_q51',
-        prompt:
-            'How would you like faith to be expressed in your home?',
+        prompt: 'How would you like faith to be expressed in your home?',
         options: [
           'Through shared prayer, worship and daily life',
           'Through personal practices and meaningful traditions',
@@ -1240,7 +1241,7 @@ List<OnboardingQuestion> _questions(List<String> ids) => [
 /// Reused presentation order for this local Selah draft.
 /// Christian questions and options have changed; they must never be treated
 /// as the prior product's persisted answers or deployed scoring contract.
-final List<OnboardingCategory> chapter3Categories = [
+final List<OnboardingCategory> chapter3CompatibilityCategories = [
   OnboardingCategory(
     id: 'faith_practice',
     name: 'Faith & Christian Practice',
@@ -1407,4 +1408,37 @@ final List<OnboardingCategory> chapter3Categories = [
       'ch3_q93',
     ]),
   ),
+];
+
+/// Ask sign-up questions once; retain their full definitions above for the
+/// existing compatibility category membership and saved answer contracts.
+final List<OnboardingCategory> chapter3Categories = [
+  for (final category in chapter3CompatibilityCategories)
+    if (category.questions.any(
+      (question) => !selahSignUpQuestionIds.contains(question.id),
+    ))
+      OnboardingCategory(
+        id: category.id,
+        name: category.name,
+        questions: category.questions
+            .where((question) => !selahSignUpQuestionIds.contains(question.id))
+            .toList(growable: false),
+      ),
+];
+
+/// The other eight questions' partner preferences remain distinct choices.
+/// Only q1 preferences are replaced by the sign-up Divorced preference.
+final List<OnboardingCategory> chapter4Categories = [
+  for (final category in chapter3CompatibilityCategories)
+    if (category.questions.any(
+      (question) =>
+          question.id != 'ch3_q1' && question.ch4Status != Ch4Status.none,
+    ))
+      OnboardingCategory(
+        id: category.id,
+        name: category.name,
+        questions: category.questions
+            .where((question) => question.id != 'ch3_q1')
+            .toList(growable: false),
+      ),
 ];

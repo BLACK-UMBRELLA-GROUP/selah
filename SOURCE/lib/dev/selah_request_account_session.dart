@@ -4,9 +4,13 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart' show Offset;
 
+import '../data/selah_reference_data.dart';
 import '../models/seeker_profile.dart';
 import '../models/selah_faith_profile.dart';
 import '../models/selah_faith_profile_details.dart';
+import '../models/selah_marriage_values.dart';
+import '../models/selah_marriage_values_details.dart';
+import '../models/selah_sign_up_compatibility.dart';
 import '../screens/profile/compatibility_editors.dart';
 import '../screens/profile/edit_profile_screen.dart';
 import '../services/selah_onboarding_answers_service.dart'
@@ -29,7 +33,10 @@ class SelahRequestAccountSession extends ChangeNotifier {
        _hapticLevel = hapticLevel,
        // ignore: prefer_initializing_formals
        _goldEnabled = goldEnabled {
-    compatibility = SelahRequestCompatibilityRepository(canAct: () => current);
+    compatibility = SelahRequestCompatibilityRepository(
+      canAct: () => current,
+      readSignUpPreferences: () => details.preferences,
+    );
   }
 
   final bool Function() _canAct;
@@ -67,6 +74,8 @@ class SelahRequestAccountSession extends ChangeNotifier {
   SeekerDetails get details => current ? _details : const SeekerDetails();
   SelahFaithProfileAnswers get faithAnswers =>
       selahFaithProfileAnswersFromDetails(details);
+  SelahMarriageValuesAnswers get marriageAnswers =>
+      selahMarriageValuesAnswersFromDetails(details);
 
   /// Seeds the existing details owner once for an isolated local review.
   /// This never infers new answers from old Chapter 2 values.
@@ -82,6 +91,80 @@ class SelahRequestAccountSession extends ChangeNotifier {
   bool saveFaithProfile(SelahFaithProfileAnswers answers) {
     if (!current || !answers.canSave) return false;
     final next = _copyDetails(selahApplyFaithProfileAnswers(_details, answers));
+    if (!current) return false;
+    _details = next;
+    _detailsSeeded = true;
+    notifyListeners();
+    return true;
+  }
+
+  /// Consent Skip clears only this local faith collection. It is not a
+  /// backend withdrawal and does not discard unrelated profile/bank answers.
+  bool clearFaithProfile() {
+    if (!current) return false;
+    final previous = _details;
+    if (previous.christianFamily == null &&
+        previous.christianDenomination == null &&
+        previous.christianDenominationOther == null &&
+        previous.faithJourney == null &&
+        !previous.showChristianTraditionOnProfile &&
+        !previous.preferences.containsKey('faith_profile') &&
+        !previous.preferences.containsKey('church_background')) {
+      return true;
+    }
+    final preferences = Map<String, dynamic>.from(previous.preferences)
+      ..remove('faith_profile')
+      ..remove('church_background');
+    final next = _copyDetails(
+      SeekerDetails(
+        countryOfBirth: previous.countryOfBirth,
+        nationality: previous.nationality,
+        ethnicity: previous.ethnicity,
+        languages: previous.languages,
+        preferences: preferences,
+      ),
+    );
+    if (!current) return false;
+    _details = next;
+    _detailsSeeded = true;
+    notifyListeners();
+    return true;
+  }
+
+  bool saveMarriageValues(SelahMarriageValuesAnswers answers) {
+    if (!current || !answers.canSave) return false;
+    final next = _copyDetails(
+      selahApplyMarriageValuesAnswers(_details, answers),
+    );
+    if (!current) return false;
+    _details = next;
+    _detailsSeeded = true;
+    notifyListeners();
+    return true;
+  }
+
+  bool saveLanguages(List<String> value) {
+    if (!current ||
+        value.isEmpty ||
+        value.any((item) => !selahLanguageNames.contains(item))) {
+      return false;
+    }
+    final previous = _details;
+    final next = _copyDetails(
+      SeekerDetails(
+        christianFamily: previous.christianFamily,
+        christianDenomination: previous.christianDenomination,
+        christianDenominationOther: previous.christianDenominationOther,
+        faithJourney: previous.faithJourney,
+        showChristianTraditionOnProfile:
+            previous.showChristianTraditionOnProfile,
+        countryOfBirth: previous.countryOfBirth,
+        nationality: previous.nationality,
+        ethnicity: previous.ethnicity,
+        languages: value.toSet().toList(growable: false),
+        preferences: previous.preferences,
+      ),
+    );
     if (!current) return false;
     _details = next;
     _detailsSeeded = true;
@@ -165,12 +248,14 @@ class SelahRequestAccountSession extends ChangeNotifier {
 
   SeekerProfile ownProfile(bool shepherd) => SeekerProfile(
     id: shepherd ? 'draft-own-shepherd' : 'draft-self',
-    firstName: shepherd ? 'Hassan' : 'Adam',
-    surnameLine: shepherd ? 'Rahman' : 'Khan',
+    firstName: shepherd ? 'David' : 'James',
+    surnameLine: shepherd ? 'Okafor' : 'Carter',
     age: shepherd ? 54 : 30,
     city: 'London',
     gender: 'male',
     photos: photos(shepherd),
+    faithProfile: shepherd ? null : faithAnswers,
+    faithDenominationText: shepherd ? null : details.christianDenomination,
   );
 
   static bool _localPhotos(List<String> value) =>
@@ -193,12 +278,18 @@ class SelahRequestAccountSession extends ChangeNotifier {
 /// No server repository, Auth reads, preferences or AppState merging exist.
 class SelahRequestCompatibilityRepository
     implements SelahCompatibilityEditorRepository {
-  SelahRequestCompatibilityRepository({required bool Function() canAct})
+  SelahRequestCompatibilityRepository({
+    required bool Function() canAct,
+    SelahSignUpPreferencesReader? readSignUpPreferences,
+  })
     // Keep the caller's public guard parameter separate from private storage.
     // ignore: prefer_initializing_formals
-    : _canAct = canAct;
+    : _canAct = canAct,
+       // ignore: prefer_initializing_formals
+       _readSignUpPreferences = readSignUpPreferences;
 
   final bool Function() _canAct;
+  final SelahSignUpPreferencesReader? _readSignUpPreferences;
   bool _closed = false;
   SelahCompatibilityDraft? _draft;
   static const _owner = 'draft-self';
@@ -215,6 +306,17 @@ class SelahRequestCompatibilityRepository
   @override
   String? get currentUserId => _current ? _owner : null;
   @override
+  Map<String, dynamic> get signUpPreferences {
+    if (!_current) return const {};
+    try {
+      return _readSignUpPreferences?.call() ?? const {};
+    } catch (_) {
+      _closed = true;
+      return const {};
+    }
+  }
+
+  @override
   int get accountGeneration => 0;
   @override
   bool isCurrentOwner(String userId, int generation) =>
@@ -229,7 +331,7 @@ class SelahRequestCompatibilityRepository
   @override
   Future<bool> save(String userId, SelahCompatibilityDraft draft) async {
     if (!isCurrentOwner(userId, 0) || draft.gender != 'male') return false;
-    final detached = draft.copy();
+    final detached = draft.copy(readSignUpPreferences: () => signUpPreferences);
     if (!isCurrentOwner(userId, 0)) return false;
     _draft = detached;
     return true;

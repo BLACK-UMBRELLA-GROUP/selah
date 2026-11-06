@@ -115,6 +115,8 @@ class SelahConceptProfilePresentation extends StatelessWidget {
     required this.onAction,
     required this.onSwitchRole,
     this.faithProfile,
+    this.marriageProfile,
+    this.aboutYouProfile,
     this.simplifiedMethodology = false,
   });
 
@@ -122,6 +124,8 @@ class SelahConceptProfilePresentation extends StatelessWidget {
   final SelahConceptAccountActionCallback onAction;
   final VoidCallback onSwitchRole;
   final Widget? faithProfile;
+  final Widget? marriageProfile;
+  final Widget? aboutYouProfile;
   final bool simplifiedMethodology;
 
   @override
@@ -259,6 +263,14 @@ class SelahConceptProfilePresentation extends StatelessWidget {
                 if (!data.shepherd && faithProfile != null) ...[
                   const SizedBox(height: 24),
                   faithProfile!,
+                ],
+                if (!data.shepherd && marriageProfile != null) ...[
+                  const SizedBox(height: 14),
+                  marriageProfile!,
+                ],
+                if (!data.shepherd && aboutYouProfile != null) ...[
+                  const SizedBox(height: 14),
+                  aboutYouProfile!,
                 ],
                 const SizedBox(height: 28),
                 const _SectionLabel('MEMBERSHIP'),

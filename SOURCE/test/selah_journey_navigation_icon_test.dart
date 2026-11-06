@@ -1,11 +1,12 @@
-import 'dart:io';
 import 'dart:ui' as ui;
 
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:selah/config/selah_native_identity_policy.dart';
 import 'package:selah/dev/dev_menu_directions.dart';
+import 'package:selah/draft/selah_draft_runtime.dart';
 import 'package:selah/services/selah_account_state.dart';
 import 'package:selah/services/selah_developer_access.dart';
 import 'package:selah/theme/selah_colors.dart';
@@ -17,8 +18,8 @@ import 'package:selah/widgets/selah_shell_navigation.dart';
 
 const _capture = bool.fromEnvironment('SELAH_JOURNEY_NAV_ICON_CAPTURE');
 const _boundary = ValueKey('journey-navigation-candidate');
-const _font = 'PoppinsJourneyNavigation';
-const _candidates = 'visual/candidates/browse_gallery_filters_2026_10_09';
+const _font = 'Figtree';
+const _candidates = 'visual/candidates/still_water_navigation_2026_11_06';
 
 const _items = [
   FloatingNavItem(icon: Icons.search, label: 'Browse'),
@@ -93,6 +94,46 @@ Finder _barGesture() => find.descendant(
   matching: find.byType(GestureDetector),
 );
 
+Finder _dockGlyph(Finder cell, FloatingNavItem item) => find.descendant(
+  of: cell,
+  matching: item.label == 'Network'
+      ? find.byIcon(item.icon)
+      : find.byType(CustomPaint),
+);
+
+// Canvas Paint serializes logical widths to float32, including LOCK's 1.7/2.2.
+double _paintStroke(double width) => (Paint()..strokeWidth = width).strokeWidth;
+
+void _expectDockGeometry(WidgetTester tester) {
+  final dock = find.byType(FloatingNavBar);
+  final position = tester.widget<Positioned>(
+    find.descendant(of: dock, matching: find.byType(Positioned)).first,
+  );
+  expect((position.left, position.right, position.bottom), (0, 0, 0));
+  final rect = tester.getRect(dock);
+  expect(rect.left, 0);
+  expect(rect.right, 393);
+  expect(rect.bottom, 852);
+  expect(rect.height, 81);
+  final surface = tester.widget<Container>(
+    find.descendant(of: dock, matching: find.byType(Container)).first,
+  );
+  expect(surface.padding, const EdgeInsets.fromLTRB(6, 8, 6, 26));
+  final decoration = surface.decoration! as BoxDecoration;
+  expect(decoration.color, SelahColors.surface);
+  expect(
+    decoration.border,
+    const Border(top: BorderSide(color: SelahColors.line)),
+  );
+  expect(decoration.borderRadius, isNull);
+  expect(decoration.boxShadow, isNull);
+  expect(decoration.gradient, isNull);
+  expect(
+    find.descendant(of: dock, matching: find.byType(BackdropFilter)),
+    findsNothing,
+  );
+}
+
 Future<void> _snapshot(WidgetTester tester, String name) async {
   final boundary = tester.renderObject<RenderRepaintBoundary>(
     find.byKey(_boundary),
@@ -119,23 +160,8 @@ void main() {
     if (!_capture) {
       return;
     }
-    final font = FontLoader(_font);
-    for (final weight in [
-      'ExtraLight',
-      'Light',
-      'Regular',
-      'Medium',
-      'SemiBold',
-      'Bold',
-    ]) {
-      font.addFont(
-        Future.value(
-          ByteData.sublistView(
-            File('assets/fonts/Poppins-$weight.ttf').readAsBytesSync(),
-          ),
-        ),
-      );
-    }
+    final font = FontLoader(_font)
+      ..addFont(rootBundle.load('assets/fonts/Figtree[wght].ttf'));
     final icons = FontLoader('MaterialIcons')
       ..addFont(rootBundle.load('fonts/MaterialIcons-Regular.otf'));
     await Future.wait([font.load(), icons.load()]);
@@ -146,7 +172,13 @@ void main() {
     SelahText.testReadingFontFamily = _capture ? _font : null;
     SelahAccountState.resetForTesting();
     SelahDeveloperAccess.resetAuthorizationForTesting();
-    SelahDeveloperAccess.setAuthorizedForTesting(true);
+    expect(
+      SelahDraftRuntime.activate(
+        bundleId: SelahNativeIdentityPolicy.productionBundleId,
+      ),
+      isTrue,
+      reason: 'Use the real private-draft admission define for these tests.',
+    );
     SelahDevMenuDesign.instance.resetForTesting();
     SelahInteractionStyle.restoreDefaults();
     haptics.clear();
@@ -160,6 +192,7 @@ void main() {
   tearDown(() {
     SelahDevMenuDesign.instance.resetForTesting();
     SelahDeveloperAccess.resetAuthorizationForTesting();
+    SelahDraftRuntime.stop();
     SelahInteractionStyle.restoreDefaults();
     SelahText.useTestFontStubs = false;
     SelahText.testReadingFontFamily = null;
@@ -234,34 +267,40 @@ void main() {
 
   for (final selected in [0, 1]) {
     testWidgets(
-      'shared bar retains Journey size and tint at selected $selected',
+      'Still Water dock paints the locked Journey outline at selected $selected',
       (tester) async {
         await _mount(tester, _app(selected: selected));
-        final finder = find.byType(SelahJourneyIcon);
+        final cell = find.byKey(const ValueKey('floating-nav-item-1'));
+        final finder = _dockGlyph(cell, _items[1]);
         expect(finder, findsOneWidget);
-        final glyph = tester.widget<SelahJourneyIcon>(finder);
-        expect(glyph.size, SelahNavBarMetrics.iconSize);
-        expect(tester.getSize(finder), const Size.square(22));
+        expect(tester.getSize(finder), const Size.square(23));
+        final color = selected == 1 ? SelahColors.lake : SelahColors.muted;
+        final stroke = _paintStroke(selected == 1 ? 2.2 : 1.7);
         expect(
-          glyph.color,
-          selected == 1 ? SelahColors.foreground : SelahColors.ink(.45),
-        );
-        final scale = tester.widget<AnimatedScale>(
-          find.ancestor(of: finder, matching: find.byType(AnimatedScale)),
-        );
-        expect(scale.scale, 1);
-        final position = tester
-            .widgetList<Positioned>(
-              find.descendant(
-                of: find.byType(FloatingNavBar),
-                matching: find.byType(Positioned),
-              ),
+          tester.renderObject<RenderCustomPaint>(finder),
+          paints
+            ..circle(
+              x: 4,
+              y: 19,
+              radius: 1.6,
+              color: color,
+              strokeWidth: stroke,
             )
-            .first;
-        expect(position.left, SelahNavBarMetrics.sideInset);
-        expect(position.right, SelahNavBarMetrics.sideInset);
-        expect(position.bottom, 0);
-        expect(find.byIcon(Icons.search), findsOneWidget);
+            ..circle(
+              x: 20,
+              y: 7,
+              radius: 1.6,
+              color: color,
+              strokeWidth: stroke,
+            )
+            ..path(
+              color: color,
+              strokeWidth: stroke,
+              style: PaintingStyle.stroke,
+            ),
+        );
+        _expectDockGeometry(tester);
+        expect(find.byType(SelahJourneyIcon), findsNothing);
         expect(find.byIcon(Icons.route_outlined), findsNothing);
         expect(tester.takeException(), isNull);
       },
@@ -271,46 +310,45 @@ void main() {
   for (final role in [('Seeker', _items), ('Shepherd', _shepherdItems)]) {
     for (var selected = 0; selected < role.$2.length; selected++) {
       testWidgets(
-        '${role.$1} navigation gives every selected/inactive glyph the same 22 px size at tab $selected',
+        '${role.$1} dock keeps 23 px icons and lake/muted labels at tab $selected',
         (tester) async {
           await _mount(tester, _app(selected: selected, items: role.$2));
           for (var index = 0; index < role.$2.length; index++) {
             final item = role.$2[index];
             final cell = find.byKey(ValueKey('floating-nav-item-$index'));
-            final glyph = find.descendant(
-              of: cell,
-              matching: item.useJourneyGlyph
-                  ? find.byType(SelahJourneyIcon)
-                  : find.byIcon(item.icon),
-            );
+            final glyph = _dockGlyph(cell, item);
             expect(glyph, findsOneWidget);
-            expect(
-              tester.getSize(glyph),
-              const Size.square(SelahNavBarMetrics.iconSize),
-            );
-            final scale = tester.widget<AnimatedScale>(
-              find.ancestor(of: glyph, matching: find.byType(AnimatedScale)),
-            );
-            expect(scale.scale, 1);
-            if (item.useJourneyGlyph) {
-              final painter = tester
-                  .widgetList<CustomPaint>(
-                    find.descendant(
-                      of: glyph,
-                      matching: find.byType(CustomPaint),
-                    ),
-                  )
-                  .map((paint) => paint.painter)
-                  .whereType<SelahJourneyIconPainter>()
-                  .single;
-              expect(painter.design, SelahJourneyIconDesign.couple);
+            expect(tester.getSize(glyph), const Size.square(23));
+            final active = index == selected;
+            final color = active ? SelahColors.lake : SelahColors.muted;
+            if (item.label == 'Network') {
+              final icon = tester.widget<Icon>(glyph);
+              expect((icon.size, icon.color), (23, color));
             } else {
               expect(
-                tester.widget<Icon>(glyph).size,
-                SelahNavBarMetrics.iconSize,
+                tester.renderObject<RenderCustomPaint>(glyph),
+                paints..path(
+                  color: color,
+                  strokeWidth: _paintStroke(active ? 2.2 : 1.7),
+                  style: PaintingStyle.stroke,
+                ),
               );
             }
+            final label = find.descendant(
+              of: cell,
+              matching: find.text(item.label),
+            );
+            final style = tester.widget<Text>(label).style!;
+            expect(
+              (style.fontSize, style.fontWeight, style.color),
+              (11, FontWeight.w500, color),
+            );
+            expect(
+              tester.getTopLeft(label).dy - tester.getBottomLeft(glyph).dy,
+              4,
+            );
           }
+          _expectDockGeometry(tester);
           expect(tester.takeException(), isNull);
         },
       );
@@ -348,65 +386,97 @@ void main() {
     expect(tester.takeException(), isNull);
   });
 
-  testWidgets('Journey glyph retains dimming and the existing badge shoulder', (
-    tester,
-  ) async {
-    await _mount(
-      tester,
-      _app(
-        selected: 1,
-        items: [
-          _items.first,
-          const FloatingNavItem(
-            icon: Icons.route_outlined,
-            label: 'Journey',
-            useJourneyGlyph: true,
-            dimmed: true,
-            dot: true,
-            badge: 3,
-          ),
-          ..._items.skip(2),
-        ],
-      ),
-    );
-    final glyph = tester.widget<SelahJourneyIcon>(find.byType(SelahJourneyIcon));
-    expect(glyph.color, SelahColors.foreground.withValues(alpha: .58));
-    expect(find.text('3'), findsOneWidget);
-    expect(tester.takeException(), isNull);
-  });
-
-  for (final design in SelahMenuDesign.values.skip(1)) {
-    testWidgets('${design.name} uses the same Journey glyph and destination', (
-      tester,
-    ) async {
-      expect(_chooseMenu(design), isTrue);
-      final calls = <int>[];
-      await _mount(tester, _app(onTap: calls.add));
-      if (design.opensMenu) {
-        await tester.tap(find.byKey(const ValueKey('menu-open')));
-        await tester.pumpAndSettle();
-      }
-      final finder = find.byType(SelahJourneyIcon);
-      expect(finder, findsOneWidget);
-      final glyph = tester.widget<SelahJourneyIcon>(finder);
-      expect(
-        (glyph.size, glyph.color),
-        (
-          24,
-          design == SelahMenuDesign.fab
-              ? SelahColors.onAction
-              : SelahColors.foreground,
+  testWidgets(
+    'Journey badge retains unread semantics and locked lake styling',
+    (tester) async {
+      await _mount(
+        tester,
+        _app(
+          selected: 1,
+          items: [
+            _items.first,
+            const FloatingNavItem(
+              icon: Icons.route_outlined,
+              label: 'Journey',
+              useJourneyGlyph: true,
+              dimmed: true,
+              dot: true,
+              badge: 3,
+            ),
+            ..._items.skip(2),
+          ],
         ),
       );
-      final destination = find.byKey(const ValueKey('menu-destination-1'));
-      await tester.ensureVisible(destination);
-      await tester.tap(destination);
-      await tester.pumpAndSettle();
-      expect(calls, [1]);
-      expect(selectionTicks(), 1);
+      final cell = find.byKey(const ValueKey('floating-nav-item-1'));
+      final glyph = _dockGlyph(cell, _items[1]);
+      expect(tester.getSize(glyph), const Size.square(23));
+      expect(
+        tester.renderObject<RenderCustomPaint>(glyph),
+        paints..path(
+          color: SelahColors.lake,
+          strokeWidth: _paintStroke(2.2),
+          style: PaintingStyle.stroke,
+        ),
+      );
+      final semantics = tester.ensureSemantics();
+      try {
+        final data = tester.getSemantics(cell).getSemanticsData();
+        expect((data.label, data.value), ('Journey', '3 unread'));
+      } finally {
+        semantics.dispose();
+      }
+      expect(find.text('3'), findsOneWidget);
       expect(tester.takeException(), isNull);
-    });
+    },
+  );
+
+  for (final design in SelahMenuDesign.values.skip(1)) {
+    testWidgets(
+      '${design.name} selection retains the locked dock and destination',
+      (tester) async {
+        expect(_chooseMenu(design), isTrue);
+        final calls = <int>[];
+        await _mount(tester, _app(onTap: calls.add));
+        expect(SelahDevMenuDesign.instance.effectiveDesign, design);
+        final destination = find.byKey(const ValueKey('floating-nav-item-1'));
+        final finder = _dockGlyph(destination, _items[1]);
+        expect(finder, findsOneWidget);
+        expect(tester.getSize(finder), const Size.square(23));
+        _expectDockGeometry(tester);
+        expect(find.byKey(const ValueKey('menu-open')), findsNothing);
+        expect(find.byKey(const ValueKey('menu-destination-1')), findsNothing);
+        await tester.tapAt(tester.getCenter(destination));
+        await tester.pumpAndSettle();
+        expect(calls, [1]);
+        expect(selectionTicks(), 1);
+        expect(tester.takeException(), isNull);
+      },
+    );
   }
+
+  test(
+    'legacy menu selection retains revision and developer authority guards',
+    () {
+      final generation = SelahAccountState.generation;
+      final revision = SelahDevMenuDesign.instance.revision;
+      expect(_chooseMenu(SelahMenuDesign.grid), isTrue);
+      expect(
+        SelahDevMenuDesign.instance.select(
+          SelahMenuDesign.fab,
+          expectedGeneration: generation,
+          expectedRevision: revision,
+        ),
+        isFalse,
+      );
+      expect(SelahDevMenuDesign.instance.effectiveDesign, SelahMenuDesign.grid);
+      SelahDraftRuntime.stop();
+      expect(_chooseMenu(SelahMenuDesign.sideMenu), isFalse);
+      expect(
+        SelahDevMenuDesign.instance.effectiveDesign,
+        SelahMenuDesign.current,
+      );
+    },
+  );
 
   if (_capture) {
     for (final selected in [0, 1]) {

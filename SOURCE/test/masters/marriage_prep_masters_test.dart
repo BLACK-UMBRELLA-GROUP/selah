@@ -29,7 +29,10 @@ const _masters = {
   'L09_marriage_prep__all_done',
   'L09_marriage_prep__didnt_save',
 };
-final _capture = MasterCaptureHarness(feature: 'MARRIAGE_PREP');
+final _capture = MasterCaptureHarness(
+  feature: 'MARRIAGE_PREP',
+  version: 'V1_1',
+);
 
 Finder _key(String value) => find.byKey(ValueKey<String>(value));
 

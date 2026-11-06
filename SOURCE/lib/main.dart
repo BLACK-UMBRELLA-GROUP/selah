@@ -25,6 +25,11 @@ import 'dev/selah_request_account_session.dart';
 import 'theme/selah_interaction_style.dart';
 import 'models/selah_faith_profile_controller.dart';
 import 'screens/onboarding/selah_faith_profile_flow.dart';
+import 'models/selah_marriage_values_controller.dart';
+import 'screens/onboarding/selah_marriage_values_flow.dart';
+import 'screens/onboarding/article9_consent_screen.dart';
+import 'screens/onboarding/selah_languages_flow.dart';
+import 'models/selah_languages_controller.dart';
 
 final selahNavigatorKey = GlobalKey<NavigatorState>();
 final selahKeyboardDismissNavigatorObserver =
@@ -208,11 +213,40 @@ class _SelahDraftRootState extends State<SelahDraftRoot> {
   bool _opening = false;
   bool _signup = false;
   bool _faith = false;
+  bool _marriage = false;
+  bool _consent = false;
+  bool _languages = false;
+  bool _faithSkipped = false;
+  SelahConsentPreviewState _consentPreview = SelahConsentPreviewState.idle;
+  int _faithInitialQuestion = 1;
+  int _marriageInitialQuestion = 1;
   int _session = 0;
   int _profileGeneration = 0;
   late SelahRequestAccountSession _accountSession = _newAccountSession();
   late SelahFaithProfileController _faithController = _newFaithController(
     _accountSession,
+  );
+
+  late SelahMarriageValuesController _marriageController =
+      _newMarriageController(_accountSession);
+
+  SelahMarriageValuesController _newMarriageController(
+    SelahRequestAccountSession owner,
+  ) => SelahMarriageValuesController(
+    canAct: () => mounted && owner.current,
+    read: () => owner.marriageAnswers,
+    save: owner.saveMarriageValues,
+  );
+
+  late SelahLanguagesController _languagesController = _newLanguagesController(
+    _accountSession,
+  );
+  SelahLanguagesController _newLanguagesController(
+    SelahRequestAccountSession owner,
+  ) => SelahLanguagesController(
+    canAct: () => mounted && owner.current,
+    read: () => owner.details.languages,
+    save: owner.saveLanguages,
   );
 
   SelahRequestAccountSession _newAccountSession() {
@@ -239,11 +273,17 @@ class _SelahDraftRootState extends State<SelahDraftRoot> {
   void _replaceProfileSession() {
     final oldSession = _accountSession;
     final oldController = _faithController;
+    final oldMarriageController = _marriageController;
+    final oldLanguagesController = _languagesController;
     _profileGeneration++;
     _accountSession = _newAccountSession();
     _faithController = _newFaithController(_accountSession);
+    _marriageController = _newMarriageController(_accountSession);
+    _languagesController = _newLanguagesController(_accountSession);
     WidgetsBinding.instance.addPostFrameCallback((_) {
       oldController.dispose();
+      oldMarriageController.dispose();
+      oldLanguagesController.dispose();
       oldSession.dispose();
     });
   }
@@ -259,6 +299,9 @@ class _SelahDraftRootState extends State<SelahDraftRoot> {
       setState(() {
         _signup = true;
         _faith = false;
+        _marriage = false;
+        _consent = false;
+        _languages = false;
         _home = false;
         _opening = false;
       });
@@ -270,6 +313,8 @@ class _SelahDraftRootState extends State<SelahDraftRoot> {
     _invite.removeListener(_inviteChanged);
     _invite.dispose();
     _faithController.dispose();
+    _marriageController.dispose();
+    _languagesController.dispose();
     _accountSession.dispose();
     super.dispose();
   }
@@ -286,6 +331,13 @@ class _SelahDraftRootState extends State<SelahDraftRoot> {
     setState(() {
       _signup = true;
       _faith = false;
+      _marriage = false;
+      _faithInitialQuestion = 1;
+      _marriageInitialQuestion = 1;
+      _consent = false;
+      _languages = false;
+      _faithSkipped = false;
+      _consentPreview = SelahConsentPreviewState.idle;
       _home = false;
       _opening = false;
       _session++;
@@ -319,6 +371,50 @@ class _SelahDraftRootState extends State<SelahDraftRoot> {
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
                 Text('Page options', style: SelahText.heading(size: 18)),
+                if (_languages) ...[
+                  TextButton(
+                    key: const ValueKey('languages_saving'),
+                    onPressed: () => choose(_languagesController.showSaving),
+                    child: const Text('Languages · saving'),
+                  ),
+                  TextButton(
+                    key: const ValueKey('languages_failed'),
+                    onPressed: () => choose(_languagesController.showFailure),
+                    child: const Text("Languages · didn't save"),
+                  ),
+                ],
+                if (_consent) ...[
+                  TextButton(
+                    key: const ValueKey('consent_saving'),
+                    onPressed: () => choose(
+                      () => setState(
+                        () => _consentPreview = SelahConsentPreviewState.saving,
+                      ),
+                    ),
+                    child: const Text('Consent · saving'),
+                  ),
+                  TextButton(
+                    key: const ValueKey('consent_failed'),
+                    onPressed: () => choose(
+                      () => setState(
+                        () => _consentPreview = SelahConsentPreviewState.failed,
+                      ),
+                    ),
+                    child: const Text("Consent · didn't save"),
+                  ),
+                ],
+                if (_marriage) ...[
+                  TextButton(
+                    key: const ValueKey('marriage_saving'),
+                    onPressed: () => choose(_marriageController.showSaving),
+                    child: const Text('Marriage · saving'),
+                  ),
+                  TextButton(
+                    key: const ValueKey('marriage_failed'),
+                    onPressed: () => choose(_marriageController.showFailure),
+                    child: const Text("Marriage · didn't save"),
+                  ),
+                ],
                 if (_faith) ...[
                   TextButton(
                     key: const ValueKey('faith_saving'),
@@ -371,6 +467,9 @@ class _SelahDraftRootState extends State<SelahDraftRoot> {
     _opening = false;
     _signup = false;
     _faith = false;
+    _marriage = false;
+    _consent = false;
+    _languages = false;
     _session++;
   });
   @override
@@ -378,18 +477,90 @@ class _SelahDraftRootState extends State<SelahDraftRoot> {
       SelahShepherdInviteScope(controller: _invite, child: _content(context));
 
   Widget _content(BuildContext context) {
-    if (_signup || _faith) {
+    final profileOwner = _accountSession;
+    if (_signup || _faith || _marriage || _consent || _languages) {
       return Stack(
         fit: StackFit.expand,
         children: [
-          if (_faith)
+          if (_languages)
+            SelahLanguagesFlow(
+              controller: _languagesController,
+              onBack: () => setState(() {
+                _languages = false;
+                _marriage = true;
+                _marriageInitialQuestion = 7;
+              }),
+              onSaved: () => _explore(false),
+            )
+          else if (_consent)
+            Article9ConsentScreen(
+              devPreview: true,
+              previewState: _consentPreview,
+              onBack: () => setState(() {
+                _consent = false;
+                _signup = true;
+              }),
+              onDecision: (granted) {
+                if (!mounted ||
+                    !identical(profileOwner, _accountSession) ||
+                    !profileOwner.current) {
+                  return;
+                }
+                if (!granted) {
+                  if (!profileOwner.clearFaithProfile()) return;
+                  _faithController.dispose();
+                  _faithController = _newFaithController(profileOwner);
+                }
+                setState(() {
+                  _consent = false;
+                  _faithSkipped = !granted;
+                  _faith = granted;
+                  _marriage = !granted;
+                  _faithInitialQuestion = 1;
+                  _marriageInitialQuestion = 1;
+                  _consentPreview = SelahConsentPreviewState.idle;
+                });
+                if (!granted) {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(
+                      content: Text(
+                        'No problem. You can answer these later in Settings.',
+                      ),
+                    ),
+                  );
+                }
+              },
+            )
+          else if (_marriage)
+            SelahMarriageValuesFlow(
+              key: ValueKey('marriage-$_session'),
+              controller: _marriageController,
+              initialQuestion: _marriageInitialQuestion,
+              onSaved: () => setState(() {
+                _marriage = false;
+                _languages = true;
+              }),
+              onBack: () => setState(() {
+                _marriage = false;
+                _faith = !_faithSkipped;
+                _consent = _faithSkipped;
+                _faithInitialQuestion = 7;
+              }),
+            )
+          else if (_faith)
             SelahFaithProfileFlow(
               key: ValueKey('faith-$_session'),
               controller: _faithController,
-              onSaved: () => _explore(false),
+              initialQuestion: _faithInitialQuestion,
+              onSaved: () => setState(() {
+                _faith = false;
+                _marriage = true;
+                _marriageInitialQuestion = 1;
+              }),
               onBack: () => setState(() {
                 _faith = false;
-                _signup = true;
+                _marriage = false;
+                _consent = true;
               }),
             )
           else
@@ -398,7 +569,8 @@ class _SelahDraftRootState extends State<SelahDraftRoot> {
               controller: _invite,
               onContinue: () => setState(() {
                 _signup = false;
-                _faith = true;
+                _consent = true;
+                _consentPreview = SelahConsentPreviewState.idle;
               }),
             ),
           if (SelahDraftRuntime.active &&
@@ -425,6 +597,9 @@ class _SelahDraftRootState extends State<SelahDraftRoot> {
                     setState(() {
                       _signup = false;
                       _faith = false;
+                      _marriage = false;
+                      _consent = false;
+                      _languages = false;
                       _home = true;
                     });
                   } else {
@@ -515,6 +690,7 @@ class _SelahDraftRootState extends State<SelahDraftRoot> {
       key: ValueKey('selah-draft-session-$_session'),
       canAct: () => mounted && SelahDraftRuntime.active,
       accountSession: _accountSession,
+      faithConsentSkipped: _faithSkipped,
       initialShepherdRole: _shepherd,
       initialShepherdInviteReview: _shepherd && _invite.pending,
       onRoleChanged: (value) => _shepherd = value,

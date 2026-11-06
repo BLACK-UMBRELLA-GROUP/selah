@@ -1,10 +1,4 @@
-// Chapter 2 — Your Profile. Topics: Photos, Location, Christian tradition,
-// faith journey, Country of Birth, Nationality, Ethnicity and Languages.
-// Each (except Photos)
-// follows About You -> Compatibility -> Flexibility, with a dynamic Hard
-// Requirement where the spec supports it. This chapter keeps the
-// interleaved About+Compatibility pattern the restructure explicitly
-// preserved for Chapter 2 (only Ch3/Ch4 were separated).
+// Profile setup: existing photos/location, LOCKed faith and marriage, then languages.
 
 import 'package:flutter/material.dart';
 import '../../widgets/selah_profile_image.dart';
@@ -14,6 +8,12 @@ import '../../models/onboarding_question.dart';
 import '../../models/selah_faith_profile_controller.dart';
 import '../../models/selah_faith_profile_details.dart';
 import 'selah_faith_profile_flow.dart';
+import 'selah_marriage_values_flow.dart';
+import 'selah_languages_flow.dart';
+import '../../models/selah_marriage_values_controller.dart';
+import '../../models/selah_marriage_values_details.dart';
+import '../../models/selah_non_faith_profile_save.dart';
+import '../../models/selah_languages_controller.dart';
 import '../../services/selah_auth.dart';
 import '../../services/selah_account_state.dart';
 import '../../services/selah_consent_service.dart';
@@ -31,14 +31,11 @@ import '../../widgets/flexibility_choice.dart';
 import '../../widgets/onboarding_scaffold.dart';
 import '../../widgets/selah_onboarding_choice_card.dart';
 import '../../widgets/privacy_indicator.dart';
-import '../../widgets/searchable_list_picker.dart';
 import '../../widgets/selah_state_widgets.dart';
 import '../../widgets/selah_loading.dart';
 import 'bio_onboarding_flow.dart';
 import 'onboarding_stage_intro_screen.dart';
 import 'seeker_setup_navigation.dart';
-
-const int _totalSteps = 21;
 
 class Chapter2Flow extends StatefulWidget {
   final String? gender;
@@ -64,8 +61,12 @@ class _Chapter2FlowState extends State<Chapter2Flow> {
   String? _restoreError;
   String? _saveError;
   // LOCK 4 replaces the former five faith prompts with one seven-screen flow.
-  // Existing reference-question IDs9+ and saved contracts stay intact.
+  // Saved background fields remain untouched; LOCK 14 retires their prompts.
   static const int _faithStep = 21;
+  static const int _marriageStep = 22;
+  int _marriageInitialQuestion = 1;
+  SelahMarriageValuesController? _marriageController;
+  SelahLanguagesController? _languagesController;
   Map<String, dynamic> _faithProfileData = {};
   Map<String, dynamic> _savedPreferences = {};
   int _faithInitialQuestion = 1;
@@ -90,9 +91,42 @@ class _Chapter2FlowState extends State<Chapter2Flow> {
         },
       );
 
+  SelahMarriageValuesController get _marriageFlowController =>
+      _marriageController ??= SelahMarriageValuesController(
+        canAct: () => _canProceed,
+        read: () => selahMarriageValuesAnswersFromDetails(_currentDetails),
+        save: (answers) async {
+          if (!_canProceed ||
+              _step != _marriageStep ||
+              ModalRoute.of(context)?.isCurrent != true) {
+            return false;
+          }
+          _applySavedDetails(
+            selahApplyMarriageValuesAnswers(_currentDetails, answers),
+          );
+          return _persistCheckpoint(_marriageStep);
+        },
+      );
+  SelahLanguagesController get _languagesFlowController =>
+      _languagesController ??= SelahLanguagesController(
+        canAct: () => _canProceed,
+        read: () => _currentDetails.languages,
+        save: (values) async {
+          if (!_canProceed ||
+              _step != 18 ||
+              ModalRoute.of(context)?.isCurrent != true) {
+            return false;
+          }
+          _languages = List.of(values);
+          return _persistCheckpoint(18, finalCheckpoint: true);
+        },
+      );
+
   @override
   void dispose() {
     _faithController?.dispose();
+    _marriageController?.dispose();
+    _languagesController?.dispose();
     super.dispose();
   }
 
@@ -359,11 +393,7 @@ class _Chapter2FlowState extends State<Chapter2Flow> {
       languageFlex: _languageFlex,
     );
     return {
-      ..._savedPreferences,
-      for (final entry in updated.entries)
-        entry.key: entry.value is Map && _savedPreferences[entry.key] is Map
-            ? {..._savedPreferences[entry.key] as Map, ...entry.value as Map}
-            : entry.value,
+      ...selahMergeAskedProfilePreferences(_savedPreferences, updated),
       if (_faithProfileData.isNotEmpty) 'faith_profile': _faithProfileData,
     };
   }
@@ -381,7 +411,8 @@ class _Chapter2FlowState extends State<Chapter2Flow> {
     if (saved && (_location ?? '').trim().isNotEmpty) {
       saved = await _persistCheckpoint(1);
     }
-    if (saved && _article9Consent == true) {
+    if (saved &&
+        (_article9Consent == true || step == _marriageStep || step == 18)) {
       saved = await _persistCheckpoint(step < 4 ? 4 : step);
     }
     if (!mounted) return;
@@ -433,16 +464,32 @@ class _Chapter2FlowState extends State<Chapter2Flow> {
       )) {
         return false;
       }
+    } else if (_article9Consent == false &&
+        (step == _marriageStep || step == 18 || finalCheckpoint)) {
+      final marriage = selahMarriageValuesAnswersFromDetails(_currentDetails);
+      final location = _currentPreferences['location'];
+      if (!await SelahSeekerDetailsService.saveNonFaithDetails(
+        languages: step == 18 || finalCheckpoint ? List.of(_languages) : null,
+        marriageValues: marriage.canSave ? marriage : null,
+        locationPreference: location is Map
+            ? Map<String, dynamic>.from(location)
+            : null,
+        expectedUserId: _owner,
+      )) {
+        return false;
+      }
     }
     return _canProceed;
   }
 
-  Future<void> _goToBioTransition() async {
+  Future<void> _goToBioTransition({bool checkpointSaved = false}) async {
     if (!_canProceed || _saving || ModalRoute.of(context)?.isCurrent != true) {
       return;
     }
     setState(() => _saving = true);
-    final saved = await _persistCheckpoint(_step, finalCheckpoint: true);
+    final saved =
+        checkpointSaved ||
+        await _persistCheckpoint(_step, finalCheckpoint: true);
     if (!mounted) return;
     if (!saved || !_canProceed || ModalRoute.of(context)?.isCurrent != true) {
       setState(() {
@@ -455,6 +502,9 @@ class _Chapter2FlowState extends State<Chapter2Flow> {
     final devPreview = _devPreview;
     final owner = _owner;
     final ownerGeneration = _ownerGeneration;
+    final signUpPreferences = Map<String, dynamic>.unmodifiable(
+      _currentDetails.preferences,
+    );
     var stageLeaving = false;
     AppState.instance.saveChapter2(
       photos: _photos,
@@ -481,8 +531,21 @@ class _Chapter2FlowState extends State<Chapter2Flow> {
             stageLeaving = true;
             Navigator.of(stageContext).pushReplacement(
               MaterialPageRoute(
-                builder: (_) =>
-                    BioOnboardingFlow(gender: gender, devPreview: devPreview),
+                builder: (_) => BioOnboardingFlow(
+                  gender: gender,
+                  devPreview: devPreview,
+                  readSignUpPreferences: () =>
+                      (devPreview
+                          ? SelahDeveloperAccess.canUseDeveloperTools
+                          : owner != null &&
+                                SelahAuth.currentUser?.id == owner &&
+                                SelahAccountState.isCurrent(
+                                  owner,
+                                  ownerGeneration,
+                                ))
+                      ? signUpPreferences
+                      : const <String, dynamic>{},
+                ),
               ),
             );
           }
@@ -502,20 +565,17 @@ class _Chapter2FlowState extends State<Chapter2Flow> {
   /// Null means not yet asked.
   bool? _article9Consent;
 
-  /// Steps 4–17 are the special-category block: Christian tradition, faith
-  /// journey, country of birth, nationality and ethnicity, with preference
-  /// and flexibility questions. Step 18 (languages) is NOT special
-  /// category, which is why the decline path lands there rather than
-  /// ending the chapter.
+  /// Only the LOCKed faith flow is skipped when consent is declined.
+  /// Marriage values and the existing languages field remain on both paths.
   static const int _firstArticle9Step = 4;
-  static const int _firstNonArticle9Step = 18;
+  static const int _firstNonArticle9Step = _marriageStep;
 
   /// Shown once, immediately before the first special-category question.
   ///
   /// Consent has to precede collection, so this sits between the location
   /// block and the faith/background block rather than at the end of the
-  /// chapter. Declining is a real path: it skips to languages and the
-  /// chapter completes normally. A decline that dead-ended would make the
+  /// chapter. Declining is a real path: it skips faith, then marriage and the
+  /// languages screen complete the chapter. A decline that dead-ended would make the
   /// consent not freely given, and therefore not valid consent at all.
   Future<void> _askArticle9Consent() async {
     if (!_canProceed) return;
@@ -530,6 +590,7 @@ class _Chapter2FlowState extends State<Chapter2Flow> {
             setState(() {
               _article9Consent = granted;
               _faithInitialQuestion = 1;
+              _marriageInitialQuestion = 1;
               _step = granted ? _faithStep : _firstNonArticle9Step;
             });
           },
@@ -572,36 +633,18 @@ class _Chapter2FlowState extends State<Chapter2Flow> {
       return;
     }
 
-    switch (_step) {
-      case 3:
-        _faithInitialQuestion = 1;
-        _goto(_faithStep);
-        return;
-      case 10: // Country compatibility -> skip Flexibility if skipped
-        _goto(_countrySkipped ? 12 : 11);
-        return;
-      case 13: // Nationality compatibility
-        _goto(_nationalitySkipped ? 15 : 14);
-        return;
-      case 16: // Ethnicity compatibility
-        _goto(_ethnicitySkipped ? 18 : 17);
-        return;
-      case 19: // Languages compatibility
-        if (_languageSkipped) {
-          _goToBioTransition();
-          return;
-        }
-        _goto(20);
-        return;
-      case 20:
-        _goToBioTransition();
-        return;
-      default:
-        if (_step < _totalSteps - 1) {
-          _goto(_step + 1);
-        } else {
-          _goToBioTransition();
-        }
+    if (_step == 3) {
+      _faithInitialQuestion = 1;
+      _goto(_faithStep);
+      return;
+    }
+    if (_step == 18) {
+      _goToBioTransition();
+      return;
+    }
+    final index = _activeStepIds.indexOf(_step);
+    if (index >= 0 && index + 1 < _activeStepIds.length) {
+      _goto(_activeStepIds[index + 1]);
     }
   }
 
@@ -619,40 +662,15 @@ class _Chapter2FlowState extends State<Chapter2Flow> {
     _next();
   }
 
-  /// Swipe-right-to-go-back — mirrors _next()'s conditional skip jumps
-  /// in reverse (Onboarding Rules & UX §SCREEN ANATOMY; see
-  /// onboarding_scaffold.dart's onSwipeBack doc comment for why this was
-  /// missing). Steps 12/15/18 have two possible predecessors depending
-  /// on whether that section's preference step was skipped; every other
-  /// step has exactly one, so a plain decrement is correct there.
   void _back() {
     if (!_canProceed || _saving) return;
-    switch (_step) {
-      case 9:
-        _faithInitialQuestion = 7;
-        _goto(_faithStep);
-        return;
-      case 12:
-        _goto(_countrySkipped ? 10 : 11);
-        return;
-      case 15:
-        _goto(_nationalitySkipped ? 13 : 14);
-        return;
-      case 18:
-        // THREE possible predecessors here since 2026-08-04. Someone who
-        // declined Article 9 consent jumped 3 -> 18 and never saw steps
-        // 4–17, so walking them backwards into questions they chose not to
-        // answer would be wrong twice over: it contradicts their decision,
-        // and it is the nagging that stops consent being freely given.
-        if (_article9Consent == false) {
-          _goto(_firstArticle9Step - 1);
-          return;
-        }
-        _goto(_ethnicitySkipped ? 16 : 17);
-        return;
-      default:
-        if (_step > 0) _goto(_step - 1);
+    if (_step == 18) {
+      _marriageInitialQuestion = 7;
+      _goto(_marriageStep);
+      return;
     }
+    final index = _activeStepIds.indexOf(_step);
+    if (index > 0) _goto(_activeStepIds[index - 1]);
   }
 
   int _firstIncompleteStep() {
@@ -682,30 +700,10 @@ class _Chapter2FlowState extends State<Chapter2Flow> {
       case _faithStep:
         final faith = selahFaithProfileAnswersFromDetails(_currentDetails);
         return faith.requiredComplete && faith.characterCount <= 150;
-      case 9:
-        return (_countryOfBirth ?? '').isNotEmpty;
-      case 10:
-        return _countrySkipped || _countryPrefs.isNotEmpty;
-      case 11:
-        return _countryFlex != null;
-      case 12:
-        return (_nationality ?? '').isNotEmpty;
-      case 13:
-        return _nationalitySkipped || _nationalityPrefs.isNotEmpty;
-      case 14:
-        return _nationalityFlex != null;
-      case 15:
-        return (_ethnicity ?? '').isNotEmpty;
-      case 16:
-        return _ethnicitySkipped || _ethnicityPrefs.isNotEmpty;
-      case 17:
-        return _ethnicityFlex != null;
+      case _marriageStep:
+        return selahMarriageValuesAnswersFromDetails(_currentDetails).canSave;
       case 18:
         return _languages.isNotEmpty;
-      case 19:
-        return _languageSkipped || _languagePrefs.isNotEmpty;
-      case 20:
-        return _languageFlex != null;
       default:
         return false;
     }
@@ -715,21 +713,15 @@ class _Chapter2FlowState extends State<Chapter2Flow> {
   // from this person's path. The displayed position must describe that path,
   // rather than count skipped questions as completed work. Before the consent
   // decision, the possible full path remains the provisional denominator.
-  List<int> get _activeStepIds {
-    final steps = <int>[0, 1, 2, 3];
-    if (_article9Consent != false) {
-      steps.add(_faithStep);
-      steps.addAll([
-        for (var step = 9; step < _firstNonArticle9Step; step++) step,
-      ]);
-    }
-    steps.addAll([18, 19, 20]);
-    if (_countrySkipped) steps.remove(11);
-    if (_nationalitySkipped) steps.remove(14);
-    if (_ethnicitySkipped) steps.remove(17);
-    if (_languageSkipped) steps.remove(20);
-    return steps;
-  }
+  List<int> get _activeStepIds => [
+    0,
+    1,
+    2,
+    3,
+    if (_article9Consent != false) _faithStep,
+    _marriageStep,
+    18,
+  ];
 
   int get _activeStepPosition {
     final index = _activeStepIds.indexOf(_step);
@@ -794,8 +786,36 @@ class _Chapter2FlowState extends State<Chapter2Flow> {
         initialQuestion: _faithInitialQuestion,
         onBack: _askArticle9Consent,
         onSaved: () {
-          if (_canProceed && _step == _faithStep) _goto(9);
+          if (_canProceed && _step == _faithStep) {
+            _marriageInitialQuestion = 1;
+            _goto(_marriageStep);
+          }
         },
+      );
+    }
+    if (_step == _marriageStep) {
+      return SelahMarriageValuesFlow(
+        controller: _marriageFlowController,
+        initialQuestion: _marriageInitialQuestion,
+        onBack: () {
+          if (!_canProceed) return;
+          if (_article9Consent == false) {
+            _askArticle9Consent();
+          } else {
+            _faithInitialQuestion = 7;
+            _goto(_faithStep);
+          }
+        },
+        onSaved: () {
+          if (_canProceed) _goto(18);
+        },
+      );
+    }
+    if (_step == 18) {
+      return SelahLanguagesFlow(
+        controller: _languagesFlowController,
+        onBack: _back,
+        onSaved: () => _goToBioTransition(checkpointSaved: true),
       );
     }
     late String question;
@@ -872,195 +892,11 @@ class _Chapter2FlowState extends State<Chapter2Flow> {
           onChanged: (v) => setState(() => _distanceFlex = v),
         );
         break;
-      case 9:
-        question = 'Which country were you born in?';
-        privacy = PrivacyLevel.unlock;
-        content = _SearchPickButton(
-          label: _countryOfBirth ?? 'Search countries…',
-          onTap: () async {
-            final result = await showSingleSearchPicker(
-              context,
-              selahCountryNames,
-              current: _countryOfBirth,
-            );
-            if (result != null && mounted) {
-              setState(() => _countryOfBirth = result);
-            }
-          },
-        );
-        break;
-      case 10:
-        question =
-            'Do you have any preferred countries of birth for your future spouse?';
-        content = _MultiPrefPicker(
-          selected: _countryPrefs,
-          skipped: _countrySkipped,
-          items: selahCountryNames,
-          onPick: (v) => setState(() {
-            _countryPrefs = v;
-            _countrySkipped = false;
-          }),
-          onSkip: () => setState(() {
-            _countryPrefs = [];
-            _countrySkipped = true;
-          }),
-        );
-        break;
-      case 11:
-        question =
-            'Would you be happy for SELAH to introduce people born outside your preferred countries if they appear to be a strong match?';
-        content = FlexibilityChoice(
-          greenText: "Yes, I'd be happy to consider them.",
-          yellowText: 'Maybe, depending on the person.',
-          redText: "No, I'd prefer to stay within my preferred countries.",
-          value: _countryFlex,
-          onChanged: (v) => setState(() => _countryFlex = v),
-        );
-        break;
-      case 12:
-        question = 'What is your nationality?';
-        privacy = PrivacyLevel.unlock;
-        content = _SearchPickButton(
-          label: _nationality ?? 'Search nationalities…',
-          onTap: () async {
-            final result = await showSingleSearchPicker(
-              context,
-              selahNationalityNames,
-              current: _nationality,
-            );
-            if (result != null && mounted) {
-              setState(() => _nationality = result);
-            }
-          },
-        );
-        break;
-      case 13:
-        question =
-            'Do you have any preferred nationalities for your future spouse?';
-        content = _MultiPrefPicker(
-          selected: _nationalityPrefs,
-          skipped: _nationalitySkipped,
-          items: selahNationalityNames,
-          onPick: (v) => setState(() {
-            _nationalityPrefs = v;
-            _nationalitySkipped = false;
-          }),
-          onSkip: () => setState(() {
-            _nationalityPrefs = [];
-            _nationalitySkipped = true;
-          }),
-        );
-        break;
-      case 14:
-        question =
-            'Would you be happy for SELAH to introduce people with other nationalities if they appear to be a strong match?';
-        content = FlexibilityChoice(
-          greenText: "Yes, I'd be happy to consider them.",
-          yellowText: 'Maybe, depending on the person.',
-          redText: "No, I'd prefer to stay within my preferred nationalities.",
-          value: _nationalityFlex,
-          onChanged: (v) => setState(() => _nationalityFlex = v),
-        );
-        break;
-      case 15:
-        question = 'Which ethnic background do you identify with?';
-        privacy = PrivacyLevel.unlock;
-        content = _SearchPickButton(
-          label: _ethnicity ?? 'Search ethnic backgrounds…',
-          onTap: () async {
-            final result = await showSingleSearchPicker(
-              context,
-              selahEthnicityNames,
-              current: _ethnicity,
-            );
-            if (result != null && mounted) setState(() => _ethnicity = result);
-          },
-        );
-        break;
-      case 16:
-        question =
-            'Do you have any preferred ethnic backgrounds for your future spouse?';
-        content = _MultiPrefPicker(
-          selected: _ethnicityPrefs,
-          skipped: _ethnicitySkipped,
-          items: selahEthnicityNames,
-          onPick: (v) => setState(() {
-            _ethnicityPrefs = v;
-            _ethnicitySkipped = false;
-          }),
-          onSkip: () => setState(() {
-            _ethnicityPrefs = [];
-            _ethnicitySkipped = true;
-          }),
-        );
-        break;
-      case 17:
-        question =
-            'Would you be happy for SELAH to introduce people from other ethnic backgrounds if they appear to be a strong match?';
-        content = FlexibilityChoice(
-          greenText: "Yes, I'd be happy to consider them.",
-          yellowText: 'Maybe, depending on the person.',
-          redText:
-              "No, I'd prefer to stay within my preferred ethnic backgrounds.",
-          value: _ethnicityFlex,
-          onChanged: (v) => setState(() => _ethnicityFlex = v),
-        );
-        break;
-      case 18:
-        question = 'Which languages do you speak fluently?';
-        privacy = PrivacyLevel.unlock;
-        content = _MultiPrefPicker(
-          selected: _languages,
-          skipped: false,
-          items: selahLanguageNames,
-          onPick: (v) => setState(() => _languages = v),
-          onSkip: null,
-          label: 'Select languages…',
-        );
-        break;
-      case 19:
-        question =
-            'Do you have any preferred languages for your future spouse?';
-        content = _MultiPrefPicker(
-          selected: _languagePrefs,
-          skipped: _languageSkipped,
-          items: selahLanguageNames,
-          onPick: (v) => setState(() {
-            _languagePrefs = v;
-            _languageSkipped = false;
-          }),
-          onSkip: () => setState(() {
-            _languagePrefs = [];
-            _languageSkipped = true;
-          }),
-        );
-        break;
-      case 20:
       default:
-        question =
-            "Would you be happy for SELAH to introduce people who don't speak your preferred languages if they appear to be a strong match?";
-        content = FlexibilityChoice(
-          greenText: "Yes, I'd be happy to consider them.",
-          yellowText: 'Maybe, depending on the person.',
-          redText: "No, I'd prefer to stay within my preferred languages.",
-          value: _languageFlex,
-          onChanged: (v) => setState(() => _languageFlex = v),
-        );
-        break;
+        return const SizedBox.shrink();
     }
 
-    final standaloneChoices = const {
-      2,
-      3,
-      4,
-      6,
-      7,
-      8,
-      11,
-      14,
-      17,
-      20,
-    }.contains(_step);
+    final standaloneChoices = const {2, 3}.contains(_step);
     return OnboardingScaffold(
       background: _background,
       chapterName: 'Your Profile',
@@ -1163,90 +999,6 @@ class _LargeSelect extends StatelessWidget {
   }
 }
 
-class _SearchPickButton extends StatelessWidget {
-  final String label;
-  final VoidCallback onTap;
-  const _SearchPickButton({required this.label, required this.onTap});
-
-  @override
-  Widget build(BuildContext context) {
-    return InkWell(
-      borderRadius: BorderRadius.circular(14),
-      onTap: onTap,
-      child: Container(
-        width: double.infinity,
-        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
-        decoration: BoxDecoration(
-          color: SelahColors.iconButtonBg,
-          border: Border.all(color: SelahColors.iconButtonBorder, width: 0.5),
-          borderRadius: BorderRadius.circular(14),
-        ),
-        child: Row(
-          children: [
-            Icon(Icons.search, color: SelahColors.ink(0.38), size: 18),
-            SizedBox(width: 10),
-            Expanded(child: Text(label, style: SelahText.body(size: 15))),
-          ],
-        ),
-      ),
-    );
-  }
-}
-
-class _MultiPrefPicker extends StatelessWidget {
-  final List<String> selected;
-  final bool skipped;
-  final List<String> items;
-  final ValueChanged<List<String>> onPick;
-  final VoidCallback? onSkip;
-  final String label;
-
-  const _MultiPrefPicker({
-    required this.selected,
-    required this.skipped,
-    required this.items,
-    required this.onPick,
-    required this.onSkip,
-    this.label = 'Select preferences…',
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        _SearchPickButton(
-          label: skipped
-              ? 'No preference'
-              : (selected.isEmpty ? label : selected.join(', ')),
-          onTap: () async {
-            final result = await showMultiSearchPicker(
-              context,
-              items,
-              current: selected,
-            );
-            if (result != null) onPick(result);
-          },
-        ),
-        if (onSkip != null) ...[
-          SizedBox(height: 10),
-          TextButton(
-            onPressed: onSkip,
-            child: Text(
-              'Skip — no preference',
-              style: SelahText.subtext(size: 12.5),
-            ),
-          ),
-        ],
-      ],
-    );
-  }
-}
-
-// Real device photo picking + Storage upload (OA-104) — replaced the
-// original mock 6-photo picsum pool picker on 2026-07-18 now that a
-// real Storage bucket exists. Developer Preview selects and processes a
-// real device photo locally, without uploading it or touching live data.
 class _PhotoGrid extends StatefulWidget {
   final List<String> photos;
   final bool devPreview;

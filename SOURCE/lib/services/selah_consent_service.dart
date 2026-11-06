@@ -1,7 +1,6 @@
 // Article 9 consent — Founder approved 2026-08-04.
 //
-// Chapter 2 asks for religious belief (sect, revert status) and ethnic
-// origin (ethnicity, and by inference country of birth and nationality).
+// Faith questions ask about church tradition and the member's faith journey.
 // Under UK GDPR these are SPECIAL-CATEGORY data, needing a lawful basis
 // beyond ordinary consent — realistically explicit consent, freely given,
 // specific, and separately recorded.
@@ -38,7 +37,7 @@ import 'selah_auth.dart';
 ///
 /// Date-based rather than sequential so the record is legible a year later
 /// without cross-referencing a changelog.
-const String kArticle9PolicyVersion = '2026-08-04';
+const String kArticle9PolicyVersion = '2026-11-06';
 
 /// Draft wording — FOR SOLICITOR REVIEW BEFORE PUBLIC LAUNCH.
 ///
@@ -49,20 +48,18 @@ const String kArticle9PolicyVersion = '2026-08-04';
 const String kArticle9ConsentTitle = 'Some of these questions are sensitive';
 
 const String kArticle9ConsentBody =
-    'The next questions ask about your faith and your background — your '
-    'sect, whether you have reverted to Christianity, your ethnicity, where you '
-    'were born and your nationality.\n\n'
+    'The next questions ask about your faith: your church tradition, how often '
+    'you’re at church, whether you’ve been baptised and how long you’ve been a Christian.\n\n'
     'UK data protection law treats these as special-category information '
-    'and asks us to get your explicit permission before recording them.\n\n'
-    'SELAH uses them only to find you compatible matches. Your actual '
-    'answers are never shown to anyone. Another member who unlocks your '
-    'compatibility sees a score — never what you wrote.\n\n'
-    'You can withdraw this permission at any time in Settings, and we will '
-    'delete these answers.';
+    'and asks us to get your clear permission before recording them.\n\n'
+    'Selah uses them only to find you compatible matches. Your Shepherd '
+    'can see your faith profile; other members see only what your profile shows.';
+
+const String kArticle9ConsentWithdrawalNote =
+    'You can withdraw this permission at any time in Settings, and we will delete these answers.';
 
 const String kArticle9ConsentDeclineNote =
-    'You can carry on without answering these. Some matches may be less '
-    'accurate.';
+    'You can carry on without answering. Some matches may be less accurate.';
 
 class SelahConsentService {
   SelahConsentService._();

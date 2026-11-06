@@ -81,7 +81,7 @@ class _SelahShepherdCirclesInboxScreenState
           SelahShepherdCircleSummary(
             threadId: 'dev-family-thread',
             seekerId: 'dev-seeker-aaliyah',
-            seekerFirstName: 'Aaliyah',
+            seekerFirstName: 'Rebecca',
             participantCount: 3,
             lastMessage: 'Let me know when you are ready to talk.',
             lastMessageAt: DateTime.now().subtract(const Duration(minutes: 8)),
@@ -701,7 +701,7 @@ class _SelahShepherdCircleScreenState extends State<SelahShepherdCircleScreen> {
           SelahFamilyMessage(
             id: 'dev-family-2',
             senderId: 'dev-circle-shepherd',
-            senderFirstName: 'Abdul',
+            senderFirstName: 'Peter',
             senderRelationship: 'father',
             senderRoleLabel: 'Main Shepherd',
             body: 'Hello to you too. We can all discuss it here.',
@@ -721,14 +721,14 @@ class _SelahShepherdCircleScreenState extends State<SelahShepherdCircleScreen> {
                     ? 'dev-circle-main-shepherd'
                     : widget.seekerId,
                 firstName: widget.viewerIsSeeker
-                    ? 'Abdul'
+                    ? 'Peter'
                     : widget.seekerFirstName,
                 roleLabel: widget.viewerIsSeeker ? 'Main Shepherd' : 'Seeker',
                 readAt: DateTime.now().subtract(const Duration(minutes: 4)),
               ),
               SelahFamilyMessageReader(
                 userId: 'dev-circle-additional-shepherd',
-                firstName: 'Hassan',
+                firstName: 'David',
                 roleLabel: 'Additional Shepherd',
                 readAt: DateTime.now().subtract(const Duration(minutes: 2)),
               ),
@@ -1102,14 +1102,14 @@ class _SelahShepherdCircleScreenState extends State<SelahShepherdCircleScreen> {
                 ),
                 SelahFamilyCircleParticipant(
                   userId: 'dev-circle-main-shepherd',
-                  firstName: 'Abdul',
+                  firstName: 'Peter',
                   memberRole: 'shepherd',
                   isMainShepherd: true,
                   isCurrentUser: !widget.viewerIsSeeker,
                 ),
                 const SelahFamilyCircleParticipant(
                   userId: 'dev-circle-additional-shepherd',
-                  firstName: 'Hassan',
+                  firstName: 'David',
                   memberRole: 'shepherd',
                   isMainShepherd: false,
                   isCurrentUser: false,

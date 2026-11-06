@@ -286,7 +286,9 @@ class _SeekerPostIdentityChoiceScreenState
                       ),
                       foregroundColor: SelahColors.foreground,
                       side: BorderSide(
-                        color: SelahColors.splashWordmark.withValues(alpha: .55),
+                        color: SelahColors.splashWordmark.withValues(
+                          alpha: .55,
+                        ),
                       ),
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(20),
@@ -379,6 +381,7 @@ class _SeekerOnboardingOverviewScreenState
   late int _ownerGeneration;
   bool _loading = true;
   bool _navigating = false;
+  SeekerDetails? _loadedDetails;
 
   @override
   void initState() {
@@ -482,6 +485,12 @@ class _SeekerOnboardingOverviewScreenState
         throwOnError: true,
       ),
     ]);
+    if (!mounted ||
+        SelahAuth.currentUser?.id != owner ||
+        !SelahAccountState.isCurrent(owner, _ownerGeneration)) {
+      throw StateError('Account changed.');
+    }
+    _loadedDetails = values[0] as SeekerDetails?;
     return seekerProfileSectionComplete(
       details: values[0] as SeekerDetails?,
       photoCount: (values[1] as List).length,
@@ -517,6 +526,18 @@ class _SeekerOnboardingOverviewScreenState
       return;
     }
     _navigating = true;
+    final preferences =
+        _loadedDetails?.preferences ?? const <String, dynamic>{};
+    final owner = _owner;
+    final generation = _ownerGeneration;
+    final devPreview = widget.devPreview;
+    Map<String, dynamic> readSignUpPreferences() =>
+        !devPreview &&
+            owner != null &&
+            SelahAuth.currentUser?.id == owner &&
+            SelahAccountState.isCurrent(owner, generation)
+        ? preferences
+        : const {};
     final Widget next = switch (_checkpoint!) {
       SeekerSetupCheckpoint.profile => Chapter2Flow(
         gender: gender,
@@ -525,10 +546,12 @@ class _SeekerOnboardingOverviewScreenState
       SeekerSetupCheckpoint.bio => BioOnboardingFlow(
         gender: gender,
         devPreview: widget.devPreview,
+        readSignUpPreferences: readSignUpPreferences,
       ),
       SeekerSetupCheckpoint.compatibility => ValuesPreferencesFlow(
         gender: gender!,
         devPreview: widget.devPreview,
+        readSignUpPreferences: readSignUpPreferences,
       ),
       SeekerSetupCheckpoint.review => ProfileReadyScreen(
         devPreview: widget.devPreview,

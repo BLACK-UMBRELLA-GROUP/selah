@@ -2978,7 +2978,7 @@ Widget buildSelahPauseFailureTestSurface({
     action: _JourneyLifecycleAction.pause,
     profile: const SeekerProfile(
       id: 'truthful-failure-test-profile',
-      firstName: 'Adam',
+      firstName: 'James',
       age: 30,
       city: 'London',
       photos: <String>[],
@@ -2993,7 +2993,7 @@ Widget buildSelahPauseFailureTestSurface({
 
 const _requestNewJourneyHoldTestProfile = SeekerProfile(
   id: 'request-new-journey-hold-test-profile',
-  firstName: 'Maryam',
+  firstName: 'Abigail',
   age: 30,
   city: 'London',
   photos: <String>[],
@@ -5385,7 +5385,7 @@ Widget buildSelahPauseDecisionTestSurface({
   required SelahJourneyPauseState state,
   required String viewerId,
   bool capacityAvailable = true,
-  String profileName = 'Adam',
+  String profileName = 'James',
   String profileGender = 'male',
   ValueChanged<SelahPauseAction>? onAction,
 }) => MaterialApp(

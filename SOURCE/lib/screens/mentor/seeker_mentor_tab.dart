@@ -84,7 +84,9 @@ class _SeekerMentorTabState extends State<SeekerMentorTab> {
   @override
   void dispose() {
     SelahDevScenario.instance.removeListener(_onScenarioChange);
-    SelahDeveloperAccess.authorizationChanges.removeListener(_onAuthorityChange);
+    SelahDeveloperAccess.authorizationChanges.removeListener(
+      _onAuthorityChange,
+    );
     SelahMentorLinkService.linkRevision.removeListener(_onLinkRevision);
     super.dispose();
   }
@@ -197,10 +199,12 @@ class _SeekerMentorTabState extends State<SeekerMentorTab> {
   }
 
   ShepherdHistoryConsentLoader get _consentLoader =>
-      widget.historyConsentLoader ?? SelahMentorLinkService.shepherdHistoryConsent;
+      widget.historyConsentLoader ??
+      SelahMentorLinkService.shepherdHistoryConsent;
 
   ShepherdJourneyAccessLoader get _journeyAccessLoader =>
-      widget.journeyAccessLoader ?? SelahMentorLinkService.shepherdJourneyAccess;
+      widget.journeyAccessLoader ??
+      SelahMentorLinkService.shepherdJourneyAccess;
 
   Future<void> _load() async {
     final request = ++_loadGeneration;
@@ -280,7 +284,7 @@ class _SeekerMentorTabState extends State<SeekerMentorTab> {
     final seekerId = SelahAuth.currentUser?.id ?? 'dev-seeker-adam';
     final seekerName = AppState.instance.name?.trim().isNotEmpty == true
         ? AppState.instance.name!.trim()
-        : 'Adam';
+        : 'James';
     Navigator.of(context).push(
       MaterialPageRoute(
         builder: (_) => SelahShepherdCircleScreen(
@@ -321,7 +325,9 @@ class _SeekerMentorTabState extends State<SeekerMentorTab> {
                 journeyAccessLoader: preview ? null : _journeyAccessLoader,
                 historyConsentPreview: preview,
                 previewActiveJourneyCount: preview
-                    ? SelahDevScenario.instance.shepherdPreviewActiveJourneyCount
+                    ? SelahDevScenario
+                          .instance
+                          .shepherdPreviewActiveJourneyCount
                     : 1,
                 makeMainShepherd: preview
                     ? _previewMakeMain

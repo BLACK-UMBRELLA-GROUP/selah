@@ -42,6 +42,8 @@ import '../data/selah_christian_traditions.dart';
 import '../data/selah_reference_data.dart';
 import '../main.dart';
 import '../models/onboarding_question.dart';
+import '../models/selah_marriage_values.dart';
+import '../models/selah_non_faith_profile_save.dart';
 import 'selah_account_state.dart';
 import 'selah_auth.dart';
 import 'selah_consent_service.dart';
@@ -192,12 +194,11 @@ class SeekerDetails {
     );
     final faithJourneyCode = r['faith_journey_code'] as String?;
     return SeekerDetails(
-      // Selah never infers a Christian answer from an inherited `sect` or
-      // `revert_status` value. A missing new code means the member re-answers.
+      // Selah never infers a Christian answer from inherited faith fields.
+      // A missing new code means the member re-answers.
       christianFamily: family?.label,
       christianDenomination: denomination?.label,
-      christianDenominationOther:
-          r['christian_denomination_other'] as String?,
+      christianDenominationOther: r['christian_denomination_other'] as String?,
       faithJourney: faithJourneyCode == null
           ? null
           : selahFaithJourneyLabels[faithJourneyCode],
@@ -361,6 +362,60 @@ class SelahSeekerDetailsService {
       debugPrint(
         'SELAH: saveDetails failed — Chapter 2 answers not persisted (${e.runtimeType}).',
       );
+      return false;
+    }
+  }
+
+  /// Saves only asked nonfaith fields when the faith questions were skipped.
+  /// The full-details Article 9 guard above remains unchanged.
+  static Future<bool> saveNonFaithDetails({
+    List<String>? languages,
+    SelahMarriageValuesAnswers? marriageValues,
+    Map<String, dynamic>? locationPreference,
+    String? expectedUserId,
+  }) async {
+    try {
+      final user = SelahAuth.currentUser;
+      final generation = SelahAccountState.generation;
+      if (user == null ||
+          (expectedUserId != null && user.id != expectedUserId)) {
+        return false;
+      }
+      bool current() =>
+          !SelahAccountState.isSigningOut &&
+          SelahAuth.currentUser?.id == user.id &&
+          SelahAccountState.generation == generation;
+      return selahSaveNonFaithProfile(
+        userId: user.id,
+        languages: languages,
+        marriageValues: marriageValues,
+        locationPreference: locationPreference,
+        canAct: current,
+        readStoredPreferences: () async {
+          if (!current()) throw StateError('Account changed.');
+          final row = await supabase
+              .from('seeker_details')
+              .select('user_id,preferences')
+              .eq('user_id', user.id)
+              .maybeSingle();
+          if (!current() || (row != null && row['user_id'] != user.id)) {
+            throw StateError('Account changed.');
+          }
+          return Map<String, dynamic>.from(
+            row?['preferences'] as Map? ?? const {},
+          );
+        },
+        write: (payload) async {
+          if (!current()) return false;
+          final saved = await supabase
+              .from('seeker_details')
+              .upsert(payload)
+              .select('user_id')
+              .maybeSingle();
+          return current() && saved?['user_id'] == user.id;
+        },
+      );
+    } catch (_) {
       return false;
     }
   }

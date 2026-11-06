@@ -7,6 +7,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:selah/config/selah_native_identity_policy.dart';
+import 'package:selah/draft/selah_draft_runtime.dart';
+import 'package:selah/services/selah_internal_preview_client.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:selah/dev/selah_shepherd_circle_preview.dart';
 import 'package:selah/dev/selah_shepherd_circle_topic_options.dart';
@@ -20,7 +23,30 @@ import 'package:selah/state/app_state.dart';
 import 'package:selah/theme/selah_colors.dart';
 import 'package:selah/theme/selah_text.dart';
 
-const _font = 'PoppinsCircleDiscussionBubble';
+import 'masters/master_capture.dart' show loadSelahMasterFonts;
+
+void _setDraftAdmission(bool admitted) {
+  if (admitted) {
+    expect(
+      SelahDraftRuntime.activate(
+        bundleId: SelahNativeIdentityPolicy.productionBundleId,
+      ),
+      isTrue,
+      reason: 'Run with --dart-define=SELAH_DRAFT_LOCAL_ONLY=true.',
+    );
+    SelahInternalPreviewClient.beginPreview();
+  } else {
+    SelahDraftRuntime.stop();
+    SelahInternalPreviewClient.finishSignOut();
+  }
+  // Publish the existing authority revision for listener/ABA simulation.
+  // Admission comes only from the exact runtime policy above; the test
+  // operator override is immediately cleared and never remains authority.
+  SelahDeveloperAccess.setAuthorizedForTesting(true);
+  SelahDeveloperAccess.setAuthorizedForTesting(false);
+}
+
+const _font = 'Figtree';
 const _captures = String.fromEnvironment('SELAH_CIRCLE_TOPIC_CAPTURE_DIR');
 const _boundary = ValueKey('circle-discussion-bubble-capture');
 const _sara = SelahFamilyMessageContext(
@@ -357,13 +383,7 @@ void main() {
         'Discussion captures require an existing absolute directory.',
       );
     }
-    final reading = FontLoader(_font);
-    for (final weight in ['ExtraLight', 'Light', 'Regular', 'Medium']) {
-      reading.addFont(rootBundle.load('assets/fonts/Poppins-$weight.ttf'));
-    }
-    final icons = FontLoader('MaterialIcons')
-      ..addFont(rootBundle.load('fonts/MaterialIcons-Regular.otf'));
-    await Future.wait([reading.load(), icons.load()]);
+    await loadSelahMasterFonts();
   });
   setUp(() async {
     SharedPreferences.setMockInitialValues({
@@ -373,7 +393,7 @@ void main() {
     SelahAccountState.resetForTesting();
     SelahAccountState.clearImagesForTesting = () async {};
     SelahDeveloperAccess.resetAuthorizationForTesting();
-    SelahDeveloperAccess.setAuthorizedForTesting(true);
+    _setDraftAdmission(true);
     AppState.instance.resetForAccountChange();
     SelahText.useTestFontStubs = true;
     SelahText.testReadingFontFamily = _font;
@@ -390,7 +410,7 @@ void main() {
     expect(preferenceState(), beforePreferences);
     expect(memberState(), beforeMember);
     HttpOverrides.global = oldNetwork;
-    SelahDeveloperAccess.setAuthorizedForTesting(false);
+    _setDraftAdmission(false);
     SelahDeveloperAccess.resetAuthorizationForTesting();
     SelahAccountState.clearImagesForTesting = null;
     SelahText.useTestFontStubs = false;
@@ -868,8 +888,8 @@ void main() {
           open();
           fixture.owner = true;
         } else {
-          SelahDeveloperAccess.setAuthorizedForTesting(false);
-          SelahDeveloperAccess.setAuthorizedForTesting(true);
+          _setDraftAdmission(false);
+          _setDraftAdmission(true);
         }
         open();
         await tester.pumpAndSettle();
@@ -998,8 +1018,8 @@ void main() {
       final close = tester
           .widget<IconButton>(_key('seeker-profile-close'))
           .onPressed!;
-      SelahDeveloperAccess.setAuthorizedForTesting(false);
-      SelahDeveloperAccess.setAuthorizedForTesting(true);
+      _setDraftAdmission(false);
+      _setDraftAdmission(true);
       close();
       await tester.pumpAndSettle();
       expect(find.byType(SeekerProfileScreen), findsNothing);

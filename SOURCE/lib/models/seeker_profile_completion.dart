@@ -29,11 +29,7 @@ bool seekerProfileFieldsComplete({
   }
 
   if (article9Consent != false) {
-    if ((christianFamily ?? '').trim().isEmpty ||
-        faithJourney == null ||
-        (countryOfBirth ?? '').isEmpty ||
-        (nationality ?? '').isEmpty ||
-        (ethnicity ?? '').isEmpty) {
+    if ((christianFamily ?? '').trim().isEmpty || faithJourney == null) {
       return false;
     }
 
@@ -55,22 +51,7 @@ bool seekerProfileFieldsComplete({
         ).contains(faithProfile['baptised'])) {
       return false;
     }
-
-    for (final key in ['country_of_birth', 'nationality', 'ethnicity']) {
-      final value = section(key);
-      if (value['skipped'] == true) continue;
-      if (value['preferred'] is! List ||
-          (value['preferred'] as List).isEmpty ||
-          !light(value['flexibility'])) {
-        return false;
-      }
-    }
   }
 
-  if (languages.isEmpty) return false;
-  final languagePreference = section('languages');
-  return languagePreference['skipped'] == true ||
-      (languagePreference['preferred'] is List &&
-          (languagePreference['preferred'] as List).isNotEmpty &&
-          light(languagePreference['flexibility']));
+  return languages.isNotEmpty;
 }

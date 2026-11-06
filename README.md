@@ -14,7 +14,11 @@ Sample profile pictures are free stock photos, not real members.
 
 The LOCKed Still Water look uses a light mist canvas, lake accents, bundled Figtree and Cormorant Garamond, and a docked tab bar. Existing loading and failure states use the same theme; no live services are enabled.
 
-Private Home → Explore as a Seeker opens the locked Shepherd invite: choose a trusted supporter, enter their name and send locally. Name validation appears after an empty send attempt and hides when a name is typed. After the invite, seven faith questions save into the same local profile draft. The Faith Profile card shows those saved answers and optional own words; the older five faith prompts are replaced. While waiting, Browse remains available; Request and Accept show the waiting message. The private Shepherd acceptance control restores those actions. Explore as a Shepherd can review the pending local request. No message, share sheet, clipboard link or account link is created.
+Private Home → Explore as a Seeker opens the locked Shepherd invite: choose a trusted supporter, enter their name and send locally. Name validation appears after an empty send attempt and hides when a name is typed. After the invite, the locked consent screen leads to seven faith questions or skips them. Seven marriage questions and a languages question follow. They save into the same local profile draft. The Faith Profile, Marriage Values and About You cards read those answers. Compatibility reads the sign-up answers through the approved mapping; Your Values no longer repeats those questions. While waiting, Browse remains available; Request and Accept show the waiting message. The private Shepherd acceptance control restores those actions. Explore as a Shepherd can review the pending local request. No message, share sheet, clipboard link or account link is created.
+
+Journey requests, acceptance, ending and replacement use the locked Selah pause with the existing action limits. Without a Shepherd, requests and acceptance remain unavailable; ending remains possible. The local Pause and Browse candidates remain under review: the queue records open questions about retained replacement, active-Journey visibility and the Prayer pack.
+
+Browse uses the approved fictional Christian cast and faith chips, with optional faith words. Its empty state opens the existing filters. Saved background fields remain in storage while their retired prompts and member displays are removed.
 
 At Open Conversation, the local Journey includes the locked marriage-preparation card. Its three steps can be marked in any order and stay with that local Journey for the session. No courses, external links or live sharing are enabled.
 
@@ -36,8 +40,10 @@ Use the existing lockfile with Flutter 3.44.2:
 ```bash
 cd SOURCE
 flutter pub get --offline --enforce-lockfile
-flutter test test/masters/look_masters_test.dart test/masters/shepherd_invite_masters_test.dart test/masters/marriage_prep_masters_test.dart test/masters/faith_profile_masters_test.dart test/selah_shepherd_invite_test.dart test/selah_faith_profile_test.dart --dart-define=SELAH_DRAFT_LOCAL_ONLY=true
+flutter test --no-pub --dart-define=SELAH_DRAFT_LOCAL_ONLY=true
 ```
+
+The active-Journey Browse capture awaits Question 9. The 320 × 568 layout at double text size remains deferred until its Larger Text design is locked; its header currently overflows.
 
 Approved comparisons use real Flutter widgets at 430 × 932 and pixel ratio 3. Images live under each feature’s `APP/APPROVED/<FEATURE>/BUILT/<version>/` folder. The `APP/APPROVED/COMPARE/` standard explains capture and replay. These checks demonstrate layout and local states; phone installation and native behaviour remain separate.
 

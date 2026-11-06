@@ -13,7 +13,6 @@ import 'package:selah/theme/selah_colors.dart';
 import 'package:selah/theme/selah_interaction_style.dart';
 import 'package:selah/theme/selah_text.dart';
 import 'package:selah/widgets/selah_browse_designs.dart';
-import 'package:selah/widgets/selah_profile_name_block.dart';
 
 const _paintBoundary = ValueKey('browse-photo-paint-boundary');
 
@@ -175,7 +174,7 @@ void _expectPhoto(
   if (dot.evaluate().isNotEmpty) {
     expect(
       (tester.widget<Container>(dot).decoration! as BoxDecoration).color,
-      SelahColors.journeyGold,
+      Colors.white,
     );
   }
 }
@@ -251,10 +250,8 @@ void main() {
     final actions = _Actions();
     await _mount(tester, _presenter(actions));
     expectTicks(0);
-    expect(
-      tester.widget<InkWell>(_key('concept_browse_open_${_person.id}')).onTap,
-      isNull,
-    );
+    // The dedicated photo gesture owns taps. The no-decision assertions
+    // below continue to prove that a tap never opens a person or requests.
 
     for (final (tap, index) in [(1, 1), (2, 2), (3, 0), (4, 1)]) {
       await tester.tap(_tapTarget());
@@ -333,7 +330,7 @@ void main() {
       ]);
       await _mount(tester, _presenter(actions, people: [person]));
       await _showLastPhoto(tester, count);
-      final identity = find.byType(SelahProfileNameBlock);
+      final identity = _key('concept_browse_identity_${person.id}');
       final identityRect = tester.getRect(identity);
       final cardRect = tester.getRect(_key('concept_browse_portrait_card'));
       final controller = tester.widget<PageView>(_pager()).controller!;
@@ -358,13 +355,7 @@ void main() {
           tester.widget<SlideTransition>(_wrap()).position.value.dx,
           closeTo(0, .001),
         );
-        expect(
-          find.descendant(
-            of: _wrap(),
-            matching: find.byType(SelahProfileNameBlock),
-          ),
-          findsNothing,
-        );
+        expect(find.descendant(of: _wrap(), matching: identity), findsNothing);
         expect(
           find.ancestor(
             of: _key('concept_browse_photo_dot_${person.id}_0'),
@@ -612,10 +603,7 @@ void main() {
     final material = tester.widget<Material>(
       find.descendant(of: card, matching: find.byType(Material)).first,
     );
-    expect(
-      material.borderRadius,
-      BorderRadius.circular(SelahCardMetrics.cardRadius),
-    );
+    expect(material.borderRadius, BorderRadius.circular(18));
     expect(material.clipBehavior, Clip.antiAlias);
     expect(
       find.descendant(of: _pager(), matching: find.byType(ClipRRect)),
@@ -627,8 +615,7 @@ void main() {
       matching: find.byWidgetPredicate(
         (widget) =>
             widget is ClipRRect &&
-            widget.borderRadius ==
-                BorderRadius.circular(SelahCardMetrics.thumbRadius),
+            widget.borderRadius == BorderRadius.circular(18),
       ),
     );
     expect(

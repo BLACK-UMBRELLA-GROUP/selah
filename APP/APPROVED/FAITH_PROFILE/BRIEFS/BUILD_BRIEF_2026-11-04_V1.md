@@ -16,7 +16,7 @@ Queue line 3. Build after: lines 1 and 2. ROADMAP rows: **Christian content and 
 
 | # | Step | Detail |
 |---|---|---|
-| 1 | Read | `SELAH/AGENTS.md`, `MAP.md` to "Route paths", `FAITH_PROFILE/RECORD/SELAH_FAITH_PROFILE_SPEC_CURRENT_VERSION_V4.md`, its `LOCK_RECORD.md`, the 16 masters in `FAITH_PROFILE/MASTERS/`, SHEPHERD_INVITE spec V4 §1 screen 4, LOOK spec V2. |
+| 1 | Read | `SELAH/AGENTS.md`, `MAP.md` to "Route paths", `FAITH_PROFILE/RECORD/SELAH_FAITH_PROFILE_SPEC_CURRENT_VERSION_V5.md`, its `LOCK_RECORD.md`, the 16 masters in `FAITH_PROFILE/MASTERS/`, SHEPHERD_INVITE spec V4 §1 screen 4, LOOK spec V2. |
 | 2 | Screens | Add the 7 question screens (spec §1-2) after Shepherd invite screen 4: its **Continue** opens question 1 (not Browse) until line 6 puts the consent screen in between. Saved → Browse until line 5 is built; line 5 then sends it to the marriage questions (spec V3). |
 | 3 | States | Every state in spec §3. "Saving" and "Didn't save" are reached through the private developer controls (offline draft saves locally at once). |
 | 4 | Answers | Store answers in the draft's existing local profile model (find where the Profile faith rows come from today; list the file in the task note). Use exactly the answer words in spec §2. Retire any existing faith questions they replace and list what was removed (move files to `BLACK UMBRELLA GROUP/tmp/_to_delete/selah_<date>/`). If an existing question has no match in spec §2, do not delete it - file a QUESTION. |

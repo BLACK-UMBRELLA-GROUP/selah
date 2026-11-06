@@ -11,7 +11,7 @@
 //
 // This resolves it against the Founder's own principle, the one that moved
 // Connections out of Settings in the first place: "Settings should
-// configure the account, not become a duplicate navigation hub." Your sect,
+// configure the account, not become a duplicate navigation hub." Your faith background,
 // your lifestyle, what you are looking for in a marriage — none of those
 // are account configuration. They are the profile.
 //
@@ -38,7 +38,9 @@ import '../../models/selah_gender.dart';
 import '../../services/selah_account_state.dart';
 import '../../services/selah_auth.dart';
 import '../../services/selah_internal_preview_client.dart';
+import '../../models/selah_sign_up_compatibility.dart';
 import '../../services/selah_onboarding_answers_service.dart';
+import '../../services/selah_seeker_details_service.dart';
 import '../../state/app_state.dart';
 import '../../theme/selah_colors.dart';
 import '../../theme/selah_text.dart';
@@ -50,6 +52,7 @@ import 'compatibility_editors.dart';
 abstract interface class SelahCompatibilityEditorRepository {
   String? get currentUserId;
   int get accountGeneration;
+  Map<String, dynamic> get signUpPreferences;
   bool isCurrentOwner(String userId, int generation);
   Future<SelahOnboardingAnswersSnapshot?> load(String userId);
   Future<bool> save(String userId, SelahCompatibilityDraft draft);
@@ -57,12 +60,22 @@ abstract interface class SelahCompatibilityEditorRepository {
 
 class _ServerCompatibilityEditorRepository
     implements SelahCompatibilityEditorRepository {
-  const _ServerCompatibilityEditorRepository();
+  Map<String, dynamic> _signUpPreferences = const {};
+  String? _loadedOwner;
+  int? _loadedGeneration;
+  int _readEpoch = 0;
 
   @override
   String? get currentUserId => supabaseReady ? SelahAuth.currentUser?.id : null;
   @override
   int get accountGeneration => SelahAccountState.generation;
+  @override
+  Map<String, dynamic> get signUpPreferences =>
+      _loadedOwner != null &&
+          _loadedGeneration != null &&
+          isCurrentOwner(_loadedOwner!, _loadedGeneration!)
+      ? _signUpPreferences
+      : const {};
   @override
   bool isCurrentOwner(String userId, int generation) =>
       supabaseReady &&
@@ -70,11 +83,35 @@ class _ServerCompatibilityEditorRepository
       SelahAuth.currentUser?.id == userId &&
       SelahAccountState.isCurrent(userId, generation);
   @override
-  Future<SelahOnboardingAnswersSnapshot?> load(String userId) =>
+  Future<SelahOnboardingAnswersSnapshot?> load(String userId) async {
+    final epoch = ++_readEpoch;
+    final generation = accountGeneration;
+    _loadedOwner = null;
+    _loadedGeneration = null;
+    _signUpPreferences = const {};
+    if (!isCurrentOwner(userId, generation)) {
+      throw StateError('The profile account changed.');
+    }
+    final results = await Future.wait<Object?>([
       SelahOnboardingAnswersService.fetchOwn(
         expectedUserId: userId,
         throwOnError: true,
-      );
+      ),
+      SelahSeekerDetailsService.fetchOwn(
+        expectedUserId: userId,
+        throwOnError: true,
+      ),
+    ]);
+    if (epoch != _readEpoch || !isCurrentOwner(userId, generation)) {
+      throw StateError('The profile account changed.');
+    }
+    _signUpPreferences =
+        (results[1] as SeekerDetails?)?.preferences ?? const {};
+    _loadedOwner = userId;
+    _loadedGeneration = generation;
+    return results[0] as SelahOnboardingAnswersSnapshot?;
+  }
+
   @override
   Future<bool> save(String userId, SelahCompatibilityDraft draft) =>
       SelahOnboardingAnswersService.syncAnswers(
@@ -87,17 +124,21 @@ class _ServerCompatibilityEditorRepository
 
 class EditProfileScreen extends StatefulWidget {
   final SelahCompatibilityEditorRepository? repository;
+  final SelahSignUpPreferencesReader? readSignUpPreferences;
   final bool _preview;
   final bool Function()? _previewCanAct;
   final String? _previewGender;
   final int? _previewAge;
   final bool embedded;
-  const EditProfileScreen({super.key, this.repository})
-    : _preview = false,
-      _previewCanAct = null,
-      _previewGender = null,
-      _previewAge = null,
-      embedded = false;
+  const EditProfileScreen({
+    super.key,
+    this.repository,
+    this.readSignUpPreferences,
+  }) : _preview = false,
+       _previewCanAct = null,
+       _previewGender = null,
+       _previewAge = null,
+       embedded = false;
 
   /// The existing editor with caller-owned local storage and account facts.
   /// This mode cannot fall through to a live repository or global AppState.
@@ -108,6 +149,7 @@ class EditProfileScreen extends StatefulWidget {
     required String? gender,
     required int? age,
     this.embedded = true,
+    this.readSignUpPreferences,
   }) : _preview = true,
        _previewCanAct = canAct,
        _previewGender = gender,
@@ -118,6 +160,12 @@ class EditProfileScreen extends StatefulWidget {
 }
 
 class _EditProfileScreenState extends State<EditProfileScreen> {
+  Map<String, dynamic> _readSignUpPreferences() {
+    if (!_canUse) return const {};
+    return widget.readSignUpPreferences?.call() ??
+        _repository.signUpPreferences;
+  }
+
   SelahCompatibilityDraft? _draft;
   late final SelahCompatibilityEditorRepository _repository;
   late final bool _localPreview;
@@ -183,8 +231,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
     _previewOwner = widget._previewCanAct;
     _previewGender = widget._previewGender;
     _previewAge = widget._previewAge;
-    _repository =
-        widget.repository ?? const _ServerCompatibilityEditorRepository();
+    _repository = widget.repository ?? _ServerCompatibilityEditorRepository();
     _localPreview = !_explicitPreview && SelahInternalPreviewClient.isActive;
     if (_localPreview) {
       // A sticky, unsaved local draft preserves the protected visual preview.
@@ -192,6 +239,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
       _draft = SelahCompatibilityDraft.fromSnapshot(
         gender: AppState.instance.gender,
         snapshot: null,
+        readSignUpPreferences: _readSignUpPreferences,
       );
     } else {
       try {
@@ -254,6 +302,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
         _draft = SelahCompatibilityDraft.fromSnapshot(
           gender: _gender,
           snapshot: snapshot,
+          readSignUpPreferences: _readSignUpPreferences,
         );
         _loading = false;
       });

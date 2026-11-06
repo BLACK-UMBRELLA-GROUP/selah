@@ -398,7 +398,8 @@ class SelahDevScenario extends ChangeNotifier {
       _dashboardJourneyPreview;
   bool get dashboardNewActivity => _dashboardNewActivity;
   bool get dashboardPendingApproval => _dashboardPendingApproval;
-  SelahDashboardInsightState get dashboardInsightState => _dashboardInsightState;
+  SelahDashboardInsightState get dashboardInsightState =>
+      _dashboardInsightState;
   SelahDashboardInsightPlan get dashboardInsightPlan => _dashboardInsightPlan;
   bool get dashboardLearningOnCurrentHub => _dashboardLearningOnCurrentHub;
   bool get dashboardOnboardingComplete => _dashboardOnboardingComplete;
@@ -416,7 +417,8 @@ class SelahDevScenario extends ChangeNotifier {
       _dashboardSeekerTodayState;
   SelahShepherdDashboardTodayState get dashboardShepherdTodayState =>
       _dashboardShepherdTodayState;
-  SelahDashboardUpdatesState get dashboardUpdatesState => _dashboardUpdatesState;
+  SelahDashboardUpdatesState get dashboardUpdatesState =>
+      _dashboardUpdatesState;
   SelahSeekerDashboardInsightsState get dashboardSeekerInsightsState =>
       _dashboardSeekerInsightsState;
   SelahShepherdDashboardInsightsState get dashboardShepherdInsightsState =>
@@ -710,7 +712,9 @@ class SelahDevScenario extends ChangeNotifier {
     notifyListeners();
   }
 
-  void setDashboardSeekerInsightsState(SelahSeekerDashboardInsightsState value) {
+  void setDashboardSeekerInsightsState(
+    SelahSeekerDashboardInsightsState value,
+  ) {
     _dashboardSeekerInsightsState = value;
     _dashboardInsightState = switch (value) {
       SelahSeekerDashboardInsightsState.insufficient =>
@@ -1175,23 +1179,18 @@ class SelahDevScenario extends ChangeNotifier {
     }
 
     const femaleIdentities = [
-      (firstName: 'Amira', surnameLine: 'Rahman', age: 28, city: 'Manchester'),
-      (firstName: 'Hana', surnameLine: 'Siddiqui', age: 31, city: 'Birmingham'),
-      (firstName: 'Safiya', surnameLine: 'Ali', age: 26, city: 'Leicester'),
-      (firstName: 'Noor', surnameLine: 'Mahmood', age: 30, city: 'Glasgow'),
-      (firstName: 'Layla', surnameLine: 'Ahmed', age: 29, city: 'Leeds'),
+      (firstName: 'Grace', surnameLine: 'Clarke', age: 28, city: 'Manchester'),
+      (firstName: 'Ruth', surnameLine: 'Adeyemi', age: 31, city: 'Birmingham'),
+      (firstName: 'Chloe', surnameLine: 'Bennett', age: 26, city: 'Leicester'),
+      (firstName: 'Lydia', surnameLine: 'Thomas', age: 30, city: 'Glasgow'),
+      (firstName: 'Miriam', surnameLine: 'Okoro', age: 29, city: 'Leeds'),
     ];
     const maleIdentities = [
-      (firstName: 'Adam', surnameLine: 'Rahman', age: 30, city: 'Manchester'),
-      (
-        firstName: 'Hamza',
-        surnameLine: 'Siddiqui',
-        age: 28,
-        city: 'Birmingham',
-      ),
-      (firstName: 'Zayd', surnameLine: 'Ali', age: 32, city: 'Leicester'),
-      (firstName: 'Idris', surnameLine: 'Mahmood', age: 27, city: 'Glasgow'),
-      (firstName: 'Omar', surnameLine: 'Ahmed', age: 31, city: 'Leeds'),
+      (firstName: 'James', surnameLine: 'Carter', age: 30, city: 'Manchester'),
+      (firstName: 'Daniel', surnameLine: 'Owusu', age: 28, city: 'Birmingham'),
+      (firstName: 'Samuel', surnameLine: 'Hughes', age: 32, city: 'Leicester'),
+      (firstName: 'Joel', surnameLine: 'Martins', age: 27, city: 'Glasgow'),
+      (firstName: 'Caleb', surnameLine: 'Moore', age: 31, city: 'Leeds'),
     ];
     final identities = targetGender == 'male'
         ? maleIdentities
@@ -1334,7 +1333,7 @@ class SelahDevScenario extends ChangeNotifier {
   //
   // The deck existed because the seeded profiles had no Chapter 2 data and
   // real photos were slow to sign. Both are now false: the 24 seeded
-  // profiles carry sect, ethnicity, languages and preferences, so the real
+  // profiles carry church tradition, ethnicity, languages and preferences, so the real
   // deck exercises more of the product than a synthetic one ever did.
 
   // --- Shepherds --------------------------------------------------------
@@ -1576,12 +1575,12 @@ class SelahDevScenario extends ChangeNotifier {
   /// that "Family Representative" is the longest label on the card and the
   /// first to wrap.
   static const List<({String name, String relationship})> fakeShepherds = [
-    (name: 'Abdul', relationship: 'father'),
-    (name: 'Hassan', relationship: 'brother'),
-    (name: 'Ibrahim', relationship: 'uncle'),
-    (name: 'Yusuf', relationship: 'grandfather'),
-    (name: 'Bilal', relationship: 'legal_shepherd'),
-    (name: 'Kamran', relationship: 'family_representative'),
+    (name: 'David', relationship: 'pastor'),
+    (name: 'Ama', relationship: 'pastor'),
+    (name: 'Joseph', relationship: 'church_elder'),
+    (name: 'Sarah', relationship: 'mentor'),
+    (name: 'Peter', relationship: 'father'),
+    (name: 'Mark', relationship: 'brother'),
   ];
 
   /// Labels are the Founder's own examples. One is deliberately null: an
@@ -1590,7 +1589,7 @@ class SelahDevScenario extends ChangeNotifier {
   /// able to see rather than only ever testing the happy path.
   static const List<({String? label, int daysLeft})> fakePendingInvites = [
     (label: 'Dad', daysLeft: 5),
-    (label: 'Uncle Ibrahim', daysLeft: 3),
+    (label: 'Uncle Matthew', daysLeft: 3),
     (label: null, daysLeft: 6),
     (label: 'Pastor', daysLeft: 1),
     (label: 'Family Friend', daysLeft: 0),
@@ -1621,7 +1620,7 @@ class SelahDevScenario extends ChangeNotifier {
           mentorId: devId,
           type: 'suggested',
           occurredAt: now.subtract(const Duration(days: 9)),
-          detail: 'Yusuf',
+          detail: 'Elijah',
         ),
         ShepherdActivity(
           mentorId: devId,
@@ -1647,13 +1646,13 @@ class SelahDevScenario extends ChangeNotifier {
           mentorId: devId,
           type: 'suggested',
           occurredAt: now.subtract(const Duration(hours: 5)),
-          detail: 'Nuh',
+          detail: 'David',
         ),
         ShepherdActivity(
           mentorId: devId,
           type: 'suggested',
           occurredAt: now.subtract(const Duration(days: 3)),
-          detail: 'Zakariya',
+          detail: 'Jonah',
         ),
         ShepherdActivity(
           mentorId: devId,
@@ -1781,16 +1780,16 @@ class SelahDevScenario extends ChangeNotifier {
     final limits = SelahEntitlements.of(viewerPlan);
 
     const queuedNames = [
-      'Yusuf',
-      'Bilal',
-      'Idris',
+      'Elijah',
+      'Nathan',
+      'Joel',
       'Musa',
       'Zaid',
       'Harun',
-      'Tariq',
-      'Rayyan',
+      'Peter',
+      'Andrew',
       'Kamal',
-      'Adnan',
+      'Mark',
     ];
     final nQueued = SelahEntitlements.devClamp(
       s.queuedJourneys,
@@ -1823,18 +1822,18 @@ class SelahDevScenario extends ChangeNotifier {
     // Paused at 8 shows Basic's 5 in both places. Without a shared clamp
     // the row and the list drift apart on a plan switch, and the panel
     // stops being the source of truth it claims to be.
-    const activeNames = ['Amina', 'Sara', 'Zaynab', 'Maryam', 'Khadija'];
+    const activeNames = ['Joanna', 'Esther', 'Phoebe', 'Abigail', 'Priscilla'];
     const pausedNames = [
-      'Fatima',
-      'Aisha',
-      'Safiya',
+      'Priscilla',
+      'Naomi',
+      'Chloe',
       'Halima',
-      'Nadia',
+      'Lydia',
       'Rabia',
       'Sumaya',
       'Zahra',
       'Iman',
-      'Noor',
+      'Lydia',
     ];
     // Active previews exist only as a defensive bridge for an old hot-reload
     // session or a preview Potential card promoted locally. The clean panel
@@ -1886,13 +1885,13 @@ class SelahDevScenario extends ChangeNotifier {
     }
 
     const endedNames = [
-      'Layla',
+      'Miriam',
       'Hafsa',
       'Ruqayya',
       'Asma',
       'Juwayriya',
       'Umm Kulthum',
-      'Zaynab bint Ali',
+      'Phoebe bint Ali',
       'Ramla',
       'Barira',
       'Nusayba',
@@ -1946,11 +1945,11 @@ class SelahDevScenario extends ChangeNotifier {
     int count,
   ) {
     const all = [
-      (from: 'Abdul', relationship: 'father', daysAgo: 0),
-      (from: 'Hassan', relationship: 'brother', daysAgo: 2),
-      (from: 'Ibrahim', relationship: 'uncle', daysAgo: 5),
-      (from: 'Yusuf', relationship: 'grandfather', daysAgo: 9),
-      (from: 'Bilal', relationship: 'legal_shepherd', daysAgo: 14),
+      (from: 'Peter', relationship: 'father', daysAgo: 0),
+      (from: 'Mark', relationship: 'brother', daysAgo: 2),
+      (from: 'Matthew', relationship: 'uncle', daysAgo: 5),
+      (from: 'Elijah', relationship: 'grandfather', daysAgo: 9),
+      (from: 'Nathan', relationship: 'legal_shepherd', daysAgo: 14),
     ];
     return [for (var i = 0; i < count && i < all.length; i++) all[i]];
   }
@@ -2243,16 +2242,16 @@ class SelahDevScenario extends ChangeNotifier {
   /// dev data and production data go through the same label lookup, which
   /// is how the 'Paternal uncle' casing bug hid for a week.
   static const List<({String name, String relationship})> fakeWards = [
-    (name: 'Aaliyah', relationship: 'father'),
-    (name: 'Umar', relationship: 'uncle'),
-    (name: 'Sumayyah', relationship: 'brother'),
-    (name: 'Maryam', relationship: 'grandfather'),
-    (name: 'Yusuf', relationship: 'legal_shepherd'),
-    (name: 'Zaynab', relationship: 'family_representative'),
-    (name: 'Hamza', relationship: 'uncle'),
-    (name: 'Safiya', relationship: 'other'),
-    (name: 'Idris', relationship: 'brother'),
-    (name: 'Khadija', relationship: 'father'),
+    (name: 'James', relationship: 'father'),
+    (name: 'Isaac', relationship: 'uncle'),
+    (name: 'Daniel', relationship: 'brother'),
+    (name: 'Peter', relationship: 'grandfather'),
+    (name: 'Elijah', relationship: 'legal_shepherd'),
+    (name: 'Phoebe', relationship: 'family_representative'),
+    (name: 'Daniel', relationship: 'uncle'),
+    (name: 'Chloe', relationship: 'other'),
+    (name: 'Joel', relationship: 'brother'),
+    (name: 'Joel', relationship: 'father'),
   ];
 
   /// Counterparts, in the shape selah_counterpart_card() actually returns:
@@ -2266,21 +2265,21 @@ class SelahDevScenario extends ChangeNotifier {
   /// for the Seeker would preview a disclosure that does not happen.
   static const List<({String name, int age, String? shepherd, String? surname})>
   _mentorPartners = [
-    (name: 'Bilal', age: 29, shepherd: 'Ismail', surname: 'family of Khan'),
-    (name: 'Khadija', age: 26, shepherd: 'Nuh', surname: 'family of Patel'),
-    (name: 'Yusuf', age: 31, shepherd: null, surname: null),
-    (name: 'Safiya', age: 27, shepherd: 'Adnan', surname: 'family of Malik'),
-    (name: 'Idris', age: 33, shepherd: 'Tariq', surname: 'family of Sheikh'),
+    (name: 'Nathan', age: 29, shepherd: 'Joseph', surname: 'family of Brooks'),
+    (name: 'Priscilla', age: 26, shepherd: 'David', surname: 'family of Evans'),
+    (name: 'Elijah', age: 31, shepherd: null, surname: null),
+    (name: 'Chloe', age: 27, shepherd: 'Mark', surname: 'family of Bennett'),
+    (name: 'Joel', age: 33, shepherd: 'Peter', surname: 'family of Martins'),
   ];
 
   /// Labels for staged sent invites. One is null on purpose — an invite
   /// with no label is the common case and renders as the raw token, which
   /// is the outcome the label exists to avoid.
   static const List<({String? label, int daysLeft})> fakeMentorInvites = [
-    (label: 'Aaliyah', daysLeft: 6),
+    (label: 'Rebecca', daysLeft: 6),
     (label: null, daysLeft: 4),
     (label: 'My nephew', daysLeft: 2),
-    (label: 'Cousin Idris', daysLeft: 0),
+    (label: 'Cousin Joel', daysLeft: 0),
   ];
 
   /// Seekers under this Shepherd — REAL LINKS FIRST, stand-ins topping up.

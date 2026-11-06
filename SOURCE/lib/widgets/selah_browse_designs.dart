@@ -20,6 +20,7 @@ import 'selah_browse_next_photo_motion.dart';
 import 'selah_invitation_label.dart';
 import 'selah_press_feedback.dart';
 import 'selah_shepherd_invite_views.dart';
+import 'selah_state_widgets.dart';
 
 /// Explicit rendering seam. The caller supplies already-authorised photo
 /// references and the renderer; a reference alone never initiates a fetch here.
@@ -181,12 +182,10 @@ class _SelahBrowseDesignsState extends State<SelahBrowseDesigns> {
               .id ==
           profile.id;
 
-  List<String> _publicDetails(SeekerProfile profile) => [
-    if (profile.publicNationality?.trim().isNotEmpty ?? false)
-      'Nationality: ${profile.publicNationality!.trim()}',
-    if (profile.publicEthnicity?.trim().isNotEmpty ?? false)
-      'Ethnicity: ${profile.publicEthnicity!.trim()}',
-  ];
+  List<String> _faithDetails(SeekerProfile profile) => profile.browseFaithChips;
+
+  String _faithQuote(SeekerProfile profile) =>
+      profile.faithProfile?.words.trim() ?? '';
 
   String _profileMeta(SeekerProfile profile) {
     final city = profile.city.trim();
@@ -211,13 +210,13 @@ class _SelahBrowseDesignsState extends State<SelahBrowseDesigns> {
           const SizedBox(height: 4),
           Text(_profileMeta(profile), style: SelahText.subtext()),
         ],
-        if (_publicDetails(profile).isNotEmpty) ...[
+        if (_faithDetails(profile).isNotEmpty) ...[
           const SizedBox(height: 14),
           Wrap(
             spacing: 6,
             runSpacing: 6,
             children: [
-              for (final detail in _publicDetails(profile))
+              for (final detail in _faithDetails(profile))
                 Container(
                   padding: const EdgeInsets.symmetric(
                     vertical: 7,
@@ -235,6 +234,14 @@ class _SelahBrowseDesignsState extends State<SelahBrowseDesigns> {
                   ),
                 ),
             ],
+          ),
+        ],
+        if (_faithQuote(profile).isNotEmpty) ...[
+          const SizedBox(height: 14),
+          Text(
+            '“${_faithQuote(profile)}”',
+            key: ValueKey('concept_browse_faith_quote_${profile.id}'),
+            style: SelahText.quote(),
           ),
         ],
       ],
@@ -553,7 +560,7 @@ class _SelahBrowseDesignsState extends State<SelahBrowseDesigns> {
       height +=
           4 + _textHeight(_profileMeta(profile), SelahText.subtext(), width);
     }
-    final details = _publicDetails(profile);
+    final details = _faithDetails(profile);
     if (details.isNotEmpty) {
       var rowWidth = 0.0;
       var rowHeight = 0.0;
@@ -581,6 +588,11 @@ class _SelahBrowseDesignsState extends State<SelahBrowseDesigns> {
         rowHeight = math.max(rowHeight, chipHeight);
       }
       height += 14 + chipsHeight + rowHeight;
+    }
+    if (_faithQuote(profile).isNotEmpty) {
+      height +=
+          14 +
+          _textHeight('“${_faithQuote(profile)}”', SelahText.quote(), width);
     }
     return height;
   }
@@ -688,6 +700,30 @@ class _SelahBrowseDesignsState extends State<SelahBrowseDesigns> {
   @override
   Widget build(BuildContext context) {
     final profiles = widget.profiles;
+    if (profiles.isEmpty) {
+      return SafeArea(
+        bottom: false,
+        child: Padding(
+          padding: EdgeInsets.fromLTRB(22, 16, 22, _footerReserve(context)),
+          child: Column(
+            children: [
+              _header(),
+              Expanded(
+                child: SelahEmptyState(
+                  key: const ValueKey('concept_browse_no_one_new'),
+                  icon: Icons.search,
+                  title: 'You’ve seen everyone for now',
+                  message:
+                      'New people join every week. Check back soon, or widen who you’d like to meet.',
+                  ctaLabel: 'Change who you’d like to meet',
+                  onCta: widget.onFilters,
+                ),
+              ),
+            ],
+          ),
+        ),
+      );
+    }
     final current = profiles.isEmpty
         ? null
         : profiles[widget.selectedIndex.clamp(0, profiles.length - 1)];

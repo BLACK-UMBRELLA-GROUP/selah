@@ -1377,7 +1377,7 @@ List<ShepherdJourneyAccessState> _previewJourneyAccessStates(
   int requestedCount, {
   required bool mainShepherd,
 }) {
-  const names = ['Maryam', 'Aaliyah', 'Sara'];
+  const names = ['Abigail', 'Rebecca', 'Esther'];
   final count = requestedCount.clamp(0, 3).toInt();
   return [
     for (var index = 0; index < count; index++)

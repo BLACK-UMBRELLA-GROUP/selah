@@ -19,9 +19,9 @@ abstract final class SelahJourneyShepherdSelection {
   /// carries that responsibility. Production data keeps the same ordering.
   static const List<({String firstName, String relationship, bool isMain})>
   otherShepherdPreview = [
-    (firstName: 'Ibrahim', relationship: 'uncle', isMain: true),
-    (firstName: 'Maryam', relationship: 'sister', isMain: false),
-    (firstName: 'Yusuf', relationship: 'grandfather', isMain: false),
+    (firstName: 'Peter', relationship: 'uncle', isMain: true),
+    (firstName: 'Ruth', relationship: 'sister', isMain: false),
+    (firstName: 'Mark', relationship: 'grandfather', isMain: false),
   ];
 
   static Set<int> toggle(Set<int> current, int index) {

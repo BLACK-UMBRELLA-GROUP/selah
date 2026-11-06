@@ -9,13 +9,13 @@ class SelahDevPersonalCodeFixtures {
   SelahDevPersonalCodeFixtures._();
 
   static const invalidEntryCode = 'SELAH-0000-0000-0000-0000-0000';
-  static const validSeekerEntryCode = 'SELAH-DEMO-SEEKER-ADAM';
-  static const validShepherdEntryCode = 'SELAH-DEMO-SHEPHERD-IBRAHIM';
+  static const validSeekerEntryCode = 'SELAH-DEMO-SEEKER-JAMES';
+  static const validShepherdEntryCode = 'SELAH-DEMO-SHEPHERD-DAVID';
 
   static String validKnownPersonEntryCode({required String? currentGender}) =>
       currentGender == 'female'
-      ? 'SELAH-DEMO-SEEKER-ADAM'
-      : 'SELAH-DEMO-SEEKER-MARYAM';
+      ? 'SELAH-DEMO-SEEKER-JAMES'
+      : 'SELAH-DEMO-SEEKER-ABIGAIL';
 
   static SelahKnownPersonCodePreview? previewKnownPersonCode(
     String code, {
@@ -27,12 +27,12 @@ class SelahDevPersonalCodeFixtures {
     }
     return currentGender == 'female'
         ? const SelahKnownPersonCodePreview(
-            firstName: 'Adam',
+            firstName: 'James',
             age: 29,
             city: 'London',
           )
         : const SelahKnownPersonCodePreview(
-            firstName: 'Maryam',
+            firstName: 'Abigail',
             age: 27,
             city: 'Birmingham',
           );
@@ -45,10 +45,10 @@ class SelahDevPersonalCodeFixtures {
     final female = gender == 'female';
     return SelahPersonalCode(
       code: switch ((asShepherd, female)) {
-        (false, false) => 'SELAH-DEMO-SEEKER-ADAM',
-        (false, true) => 'SELAH-DEMO-SEEKER-MARYAM',
-        (true, false) => 'SELAH-DEMO-SHEPHERD-IBRAHIM',
-        (true, true) => 'SELAH-DEMO-SHEPHERD-KHADIJA',
+        (false, false) => 'SELAH-DEMO-SEEKER-JAMES',
+        (false, true) => 'SELAH-DEMO-SEEKER-ABIGAIL',
+        (true, false) => 'SELAH-DEMO-SHEPHERD-DAVID',
+        (true, true) => 'SELAH-DEMO-SHEPHERD-AMA',
       },
       roleContext: asShepherd ? 'mentor' : 'seeker',
     );
@@ -67,7 +67,7 @@ class SelahDevPersonalCodeFixtures {
       return null;
     }
     return SelahPersonalCodePreview(
-      firstName: asShepherd ? 'Adam' : 'Ibrahim',
+      firstName: asShepherd ? 'James' : 'David',
       role: asShepherd ? 'seeker' : 'mentor',
     );
   }

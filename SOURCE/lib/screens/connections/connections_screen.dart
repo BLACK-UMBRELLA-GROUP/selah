@@ -144,7 +144,7 @@ bool _isLocalTestProfile(SeekerProfile profile) =>
     _isActivityPreview(profile) ||
     profile.id.startsWith(kSelahIntroductionTestProfilePrefix);
 
-const String _kLocalIntroductionSuggestedBy = 'Ibrahim';
+const String _kLocalIntroductionSuggestedBy = 'Matthew';
 
 String? _localIntroductionAttribution(SeekerProfile profile) =>
     profile.id.startsWith(kSelahIntroductionTestProfilePrefix)
@@ -174,8 +174,8 @@ List<SeekerProfile> composeSelahActivityPreviewProfiles(
   final count = previewCount.clamp(0, 5);
   if (count == 0) return List<SeekerProfile>.of(real);
 
-  const women = ['Hana', 'Zara', 'Safiya', 'Inaya', 'Amira'];
-  const men = ['Hamza', 'Omar', 'Idris', 'Zayd', 'Rayyan'];
+  const women = ['Ruth', 'Miriam', 'Chloe', 'Rebecca', 'Grace'];
+  const men = ['Daniel', 'Caleb', 'Joel', 'Samuel', 'Andrew'];
   const surnames = ['Rahman', 'Khan', 'Malik', 'Ahmed', 'Hussain'];
   const cities = ['London', 'Birmingham', 'Manchester', 'Leeds', 'Glasgow'];
   final gender = SelahGender.oppositeCode(viewerGender);
@@ -4184,8 +4184,8 @@ Widget buildSelahConnectionsJourneyCardTestSurface(
 ) {
   const profile = SeekerProfile(
     id: 'connections-card-test-profile',
-    firstName: 'Maryam',
-    surnameLine: 'Hussain',
+    firstName: 'Abigail',
+    surnameLine: 'Reyes',
     age: 27,
     city: 'London',
     photos: [],
@@ -4245,7 +4245,7 @@ Widget buildSelahConnectionsExclusiveExpansionTestSurface() {
   final expansionController = SelahConnectionsExpansionController();
   const journeyProfile = SeekerProfile(
     id: 'exclusive-journey-profile',
-    firstName: 'Maryam',
+    firstName: 'Abigail',
     age: 27,
     city: 'London',
     photos: [],
@@ -4253,7 +4253,7 @@ Widget buildSelahConnectionsExclusiveExpansionTestSurface() {
   );
   const activityProfile = SeekerProfile(
     id: 'exclusive-activity-profile',
-    firstName: 'Amina',
+    firstName: 'Joanna',
     age: 29,
     city: 'Leeds',
     photos: [],
@@ -4325,8 +4325,8 @@ Widget buildSelahConnectionsActivityCardTestSurface(
             : localTestProfile
             ? selahActivityTestProfileId(localState, 0)
             : 'connections-activity-test-${state.name}'),
-    firstName: 'Maryam',
-    surnameLine: 'Hussain',
+    firstName: 'Abigail',
+    surnameLine: 'Reyes',
     age: 27,
     city: 'London',
     photos: const [],

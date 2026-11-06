@@ -31,56 +31,57 @@ import '../../services/selah_consent_service.dart';
 import '../../services/selah_developer_access.dart';
 import '../../theme/selah_colors.dart';
 import '../../theme/selah_text.dart';
+import '../../widgets/selah_shepherd_invite_views.dart';
+import '../../widgets/selah_state_widgets.dart';
+
+enum SelahConsentPreviewState { idle, saving, failed }
 
 class Article9ConsentScreen extends StatefulWidget {
-  final SelahBackgroundVariant background;
-
-  /// A requested local rehearsal never records a real Article 9 decision.
-  final bool devPreview;
-
-  /// Called with true if consent was granted, false if declined.
-  /// The caller decides what to skip — this screen does not navigate.
-  final ValueChanged<bool> onDecision;
-
   const Article9ConsentScreen({
     super.key,
     required this.onDecision,
     this.background = SelahBackgroundVariant.neutral,
     this.devPreview = false,
+    this.onBack,
+    this.previewState = SelahConsentPreviewState.idle,
   });
+  final SelahBackgroundVariant background;
 
+  /// The existing detached rehearsal never records a real consent decision.
+  final bool devPreview;
+  final ValueChanged<bool> onDecision;
+  final VoidCallback? onBack;
+  final SelahConsentPreviewState previewState;
   @override
   State<Article9ConsentScreen> createState() => _Article9ConsentScreenState();
 }
 
 class _Article9ConsentScreenState extends State<Article9ConsentScreen> {
   bool _busy = false;
+  bool _failed = false;
+  bool _lastChoice = true;
 
   Future<void> _decide(bool granted) async {
     if (_busy ||
         (widget.devPreview && !SelahDeveloperAccess.canUseDeveloperTools)) {
       return;
     }
+    _lastChoice = granted;
     if (widget.devPreview) {
       widget.onDecision(granted);
       return;
     }
-    setState(() => _busy = true);
+    setState(() {
+      _busy = true;
+      _failed = false;
+    });
     final ok = await SelahConsentService.record(granted: granted);
     if (!mounted) return;
-    setState(() => _busy = false);
-
-    if (!ok) {
-      // A consent we cannot evidence is a consent we do not have. Rather
-      // than proceeding on an unrecorded "yes", say so and let them retry.
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text("We couldn't save your choice. Please try again."),
-        ),
-      );
-      return;
-    }
-    widget.onDecision(granted);
+    setState(() {
+      _busy = false;
+      _failed = !ok;
+    });
+    if (ok) widget.onDecision(granted);
   }
 
   @override
@@ -94,126 +95,143 @@ class _Article9ConsentScreenState extends State<Article9ConsentScreen> {
           body: const SizedBox.expand(),
         );
       }
-      return _buildConsent(context);
-    },
-  );
-
-  Widget _buildConsent(BuildContext context) => Scaffold(
-    body: Container(
-      constraints: const BoxConstraints.expand(),
-      decoration: BoxDecoration(
-        gradient: SelahColors.backgroundFor(widget.background),
-      ),
-      child: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 28, vertical: 24),
+      final preview =
+          widget.devPreview && SelahDeveloperAccess.canUseDeveloperTools;
+      final saving =
+          _busy ||
+          (preview && widget.previewState == SelahConsentPreviewState.saving);
+      final failed =
+          _failed ||
+          (preview && widget.previewState == SelahConsentPreviewState.failed);
+      return Scaffold(
+        key: const ValueKey('consent_screen'),
+        backgroundColor: SelahColors.mist,
+        body: SafeArea(
+          bottom: false,
           child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+              Padding(
+                padding: const EdgeInsets.fromLTRB(22, 6, 22, 12),
+                child: Row(
+                  children: [
+                    TextButton(
+                      key: const ValueKey('consent_back'),
+                      onPressed: saving
+                          ? null
+                          : widget.onBack ??
+                                () => Navigator.of(context).maybePop(),
+                      style: TextButton.styleFrom(
+                        foregroundColor: SelahColors.lake,
+                        padding: const EdgeInsets.symmetric(vertical: 6),
+                        minimumSize: Size.zero,
+                        tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                        alignment: Alignment.centerLeft,
+                      ),
+                      child: Text(
+                        '‹ Back',
+                        style: SelahText.button(
+                          size: 15,
+                          color: SelahColors.lake,
+                        ),
+                      ),
+                    ),
+                    const Spacer(),
+                    Text(
+                      'Before your faith questions',
+                      style: SelahText.subtext(),
+                    ),
+                  ],
+                ),
+              ),
               Expanded(
-                child: SingleChildScrollView(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      SizedBox(height: 12),
-                      Row(
-                        children: [
-                          Icon(
-                            Icons.lock_outline,
-                            size: 16,
-                            color: SelahColors.foreground.withValues(alpha: 0.6),
+                child: LayoutBuilder(
+                  builder: (context, bounds) => SingleChildScrollView(
+                    child: Padding(
+                      padding: const EdgeInsets.fromLTRB(22, 0, 22, 16),
+                      child: ConstrainedBox(
+                        constraints: BoxConstraints(
+                          minHeight: (bounds.maxHeight - 16).clamp(
+                            0,
+                            double.infinity,
                           ),
-                          SizedBox(width: 8),
-                          Text(
-                            'YOUR PERMISSION',
-                            style: SelahText.chapterLabel(
-                              color: SelahColors.ink(0.70),
-                            ),
-                          ),
-                        ],
-                      ),
-                      SizedBox(height: 16),
-                      Text(
-                        kArticle9ConsentTitle,
-                        style: SelahText.heading(size: 26),
-                      ),
-                      SizedBox(height: 18),
-                      Text(
-                        kArticle9ConsentBody,
-                        style: SelahText.body(size: 15).copyWith(height: 1.55),
-                      ),
-                      SizedBox(height: 24),
-                      Container(
-                        padding: const EdgeInsets.all(14),
-                        decoration: BoxDecoration(
-                          color: SelahColors.iconButtonBg,
-                          border: Border.all(
-                            color: SelahColors.iconButtonBorder,
-                            width: 0.5,
-                          ),
-                          borderRadius: BorderRadius.circular(12),
                         ),
-                        child: Text(
-                          kArticle9ConsentDeclineNote,
-                          style: SelahText.subtext(size: 12.5),
+                        child: IntrinsicHeight(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.stretch,
+                            children: [
+                              if (failed) ...[
+                                SelahErrorBanner(
+                                  key: const ValueKey('consent_failure'),
+                                  message:
+                                      'We couldn’t save your choice. Try again.',
+                                  retryKey: const ValueKey('consent_retry'),
+                                  onRetry: () => _decide(_lastChoice),
+                                ),
+                                const SizedBox(height: 14),
+                              ],
+                              Text(
+                                kArticle9ConsentTitle,
+                                style: SelahText.pageTitle(),
+                              ),
+                              const SizedBox(height: 14),
+                              for (final paragraph
+                                  in kArticle9ConsentBody.split('\n\n')) ...[
+                                Text(
+                                  paragraph,
+                                  style: SelahText.body().copyWith(
+                                    height: 1.55,
+                                  ),
+                                ),
+                                const SizedBox(height: 14),
+                              ],
+                              Text(
+                                kArticle9ConsentWithdrawalNote,
+                                style: SelahText.subtext().copyWith(
+                                  height: 1.55,
+                                ),
+                              ),
+                              const SizedBox(height: 14),
+                              const Spacer(),
+                              Opacity(
+                                opacity: saving ? .75 : 1,
+                                child: SelahInviteButton(
+                                  key: const ValueKey('consent_agree'),
+                                  label: saving
+                                      ? 'Saving…'
+                                      : 'I agree, ask me these',
+                                  onPressed: saving
+                                      ? null
+                                      : () => _decide(true),
+                                ),
+                              ),
+                              if (!saving) ...[
+                                const SizedBox(height: 10),
+                                SelahInviteButton(
+                                  key: const ValueKey('consent_skip'),
+                                  label: 'Skip these questions',
+                                  ghost: true,
+                                  onPressed: () => _decide(false),
+                                ),
+                              ] else
+                                const SizedBox(height: 42),
+                              const SizedBox(height: 10),
+                              Text(
+                                kArticle9ConsentDeclineNote,
+                                textAlign: TextAlign.center,
+                                style: SelahText.subtext(),
+                              ),
+                            ],
+                          ),
                         ),
                       ),
-                    ],
-                  ),
-                ),
-              ),
-              SizedBox(height: 20),
-              // Accept carries primary weight; decline is plainly
-              // available and not buried. Making decline hard to find is
-              // the single most common way consent stops being freely
-              // given.
-              SizedBox(
-                width: double.infinity,
-                height: 52,
-                child: FilledButton(
-                  onPressed: _busy ? null : () => _decide(true),
-                  style: FilledButton.styleFrom(
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(50),
                     ),
-                  ),
-                  child: Text(
-                    'I agree — use these answers to match me',
-                    textAlign: TextAlign.center,
-                    style: SelahText.button(size: 14),
-                  ),
-                ),
-              ),
-              SizedBox(height: 10),
-              SizedBox(
-                width: double.infinity,
-                height: 50,
-                child: TextButton(
-                  onPressed: _busy ? null : () => _decide(false),
-                  style: TextButton.styleFrom(foregroundColor: Colors.white),
-                  child: Text(
-                    'Skip these questions',
-                    style: SelahText.button(
-                      size: 14,
-                      color: SelahColors.ink(0.70),
-                    ),
-                  ),
-                ),
-              ),
-              SizedBox(height: 8),
-              Center(
-                child: Text(
-                  'You can change this at any time in Settings.',
-                  style: SelahText.subtext(
-                    size: 11.5,
-                    color: SelahColors.ink(0.54),
                   ),
                 ),
               ),
             ],
           ),
         ),
-      ),
-    ),
+      );
+    },
   );
 }

@@ -4,8 +4,7 @@ import '../../models/selah_faith_profile.dart';
 import '../../models/selah_faith_profile_controller.dart';
 import '../../theme/selah_colors.dart';
 import '../../theme/selah_text.dart';
-import '../../widgets/selah_shepherd_invite_views.dart';
-import '../../widgets/selah_state_widgets.dart';
+import '../../widgets/selah_profile_questions.dart';
 
 /// The seven LOCK 4 screens; the owner supplies the interim destinations.
 class SelahFaithProfileFlow extends StatefulWidget {
@@ -158,69 +157,6 @@ class _SelahFaithProfileFlowState extends State<SelahFaithProfileFlow> {
     };
   }
 
-  Widget _header() => Padding(
-    padding: const EdgeInsets.fromLTRB(22, 6, 22, 12),
-    child: Row(
-      children: [
-        TextButton(
-          key: const ValueKey('faith_back'),
-          onPressed: _back,
-          style: TextButton.styleFrom(
-            foregroundColor: SelahColors.lake,
-            padding: const EdgeInsets.symmetric(vertical: 6),
-            minimumSize: Size.zero,
-            tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-            alignment: Alignment.centerLeft,
-          ),
-          child: Text(
-            '‹ Back',
-            style: SelahText.button(size: 15, color: SelahColors.lake),
-          ),
-        ),
-        const Spacer(),
-        Text('Your faith · $_question of 7', style: SelahText.subtext()),
-      ],
-    ),
-  );
-
-  Widget _choice(String option, int index) {
-    final selected = _selected(option);
-    return Semantics(
-      selected: selected,
-      button: true,
-      child: Container(
-        decoration: BoxDecoration(
-          color: SelahColors.surface,
-          border: Border.all(
-            color: selected ? SelahColors.lake : SelahColors.line,
-          ),
-          borderRadius: BorderRadius.circular(14),
-        ),
-        foregroundDecoration: selected
-            ? BoxDecoration(
-                border: Border.all(color: SelahColors.lake, width: 2),
-                borderRadius: BorderRadius.circular(14),
-              )
-            : null,
-        child: Material(
-          color: Colors.transparent,
-          child: InkWell(
-            key: ValueKey('faith_choice_q${_question}_$index'),
-            borderRadius: BorderRadius.circular(14),
-            onTap: () => _faith.choose(_question, index),
-            child: Padding(
-              padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 14),
-              child: Text(
-                option,
-                style: SelahText.body(size: 14.5).copyWith(height: 1.2),
-              ),
-            ),
-          ),
-        ),
-      ),
-    );
-  }
-
   Widget _wordsField() => Column(
     crossAxisAlignment: CrossAxisAlignment.stretch,
     children: [
@@ -281,137 +217,43 @@ class _SelahFaithProfileFlowState extends State<SelahFaithProfileFlow> {
   );
 
   @override
-  Widget build(BuildContext context) {
-    final saving = _faith.saveState == SelahFaithProfileSaveState.saving;
-    final failed = _faith.saveState == SelahFaithProfileSaveState.failed;
-    final options = SelahFaithProfileAnswers.optionsFor(_question);
-    final help = _help[_question];
-    return Scaffold(
-      key: ValueKey('faith_question_$_question'),
-      backgroundColor: SelahColors.mist,
-      body: SafeArea(
-        bottom: false,
-        child: Column(
-          children: [
-            _header(),
-            Expanded(
-              child: LayoutBuilder(
-                builder: (context, bounds) => SingleChildScrollView(
-                  controller: _scroll,
-                  child: Padding(
-                    padding: const EdgeInsets.fromLTRB(22, 0, 22, 16),
-                    child: ConstrainedBox(
-                      constraints: BoxConstraints(
-                        minHeight: (bounds.maxHeight - 16).clamp(
-                          0,
-                          double.infinity,
-                        ),
-                      ),
-                      child: IntrinsicHeight(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.stretch,
-                          children: [
-                            if (failed) ...[
-                              SelahErrorBanner(
-                                key: const ValueKey('faith_failure'),
-                                message:
-                                    'Your faith profile didn’t save. Try again.',
-                                retryKey: const ValueKey('faith_retry'),
-                                onRetry: _save,
-                              ),
-                              const SizedBox(height: 14),
-                            ],
-                            ClipRRect(
-                              borderRadius: BorderRadius.circular(3),
-                              child: LinearProgressIndicator(
-                                value: _question / 7,
-                                minHeight: 5,
-                                color: SelahColors.lake,
-                                backgroundColor: SelahColors.line,
-                              ),
-                            ),
-                            const SizedBox(height: 14),
-                            Text(
-                              _titles[_question - 1],
-                              style: SelahText.pageTitle(),
-                            ),
-                            if (help != null) ...[
-                              const SizedBox(height: 14),
-                              Text(
-                                help,
-                                style: SelahText.body(color: SelahColors.muted),
-                              ),
-                            ],
-                            const SizedBox(height: 14),
-                            if (options.isNotEmpty)
-                              for (var i = 0; i < options.length; i++) ...[
-                                if (i > 0) const SizedBox(height: 8),
-                                _choice(options[i], i),
-                              ]
-                            else
-                              _wordsField(),
-                            if (_faith.showRequiredErrorFor(_question)) ...[
-                              const SizedBox(height: 14),
-                              Text(
-                                'Choose one answer to continue.',
-                                key: const ValueKey('faith_required_error'),
-                                style: SelahText.subtext(
-                                  color: SelahColors.dawn,
-                                ),
-                              ),
-                            ],
-                            const SizedBox(height: 14),
-                            const Spacer(),
-                            if (_question == 7 && _faith.showLengthError) ...[
-                              Text(
-                                'Keep it under 150 characters.',
-                                key: const ValueKey('faith_length_error'),
-                                style: SelahText.subtext(
-                                  color: SelahColors.dawn,
-                                ),
-                              ),
-                              const SizedBox(height: 14),
-                            ],
-                            Opacity(
-                              opacity: saving ? .75 : 1,
-                              child: SelahInviteButton(
-                                key: ValueKey(
-                                  _question == 7
-                                      ? 'faith_save'
-                                      : 'faith_continue',
-                                ),
-                                label: saving
-                                    ? 'Saving…'
-                                    : _question == 7
-                                    ? 'Save and continue'
-                                    : 'Continue',
-                                onPressed: saving ? null : _next,
-                              ),
-                            ),
-                            if (saving)
-                              // The locked master reserves the existing private
-                              // demo-row space; no member-facing preset appears.
-                              const SizedBox(height: 42)
-                            else if (_question == 5 || _question == 7) ...[
-                              const SizedBox(height: 10),
-                              SelahInviteButton(
-                                key: const ValueKey('faith_skip'),
-                                label: 'Skip',
-                                ghost: true,
-                                onPressed: _skip,
-                              ),
-                            ],
-                          ],
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-              ),
-            ),
-          ],
+  Widget build(BuildContext context) => SelahProfileQuestionPage(
+    keyPrefix: 'faith',
+    sectionLabel: 'Your faith',
+    questions: [
+      for (var q = 1; q <= 7; q++)
+        SelahProfileQuestion(
+          title: _titles[q - 1],
+          help: _help[q],
+          options: SelahFaithProfileAnswers.optionsFor(q),
         ),
-      ),
-    );
-  }
+    ],
+    questionNumber: _question,
+    scrollController: _scroll,
+    onBack: _back,
+    isSelected: _selected,
+    onChoose: (index) => _faith.choose(_question, index),
+    onContinue: _next,
+    customAnswer: _question == 7 ? _wordsField() : null,
+    showRequiredError: _faith.showRequiredErrorFor(_question),
+    saving: _faith.saveState == SelahFaithProfileSaveState.saving,
+    failureMessage: _faith.saveState == SelahFaithProfileSaveState.failed
+        ? 'Your faith profile didn’t save. Try again.'
+        : null,
+    onRetry: _save,
+    beforeButtons: _question == 7 && _faith.showLengthError
+        ? Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Text(
+                'Keep it under 150 characters.',
+                key: const ValueKey('faith_length_error'),
+                style: SelahText.subtext(color: SelahColors.dawn),
+              ),
+              const SizedBox(height: 14),
+            ],
+          )
+        : null,
+    onSkip: _question == 5 || _question == 7 ? _skip : null,
+  );
 }

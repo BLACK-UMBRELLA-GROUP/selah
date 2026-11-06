@@ -5,6 +5,7 @@ import '../../dev/selah_app_gold_preview.dart';
 import '../../data/chapter3_categories.dart';
 import '../../models/onboarding_question.dart';
 import '../../models/journey_bio.dart';
+import '../../models/selah_sign_up_compatibility.dart';
 import '../../services/selah_onboarding_answers_service.dart';
 import '../../state/app_state.dart';
 import '../../theme/selah_colors.dart';
@@ -80,11 +81,13 @@ class SelahCompatibilityDraft {
     required this.answers,
     required this.preferences,
     required this.hardRequirements,
+    this.readSignUpPreferences,
   });
 
   factory SelahCompatibilityDraft.fromSnapshot({
     required String? gender,
     SelahOnboardingAnswersSnapshot? snapshot,
+    SelahSignUpPreferencesReader? readSignUpPreferences,
   }) {
     final answers = <String, dynamic>{};
     final preferences = <String, Map<String, TrafficLight>>{};
@@ -99,7 +102,7 @@ class SelahCompatibilityDraft {
         answers[entry.key] = _copyAnswerValue(entry.value);
       }
     }
-    for (final category in chapter3Categories) {
+    for (final category in chapter3CompatibilityCategories) {
       for (final question in category.questions) {
         if (!question.visibleFor(gender)) continue;
         final persisted = SelahOnboardingAnswersService.persistedQuestionId(
@@ -128,6 +131,7 @@ class SelahCompatibilityDraft {
       answers: answers,
       preferences: preferences,
       hardRequirements: hard,
+      readSignUpPreferences: readSignUpPreferences,
     );
     draft.pruneHiddenAnswers();
     return draft;
@@ -137,9 +141,29 @@ class SelahCompatibilityDraft {
   final Map<String, dynamic> answers;
   final Map<String, Map<String, TrafficLight>> preferences;
   final Map<String, Set<String>> hardRequirements;
+  final SelahSignUpPreferencesReader? readSignUpPreferences;
 
-  SelahCompatibilityDraft copy() => SelahCompatibilityDraft(
+  SelahSignUpCompatibility get _signUp {
+    try {
+      return SelahSignUpCompatibility.fromPreferences(
+        readSignUpPreferences?.call() ?? const {},
+      );
+    } catch (_) {
+      return SelahSignUpCompatibility.fromPreferences(const {});
+    }
+  }
+
+  Map<String, dynamic> get compatibilityAnswers => _signUp.answersOver(answers);
+  Map<String, Map<String, TrafficLight>> get compatibilityPreferences =>
+      _signUp.preferencesOver(preferences);
+  Map<String, Set<String>> get compatibilityHardRequirements =>
+      _signUp.hardRequirementsOver(hardRequirements);
+
+  SelahCompatibilityDraft copy({
+    SelahSignUpPreferencesReader? readSignUpPreferences,
+  }) => SelahCompatibilityDraft(
     gender: gender,
+    readSignUpPreferences: readSignUpPreferences ?? this.readSignUpPreferences,
     answers: {
       for (final entry in answers.entries)
         entry.key: _copyAnswerValue(entry.value),
@@ -180,10 +204,11 @@ class SelahCompatibilityDraft {
 
   Map<String, dynamic> get _answersByQuestionId {
     final result = <String, dynamic>{};
-    for (final category in chapter3Categories) {
+    final effective = compatibilityAnswers;
+    for (final category in chapter3CompatibilityCategories) {
       for (final question in category.questions) {
-        if (answers.containsKey(question.responseKey)) {
-          result[question.id] = answers[question.responseKey];
+        if (effective.containsKey(question.responseKey)) {
+          result[question.id] = effective[question.responseKey];
         }
       }
     }
@@ -203,6 +228,7 @@ class SelahCompatibilityDraft {
           .toList(growable: false);
 
   void setAnswer(OnboardingQuestion question, dynamic value) {
+    if (selahSignUpQuestionIds.contains(question.id)) return;
     answers[question.responseKey] = value;
     pruneHiddenAnswers();
   }
@@ -213,10 +239,22 @@ class SelahCompatibilityDraft {
         for (final question in visibleQuestions(category)) question.responseKey,
     };
     answers.removeWhere(
-      (key, _) => !key.startsWith('bio_') && !visibleKeys.contains(key),
+      (key, _) =>
+          !key.startsWith('bio_') &&
+          !selahSignUpQuestionIds.contains(key) &&
+          !visibleKeys.contains(key),
     );
-    preferences.removeWhere((key, _) => !visibleKeys.contains(key));
-    hardRequirements.removeWhere((key, _) => !visibleKeys.contains(key));
+    final preferenceKeys = <String>{
+      for (final category in chapter4Categories)
+        for (final question in preferenceQuestions(category))
+          question.responseKey,
+    };
+    preferences.removeWhere(
+      (key, _) => key != 'ch3_q1' && !preferenceKeys.contains(key),
+    );
+    hardRequirements.removeWhere(
+      (key, _) => key != 'ch3_q1' && !preferenceKeys.contains(key),
+    );
   }
 
   int answeredIn(Iterable<OnboardingCategory> categories) => categories
@@ -227,17 +265,16 @@ class SelahCompatibilityDraft {
   int questionsIn(Iterable<OnboardingCategory> categories) =>
       categories.expand(visibleQuestions).length;
 
-  int get preferenceAnswerCount =>
-      preferences.values.fold<int>(0, (total, values) => total + values.length);
+  int get preferenceAnswerCount => preferences.entries
+      .where((entry) => entry.key != 'ch3_q1')
+      .fold<int>(0, (total, entry) => total + entry.value.length);
 
-  int get preferenceOptionCount => chapter3Categories
+  int get preferenceOptionCount => chapter4Categories
       .expand(preferenceQuestions)
       .fold<int>(0, (total, question) => total + question.options.length);
 
-  int get hardRequirementCount => hardRequirements.values.fold<int>(
-    0,
-    (total, values) => total + values.length,
-  );
+  int get hardRequirementCount => compatibilityHardRequirements.values
+      .fold<int>(0, (total, values) => total + values.length);
 
   static bool _hasValue(dynamic value) => switch (value) {
     List<dynamic> values => values.isNotEmpty,
@@ -598,14 +635,17 @@ class _AnswerCategoryEditorState extends State<_AnswerCategoryEditor> {
           return _QuestionDoor(
             key: ValueKey('edit-answer-${question.responseKey}'),
             question: question.prompt,
-            value: _answerLabel(widget.draft.answers[question.responseKey]),
+            value: _answerLabel(
+              widget.draft.compatibilityAnswers[question.responseKey],
+            ),
             onTap: () async {
               if (!_editorCurrent(context, widget.owner)) return;
               final value = await Navigator.of(context).push<dynamic>(
                 MaterialPageRoute(
                   builder: (_) => _AnswerQuestionEditor(
                     question: question,
-                    initialValue: widget.draft.answers[question.responseKey],
+                    initialValue:
+                        widget.draft.compatibilityAnswers[question.responseKey],
                     owner: widget.owner,
                   ),
                 ),
@@ -698,7 +738,7 @@ class _PreferenceGroups extends StatelessWidget {
     children: [
       _MeaningCard(),
       const SizedBox(height: 14),
-      for (final category in chapter3Categories)
+      for (final category in chapter4Categories)
         if (draft.preferenceQuestions(category).isNotEmpty)
           _CategoryDoor(
             key: ValueKey('edit-preferences-${category.id}'),
@@ -768,7 +808,8 @@ class _PreferenceCategoryEditorState extends State<_PreferenceCategoryEditor> {
                       builder: (_) => _PreferenceQuestionEditor(
                         question: question,
                         yourAnswers: _asStringSet(
-                          widget.draft.answers[question.responseKey],
+                          widget.draft.compatibilityAnswers[question
+                              .responseKey],
                         ),
                         initialValues: values ?? const {},
                         initialHard:
@@ -893,7 +934,7 @@ class _HardRequirementsEditor extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final eligible = <(OnboardingCategory, OnboardingQuestion, List<String>)>[];
-    for (final category in chapter3Categories) {
+    for (final category in chapter4Categories) {
       for (final question in draft.preferenceQuestions(category)) {
         if (!question.hardRequirementSupported) continue;
         final reds = question.options

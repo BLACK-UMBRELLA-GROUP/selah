@@ -14,6 +14,7 @@ import '../../widgets/privacy_indicator.dart';
 import '../../widgets/selah_loading.dart';
 import 'onboarding_stage_intro_screen.dart';
 import 'values_preferences_flow.dart';
+import '../../models/selah_sign_up_compatibility.dart';
 import 'seeker_setup_navigation.dart';
 
 /// Optional, Journey-only Bio chapter.
@@ -24,11 +25,13 @@ import 'seeker_setup_navigation.dart';
 class BioOnboardingFlow extends StatefulWidget {
   final String? gender;
   final bool devPreview;
+  final SelahSignUpPreferencesReader? readSignUpPreferences;
 
   const BioOnboardingFlow({
     super.key,
     required this.gender,
     this.devPreview = false,
+    this.readSignUpPreferences,
   });
 
   @override
@@ -239,6 +242,7 @@ class _BioOnboardingFlowState extends State<BioOnboardingFlow> {
     final devPreview = _devPreview;
     final owner = _owner;
     final ownerGeneration = _ownerGeneration;
+    final readSignUpPreferences = widget.readSignUpPreferences;
     var stageLeaving = false;
     if (gender == null) {
       ScaffoldMessenger.of(context).showSnackBar(
@@ -273,6 +277,7 @@ class _BioOnboardingFlowState extends State<BioOnboardingFlow> {
                 builder: (_) => ValuesPreferencesFlow(
                   gender: gender,
                   devPreview: devPreview,
+                  readSignUpPreferences: readSignUpPreferences,
                 ),
               ),
             );

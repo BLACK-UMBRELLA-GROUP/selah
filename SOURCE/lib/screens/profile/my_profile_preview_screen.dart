@@ -82,6 +82,8 @@ class _MyProfilePreviewScreenState extends State<MyProfilePreviewScreen> {
             photos: List<String>.unmodifiable(p.photos),
             publicNationality: p.publicNationality,
             publicEthnicity: p.publicEthnicity,
+            faithProfile: p.faithProfile,
+            faithDenominationText: p.faithDenominationText,
           );
     if (_previewMode) {
       _photos = _previewProfile!.photos;

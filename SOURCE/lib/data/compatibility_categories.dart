@@ -34,19 +34,12 @@ CompatibilityCategoryDefinition _fromValues(OnboardingCategory category) =>
     );
 
 final List<CompatibilityCategoryDefinition> compatibilityCategories = [
-  for (final category in chapter3Categories.take(10)) _fromValues(category),
+  for (final category in chapter3CompatibilityCategories.take(10))
+    _fromValues(category),
   const CompatibilityCategoryDefinition(
     id: 'culture_location',
-    name: 'Culture, Language & Location',
-    chapter2Keys: [
-      'location',
-      'sect',
-      'revert',
-      'country_of_birth',
-      'nationality',
-      'ethnicity',
-      'languages',
-    ],
+    name: 'Location & Language',
+    chapter2Keys: ['location', 'languages'],
   ),
-  _fromValues(chapter3Categories.last),
+  _fromValues(chapter3CompatibilityCategories.last),
 ];

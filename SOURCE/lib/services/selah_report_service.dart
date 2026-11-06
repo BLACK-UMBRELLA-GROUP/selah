@@ -6,13 +6,8 @@
 // Browse long-press menu's "Report a Problem" opened the generic Help &
 // Support screen, with no subject and nowhere for a report to go.
 //
-// TWO DISTINCT ACTIONS, deliberately kept separate — the single most
-// useful thing taken from the Muzz teardown (MUZZ_TEARDOWN_CURRENT_
-// VERSION_V1.md §1.3). Muzz's reason list leads with "I don't want to see
-// this person", which is a BLOCK, not a report. Most people reaching for
-// "report" only want the person gone. Conflating the two floods the
-// moderation queue with non-incidents and makes the user wait for a
-// review they never needed.
+// Blocking and reporting are distinct: hiding a person does not require
+// a moderation review and should not create an incident report.
 //
 //   block()  -> mutual invisibility, instant, no moderation involvement
 //   report() -> goes to a moderation queue, permanent, not retractable
@@ -148,10 +143,8 @@ class SelahReportService {
   /// fail on a uuid cast and the user would see a generic "that didn't
   /// work" for something that was never going to work.
   ///
-  /// This method should DELETE ITSELF along with the mock fallback — see
-  /// ES-02 in the Muzz teardown ("no mock data in production paths"),
-  /// which exists precisely because that fallback hid the profile_complete
-  /// bug for a month. It is a bridge, not a design.
+  /// Reject synthetic IDs before any persistence call. This guard remains
+  /// needed while retained display paths can expose a local fixture.
   static bool isPersistableId(String id) => RegExp(
     r'^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$',
     caseSensitive: false,

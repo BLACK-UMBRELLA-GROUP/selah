@@ -10,6 +10,7 @@ import 'package:flutter/material.dart';
 
 import '../../data/chapter3_categories.dart';
 import '../../models/onboarding_question.dart';
+import '../../models/selah_sign_up_compatibility.dart';
 import '../../services/selah_onboarding_answers_service.dart';
 import '../../services/selah_account_state.dart';
 import '../../services/selah_auth.dart';
@@ -64,11 +65,13 @@ class ValuesPreferencesFlow extends StatefulWidget {
   /// silently disappearing when Compatibility is entered with no gender.
   final String gender;
   final bool devPreview;
+  final SelahSignUpPreferencesReader? readSignUpPreferences;
 
   const ValuesPreferencesFlow({
     super.key,
     required this.gender,
     this.devPreview = false,
+    this.readSignUpPreferences,
   });
 
   @override
@@ -122,15 +125,26 @@ class _ValuesPreferencesFlowState extends State<ValuesPreferencesFlow> {
 
   Map<String, dynamic> get _answersByQuestionId {
     final answers = <String, dynamic>{};
-    for (final category in chapter3Categories) {
+    final effective = _signUp.answersOver(_ch3Answers);
+    for (final category in chapter3CompatibilityCategories) {
       for (final question in category.questions) {
         final key = question.responseKey;
-        if (_ch3Answers.containsKey(key)) {
-          answers[question.id] = _ch3Answers[key];
+        if (effective.containsKey(key)) {
+          answers[question.id] = effective[key];
         }
       }
     }
     return answers;
+  }
+
+  SelahSignUpCompatibility get _signUp {
+    try {
+      return SelahSignUpCompatibility.fromPreferences(
+        widget.readSignUpPreferences?.call() ?? const {},
+      );
+    } catch (_) {
+      return SelahSignUpCompatibility.fromPreferences(const {});
+    }
   }
 
   List<OnboardingQuestion> _preferenceQuestions(OnboardingCategory category) =>
@@ -171,7 +185,7 @@ class _ValuesPreferencesFlowState extends State<ValuesPreferencesFlow> {
       if (snapshot == null) return;
 
       AppState.instance.saveJourneyBio(snapshot.journeyBio);
-      for (final category in chapter3Categories) {
+      for (final category in chapter3CompatibilityCategories) {
         for (final question in category.questions) {
           final persisted = SelahOnboardingAnswersService.persistedQuestionId(
             question.responseKey,
@@ -252,7 +266,7 @@ class _ValuesPreferencesFlowState extends State<ValuesPreferencesFlow> {
     steps.add(const _FlowStep(_FlowStepKind.preferencesIntro));
     steps.add(const _FlowStep(_FlowStepKind.preferenceGuide));
 
-    for (final category in chapter3Categories) {
+    for (final category in chapter4Categories) {
       if (_preferenceQuestions(category).isEmpty) continue;
       steps.add(_FlowStep(_FlowStepKind.preferenceSection, category: category));
     }
@@ -272,9 +286,21 @@ class _ValuesPreferencesFlowState extends State<ValuesPreferencesFlow> {
         for (final category in chapter3Categories)
           for (final question in _visible(category)) question.responseKey,
       };
-      _ch3Answers.removeWhere((id, _) => !stillVisible.contains(id));
-      _ch4Preferences.removeWhere((id, _) => !stillVisible.contains(id));
-      _ch4HardRequirement.removeWhere((id, _) => !stillVisible.contains(id));
+      _ch3Answers.removeWhere(
+        (id, _) =>
+            !selahSignUpQuestionIds.contains(id) && !stillVisible.contains(id),
+      );
+      final preferenceVisible = <String>{
+        for (final category in chapter4Categories)
+          for (final question in _preferenceQuestions(category))
+            question.responseKey,
+      };
+      _ch4Preferences.removeWhere(
+        (id, _) => id != 'ch3_q1' && !preferenceVisible.contains(id),
+      );
+      _ch4HardRequirement.removeWhere(
+        (id, _) => id != 'ch3_q1' && !preferenceVisible.contains(id),
+      );
 
       final reanchored = _steps.indexWhere((step) => step.anchor == anchor);
       if (reanchored != -1) _stepIndex = reanchored;
@@ -413,7 +439,7 @@ class _ValuesPreferencesFlowState extends State<ValuesPreferencesFlow> {
   }
 
   Set<String> _answerOptions(OnboardingQuestion question) {
-    final answer = _ch3Answers[question.responseKey];
+    final answer = _signUp.answersOver(_ch3Answers)[question.responseKey];
     if (answer == null) return const {};
     if (answer is List) {
       return answer.map((value) => value.toString()).toSet();
@@ -816,7 +842,9 @@ class _PreferenceGuideScreen extends StatelessWidget {
                   alignment: Alignment.centerLeft,
                   child: Text(
                     'COMPATIBILITY · PART 2',
-                    style: SelahText.chapterLabel(color: SelahColors.unlockText),
+                    style: SelahText.chapterLabel(
+                      color: SelahColors.unlockText,
+                    ),
                   ),
                 ),
                 SizedBox(height: 12),
@@ -970,7 +998,9 @@ class _CompatibilityBoundaryScreen extends StatelessWidget {
                   alignment: Alignment.centerLeft,
                   child: Text(
                     eyebrow,
-                    style: SelahText.chapterLabel(color: SelahColors.unlockText),
+                    style: SelahText.chapterLabel(
+                      color: SelahColors.unlockText,
+                    ),
                   ),
                 ),
                 SizedBox(height: 12),

@@ -338,7 +338,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
               //
               // Now in screens/profile/edit_profile_screen.dart, on the
               // Founder's own principle: "Settings should configure the
-              // account, not become a duplicate navigation hub." Sect,
+              // account, not become a duplicate navigation hub." Faith background,
               // lifestyle and what someone wants in a marriage are not
               // account configuration — they are the profile.
               //
@@ -445,7 +445,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 ],
               ),
 
-              // ADDED 2026-08-09 (Founder, from the Muzz teardown: "they
+              // ADDED 2026-08-09 (Founder: "they
               // have a privacy and cookie setting"). A LEGAL section, not a
               // row inside PRIVACY — the existing PRIVACY section is about
               // choices the member makes (who sees them, who is blocked).
@@ -582,7 +582,7 @@ class _SummaryCard extends StatelessWidget {
 // ── Section ────────────────────────────────────────────────────────────
 /// The version line at the foot of Settings — "1.0.0 (1)".
 ///
-/// ADDED 2026-08-09. Founder, from the Muzz teardown: "at bottom a version
+/// ADDED 2026-08-09. Founder: "at bottom a version
 /// number with 8.77.1 (563)". Same shape: marketing version, then build
 /// number in brackets.
 ///

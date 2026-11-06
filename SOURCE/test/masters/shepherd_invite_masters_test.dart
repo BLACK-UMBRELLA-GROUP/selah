@@ -119,6 +119,7 @@ Future<MasterScreen> _pendingRoot(WidgetTester tester) async {
   await _openInvite(tester);
   await _tap(tester, _key('invite_send'));
   await _tap(tester, _key('invite_sent_continue'));
+  await _tap(tester, _key('consent_agree'));
   // LOCK 4 is now the real next sign-up step. Complete required answers and
   // use both genuine optional Skip actions before continuing to Browse.
   for (final (question, answer) in [(1, 1), (2, 0), (3, 0), (4, 1)]) {
@@ -129,6 +130,16 @@ Future<MasterScreen> _pendingRoot(WidgetTester tester) async {
   await _tap(tester, _key('faith_choice_q6_0'));
   await _tap(tester, _key('faith_continue'));
   await _tap(tester, _key('faith_skip'));
+  await tester.pump(const Duration(seconds: 5));
+  await tester.pumpAndSettle();
+  for (var q = 1; q <= 7; q++) {
+    await _tap(tester, _key('marriage_choice_q${q}_0'));
+    await _tap(tester, _key(q == 7 ? 'marriage_save' : 'marriage_continue'));
+  }
+  await tester.pump(const Duration(seconds: 5));
+  await tester.pumpAndSettle();
+  await _tap(tester, _key('language_choice_0'));
+  await _tap(tester, _key('languages_save'));
   await _waitForBrowse(tester);
   // The newly completed faith step shows its real save result before Browse.
   // Let it expire naturally so it neither covers the dock nor enters a master
@@ -314,7 +325,7 @@ void main() {
       ),
       findsOneWidget,
     );
-    await _capture.capture(
+    await _correctionCapture.capture(
       tester,
       screen,
       'L03_seeker_browse__waiting_for_shepherd',
@@ -440,7 +451,7 @@ void main() {
       expect(invite.accepted, isTrue);
       expect(invite.fullName, _name);
       expect(_key('local_shepherd_invite_review'), findsNothing);
-      expect(find.text('You are now Adam’s Shepherd.'), findsOneWidget);
+      expect(find.text('You are now James’s Shepherd.'), findsOneWidget);
       await tester.pump(const Duration(seconds: 4));
     },
   );
@@ -457,7 +468,7 @@ void main() {
       expect(_key('local_shepherd_invite_review'), findsNothing);
       expect(
         find.text(
-          'Adam will be told kindly. You can accept later from the message.',
+          'James will be told kindly. You can accept later from the message.',
         ),
         findsOneWidget,
       );

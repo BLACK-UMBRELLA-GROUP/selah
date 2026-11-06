@@ -302,7 +302,9 @@ class _ProfileUnlockScreenState extends State<ProfileUnlockScreen> {
     // locked -> unlocked presentation without contacting Supabase.
     if (_isDeveloperPreview) {
       setState(() {
-        _realScore = SelahUnlockService.developerPreviewScore(widget.profile.id);
+        _realScore = SelahUnlockService.developerPreviewScore(
+          widget.profile.id,
+        );
         _loadingScore = false;
       });
       return;
@@ -1122,7 +1124,7 @@ Widget buildSelahCompatibilityBreakdownTestSurface({
   developerPreview: demoUnlocked,
   demoUnlocked: demoUnlocked,
   shepherds: [],
-  firstName: 'Hana',
+  firstName: 'Ruth',
   gender: 'female',
 );
 
@@ -1233,7 +1235,10 @@ class _ShepherdSection extends StatelessWidget {
         children: [
           Divider(color: Colors.white.withValues(alpha: 0.10), height: 1),
           const SizedBox(height: 14),
-          Text('SHEPHERD', style: SelahText.chapterLabel(color: Colors.white54)),
+          Text(
+            'SHEPHERD',
+            style: SelahText.chapterLabel(color: Colors.white54),
+          ),
           const SizedBox(height: 10),
 
           if (!unlocked || list == null)

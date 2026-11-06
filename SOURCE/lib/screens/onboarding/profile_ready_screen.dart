@@ -31,11 +31,13 @@ class SelahProfileReviewSnapshot {
   // Injected fixtures default to a completed profile. Live reads always set
   // this from the actual saved fields, consent, location and three photos.
   final bool profileSectionComplete;
+  final SeekerDetails? details;
 
   const SelahProfileReviewSnapshot({
     required this.progress,
     required this.verification,
     this.profileSectionComplete = true,
+    this.details,
   });
 
   // Optional Journey Bio prose is deliberately not a publication gate.
@@ -94,6 +96,7 @@ class _ServerProfileReviewRepository implements SelahProfileReviewRepository {
     return SelahProfileReviewSnapshot(
       progress: progress,
       verification: results[1] as SelahIdentityVerificationState?,
+      details: results[2] as SeekerDetails?,
       profileSectionComplete: seekerProfileSectionComplete(
         details: results[2] as SeekerDetails?,
         photoCount: (results[3] as List<String>).length,
@@ -272,9 +275,15 @@ class _ProfileReadyScreenState extends State<ProfileReadyScreen> {
     // The existing editor persists member changes, so it is never opened by
     // the no-write local rehearsal.
     if (_devPreview || _busy || !_canProceed) return;
-    await Navigator.of(
-      context,
-    ).push<void>(MaterialPageRoute(builder: (_) => const EditProfileScreen()));
+    await Navigator.of(context).push<void>(
+      MaterialPageRoute(
+        builder: (_) => EditProfileScreen(
+          readSignUpPreferences: () => _canProceed
+              ? _snapshot?.details?.preferences ?? const {}
+              : const {},
+        ),
+      ),
+    );
     if (_canProceed) await _loadReview();
   }
 

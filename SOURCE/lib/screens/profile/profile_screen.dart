@@ -462,17 +462,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
               ),
             ),
             SizedBox(height: 24),
-            // ── PUBLIC INFORMATION — REMOVED 2026-08-06 ───────────────
-            //
-            // Founder: "Since Browse no longer displays things like Sect, I
-            // don't think Public Information belongs on Profile anymore."
-            //
-            // It listed Sect and a photo count. Sect is no longer shown in
-            // Browse, so the heading was claiming a publicness the field no
-            // longer has; the photo count is answered better by the carousel
-            // and the Edit Photos button. Editing lives in Edit Profile,
-            // which owns those answers as of 2026-08-07 — it used to say
-            // Settings → Compatibility, and that section has moved.
+            // Profile answers are edited through Edit Profile; the photo
+            // count is already available from the carousel and Edit Photos.
+
             //
             // YOUR CONNECTIONS is removed for the same reason it was removed
             // from the Settings section this morning: Connections owns it.

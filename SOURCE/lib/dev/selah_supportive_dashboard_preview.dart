@@ -239,7 +239,7 @@ class SupportiveDashboardPreview extends ChangeNotifier {
     insight: insight,
     reflection: reflection,
     personalized: true,
-    counterpartName: AppState.instance.gender == 'female' ? 'Adam' : 'Maryam',
+    counterpartName: AppState.instance.gender == 'female' ? 'James' : 'Abigail',
   );
 }
 
@@ -265,7 +265,7 @@ class SupportiveDashboardFixtures {
     SupportiveInsightExample insight = SupportiveInsightExample.all,
     SupportiveReflectionTopic reflection = SupportiveReflectionTopic.pace,
     bool personalized = false,
-    String counterpartName = 'Adam',
+    String counterpartName = 'James',
   }) {
     // Both entry and leaf fail closed; direct fixture callers get no samples.
     if (!SupportiveDashboardPreview.allowed) {

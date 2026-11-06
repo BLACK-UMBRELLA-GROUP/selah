@@ -27,7 +27,7 @@ Replaces, for the Seeker, the copied code-and-scan link ("Enter code" / "Scan SE
 | 3e | – no name | L03_signup_invite__name_error | Under the field: "Enter your Shepherd’s name." | Clears on next try |
 | 3s | – sending | L03_signup_invite__sending | Primary button reads "Sending…", 75% opacity, not tappable; Copy link hidden | – |
 | 3f | – didn't send | L03_signup_invite__failed | Error bar (LOOK §5) at top: "Your invite didn’t send. Try again." + **Try again** | Try again = Send again |
-| 4 | Invite sent | L03_signup_sent | Selah pause layout (soft background, dawn ’); label "INVITE SENT"; heading "<First name> has your invite."; body "You can look around Selah now. You can ask or accept once <First name> says yes." | **Continue** → consent screen (CONSENT spec V1, LOCK 6) → faith questions → marriage questions → Browse (state "waiting"); Back → 3 |
+| 4 | Invite sent | L03_signup_sent | Selah pause layout (soft background, dawn ’); label "INVITE SENT"; heading "<First name> has your invite."; body "You can look around Selah now. You can ask or accept once <First name> says yes." | **Continue** → consent screen (CONSENT spec V2, LOCK 6) → faith questions → marriage questions → Browse (state "waiting"); Back → 3 |
 
 ## 2. While waiting (option A)
 

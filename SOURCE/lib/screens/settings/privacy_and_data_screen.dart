@@ -1,12 +1,7 @@
 // Settings › Legal › Privacy & data.
 //
-// ADDED 2026-08-09. Founder: "on Muzz in settings they have a privacy and
-// cookie setting."
-//
-// ── WHY THIS IS NOT A COOKIE SETTINGS SCREEN, which is what Muzz has.
-//
 // A cookie/consent screen exists to let you switch third-party tracking
-// off. Muzz needs one because Muzz has trackers to switch off. Verified
+// off. Verified
 // against pubspec.yaml on 2026-08-09, SELAH's entire dependency list is:
 //
 //   google_fonts · supabase_flutter · image_picker · google_sign_in ·

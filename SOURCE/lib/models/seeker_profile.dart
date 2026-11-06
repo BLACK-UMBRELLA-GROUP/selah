@@ -10,6 +10,8 @@
 // its Browse card supports tap-left/right photo cycling with a side dot
 // indicator, which needs more than one photo per candidate to matter.
 
+import 'selah_faith_profile.dart';
+
 class SeekerProfile {
   final String id;
   final String firstName;
@@ -49,6 +51,11 @@ class SeekerProfile {
   final String? publicNationality;
   final String? publicEthnicity;
 
+  /// Explicit public faith projection. Missing/withheld answers stay absent;
+  /// retained nationality, ethnicity and compatibility fields are not inferred.
+  final SelahFaithProfileAnswers? faithProfile;
+  final String? faithDenominationText;
+
   /// 2026-07-27 (Founder: "selah one account users can upload a video...
   /// maybe for on account show how the video will look and on the left
   /// side dots area... for a video its a play button"). Mock/UI-demo
@@ -79,6 +86,8 @@ class SeekerProfile {
     this.surnameLine,
     this.publicNationality,
     this.publicEthnicity,
+    this.faithProfile,
+    this.faithDenominationText,
     this.videoPhotoIndex,
     this.alreadyLikedYou = false,
   });
@@ -88,6 +97,34 @@ class SeekerProfile {
   // A privacy-filtered or not-yet-uploaded photo list is valid. The shared
   // image widget uses an empty URL for its neutral placeholder.
   String get photoUrl => photos.isEmpty ? '' : photos.first;
+
+  /// LOCK 8's ordered projection of explicitly supplied faith answers.
+  /// Absent and withheld values produce no replacement or inferred label.
+  List<String> get browseFaithChips {
+    final faith = faithProfile;
+    if (faith == null) return const [];
+    final tradition = faith.tradition == 'Another tradition'
+        ? faithDenominationText?.trim()
+        : faith.tradition;
+    return List.unmodifiable([
+      if (tradition != null && tradition.isNotEmpty) tradition,
+      if (switch (faith.church) {
+            'Every week' => 'Church weekly',
+            'Most weeks' => 'Church most weeks',
+            'Sometimes' => 'Church sometimes',
+            _ => null,
+          }
+          case final String church)
+        church,
+      if (switch (faith.baptised) {
+            'Yes' => 'Baptised',
+            'Not yet' => 'Not yet baptised',
+            _ => null,
+          }
+          case final String baptised)
+        baptised,
+    ]);
+  }
 }
 
 /// Placeholder profile photos (public placeholder image service) so the
@@ -102,12 +139,12 @@ final List<SeekerProfile> mockProfiles = [
   // different cases.
   const SeekerProfile(
     id: '1',
-    firstName: 'Maryam',
+    firstName: 'Abigail',
     age: 27,
     city: 'London',
     gender: 'female',
     alreadyLikedYou: true,
-    surnameLine: 'Hussain',
+    surnameLine: 'Reyes',
     // 2026-07-27 — demonstrates the SELAH One video-slot play-button dot
     // treatment (see SeekerProfile.videoPhotoIndex's doc comment). Photo
     // index 1 (the middle of these 3) is the mock "video" slot; it's
@@ -121,11 +158,11 @@ final List<SeekerProfile> mockProfiles = [
   ),
   const SeekerProfile(
     id: '2',
-    firstName: 'Yusuf',
+    firstName: 'Elijah',
     age: 30,
     city: 'Birmingham',
     gender: 'male',
-    surnameLine: 'Khan',
+    surnameLine: 'Grant',
     photos: [
       'https://picsum.photos/seed/selah2a/700/1000',
       'https://picsum.photos/seed/selah2b/700/1000',
@@ -133,12 +170,12 @@ final List<SeekerProfile> mockProfiles = [
   ),
   const SeekerProfile(
     id: '3',
-    firstName: 'Aisha',
+    firstName: 'Naomi',
     age: 25,
     city: 'Manchester',
     gender: 'female',
     alreadyLikedYou: true,
-    surnameLine: 'Begum',
+    surnameLine: 'Fernandes',
     photos: [
       'https://picsum.photos/seed/selah3a/700/1000',
       'https://picsum.photos/seed/selah3b/700/1000',
@@ -147,7 +184,7 @@ final List<SeekerProfile> mockProfiles = [
   ),
   const SeekerProfile(
     id: '4',
-    firstName: 'Ibrahim',
+    firstName: 'Matthew',
     age: 29,
     city: 'Leeds',
     gender: 'male',
@@ -159,11 +196,11 @@ final List<SeekerProfile> mockProfiles = [
   ),
   const SeekerProfile(
     id: '5',
-    firstName: 'Zainab',
+    firstName: 'Phoebe',
     age: 26,
     city: 'Bristol',
     gender: 'female',
-    surnameLine: 'Iqbal',
+    surnameLine: 'Wright',
     photos: [
       'https://picsum.photos/seed/selah5a/700/1000',
       'https://picsum.photos/seed/selah5b/700/1000',
@@ -171,11 +208,11 @@ final List<SeekerProfile> mockProfiles = [
   ),
   const SeekerProfile(
     id: '6',
-    firstName: 'Bilal',
+    firstName: 'Nathan',
     age: 31,
     city: 'Glasgow',
     gender: 'male',
-    surnameLine: 'Abdul Malik',
+    surnameLine: 'Brooks',
     photos: ['https://picsum.photos/seed/selah6a/700/1000'],
   ),
 ];
