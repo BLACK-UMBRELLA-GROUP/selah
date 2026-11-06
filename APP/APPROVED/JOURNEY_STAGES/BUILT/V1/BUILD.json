@@ -1,0 +1,59 @@
+{
+  "schema": 1,
+  "feature": "JOURNEY_STAGES",
+  "lock": 21,
+  "built_from": [
+    "APP/APPROVED/JOURNEY_STAGES/BRIEFS/BUILD_BRIEF_2026-11-06_V1.md",
+    "APP/APPROVED/JOURNEY_STAGES/RECORD/SELAH_JOURNEY_STAGES_SPEC_CURRENT_VERSION_V2.md",
+    "APP/APPROVED/JOURNEY_STAGES/RECORD/LOCK_RECORD.md",
+    "APP/APPROVED/QUESTIONS.md Q15"
+  ],
+  "commit": "ed02161c5d48ebbef0c370522954ea5f15f835bb",
+  "flutter": "3.44.2",
+  "dart": "3.12.2",
+  "build_mode": "flutter-test actual local-only draft root;430x932@3x",
+  "recorded_at_utc": "2026-11-06T23:10:53.811489+00:00",
+  "evidence": {
+    "pairs": 9,
+    "png_count": 18,
+    "png_bytes": 6658928,
+    "manifest": "HASHES.json",
+    "manifest_sha256": "6b184e3fe57ad42d3fda86d593968e68b427983e2a99682db672868f7c64fcfb"
+  },
+  "checks": {
+    "capture_cases": 10,
+    "caption_recapture_cases": 2,
+    "plain_replay_cases": 10,
+    "focused_stage_checks": 44,
+    "mandatory_model_checks": 1278,
+    "legacy_pass_through_checks": 26,
+    "cached_files": 402,
+    "cached_errors": 0,
+    "cached_warnings": 0,
+    "cached_prior_infos": 1,
+    "flutter_errors": 0,
+    "flutter_warnings": 0,
+    "flutter_prior_infos": 10,
+    "static_boundaries": 20602
+  },
+  "behavior": [
+    "Exactly seven visible stages; direct local Compatibility Reveal to Faith & Values; Main admission and both Continue guards retained.",
+    "Current-stage header uses own Main only; peer recorded fixture names or generic fallback. Seeker captions include total; Shepherd captions omit it.",
+    "Retained legacy mentor_gate pass uses existing RPCs only after accepted authoritative results, original owner/Main guards, no same-cycle retry; unknown/unconfirmed stages retain existing error.",
+    "Retired gate UI and mandatory LifeSnapshot detour removed; old stored values and SQL/RPC untouched; Family Review preserved."
+  ],
+  "visual_review": {
+    "all_pairs_viewed": true,
+    "known_differences": [
+      "Existing vertical Journey arrival/ribbon architecture remains; masters show an overview list and dock. Header and seven visible stages are implemented.",
+      "Current queue23 Journey list keeps its Esther card/actions; Stage 3 of 7 caption is added. Pending/free-place topology is not recreated.",
+      "My Selah preserves actual Grace request and existing grouped navigation; no prototype Naomi incoming request or static Updates are fabricated.",
+      "Profile reads actual unanswered session and current account header; prototype saved Faith/Marriage facts are not seeded.",
+      "Shepherd Seekers keeps current detailed James workspace and Journey-with-name prefix; Stage 3 \u00b7 Faith & Values segment is present without a total.",
+      "Four MarriagePrep states preserve actual checked values and failure presentation; surrounding architecture, native status area, photo/cast and font-rendering differences remain as built."
+    ],
+    "claim": "No blanket pixel MATCH or Founder acceptance."
+  },
+  "phone": "Awaits final batch source pin review and iPhone update.",
+  "version": "0.1.0+1 unchanged"
+}
