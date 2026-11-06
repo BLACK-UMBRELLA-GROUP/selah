@@ -16,3 +16,4 @@ owner: SELAH chat
 | 3 (change) | 2026-11-06 09:45 | From LOCK 4, 4 Nov: "A · One per screen — LOCK it (Recommended)" | Spec V2: screen 4 Continue → faith question 1. No master changes |
 | 3 (change) | 2026-11-06 13:40 | From LOCK 6: "Yes — LOCK it (Recommended)" | Spec V3: screen 4 Continue → consent screen |
 | 3 (change) | 2026-11-06 15:20 | From LOCK 11: "A · “Request a Journey” — LOCK it (Recommended)" | Spec V4 waiting words; master re-rendered |
+| 3 (fix) | 2026-11-06 | Build check of line 2 (SELAH chat) - no Founder decision needed | Master `L03_shepherd_invitation` was drawn with old invented Shepherd tabs; re-rendered with the real tabs (Dashboard · Network · Seekers · Profile) that line 2 already built. Old one in `ARCHIVE/MASTERS_V2_TABS/`. Spec unchanged |

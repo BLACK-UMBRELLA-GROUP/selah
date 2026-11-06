@@ -55,18 +55,26 @@ void main() {
     expect(controller.hasInvite, isFalse);
   });
 
-  test('blank name fails; typing keeps its error until next send attempt', () {
+  test('name error is shown only for trimmed-empty names until next try', () {
     controller.chooseRelation(SelahShepherdRelation.parent);
     controller.setName('   ');
     expect(controller.send(), isFalse);
     expect(controller.showNameError, isTrue);
     expect(controller.hasInvite, isFalse);
     validName();
+    expect(controller.showNameError, isFalse);
+    controller.setName('');
     expect(controller.showNameError, isTrue);
+    controller.setName(' \t\n ');
+    expect(controller.showNameError, isTrue);
+    validName();
+    expect(controller.showNameError, isFalse);
     expect(controller.send(), isTrue);
     expect(controller.showNameError, isFalse);
     expect(controller.fullName, 'David Okafor');
     expect(controller.firstName, 'David');
+    controller.setName('');
+    expect(controller.showNameError, isFalse);
   });
 
   test('normal Send is local, synchronous and pending until accepted', () {

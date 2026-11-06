@@ -58,7 +58,8 @@ class SelahShepherdInviteController extends ChangeNotifier {
   }
 
   bool get showChoiceError => _allowed && _showChoiceError;
-  bool get showNameError => _allowed && _showNameError;
+  bool get showNameError =>
+      _allowed && _showNameError && _fullName.trim().isEmpty;
   SelahShepherdInviteSendState get sendState =>
       _allowed ? _sendState : SelahShepherdInviteSendState.idle;
   bool get hasInvite => _allowed && _hasInvite;

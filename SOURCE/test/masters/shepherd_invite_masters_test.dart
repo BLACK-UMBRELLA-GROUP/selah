@@ -39,6 +39,10 @@ const _masters = <String>{
   'L03_shepherd_invitation',
 };
 final _capture = MasterCaptureHarness(feature: 'SHEPHERD_INVITE');
+final _correctionCapture = MasterCaptureHarness(
+  feature: 'SHEPHERD_INVITE',
+  version: 'V1_1',
+);
 
 Finder _key(String value) => find.byKey(ValueKey<String>(value));
 
@@ -250,12 +254,21 @@ void main() {
     await _openInvite(tester, name: false);
     await _tap(tester, _key('invite_send'));
     expect(find.text('Enter your Shepherd’s name.'), findsOneWidget);
-    // LOCK 3 retains this error until the next try. The master shows the
-    // reachable intermediate state after a blank try, then entering a name.
+    // DOC-SELAH-0047: the error belongs only to a trim-empty name. Exercise
+    // editing through valid and whitespace values, then return to the exact
+    // empty field in the corrected master using the real form actions.
     await tester.enterText(_key('invite_name'), _name);
-    await _tap(tester, find.text('THEIR NAME'));
+    await tester.pumpAndSettle();
+    expect(find.text('Enter your Shepherd’s name.'), findsNothing);
+    await tester.enterText(_key('invite_name'), '   ');
+    await tester.pumpAndSettle();
     expect(find.text('Enter your Shepherd’s name.'), findsOneWidget);
-    await _capture.capture(
+    await tester.enterText(_key('invite_name'), '');
+    await _tap(tester, _key('invite_send'));
+    await _tap(tester, find.text('THEIR NAME'));
+    expect(flow.controller.fullName, isEmpty);
+    expect(find.text('Enter your Shepherd’s name.'), findsOneWidget);
+    await _correctionCapture.capture(
       tester,
       flow.screen,
       'L03_signup_invite__name_error',
@@ -350,7 +363,7 @@ void main() {
     );
     await tester.pumpAndSettle();
     expect(find.text('Be James’s Shepherd?'), findsOneWidget);
-    await _capture.capture(tester, screen, 'L03_shepherd_invitation');
+    await _correctionCapture.capture(tester, screen, 'L03_shepherd_invitation');
   });
 
   testWidgets(
