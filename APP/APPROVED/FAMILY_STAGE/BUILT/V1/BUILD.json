@@ -1,0 +1,77 @@
+{
+  "schema": 1,
+  "feature": "FAMILY_STAGE",
+  "lock": 22,
+  "built_from": [
+    "APP/APPROVED/FAMILY_STAGE/BRIEFS/BUILD_BRIEF_2026-11-06_V1.md",
+    "APP/APPROVED/FAMILY_STAGE/RECORD/SELAH_FAMILY_STAGE_SPEC_CURRENT_VERSION_V2.md",
+    "APP/APPROVED/FAMILY_STAGE/RECORD/LOCK_RECORD.md",
+    "APP/APPROVED/QUESTIONS.md Q15"
+  ],
+  "commit": "1e2324d9054d5dc1116cdae56f5b14d64a109447",
+  "flutter": "3.44.2",
+  "dart": "3.12.2",
+  "build_mode": "flutter-test actual local-only draft root;430x932@3x",
+  "recorded_at_utc": "2026-11-06T23:37:55.995739+00:00",
+  "evidence": {
+    "pairs": 5,
+    "png_count": 10,
+    "png_bytes": 4115352,
+    "manifest": "HASHES.json",
+    "manifest_sha256": "1aa93c56348275f12de0991db7b25f9009d5291c587b14eccc933334e4fe5900",
+    "later_locked_reference_audit": "LOCKED_REFERENCE_AUDIT.json",
+    "audit_sha256": "7c69ea825b71cb8bb13f1a994f045a5487af3cc8f719cbfc8b58760f6f36279c"
+  },
+  "checks": {
+    "family_capture_cases": 8,
+    "family_and_stage_plain_replay": 18,
+    "focused_later_reference_replay": 72,
+    "focused_family_model_checks": 48,
+    "mandatory_models": 1338,
+    "whole_flutter_suite_passed": 511,
+    "existing_larger_text_skip": 1,
+    "cached_files": 407,
+    "cached_errors": 0,
+    "cached_warnings": 0,
+    "cached_prior_infos": 1,
+    "flutter_errors": 0,
+    "flutter_warnings": 0,
+    "flutter_prior_infos": 10,
+    "static_boundaries": 20688
+  },
+  "behavior": [
+    "Four exact fam_q1..4 questions,400 Unicode runes each; exact Seeker names and Main-only/generic Shepherd wording.",
+    "Existing Journey progress owns separate own/peer answers and sent flags, starts empty; controller holds transient status only.",
+    "Own send requires all4, freezes own side, never sends peer or auto-continues; both sent required before existing Continue/Main/Family Review guards.",
+    "Sending disables; failure preserves actual typed answers; Sent is read-only; bothSent uses existing completion words without false Waiting.",
+    "Original role/Journey/Main/lifetime/tab/render guards reject stale/hidden/Page-options callbacks. Exact original current route required for visible member dispatch; covered owner may preserve answers.",
+    "Retired old question banks and Seeker-to-Shepherd writer/read/UI removed; stored old rows untouched."
+  ],
+  "retained_path": {
+    "implemented": "Exact actor-filtered reads for each real Seeker in existing mentor_to_seeker direction; existing insert/store/RPC only. Exact canonical trimmed submission required before reporting Sent; dirty typed answers survive mismatch/polls and original guards persist across awaits.",
+    "written_limit_OA_SELAH_002": "No live backend validation or server migration. A conflicting duplicate row stays a truthful failure; no upsert, new RPC or silent replacement introduced."
+  },
+  "visual_review": {
+    "all_pairs_viewed": true,
+    "known_differences": [
+      "Existing vertical Journey/ribbon presentation remains around the Answer questions entry; master shows a full seven-row overview, Back and dock. Queue27 changes the real entry action, not the earlier presentation architecture.",
+      "Native status/safe-area geometry, bundled-font rendering and private developer rail differ from the browser masters as in earlier evidence.",
+      "Family labels/questions/entered answers/counters/sending/failure/sent words and shared shape/color roles are retained. Scroll positions and resulting footer placement show native layout differences; no blanket pixel-match claim.",
+      "Actual root keeps its selected Journey dock destination/badge, while browser temporary-page masters show neutral dock icons."
+    ],
+    "claim": "No blanket pixel MATCH or Founder visual acceptance."
+  },
+  "older_test_alignment": {
+    "initial_whole_run": "488pass,1existing skip,23fail:6obsolete caption assertions,16superseded golden baselines,1obsolete Dashboard-profile driver. All resolved without product edits, assertion removal, added skips, comparator tolerance change or historical image overwrite.",
+    "exact_retargets": 13,
+    "new_reviewed_pairs": 3,
+    "locks": [
+      19,
+      20,
+      21
+    ],
+    "diagnostics": "52PNG/16639153B hash-verified and moved to Founder trash; no deletion."
+  },
+  "phone": "Latest24\u201327 source installed and22-second stability verified separately; sanitized phone receipt follows in DELIVERY_REPAIR/BUILT/V1.",
+  "version": "0.1.0+1 unchanged"
+}

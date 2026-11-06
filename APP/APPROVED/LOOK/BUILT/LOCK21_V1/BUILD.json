@@ -1,0 +1,39 @@
+{
+  "schema": 1,
+  "feature": "LOOK",
+  "evidence_version": "LOCK21_V1",
+  "later_lock": 21,
+  "built_from": [
+    "APP/APPROVED/LOOK/RECORD/SELAH_LOOK_SPEC_CURRENT_VERSION_V2.md",
+    "APP/APPROVED/JOURNEY_STAGES/BRIEFS/BUILD_BRIEF_2026-11-06_V1.md"
+  ],
+  "commit": "1e2324d9054d5dc1116cdae56f5b14d64a109447",
+  "flutter": "3.44.2",
+  "build_mode": "flutter-test actual approved widget fixtures;430x932@3x",
+  "recorded_at_utc": "2026-11-06T23:37:55.995739+00:00",
+  "scope": "New versioned comparison for approved changed scope; historical evidence preserved.",
+  "audit": "APP/APPROVED/FAMILY_STAGE/BUILT/V1/LOCKED_REFERENCE_AUDIT.json",
+  "images": [
+    {
+      "path": "APP/APPROVED/LOOK/BUILT/LOCK21_V1/L01_seeker_journey__stages__build.png",
+      "bytes": 94803,
+      "sha256": "fd69cda68dfdf350bfba37e21087da0444e0e13ac979d2219a696be213b5f92c"
+    },
+    {
+      "path": "APP/APPROVED/LOOK/BUILT/LOCK21_V1/L01_seeker_journey__stages__master_beside_build.png",
+      "bytes": 383031,
+      "sha256": "f191123e64594fdcf8847d24958c1f2ffc8ddc8ffe71023c968948c595592b33"
+    },
+    {
+      "path": "APP/APPROVED/LOOK/BUILT/LOCK21_V1/L01_seeker_journeys__pending_and_free_place__build.png",
+      "bytes": 209608,
+      "sha256": "e7d7efbf4cbdedbf4430fefe5c4547560a575975dd3c48204f869a85a27d83e6"
+    },
+    {
+      "path": "APP/APPROVED/LOOK/BUILT/LOCK21_V1/L01_seeker_journeys__pending_and_free_place__master_beside_build.png",
+      "bytes": 444184,
+      "sha256": "2c78807360ffe8ff9f7872f44d1c8f145022e9c1c71170b7534e7b62a74b10d6"
+    }
+  ],
+  "checks": "3 targeted new captures and72 focused replay cases passed; final whole suite511pass/1existing skip."
+}

@@ -1,0 +1,28 @@
+{
+  "schema": 1,
+  "feature": "SHEPHERD_INVITE",
+  "evidence_version": "LOCK19_V1",
+  "later_lock": 19,
+  "built_from": [
+    "APP/APPROVED/SHEPHERD_INTRODUCE/BRIEFS/BUILD_BRIEF_2026-11-06_V1.md"
+  ],
+  "commit": "1e2324d9054d5dc1116cdae56f5b14d64a109447",
+  "flutter": "3.44.2",
+  "build_mode": "flutter-test actual approved widget fixtures;430x932@3x",
+  "recorded_at_utc": "2026-11-06T23:37:55.995739+00:00",
+  "scope": "New versioned comparison for approved changed scope; historical evidence preserved.",
+  "audit": "APP/APPROVED/FAMILY_STAGE/BUILT/V1/LOCKED_REFERENCE_AUDIT.json",
+  "images": [
+    {
+      "path": "APP/APPROVED/SHEPHERD_INVITE/BUILT/LOCK19_V1/L03_shepherd_invitation__build.png",
+      "bytes": 281494,
+      "sha256": "dea5bd88f776c2727bf75800a1e53ce290efcd27699f6456e1739af734b015be"
+    },
+    {
+      "path": "APP/APPROVED/SHEPHERD_INVITE/BUILT/LOCK19_V1/L03_shepherd_invitation__master_beside_build.png",
+      "bytes": 557370,
+      "sha256": "df31e6825ba96576ca22d2202583e3610b4fbc345a9dfce20eb8a794866c7ec8"
+    }
+  ],
+  "checks": "3 targeted new captures and72 focused replay cases passed; final whole suite511pass/1existing skip."
+}
