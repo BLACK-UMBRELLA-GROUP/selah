@@ -30,6 +30,7 @@ import '../../theme/selah_colors.dart';
 import '../../theme/selah_text.dart';
 import '../../widgets/selah_fade_edges.dart';
 import '../../theme/selah_card_metrics.dart';
+import '../../widgets/selah_shepherd_invite_views.dart';
 
 class AcceptShepherdInviteScreen extends StatefulWidget {
   final String from;
@@ -37,11 +38,55 @@ class AcceptShepherdInviteScreen extends StatefulWidget {
   /// The relationship code the inviting Shepherd stated. Pre-selects.
   final String? theirAnswer;
 
+  final ({
+    String name,
+    int age,
+    String gender,
+    Widget photo,
+    String relationship,
+    VoidCallback accept,
+    VoidCallback decline,
+  })?
+  _seekerRequest;
+  final Widget? bottomNavigation;
+  String? get seekerName => _seekerRequest?.name;
+  int? get seekerAge => _seekerRequest?.age;
+  String? get seekerGender => _seekerRequest?.gender;
+  Widget? get seekerPhoto => _seekerRequest?.photo;
+  String? get requestedRelationship => _seekerRequest?.relationship;
+  VoidCallback? get onAccept => _seekerRequest?.accept;
+  VoidCallback? get onDecline => _seekerRequest?.decline;
+
   const AcceptShepherdInviteScreen({
     super.key,
     required this.from,
     this.theirAnswer,
-  });
+  }) : _seekerRequest = null,
+       bottomNavigation = null;
+
+  /// Explicit opposite-direction request: a Shepherd reviews a Seeker.
+  /// Existing callers of the from/theirAnswer constructor retain their role.
+  const AcceptShepherdInviteScreen.seekerRequest({
+    super.key,
+    required String seekerName,
+    required int seekerAge,
+    required String seekerGender,
+    required Widget seekerPhoto,
+    required String relationship,
+    required VoidCallback onAccept,
+    required VoidCallback onDecline,
+    this.bottomNavigation,
+  }) : from = '',
+       theirAnswer = null,
+       _seekerRequest = (
+         name: seekerName,
+         age: seekerAge,
+         gender: seekerGender,
+         photo: seekerPhoto,
+         relationship: relationship,
+         accept: onAccept,
+         decline: onDecline,
+       );
 
   @override
   State<AcceptShepherdInviteScreen> createState() =>
@@ -60,6 +105,46 @@ class _AcceptShepherdInviteScreenState
 
   @override
   Widget build(BuildContext context) {
+    if (widget.seekerName != null) {
+      return Scaffold(
+        key: const ValueKey('invite_review'),
+        backgroundColor: SelahColors.mist,
+        body: Stack(
+          fit: StackFit.expand,
+          children: [
+            SelahShepherdRequestReview(
+              seekerName: widget.seekerName!,
+              seekerAge: widget.seekerAge!,
+              seekerGender: widget.seekerGender!,
+              seekerPhoto: widget.seekerPhoto!,
+              relationship: widget.requestedRelationship!,
+              bottomPadding: widget.bottomNavigation == null ? 16 : 95,
+              onAccept: () {
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(
+                    content: Text(
+                      'You are now ${widget.seekerName}’s Shepherd.',
+                    ),
+                  ),
+                );
+                widget.onAccept!();
+              },
+              onDecline: () {
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(
+                    content: Text(
+                      '${widget.seekerName} will be told kindly. You can accept later from the message.',
+                    ),
+                  ),
+                );
+                widget.onDecline!();
+              },
+            ),
+            if (widget.bottomNavigation != null) widget.bottomNavigation!,
+          ],
+        ),
+      );
+    }
     return Scaffold(
       extendBodyBehindAppBar: true,
       backgroundColor: Colors.transparent,

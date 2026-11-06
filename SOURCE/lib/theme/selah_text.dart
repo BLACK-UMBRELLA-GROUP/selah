@@ -40,7 +40,7 @@ class SelahText {
     fontWeight: weight,
     color: color,
     height: height,
-    letterSpacing: spacing,
+    letterSpacing: spacing ?? 0,
   );
   static TextStyle preview(
     SelahAppFont font, {
@@ -63,6 +63,7 @@ class SelahText {
     fontWeight: FontWeight.w600,
     color: color ?? SelahColors.foreground,
     height: 1.1,
+    letterSpacing: 0,
   );
   static const pageTitleSize = 33.6;
   static TextStyle pageTitle() => heading();

@@ -69,14 +69,20 @@ class SelahErrorBanner extends StatelessWidget {
           ),
           child: Text(
             '!',
-            style: SelahText.body(size: 18, color: Colors.white),
+            style: SelahText.body(
+              size: 14,
+              color: Colors.white,
+            ).copyWith(fontWeight: FontWeight.w700, height: 1),
           ),
         ),
         const SizedBox(width: 12),
         Expanded(
           child: Text(
             message,
-            style: SelahText.body(size: 14, color: SelahColors.foreground),
+            style: SelahText.body(
+              size: 14,
+              color: SelahColors.foreground,
+            ).copyWith(height: 1.4),
           ),
         ),
         if (onRetry != null) ...[
@@ -85,6 +91,8 @@ class SelahErrorBanner extends StatelessWidget {
             key: retryKey,
             onPressed: onRetry,
             style: OutlinedButton.styleFrom(
+              minimumSize: const Size(0, 35.5),
+              tapTargetSize: MaterialTapTargetSize.shrinkWrap,
               foregroundColor: SelahColors.foreground,
               side: const BorderSide(color: SelahColors.line),
               shape: RoundedRectangleBorder(
@@ -92,7 +100,10 @@ class SelahErrorBanner extends StatelessWidget {
               ),
               padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
             ),
-            child: Text('Try again', style: SelahText.button(size: 13.5)),
+            child: Text(
+              'Try again',
+              style: SelahText.button(size: 13.5).copyWith(height: 1),
+            ),
           ),
         ],
         if (onDismiss != null)

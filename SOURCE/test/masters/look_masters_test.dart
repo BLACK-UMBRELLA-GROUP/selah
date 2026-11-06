@@ -4,10 +4,8 @@
 import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
-import 'dart:ui' as ui;
 
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -16,17 +14,15 @@ import 'package:selah/dev/selah_concept_preview_boundary.dart';
 import 'package:selah/dev/selah_one_journey_browse_designs.dart';
 import 'package:selah/dev/selah_one_journey_concept_shell.dart';
 import 'package:selah/draft/selah_draft_runtime.dart';
-import 'package:selah/main.dart' show SelahApp;
 import 'package:selah/services/selah_internal_preview_client.dart';
 import 'package:selah/theme/selah_text.dart';
 import 'package:selah/widgets/selah_shell_navigation.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-const _phoneSize = Size(430, 932);
-const _pixelRatio = 3.0;
-const _safeArea = EdgeInsets.only(top: 59, bottom: 34);
+import 'master_capture.dart';
+
 final _look = Directory('../APP/APPROVED/LOOK').absolute;
-final _output = Directory('${_look.path}/BUILT/V1');
+final _captureHarness = MasterCaptureHarness(feature: 'LOOK');
 
 // Features absent from the current app are deliberately not reconstructed in
 // tests. The two absent async states are also not invented for screenshots.
@@ -82,63 +78,17 @@ class _PortraitGate {
   }
 }
 
-class _Screen {
-  _Screen(this.pane, this.boundary);
-  final Widget pane;
-  final GlobalKey boundary;
-}
-
-Future<_Screen> _mount(WidgetTester tester, {bool shepherd = false}) async {
-  tester.view.devicePixelRatio = _pixelRatio;
-  tester.view.physicalSize = _phoneSize * _pixelRatio;
-  addTearDown(tester.view.resetDevicePixelRatio);
-  addTearDown(tester.view.resetPhysicalSize);
-
-  // Obtain the production theme and outer presentation builder from SelahApp.
-  // The unavailable home is then replaced by the actual admitted local concept
-  // shell. Runtime admission below still uses the real exact-bundle policy and
-  // SELAH_DRAFT_LOCAL_ONLY compile-time flag; no admission check is bypassed.
-  await tester.pumpWidget(const SelahApp());
-  await tester.pump();
-  final production = tester.widget<MaterialApp>(find.byType(MaterialApp));
-  expect(production.theme!.brightness, Brightness.light);
-  final boundary = GlobalKey(debugLabel: 'look-built-screen');
-  final pane = RepaintBoundary(
-    key: boundary,
-    child: SizedBox.fromSize(
-      size: _phoneSize,
-      child: MaterialApp(
-        debugShowCheckedModeBanner: false,
-        theme: production.theme,
-        scrollBehavior: production.scrollBehavior,
-        builder: (context, child) => MediaQuery(
-          data: MediaQuery.of(context).copyWith(
-            size: _phoneSize,
-            devicePixelRatio: _pixelRatio,
-            padding: _safeArea,
-            viewPadding: _safeArea,
-            viewInsets: EdgeInsets.zero,
-            textScaler: TextScaler.noScaling,
-            platformBrightness: Brightness.light,
-            disableAnimations: true,
-            accessibleNavigation: true,
-          ),
-          child: production.builder?.call(context, child) ?? child!,
-        ),
-        home: SelahConceptPreviewBoundary(
-          child: SelahOneJourneyConceptShell(
-            canAct: () => true,
-            onExit: () {},
-            initialShepherdRole: shepherd,
-          ),
+Future<MasterScreen> _mount(WidgetTester tester, {bool shepherd = false}) =>
+    _captureHarness.mount(
+      tester,
+      home: SelahConceptPreviewBoundary(
+        child: SelahOneJourneyConceptShell(
+          canAct: () => true,
+          onExit: () {},
+          initialShepherdRole: shepherd,
         ),
       ),
-    ),
-  );
-  await tester.pumpWidget(pane);
-  await tester.pump();
-  return _Screen(pane, boundary);
-}
+    );
 
 Future<void> _waitForPhotos(WidgetTester tester) async {
   await tester.runAsync(() async {
@@ -214,94 +164,11 @@ Future<void> _preparingJourney(WidgetTester tester) async {
   await _tab(tester, 'Journey');
 }
 
-Future<void> _prepareImages(WidgetTester tester) async {
-  final images = tester.widgetList<Image>(find.byType(Image)).toList();
-  await tester.runAsync(() async {
-    for (final widget in images) {
-      var ready = false;
-      Object? error;
-      unawaited(
-        precacheImage(
-          widget.image,
-          tester.element(find.byWidget(widget)),
-          onError: (exception, _) => error = exception,
-        ).then((_) => ready = true),
-      );
-      final deadline = DateTime.now().add(const Duration(seconds: 15));
-      // A FileImage started by a pumped widget may complete in the test's
-      // FakeAsync zone. Keep pumping while the real codec/I/O event completes.
-      while (!ready && DateTime.now().isBefore(deadline)) {
-        await Future<void>.delayed(const Duration(milliseconds: 10));
-        await tester.pump();
-      }
-      expect(ready, isTrue, reason: 'First frame for ${widget.image}');
-      expect(error, isNull, reason: 'Decode ${widget.image}');
-    }
-  });
-  await tester.pumpAndSettle();
-  expect(tester.takeException(), isNull);
-}
-
-Future<void> _golden(
-  WidgetTester tester,
-  GlobalKey boundary,
-  String filename,
-) async {
-  final render =
-      boundary.currentContext!.findRenderObject()! as RenderRepaintBoundary;
-  await tester.runAsync(() async {
-    final image = await render.toImage(pixelRatio: _pixelRatio);
-    try {
-      expect(image.width, (render.size.width * _pixelRatio).round());
-      expect(image.height, (render.size.height * _pixelRatio).round());
-      final bytes = (await image.toByteData(format: ui.ImageByteFormat.png))!;
-      await expectLater(
-        bytes.buffer.asUint8List(bytes.offsetInBytes, bytes.lengthInBytes),
-        matchesGoldenFile(File('${_output.path}/$filename').uri),
-      );
-    } finally {
-      image.dispose();
-    }
-  });
-}
-
 Future<void> _capture(
   WidgetTester tester,
-  _Screen screen,
+  MasterScreen screen,
   String master,
-) async {
-  await _prepareImages(tester);
-  expect(tester.getSize(find.byKey(screen.boundary)), _phoneSize);
-  await _golden(tester, screen.boundary, '${master}__build.png');
-  final comparison = GlobalKey(debugLabel: 'look-master-beside-build');
-  tester.view.physicalSize = const Size(860, 932) * _pixelRatio;
-  // Reparent the same real app subtree at its original 430-pixel width. Its
-  // GlobalKey preserves current navigation/state; no screen is redrawn here.
-  await tester.pumpWidget(
-    RepaintBoundary(
-      key: comparison,
-      child: Directionality(
-        textDirection: TextDirection.ltr,
-        child: Row(
-          children: [
-            SizedBox.fromSize(
-              size: _phoneSize,
-              child: Image.file(
-                File('${_look.path}/MASTERS/$master.png'),
-                fit: BoxFit.fill,
-                filterQuality: FilterQuality.none,
-              ),
-            ),
-            screen.pane,
-          ],
-        ),
-      ),
-    ),
-  );
-  await _prepareImages(tester);
-  expect(tester.getSize(find.byKey(comparison)), const Size(860, 932));
-  await _golden(tester, comparison, '${master}__master_beside_build.png');
-}
+) => _captureHarness.capture(tester, screen, master);
 
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
@@ -313,28 +180,7 @@ void main() {
     originalFontFetching = GoogleFonts.config.allowRuntimeFetching;
     GoogleFonts.config.allowRuntimeFetching = false;
     HttpOverrides.global = SelahOfflineHttpOverrides();
-    final figtree = FontLoader('Figtree')
-      ..addFont(
-        Future.value(
-          ByteData.sublistView(
-            File('assets/fonts/Figtree[wght].ttf').readAsBytesSync(),
-          ),
-        ),
-      );
-    final cormorant = FontLoader('Cormorant Garamond');
-    for (final file in [
-      'CormorantGaramond[wght].ttf',
-      'CormorantGaramond-Italic[wght].ttf',
-    ]) {
-      cormorant.addFont(
-        Future.value(
-          ByteData.sublistView(File('assets/fonts/$file').readAsBytesSync()),
-        ),
-      );
-    }
-    final icons = FontLoader('MaterialIcons')
-      ..addFont(rootBundle.load('fonts/MaterialIcons-Regular.otf'));
-    await Future.wait([figtree.load(), cormorant.load(), icons.load()]);
+    await loadSelahMasterFonts();
   });
 
   setUp(() {

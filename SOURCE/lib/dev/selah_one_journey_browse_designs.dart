@@ -44,6 +44,7 @@ class SelahOneJourneyBrowseDesigns extends StatefulWidget {
     this.requestLabel,
     this.invitationSent,
     this.canRequest,
+    this.waitingShepherdFirstName,
     this.bottomPadding = 100,
     this.photoBuilder,
     this.alignHeaderActions = false,
@@ -67,6 +68,7 @@ class SelahOneJourneyBrowseDesigns extends StatefulWidget {
   final String Function(SeekerProfile)? requestLabel;
   final bool Function(SeekerProfile)? invitationSent;
   final bool Function(SeekerProfile)? canRequest;
+  final String? waitingShepherdFirstName;
   final double bottomPadding;
 
   /// Optional owner-prepared offline renderer. The existing sample-only
@@ -116,6 +118,7 @@ class _SelahOneJourneyBrowseDesignsState
     requestLabel: widget.requestLabel,
     invitationSent: widget.invitationSent,
     canRequest: widget.canRequest,
+    waitingShepherdFirstName: widget.waitingShepherdFirstName,
     bottomPadding: widget.bottomPadding,
     alignHeaderActions: widget.alignHeaderActions,
     nextProfileMotion: widget.nextProfileMotion,

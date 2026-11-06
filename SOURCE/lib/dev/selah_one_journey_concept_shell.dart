@@ -10,6 +10,12 @@ import '../data/journey_questions.dart';
 import '../data/selah_reference_data.dart';
 import '../data/selah_journey_pause_state.dart';
 import '../models/seeker_profile.dart';
+import '../models/selah_shepherd_invite.dart';
+import '../services/selah_developer_access.dart';
+import '../widgets/selah_shepherd_invite_scope.dart';
+import '../widgets/selah_shepherd_invite_views.dart';
+import '../widgets/selah_profile_image.dart';
+import '../screens/onboarding/selah_shepherd_invite_flow.dart';
 import '../models/selah_dashboard_resolution.dart';
 import '../models/selah_supportive_dashboard.dart';
 import '../services/selah_mentor_link_service.dart'
@@ -87,6 +93,7 @@ class SelahOneJourneyConceptShell extends StatefulWidget {
     this.onDeveloperHome,
     this.onRoleChanged,
     this.initialShepherdRole = false,
+    this.initialShepherdInviteReview = false,
     this.initialSeekerBasic = false,
     this.initialShepherdBasic = false,
   });
@@ -99,6 +106,7 @@ class SelahOneJourneyConceptShell extends StatefulWidget {
   final VoidCallback? onDeveloperHome;
   final ValueChanged<bool>? onRoleChanged;
   final bool initialShepherdRole;
+  final bool initialShepherdInviteReview;
   final bool initialSeekerBasic;
   final bool initialShepherdBasic;
   @override
@@ -110,6 +118,26 @@ class _SelahOneJourneyConceptShellState
     extends State<SelahOneJourneyConceptShell>
     with SingleTickerProviderStateMixin {
   final _model = ViewRequestDraftModel(capacity: 3);
+  SelahShepherdInviteController? _invite;
+  bool _inviteWasPending = false;
+  bool get _invitePending => _invite?.pending ?? false;
+
+  void _inviteChanged() {
+    if (!_allowed) return;
+    final invite = _invite;
+    if (invite == null) return;
+    final newlyAccepted = _inviteWasPending && invite.accepted;
+    _act(() {
+      if (invite.hasInvite) {
+        _model.setOwnMainShepherdPresent(invite.accepted);
+      }
+      _inviteWasPending = invite.pending;
+      if (newlyAccepted && !_shepherdRole) {
+        _notice = '${invite.firstName} said yes. You can ask and accept now.';
+      }
+    });
+  }
+
   final _appearanceOwner = Object();
   final _scroll = ScrollController();
   final _message = TextEditingController();
@@ -304,6 +332,9 @@ class _SelahOneJourneyConceptShellState
   void initState() {
     super.initState();
     _shepherdRole = widget.initialShepherdRole;
+    if (widget.initialShepherdInviteReview && _shepherdRole) {
+      _pages.add('shepherd_invite_review');
+    }
     _accountSession = SelahRequestAccountSession(
       canAct: () => _allowed,
       palette: SelahColors.devPalette,
@@ -594,6 +625,16 @@ class _SelahOneJourneyConceptShellState
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
+    final invite = SelahShepherdInviteScope.maybeOf(context);
+    if (_invite != invite) {
+      _invite?.removeListener(_inviteChanged);
+      _invite = invite;
+      invite?.addListener(_inviteChanged);
+      _inviteWasPending = invite?.pending ?? false;
+      if (invite?.hasInvite ?? false) {
+        _model.setOwnMainShepherdPresent(invite!.accepted);
+      }
+    }
     _syncGoldMotion();
   }
 
@@ -613,6 +654,7 @@ class _SelahOneJourneyConceptShellState
   @override
   void dispose() {
     SelahVisualComparison.instance.release(_appearanceOwner);
+    _invite?.removeListener(_inviteChanged);
     _noticeTimer?.cancel();
     _browsePhotoRenderer.dispose();
     _expansion.dispose();
@@ -659,6 +701,7 @@ class _SelahOneJourneyConceptShellState
           'journey',
           'request_capacity',
           'journey_shepherds',
+          'shepherd_invite_review',
           'shepherd_circle',
           'account_action',
           'shepherd_linked_profile',
@@ -693,9 +736,7 @@ class _SelahOneJourneyConceptShellState
             ),
           );
     return AnnotatedRegion<SystemUiOverlayStyle>(
-      value: SelahColors.isWafaPreview
-          ? SystemUiOverlayStyle.dark
-          : SystemUiOverlayStyle.light,
+      value: SystemUiOverlayStyle.dark,
       child: PopScope(
         canPop:
             _pages.isEmpty &&
@@ -889,6 +930,7 @@ class _SelahOneJourneyConceptShellState
 
   Widget _content() => switch (_page) {
     'controls' => _controls(),
+    'shepherd_invite_review' => _shepherdInviteReview(),
     'profile' => _profileView(),
     'journey' => _journeyView(),
     'journey_action' => _journeyActionConfirmation(),
@@ -1010,7 +1052,12 @@ class _SelahOneJourneyConceptShellState
       (_model.stateFor(id) == DraftJourneyState.sent || _model.canRequest(id));
 
   String _invitationLabel(String id) => switch (_model.stateFor(id)) {
-    null => 'Request a Journey',
+    null =>
+      _invitePending
+          ? 'Request later'
+          : (_invite?.accepted ?? false)
+          ? 'Request a Journey'
+          : 'Request a Journey',
     DraftJourneyState.sent => 'Journey invitation sent',
     DraftJourneyState.ended => 'Journey archived',
     final state => _stateLabel(state),
@@ -1018,6 +1065,13 @@ class _SelahOneJourneyConceptShellState
 
   void _toggleInvitation(String id) {
     if (!_allowed || !_canToggleInvitation(id)) return;
+    if (_invitePending) {
+      _act(
+        () => _notice =
+            'You can request a Journey once ${_invite!.firstName} accepts your invite.',
+      );
+      return;
+    }
     unawaited(_selectionHaptic());
     _act(() {
       _seenBrowseProfileIds.add(id);
@@ -1257,6 +1311,7 @@ class _SelahOneJourneyConceptShellState
     }
     return SelahOneJourneyBrowseDesigns(
       profiles: people.map(_displayProfile).toList(growable: false),
+      waitingShepherdFirstName: _invitePending ? _invite!.firstName : null,
       selectedIndex: index,
       design: _browseDesign,
       photoBuilder: _browsePhotoRenderer.build,
@@ -1594,7 +1649,7 @@ class _SelahOneJourneyConceptShellState
                       'draft_accept_${p.id}',
                       'Accept request',
                       Icons.check,
-                      _model.canAttemptAccept(p.id)
+                      (_invitePending || _model.canAttemptAccept(p.id))
                           ? visibleAction(() => _accept(p, true))
                           : null,
                     ),
@@ -1651,10 +1706,19 @@ class _SelahOneJourneyConceptShellState
         _tab != 2 ||
         _page != 'requests' ||
         _requestsTab != (incoming ? 0 : 1) ||
-        _model.stateFor(p.id) != expected ||
-        !_model.canAttemptAccept(p.id)) {
+        _model.stateFor(p.id) != expected) {
       return;
     }
+    if (_invitePending) {
+      if (incoming) {
+        _act(
+          () => _notice =
+              'You can accept once ${_invite!.firstName} accepts your invite.',
+        );
+      }
+      return;
+    }
+    if (!_model.canAttemptAccept(p.id)) return;
     if (!_model.hasCapacity) {
       _move(() {
         _personId = p.id;
@@ -2996,6 +3060,13 @@ class _SelahOneJourneyConceptShellState
       fixtureMode: true,
       singlePage: true,
       fixtureCards: [
+        if (_invite?.accepted ?? false)
+          SupportiveCard(
+            id: 'local-shepherd-accepted',
+            section: SupportiveSection.changed,
+            title:
+                '${_invite!.fullName} accepted. Your Shepherd walks with you now.',
+          ),
         SupportiveCard(
           id: 'concept-my-requests',
           section: SupportiveSection.stand,
@@ -3092,15 +3163,24 @@ class _SelahOneJourneyConceptShellState
   List<MentorLinkedPerson> get _conceptShepherdPeople => [
     for (final shepherd in draftShepherds)
       if (!_conceptRemovedShepherds.contains(shepherd.id))
-        MentorLinkedPerson(
-          id: shepherd.id,
-          firstName: shepherd.firstName,
-          relationship: shepherd.relationshipCode,
-          linkedAt: shepherd.linkedAt,
-          isMain:
-              _model.ownMainShepherdPresent &&
-              shepherd.id == _conceptMainShepherdId,
-        ),
+        if ((_invite?.accepted ?? false) &&
+            shepherd.id == _conceptMainShepherdId)
+          _InvitedShepherdPerson(
+            id: shepherd.id,
+            fullName: _invite!.fullName,
+            relation: _invite!.relation?.label,
+            isMain: _model.ownMainShepherdPresent,
+          )
+        else
+          MentorLinkedPerson(
+            id: shepherd.id,
+            firstName: shepherd.firstName,
+            relationship: shepherd.relationshipCode,
+            linkedAt: shepherd.linkedAt,
+            isMain:
+                _model.ownMainShepherdPresent &&
+                shepherd.id == _conceptMainShepherdId,
+          ),
   ];
 
   SeekerProfile get _conceptLinkedSeekerProfile =>
@@ -3396,7 +3476,68 @@ class _SelahOneJourneyConceptShellState
     );
   }
 
+  Future<void> _openInviteReminder(SelahShepherdInviteController invite) async {
+    if (!_allowed || !invite.pending) return;
+    await Navigator.of(context).push<void>(
+      MaterialPageRoute(
+        builder: (routeContext) => SelahShepherdInviteFlow(
+          controller: invite,
+          initialStep: SelahShepherdInviteStep.sent,
+          onContinue: () {
+            if (_allowed) Navigator.of(routeContext).pop();
+          },
+        ),
+      ),
+    );
+  }
+
+  Widget _shepherdInviteReview() {
+    final invite = _invite;
+    if (invite == null || !invite.pending) return _shepherdDashboard();
+    final profile = _conceptLinkedSeekerProfile;
+    return SelahShepherdRequestReview(
+      key: const ValueKey('local_shepherd_invite_review'),
+      seekerName: profile.firstName,
+      seekerAge: profile.age,
+      seekerGender: profile.gender,
+      seekerPhoto: SelahProfileImage(
+        profile.photos.firstOrNull ?? '',
+        width: 78,
+        height: 78,
+      ),
+      relationship: invite.relation?.label ?? '',
+      onBack: _bound(_back),
+      onAccept: _bound(() {
+        if (!invite.pending || !invite.accept()) return;
+        _move(() {
+          _pages.clear();
+          _tab = 0;
+          _notice = 'You are now ${profile.firstName}’s Shepherd.';
+        });
+      }),
+      onDecline: _bound(
+        () => _move(() {
+          _pages.clear();
+          _tab = 0;
+          _notice =
+              '${profile.firstName} will be told kindly. You can accept later from the message.';
+        }),
+      ),
+    );
+  }
+
   Widget _shepherds({String? journeyContextId}) {
+    if (_invitePending && journeyContextId == null) {
+      final invite = _invite!;
+      return SafeArea(
+        bottom: false,
+        child: SelahShepherdPendingView(
+          fullName: invite.fullName,
+          onRemind: _bound(() => _openInviteReminder(invite)),
+          onCopy: _bound(() => _act(() => _notice = 'Invite link copied.')),
+        ),
+      );
+    }
     final revision = _uiRevision;
     final journeys = _shepherdJourneys;
     String journeyStamp() => _shepherdJourneys
@@ -4842,6 +4983,33 @@ class _SelahOneJourneyConceptShellState
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         _title('Page options', size: 18),
+        if (_invite != null && SelahDeveloperAccess.canUseDeveloperTools) ...[
+          _controlSection([
+            _previewAction('invite_sending', 'Invite · sending', () {
+              if (_allowed && SelahDeveloperAccess.canUseDeveloperTools) {
+                _invite!.showSending();
+              }
+            }),
+            _previewAction('invite_failed', "Invite · didn't send", () {
+              if (_allowed && SelahDeveloperAccess.canUseDeveloperTools) {
+                _invite!.showFailure();
+              }
+            }),
+            _previewAction('invite_shepherd_accepts', 'Shepherd accepts', () {
+              if (!_allowed || !SelahDeveloperAccess.canUseDeveloperTools) {
+                return;
+              }
+              if (_invite!.accept()) {
+                _move(() {
+                  _pages.clear();
+                  _notice =
+                      '${_invite!.firstName} said yes. You can ask and accept now.';
+                });
+              }
+            }),
+          ]),
+          const SizedBox(height: 12),
+        ],
         const SizedBox(height: 8),
         Text(
           _pageOptionsTitle,
@@ -4983,6 +5151,7 @@ class _SelahOneJourneyConceptShellState
               );
               _model.setCapacity(3);
               _model.reset();
+              _invite?.reset();
               _seenBrowseProfileIds.clear();
               _browseHistory.reset();
               _messages.clear();
@@ -5405,3 +5574,17 @@ class _SelahOneJourneyConceptShellState
 
 /// Touch ends the opening cue before the bar begins its existing breathing
 /// interaction. The Listener observes only child hits and owns no gesture.
+
+// Ephemeral display adapter: the pending invite supplies its own name/label.
+// No relationship code, server link timestamp or saved record is fabricated.
+class _InvitedShepherdPerson extends MentorLinkedPerson {
+  _InvitedShepherdPerson({
+    required super.id,
+    required String fullName,
+    required this.relation,
+    required super.isMain,
+  }) : super(firstName: fullName);
+  final String? relation;
+  @override
+  String? get relationshipLabel => relation;
+}

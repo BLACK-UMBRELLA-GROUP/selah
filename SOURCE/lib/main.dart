@@ -16,6 +16,11 @@ import 'theme/selah_colors.dart';
 import 'theme/selah_text.dart';
 import 'widgets/selah_keyboard_dismiss_scope.dart';
 import 'widgets/selah_sanctuary_mark.dart';
+import 'models/selah_shepherd_invite.dart';
+import 'widgets/selah_shepherd_invite_scope.dart';
+import 'screens/onboarding/selah_shepherd_invite_flow.dart';
+import 'services/selah_developer_access.dart';
+import 'dev/selah_dev_control_system.dart';
 
 final selahNavigatorKey = GlobalKey<NavigatorState>();
 final selahKeyboardDismissNavigatorObserver =
@@ -197,16 +202,162 @@ class _SelahDraftRootState extends State<SelahDraftRoot> {
   bool _shepherd = false;
   bool _home = false;
   bool _opening = false;
+  bool _signup = false;
   int _session = 0;
-  void _reset() => setState(() => _session++);
+  late final _invite = SelahShepherdInviteController(
+    canAct: () => mounted && SelahDraftRuntime.active,
+  )..addListener(_inviteChanged);
+
+  void _inviteChanged() {
+    if (!mounted || !SelahDraftRuntime.active) return;
+    if (_invite.sendState == SelahShepherdInviteSendState.sending ||
+        _invite.sendState == SelahShepherdInviteSendState.failed) {
+      setState(() {
+        _signup = true;
+        _home = false;
+        _opening = false;
+      });
+    }
+  }
+
+  @override
+  void dispose() {
+    _invite.removeListener(_inviteChanged);
+    _invite.dispose();
+    super.dispose();
+  }
+
+  void _reset() {
+    _invite.reset();
+    setState(() => _session++);
+  }
+
+  void _startSignup() {
+    _invite.reset();
+    setState(() {
+      _signup = true;
+      _home = false;
+      _opening = false;
+      _session++;
+    });
+  }
+
+  Future<void> _inviteControls() async {
+    if (!mounted ||
+        !SelahDraftRuntime.active ||
+        !SelahDeveloperAccess.canUseDeveloperTools) {
+      return;
+    }
+    await showModalBottomSheet<void>(
+      context: context,
+      builder: (sheetContext) {
+        void choose(VoidCallback action) {
+          if (!mounted ||
+              !SelahDraftRuntime.active ||
+              !SelahDeveloperAccess.canUseDeveloperTools) {
+            return;
+          }
+          Navigator.of(sheetContext).pop();
+          action();
+        }
+
+        return SafeArea(
+          child: Padding(
+            padding: const EdgeInsets.all(22),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                Text('Page options', style: SelahText.heading(size: 18)),
+                TextButton(
+                  key: const ValueKey('invite_sending'),
+                  onPressed: () => choose(_invite.showSending),
+                  child: const Text('Invite · sending'),
+                ),
+                TextButton(
+                  key: const ValueKey('invite_failed'),
+                  onPressed: () => choose(_invite.showFailure),
+                  child: const Text("Invite · didn't send"),
+                ),
+                TextButton(
+                  key: const ValueKey('invite_shepherd_accepts'),
+                  onPressed: () => choose(() {
+                    if (_invite.accept()) {
+                      _explore(false);
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                          content: Text(
+                            '${_invite.firstName} said yes. You can ask and accept now.',
+                          ),
+                        ),
+                      );
+                    }
+                  }),
+                  child: const Text('Shepherd accepts'),
+                ),
+              ],
+            ),
+          ),
+        );
+      },
+    );
+  }
+
   void _explore(bool shepherd) => setState(() {
     _shepherd = shepherd;
     _home = false;
     _opening = false;
+    _signup = false;
     _session++;
   });
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context) =>
+      SelahShepherdInviteScope(controller: _invite, child: _content(context));
+
+  Widget _content(BuildContext context) {
+    if (_signup) {
+      return Stack(
+        fit: StackFit.expand,
+        children: [
+          SelahShepherdInviteFlow(
+            key: ValueKey('signup-$_session'),
+            controller: _invite,
+            onContinue: () => _explore(false),
+          ),
+          if (SelahDraftRuntime.active &&
+              SelahDeveloperAccess.canUseDeveloperTools)
+            Positioned(
+              right: 0,
+              top: 0,
+              bottom: 0,
+              width: SelahDevControlRail.width,
+              child: SelahDevControlRail(
+                open: false,
+                selected: SelahDevControlSection.actions,
+                visibleSections: const [
+                  SelahDevControlSection.home,
+                  SelahDevControlSection.actions,
+                ],
+                onSelected: (section) {
+                  if (!mounted ||
+                      !SelahDraftRuntime.active ||
+                      !SelahDeveloperAccess.canUseDeveloperTools) {
+                    return;
+                  }
+                  if (section == SelahDevControlSection.home) {
+                    setState(() {
+                      _signup = false;
+                      _home = true;
+                    });
+                  } else {
+                    _inviteControls();
+                  }
+                },
+              ),
+            ),
+        ],
+      );
+    }
     if (_opening) {
       return DevOnboardingOpening(
         direction: selahDefaultDevOnboardingDirection,
@@ -252,7 +403,7 @@ class _SelahDraftRootState extends State<SelahDraftRoot> {
                     ),
                     const SizedBox(height: 32),
                     FilledButton(
-                      onPressed: () => _explore(false),
+                      onPressed: _startSignup,
                       child: const Text('Explore as a Seeker'),
                     ),
                     const SizedBox(height: 12),
@@ -286,6 +437,7 @@ class _SelahDraftRootState extends State<SelahDraftRoot> {
       key: ValueKey('selah-draft-session-$_session'),
       canAct: () => mounted && SelahDraftRuntime.active,
       initialShepherdRole: _shepherd,
+      initialShepherdInviteReview: _shepherd && _invite.pending,
       onRoleChanged: (value) => _shepherd = value,
       onExit: _reset,
       // Draft home stays in Selah; no old-app route or real AuthGate exists.

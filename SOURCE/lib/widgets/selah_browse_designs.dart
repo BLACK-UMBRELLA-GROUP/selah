@@ -19,6 +19,7 @@ import 'floating_nav_bar.dart';
 import 'selah_browse_next_photo_motion.dart';
 import 'selah_invitation_label.dart';
 import 'selah_press_feedback.dart';
+import 'selah_shepherd_invite_views.dart';
 
 /// Explicit rendering seam. The caller supplies already-authorised photo
 /// references and the renderer; a reference alone never initiates a fetch here.
@@ -65,6 +66,7 @@ class SelahBrowseDesigns extends StatefulWidget {
     this.requestLabel,
     this.invitationSent,
     this.canRequest,
+    this.waitingShepherdFirstName,
     this.bottomPadding = 100,
     this.alignHeaderActions = false,
     this.nextProfileMotion = SelahBrowseNextMotion.current,
@@ -88,6 +90,10 @@ class SelahBrowseDesigns extends StatefulWidget {
   final String Function(SeekerProfile)? requestLabel;
   final bool Function(SeekerProfile)? invitationSent;
   final bool Function(SeekerProfile)? canRequest;
+
+  /// Caller-owned pending invite display only. Null leaves the existing
+  /// Portrait layout unchanged; this presenter does not decide eligibility.
+  final String? waitingShepherdFirstName;
   final double bottomPadding;
   final bool alignHeaderActions;
   // Optional presentation-only preview. Callers own selection and actions;
@@ -607,11 +613,32 @@ class _SelahBrowseDesignsState extends State<SelahBrowseDesigns> {
         final identityHeight = profile == null
             ? 0.0
             : _identityMinimumHeight(profile, contentWidth);
+        final waitingName = widget.waitingShepherdFirstName?.trim() ?? '';
+        final showWaitingBanner = waitingName.isNotEmpty;
+        // Match the shared banner's real text/circle footprint before sizing
+        // the photo. The extra gap exists only while an invite is pending.
+        final waitingHeight = showWaitingBanner
+            ? 20 +
+                  math.max(
+                    30,
+                    _textHeight(
+                      'Waiting for $waitingName to accept. You can ask once they say yes.',
+                      SelahText.body(size: 13.5).copyWith(height: 1.2),
+                      contentWidth - 68,
+                    ),
+                  ) +
+                  14
+            : 0.0;
         final photoHeight = math.max(
           240.0,
           math.min(
             620.0,
-            available - headerHeight - identityHeight - footerHeight - 42,
+            available -
+                headerHeight -
+                identityHeight -
+                footerHeight -
+                42 -
+                waitingHeight,
           ),
         );
         return SingleChildScrollView(
@@ -623,6 +650,10 @@ class _SelahBrowseDesignsState extends State<SelahBrowseDesigns> {
             children: [
               _header(),
               const SizedBox(height: 14),
+              if (showWaitingBanner) ...[
+                SelahShepherdWaitingBanner(firstName: waitingName),
+                const SizedBox(height: 14),
+              ],
               if (profile == null)
                 Text(
                   'No profiles to view right now.',

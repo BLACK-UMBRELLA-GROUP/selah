@@ -13,3 +13,6 @@ owner: SELAH chat
 | # | Date / time (UK) | Founder's words (exact) | What it locks |
 |---|---|---|---|
 | 3 | 2026-11-04 09:40 | Clickable answer: "A · Browse while waiting — LOCK it (Recommended)" (after testing A and B in prototype V6 beside the chat). Standing rule behind it, 3 Nov: "I DONT WANT IT TO BE A DATING APP SO I THINK A SHEPARD IS NEEDED" | `RECORD/SELAH_SHEPHERD_INVITE_SPEC_CURRENT_VERSION_V1.md`; 12 masters `MASTERS/L03_*.png`; prototype V7; queue line 2 |
+| 3 (change) | 2026-11-06 09:45 | From LOCK 4, 4 Nov: "A · One per screen — LOCK it (Recommended)" | Spec V2: screen 4 Continue → faith question 1. No master changes |
+| 3 (change) | 2026-11-06 13:40 | From LOCK 6: "Yes — LOCK it (Recommended)" | Spec V3: screen 4 Continue → consent screen |
+| 3 (change) | 2026-11-06 15:20 | From LOCK 11: "A · “Request a Journey” — LOCK it (Recommended)" | Spec V4 waiting words; master re-rendered |

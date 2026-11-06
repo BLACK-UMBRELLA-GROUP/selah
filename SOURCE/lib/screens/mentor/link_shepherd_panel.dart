@@ -1,56 +1,86 @@
 import 'package:flutter/material.dart';
 
+import '../../draft/selah_draft_runtime.dart';
+import '../../models/selah_shepherd_invite.dart';
+import '../../services/selah_account_state.dart';
 import '../../theme/selah_colors.dart';
 import '../../theme/selah_text.dart';
-import 'selah_code_screen.dart';
+import '../../widgets/selah_shepherd_invite_scope.dart';
+import '../onboarding/selah_shepherd_invite_flow.dart';
 
-/// Seeker entry point for permanent SELAH Codes.
-class LinkShepherdScreen extends StatelessWidget {
+/// The Seeker links through the locked local invitation; other code routes
+/// still own SelahCodeScreen and are unchanged.
+class LinkShepherdScreen extends StatefulWidget {
+  const LinkShepherdScreen({
+    super.key,
+    required this.onLinked,
+    this.gender,
+    this.controller,
+  });
   final VoidCallback onLinked;
   final String? gender;
+  final SelahShepherdInviteController? controller;
 
-  const LinkShepherdScreen({super.key, required this.onLinked, this.gender});
+  @override
+  State<LinkShepherdScreen> createState() => _LinkShepherdScreenState();
+}
+
+class _LinkShepherdScreenState extends State<LinkShepherdScreen> {
+  SelahShepherdInviteController? _owned;
+  final _ownerGeneration = SelahAccountState.generation;
+
+  @override
+  void dispose() {
+    _owned?.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
-    return SelahCodeScreen(asShepherd: false, onLinked: onLinked);
+    final controller =
+        widget.controller ??
+        SelahShepherdInviteScope.maybeOf(context) ??
+        (_owned ??= SelahShepherdInviteController(
+          canAct: () =>
+              mounted &&
+              SelahDraftRuntime.active &&
+              SelahAccountState.generation == _ownerGeneration,
+        ));
+    return SelahShepherdInviteFlow(
+      controller: controller,
+      initialStep: SelahShepherdInviteStep.invite,
+      onContinue: () {
+        // The retained callback refreshes its caller; no real link is granted
+        // here, and the session owner can still report the invite as pending.
+        widget.onLinked();
+        if (mounted && Navigator.of(context).canPop()) {
+          Navigator.of(context).pop();
+        }
+      },
+    );
   }
 }
 
-/// Compatibility wrapper for older callers that embedded the one-use-code
-/// panel. It now opens the single governed SELAH Code surface.
 class LinkShepherdPanel extends StatelessWidget {
+  const LinkShepherdPanel({super.key, required this.onLinked});
   final VoidCallback onLinked;
 
-  const LinkShepherdPanel({super.key, required this.onLinked});
-
   @override
-  Widget build(BuildContext context) {
-    return SizedBox(
-      width: double.infinity,
-      height: 52,
-      child: DecoratedBox(
-        decoration: BoxDecoration(
-          color: SelahColors.accentBg,
-          border: Border.all(color: SelahColors.accentBorder),
-          borderRadius: BorderRadius.circular(50),
-        ),
-        child: Material(
-          color: Colors.transparent,
-          child: InkWell(
-            borderRadius: BorderRadius.circular(50),
-            onTap: () => Navigator.of(context).push(
-              MaterialPageRoute(
-                builder: (_) =>
-                    SelahCodeScreen(asShepherd: false, onLinked: onLinked),
-              ),
-            ),
-            child: Center(
-              child: Text('Add a Shepherd', style: SelahText.button()),
-            ),
-          ),
+  Widget build(BuildContext context) => SizedBox(
+    width: double.infinity,
+    height: 52,
+    child: OutlinedButton(
+      style: OutlinedButton.styleFrom(
+        foregroundColor: SelahColors.inkColor,
+        side: const BorderSide(color: SelahColors.line),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+      ),
+      onPressed: () => Navigator.of(context).push(
+        MaterialPageRoute(
+          builder: (_) => LinkShepherdScreen(onLinked: onLinked),
         ),
       ),
-    );
-  }
+      child: Text('Add a Shepherd', style: SelahText.button()),
+    ),
+  );
 }

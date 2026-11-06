@@ -8,7 +8,7 @@ links: [OA-SELAH-003, AD-AIOS-123, DOC-SELAH-0009]
 owner: SELAH chat
 ---
 
-# SELAH SHEPHERD INVITE — SPEC — CURRENT VERSION V1 (LOCK 3)
+# SELAH SHEPHERD INVITE — SPEC — CURRENT VERSION V4 (LOCK 3, updated by LOCKs 4, 6 and 11)
 
 Founder, 4 Nov 2026: "A · Browse while waiting — LOCK it" (prototype V6, cleaned as V7). Founder rule, 3 Nov: "I DONT WANT IT
 TO BE A DATING APP SO I THINK A SHEPARD IS NEEDED" - every Seeker has a Shepherd. Look: LOOK spec V2 (DOC-SELAH-0009).
@@ -27,18 +27,18 @@ Replaces, for the Seeker, the copied code-and-scan link ("Enter code" / "Scan SE
 | 3e | – no name | L03_signup_invite__name_error | Under the field: "Enter your Shepherd’s name." | Clears on next try |
 | 3s | – sending | L03_signup_invite__sending | Primary button reads "Sending…", 75% opacity, not tappable; Copy link hidden | – |
 | 3f | – didn't send | L03_signup_invite__failed | Error bar (LOOK §5) at top: "Your invite didn’t send. Try again." + **Try again** | Try again = Send again |
-| 4 | Invite sent | L03_signup_sent | Selah pause layout (soft background, dawn ’); label "INVITE SENT"; heading "<First name> has your invite."; body "You can look around Selah now. You can ask or accept once <First name> says yes." | **Continue** → Browse (state "waiting") ; Back → 3 |
+| 4 | Invite sent | L03_signup_sent | Selah pause layout (soft background, dawn ’); label "INVITE SENT"; heading "<First name> has your invite."; body "You can look around Selah now. You can ask or accept once <First name> says yes." | **Continue** → consent screen (CONSENT spec V1, LOCK 6) → faith questions → marriage questions → Browse (state "waiting"); Back → 3 |
 
 ## 2. While waiting (option A)
 
 | Where | Master | What changes |
 |---|---|---|
-| Browse | L03_seeker_browse__waiting_for_shepherd | Soft bar above the photo: initial circle + "Waiting for <First name> to accept. You can ask once they say yes."; the primary button reads **Ask later** and only shows toast "You can ask once <First name> accepts your invite." |
+| Browse | L03_seeker_browse__waiting_for_shepherd | Soft bar above the photo: initial circle + "Waiting for <First name> to accept. You can request a Journey once they say yes."; the primary button reads **Request later** and only shows toast "You can request a Journey once <First name> accepts your invite." (master re-rendered for LOCK 11) |
 | My Selah → Accept on a request | (L01 my_selah master) | Accept shows toast "You can accept once <First name> accepts your invite."; nothing else changes |
 | Shepherd tab | L03_seeker_shepherd__invite_pending | Card: initial circle 64 px, full name, "Invite sent · waiting for a yes", **Remind <First name>** and **Copy link again** (ghost); card "ONCE <FIRST NAME> SAYS YES, THEY WILL SEE" with the same 4 rows as screen 3; footnote "A Shepherd is needed in Selah. Until <First name> accepts, you can’t send or accept a request." |
 | Everything else | – | Usable as normal (Journey, Profile, filters) |
 
-When the Shepherd accepts: the waiting bar goes, **Ask to begin** returns, Shepherd tab shows the normal linked Shepherd card, and an update reads "<Full name> accepted. Your Shepherd walks with you now."; toast "<First name> said yes. You can ask and accept now."
+When the Shepherd accepts: the waiting bar goes, **Request a Journey** returns, Shepherd tab shows the normal linked Shepherd card, and an update reads "<Full name> accepted. Your Shepherd walks with you now."; toast "<First name> said yes. You can ask and accept now."
 
 ## 3. The Shepherd's side
 
@@ -63,3 +63,6 @@ Real invite delivery (OA-SELAH-002) · reminders schedule · what happens if the
 | Date | Version | Change |
 |---|---|---|
 | 2026-11-04 | V1 | LOCK 3 - Founder: "A · Browse while waiting — LOCK it" |
+| 2026-11-06 | V2 | LOCK 4 (Founder 4 Nov: "A · One per screen — LOCK it"): Invite sent → Continue now opens the faith questions. V1 archived |
+| 2026-11-06 | V3 | LOCK 6 (Founder 6 Nov: "Yes — LOCK it"): Invite sent → Continue opens the consent screen. V2 archived |
+| 2026-11-06 | V4 | LOCK 11 (Founder 6 Nov: "A · “Request a Journey” — LOCK it"): waiting words use "request"; master L03_seeker_browse__waiting_for_shepherd re-rendered (old in ARCHIVE/MASTERS_V1). V3 archived |
