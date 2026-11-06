@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'selah_loading.dart';
 
 import '../theme/selah_colors.dart';
 import '../theme/selah_text.dart';
@@ -97,10 +98,7 @@ class SelahGoldActionPill extends StatelessWidget {
                               SizedBox(
                                 width: 17,
                                 height: 17,
-                                child: CircularProgressIndicator(
-                                  strokeWidth: 1.7,
-                                  color: gold,
-                                ),
+                                child: SelahLoading(),
                               )
                             else
                               Icon(icon, size: 17, color: gold),

@@ -16,6 +16,7 @@
 // mechanism yet.
 
 import 'package:flutter/material.dart';
+import '../../widgets/selah_switch.dart';
 import '../../dev/selah_app_gold_preview.dart';
 import '../../services/selah_account_state.dart';
 import '../../services/selah_auth.dart';
@@ -204,10 +205,9 @@ class _PrivacySettingsScreenState extends State<PrivacySettingsScreen> {
                               ),
                               if (_visible != null) ...[
                                 const SizedBox(width: 12),
-                                Switch(
+                                SelahSwitch(
                                   value: _visible!,
                                   onChanged: _saving ? null : _setVisible,
-                                  activeThumbColor: SelahColors.accentBorder,
                                 ),
                               ],
                             ],

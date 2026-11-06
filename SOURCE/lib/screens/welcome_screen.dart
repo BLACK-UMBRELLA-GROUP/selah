@@ -18,6 +18,7 @@
 import 'package:flutter/foundation.dart'
     show defaultTargetPlatform, TargetPlatform;
 import 'package:flutter/material.dart';
+import '../widgets/selah_loading.dart';
 import '../models/selah_error_state.dart';
 import '../services/selah_auth.dart';
 import '../services/selah_session_router.dart';
@@ -392,10 +393,7 @@ class _OAuthButton extends StatelessWidget {
                               SizedBox(
                                 width: emphasized ? 18 : 16,
                                 height: emphasized ? 18 : 16,
-                                child: const CircularProgressIndicator(
-                                  strokeWidth: 1.8,
-                                  color: Color(0xFF5F6368),
-                                ),
+                                child: const SelahLoading(),
                               ),
                               const SizedBox(width: 10),
                               Flexible(

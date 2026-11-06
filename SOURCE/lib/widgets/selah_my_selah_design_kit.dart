@@ -117,9 +117,9 @@ class MySelahReviewData {
 /// Shared factual rendering and callbacks. Candidate files only arrange these
 /// parts; they cannot independently reclassify, deduplicate or route a card.
 class MySelahDesignKit {
-  static const ink = Color(0xFFF6F0F8);
-  static const secondary = Color(0xFFDDD2E4);
-  static const lavender = Color(0xFFDFBFEA);
+  static const ink = SelahColors.inkColor;
+  static const secondary = SelahColors.muted;
+  static const lavender = SelahColors.lake;
   final MySelahReviewData data;
   final String? firstName;
   final bool showAllActions;
@@ -150,18 +150,33 @@ class MySelahDesignKit {
     text,
     style: SelahText.heading(size: size, color: ink).copyWith(height: 1.22),
   );
-  Widget label(String text) => Text(
-    text,
-    style: SelahText.body(
-      size: 11,
-      color: secondary,
-    ).copyWith(letterSpacing: .55, height: 1.5),
-  );
+  Widget label(String text) {
+    final sectionLabel = text.isNotEmpty && text == text.toUpperCase();
+    return Text(
+      text,
+      style: SelahText.body(size: sectionLabel ? 11 : 13, color: secondary)
+          .copyWith(
+            fontWeight: sectionLabel ? FontWeight.w600 : FontWeight.w400,
+            letterSpacing: sectionLabel ? 1.32 : 0,
+            height: 1.5,
+          ),
+    );
+  }
+
   Widget body(String text) => Text(
     text,
-    style: SelahText.body(size: 13, color: secondary).copyWith(height: 1.6),
+    style: SelahText.body(size: 15, color: secondary).copyWith(height: 1.5),
   );
-  Widget get rule => Divider(height: 28, color: ink.withValues(alpha: .16));
+
+  Widget rowTitle(String text) => Text(
+    text,
+    style: SelahText.body(
+      size: 15,
+      color: ink,
+    ).copyWith(fontWeight: FontWeight.w600, height: 1.5),
+  );
+
+  Widget get rule => const Divider(height: 28, color: SelahColors.line);
 
   Widget get notice {
     if (data.isInsights) {
@@ -206,11 +221,11 @@ class MySelahDesignKit {
   Widget _notice(String key, String title, String detail) => Container(
     key: ValueKey(key),
     margin: const EdgeInsets.only(bottom: 24),
-    padding: const EdgeInsets.fromLTRB(16, 14, 16, 8),
+    padding: const EdgeInsets.all(16),
     decoration: BoxDecoration(
-      color: SelahColors.sheetSurface,
-      border: const Border(left: BorderSide(color: lavender, width: 2)),
-      borderRadius: BorderRadius.circular(4),
+      color: SelahColors.surface,
+      border: Border.all(color: SelahColors.line),
+      borderRadius: BorderRadius.circular(14),
     ),
     child: Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -298,7 +313,7 @@ class MySelahDesignKit {
           padding: const EdgeInsets.only(bottom: 8),
           child: label('Last known · not current'),
         ),
-      heading(card.title, size: 18),
+      rowTitle(card.title),
       if (card.date != null) ...[
         const SizedBox(height: 8),
         label(_date(card.date!)),
@@ -342,16 +357,7 @@ class MySelahDesignKit {
             padding: const EdgeInsets.only(bottom: 8),
             child: label('Last known · not current'),
           ),
-        if (prominent)
-          heading(card.title, size: 29)
-        else
-          Text(
-            card.title,
-            style: SelahText.body(
-              size: compact ? 14 : 17,
-              color: ink,
-            ).copyWith(height: 1.45),
-          ),
+        rowTitle(card.title),
         if (card.detail?.trim().isNotEmpty == true) ...[
           const SizedBox(height: 8),
           body(card.detail!),
@@ -390,9 +396,7 @@ class MySelahDesignKit {
               key: ValueKey('my-selah-evidence-body-${card.id}'),
               padding: const EdgeInsets.only(left: 14, top: 12, bottom: 12),
               decoration: BoxDecoration(
-                border: Border(
-                  left: BorderSide(color: lavender.withValues(alpha: .55)),
-                ),
+                border: Border(left: BorderSide(color: SelahColors.line)),
               ),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -446,22 +450,18 @@ class MySelahDesignKit {
       key: key == null ? null : ValueKey(key),
       onPressed: callback,
       style: TextButton.styleFrom(
-        foregroundColor: lavender,
-        minimumSize: const Size(48, 48),
-        padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 0),
+        foregroundColor: ink,
+        minimumSize: const Size(48, 40),
+        padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 14),
+        side: const BorderSide(color: SelahColors.line),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
         alignment: Alignment.centerLeft,
       ),
       child: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
           Flexible(
-            child: Text(
-              text,
-              style: SelahText.body(
-                size: 12.5,
-                color: lavender,
-              ).copyWith(height: 1.4),
-            ),
+            child: Text(text, style: SelahText.button(size: 13.5, color: ink)),
           ),
           if (route) ...[
             const SizedBox(width: 8),

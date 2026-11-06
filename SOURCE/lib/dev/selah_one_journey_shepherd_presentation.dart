@@ -570,27 +570,10 @@ class _NetworkPortraitCard extends StatelessWidget {
             behavior: HitTestBehavior.opaque,
             onTap: onProfile,
             child: ClipRRect(
-              borderRadius: BorderRadius.circular(42),
+              borderRadius: BorderRadius.circular(18),
               child: Stack(
                 fit: StackFit.expand,
-                children: [
-                  SelahProfileImage(profile.photoUrl),
-                  DecoratedBox(
-                    decoration: BoxDecoration(
-                      gradient: LinearGradient(
-                        begin: Alignment.center,
-                        end: Alignment.bottomCenter,
-                        colors: [
-                          Colors.transparent,
-                          SelahColors.luxuryDarkPurple.withValues(
-                            alpha: 217 / 255,
-                          ),
-                        ],
-                        stops: const [.45, 1],
-                      ),
-                    ),
-                  ),
-                ],
+                children: [SelahProfileImage(profile.photoUrl)],
               ),
             ),
           ),
@@ -741,7 +724,9 @@ class _DashboardStatusCard extends StatelessWidget {
         Icon(
           icon,
           size: 21,
-          color: premiumBoundary ? SelahColors.journeyGold : SelahColors.ink(.72),
+          color: premiumBoundary
+              ? SelahColors.journeyGold
+              : SelahColors.ink(.72),
         ),
         const SizedBox(width: 11),
         Expanded(

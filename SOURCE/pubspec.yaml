@@ -37,34 +37,21 @@ flutter:
     - assets/auth/google_g_logo.png
     - assets/icon/icon.png
     - assets/dev/one_journey_photos/
-    - assets/fonts/Poppins-OFL.txt
-    - assets/fonts/Syne-OFL-NOTICE.txt
-    - assets/fonts/Syne-OFL.txt
-    - assets/fonts/Jost-OFL.txt
+    - assets/fonts/figtree-OFL.txt
+    - assets/fonts/cormorantgaramond-OFL.txt
   fonts:
-    - family: Poppins
+    - family: Figtree
       fonts:
-        - asset: assets/fonts/Poppins-ExtraLight.ttf
-          weight: 200
-        - asset: assets/fonts/Poppins-Light.ttf
-          weight: 300
-        - asset: assets/fonts/Poppins-Regular.ttf
+        - asset: assets/fonts/Figtree[wght].ttf
           weight: 400
-        - asset: assets/fonts/Poppins-Medium.ttf
+        - asset: assets/fonts/Figtree[wght].ttf
           weight: 500
-        - asset: assets/fonts/Poppins-SemiBold.ttf
+        - asset: assets/fonts/Figtree[wght].ttf
           weight: 600
-        - asset: assets/fonts/Poppins-Bold.ttf
-          weight: 700
-    - family: Syne
+    - family: Cormorant Garamond
       fonts:
-        - asset: assets/fonts/Syne-SemiBold.ttf
+        - asset: assets/fonts/CormorantGaramond[wght].ttf
           weight: 600
-    - family: Jost
-      fonts:
-        - asset: assets/fonts/Jost-Light.ttf
-          weight: 300
-        - asset: assets/fonts/Jost-Regular.ttf
-          weight: 400
-        - asset: assets/fonts/Jost-Medium.ttf
-          weight: 500
+        - asset: assets/fonts/CormorantGaramond-Italic[wght].ttf
+          weight: 600
+          style: italic

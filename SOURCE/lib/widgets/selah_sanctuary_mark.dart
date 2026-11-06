@@ -37,17 +37,8 @@ class SelahSanctuaryBackdrop extends StatelessWidget {
   const SelahSanctuaryBackdrop({super.key});
 
   @override
-  Widget build(BuildContext context) => IgnorePointer(
-    child: ExcludeSemantics(
-      child: CustomPaint(
-        painter: _SanctuaryBackdropPainter(
-          ivory: SelahColors.warmIvory,
-          bronze: SelahColors.candleBronze,
-          sage: SelahColors.sanctuarySage,
-        ),
-        child: const SizedBox.expand(),
-      ),
-    ),
+  Widget build(BuildContext context) => const IgnorePointer(
+    child: ExcludeSemantics(child: ColoredBox(color: SelahColors.mist)),
   );
 }
 
@@ -80,19 +71,6 @@ class _SanctuaryMarkPainter extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
     if (size.isEmpty) return;
-
-    final glowRect = Rect.fromCircle(
-      center: Offset(size.width * 0.5, size.height * 0.43),
-      radius: size.shortestSide * 0.34,
-    );
-    canvas.drawCircle(
-      glowRect.center,
-      glowRect.width / 2,
-      Paint()
-        ..shader = RadialGradient(
-          colors: [bronze.withValues(alpha: 0.16), bronze.withValues(alpha: 0)],
-        ).createShader(glowRect),
-    );
 
     canvas.drawPath(
       _arch(size, 0.14, 0.08, 0.89),
@@ -140,78 +118,6 @@ class _SanctuaryMarkPainter extends CustomPainter {
   @override
   bool shouldRepaint(covariant _SanctuaryMarkPainter oldDelegate) =>
       ink != oldDelegate.ink ||
-      ivory != oldDelegate.ivory ||
-      bronze != oldDelegate.bronze ||
-      sage != oldDelegate.sage;
-}
-
-class _SanctuaryBackdropPainter extends CustomPainter {
-  const _SanctuaryBackdropPainter({
-    required this.ivory,
-    required this.bronze,
-    required this.sage,
-  });
-
-  final Color ivory;
-  final Color bronze;
-  final Color sage;
-
-  @override
-  void paint(Canvas canvas, Size size) {
-    if (size.isEmpty) return;
-
-    final lightRect = Rect.fromLTWH(
-      size.width * 0.12,
-      -size.height * 0.08,
-      size.width * 0.76,
-      size.height * 0.78,
-    );
-    canvas.drawOval(
-      lightRect,
-      Paint()
-        ..shader = RadialGradient(
-          center: const Alignment(0, -0.65),
-          radius: 0.92,
-          colors: [
-            ivory.withValues(alpha: 0.09),
-            bronze.withValues(alpha: 0.035),
-            bronze.withValues(alpha: 0),
-          ],
-          stops: const [0, 0.44, 1],
-        ).createShader(lightRect),
-    );
-
-    final arch = Path()
-      ..moveTo(size.width * 0.17, size.height * 0.72)
-      ..lineTo(size.width * 0.17, size.height * 0.30)
-      ..cubicTo(
-        size.width * 0.17,
-        size.height * 0.08,
-        size.width * 0.83,
-        size.height * 0.08,
-        size.width * 0.83,
-        size.height * 0.30,
-      )
-      ..lineTo(size.width * 0.83, size.height * 0.72);
-    canvas
-      ..drawPath(
-        arch,
-        Paint()
-          ..style = PaintingStyle.stroke
-          ..strokeWidth = 1
-          ..color = bronze.withValues(alpha: 0.075),
-      )
-      ..drawLine(
-        Offset(size.width * 0.12, size.height * 0.82),
-        Offset(size.width * 0.88, size.height * 0.82),
-        Paint()
-          ..strokeWidth = 1
-          ..color = sage.withValues(alpha: 0.07),
-      );
-  }
-
-  @override
-  bool shouldRepaint(covariant _SanctuaryBackdropPainter oldDelegate) =>
       ivory != oldDelegate.ivory ||
       bronze != oldDelegate.bronze ||
       sage != oldDelegate.sage;

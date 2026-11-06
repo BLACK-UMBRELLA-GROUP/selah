@@ -43,6 +43,7 @@ import '../../state/app_state.dart';
 import '../../theme/selah_colors.dart';
 import '../../theme/selah_text.dart';
 import '../../widgets/selah_loading.dart';
+import '../../widgets/selah_state_widgets.dart';
 import '../../widgets/selah_pull_down_back_scope.dart';
 import 'compatibility_editors.dart';
 
@@ -403,22 +404,17 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
         style: SelahText.chapterLabel(color: SelahColors.ink(0.54)),
       ),
       SizedBox(height: 10),
-      if (_loadError != null) ...[
-        Text(
-          _loadError!,
+      if (_loadError != null)
+        SelahErrorBanner(
           key: const ValueKey('edit_profile_load_error'),
-          style: SelahText.body(size: 14),
-        ),
-        if (_currentOwner)
-          TextButton(
-            key: const ValueKey('edit_profile_restore_retry'),
-            onPressed: _load,
-            child: Text('Try again', style: SelahText.button(size: 14)),
-          ),
-      ] else if (_loading)
+          retryKey: const ValueKey('edit_profile_restore_retry'),
+          message: _loadError!,
+          onRetry: _currentOwner ? _load : null,
+        )
+      else if (_loading)
         const Padding(
           padding: EdgeInsets.symmetric(vertical: 36),
-          child: Center(child: SelahLoading()),
+          child: Center(child: SelahLoading.profile()),
         )
       else if (_draft != null && _canUse)
         for (final kind in CompatibilityEditorKind.values)
@@ -434,7 +430,10 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
       // person who wants to correct their birth year opens Edit
       // Profile, not Settings, and finding nothing is worse than
       // finding a plain explanation.
-      Text('FIXED', style: SelahText.chapterLabel(color: SelahColors.ink(0.54))),
+      Text(
+        'FIXED',
+        style: SelahText.chapterLabel(color: SelahColors.ink(0.54)),
+      ),
       SizedBox(height: 10),
       _FixedRow(
         label: 'Date of birth',
@@ -515,23 +514,25 @@ class _CompatibilityRow extends StatelessWidget {
   );
 }
 
-String _statusFor(CompatibilityEditorKind kind, SelahCompatibilityDraft draft) =>
-    switch (kind) {
-      CompatibilityEditorKind.aboutYou ||
-      CompatibilityEditorKind.lifestyle ||
-      CompatibilityEditorKind.marriagePreferences => () {
-        final categories = categoriesForKind(kind);
-        return '${draft.answeredIn(categories)} of '
-            '${draft.questionsIn(categories)} answered';
-      }(),
-      CompatibilityEditorKind.trafficLights =>
-        '${draft.preferenceAnswerCount} of '
-            '${draft.preferenceOptionCount} preferences set',
-      CompatibilityEditorKind.hardRequirements =>
-        draft.hardRequirementCount == 1
-            ? '1 introduction-blocking answer'
-            : '${draft.hardRequirementCount} introduction-blocking answers',
-    };
+String _statusFor(
+  CompatibilityEditorKind kind,
+  SelahCompatibilityDraft draft,
+) => switch (kind) {
+  CompatibilityEditorKind.aboutYou ||
+  CompatibilityEditorKind.lifestyle ||
+  CompatibilityEditorKind.marriagePreferences => () {
+    final categories = categoriesForKind(kind);
+    return '${draft.answeredIn(categories)} of '
+        '${draft.questionsIn(categories)} answered';
+  }(),
+  CompatibilityEditorKind.trafficLights =>
+    '${draft.preferenceAnswerCount} of '
+        '${draft.preferenceOptionCount} preferences set',
+  CompatibilityEditorKind.hardRequirements =>
+    draft.hardRequirementCount == 1
+        ? '1 introduction-blocking answer'
+        : '${draft.hardRequirementCount} introduction-blocking answers',
+};
 
 class _FixedRow extends StatelessWidget {
   final String label;

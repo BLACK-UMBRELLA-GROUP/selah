@@ -54,7 +54,7 @@ class _SafetyCaseStatusScreenState extends State<SafetyCaseStatusScreen> {
         child: _loading
             ? const SelahLoading(label: 'Checking your reports…')
             : _failed
-            ? SelahUnknownErrorState(onRetry: _load)
+            ? SelahUnknownErrorState(contentName: 'Reports', onRetry: _load)
             : _cases.isEmpty
             ? const _NoSafetyCases()
             : ListView(
@@ -152,7 +152,10 @@ class _SafetyCaseCard extends StatelessWidget {
               const SizedBox(height: 5),
               Text(
                 value.statusLabel,
-                style: SelahText.body(size: 12.5, color: SelahColors.journeyGold),
+                style: SelahText.body(
+                  size: 12.5,
+                  color: SelahColors.journeyGold,
+                ),
               ),
               const SizedBox(height: 4),
               Text(

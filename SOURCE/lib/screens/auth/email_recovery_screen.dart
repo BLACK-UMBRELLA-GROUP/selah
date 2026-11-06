@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import '../../widgets/selah_loading.dart';
 import 'package:flutter/services.dart';
 
 import '../../services/selah_auth.dart';
@@ -331,11 +332,7 @@ class _EmailRecoveryScreenState extends State<EmailRecoveryScreen> {
                         ? null
                         : (_codeSent ? _verifyCode : _sendCode),
                     child: _busy
-                        ? SizedBox(
-                            width: 18,
-                            height: 18,
-                            child: CircularProgressIndicator(strokeWidth: 1.8),
-                          )
+                        ? SizedBox(width: 18, height: 18, child: SelahLoading())
                         : Text(
                             _codeSent ? 'Continue' : 'Send code',
                             style: SelahText.button(size: 14),

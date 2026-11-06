@@ -127,7 +127,8 @@ class _MentorSeekersScreenState extends State<MentorSeekersScreen> {
     final roleKeys = {
       for (final person in people) '${person.id}:${person.isMain}',
     };
-    if (!_usesInjectedData) AppState.instance.setMentorRealLinkedSeekers(people);
+    if (!_usesInjectedData)
+      AppState.instance.setMentorRealLinkedSeekers(people);
 
     SelahSourceResult<ShepherdSeekerRosterContext> contextResult;
     if (people.isEmpty) {
@@ -136,7 +137,8 @@ class _MentorSeekersScreenState extends State<MentorSeekersScreen> {
       );
     } else {
       final contextLoader =
-          widget.loadContext ?? SelahMentorJourneyService.fetchRosterContextResult;
+          widget.loadContext ??
+          SelahMentorJourneyService.fetchRosterContextResult;
       contextResult = await contextLoader(people);
       if (!mounted || generation != _loadGeneration) return;
     }
@@ -282,7 +284,9 @@ class _MentorSeekersScreenState extends State<MentorSeekersScreen> {
     // Public accounts retain the honest unavailable state because an unknown
     // live roster must never be represented as an authoritative empty roster.
     if (initialUnavailable && !developerPreview) {
-      return _shell(SelahUnknownErrorState(onRetry: _load));
+      return _shell(
+        SelahUnknownErrorState(contentName: 'Seekers', onRetry: _load),
+      );
     }
 
     final resolution = _resolver.resolve(
@@ -740,7 +744,10 @@ class _SeekerQuietSection extends StatelessWidget {
     child: Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(label, style: SelahText.chapterLabel(color: SelahColors.ink(0.47))),
+        Text(
+          label,
+          style: SelahText.chapterLabel(color: SelahColors.ink(0.47)),
+        ),
         const SizedBox(height: 10),
         child,
       ],

@@ -20,6 +20,7 @@
 // updates default OFF, because a pre-ticked consent box is not consent.
 
 import 'package:flutter/material.dart';
+import '../../widgets/selah_switch.dart';
 import '../../dev/selah_app_gold_preview.dart';
 import '../../services/selah_account_state.dart';
 import '../../services/selah_auth.dart';
@@ -439,11 +440,7 @@ class _ToggleRow extends StatelessWidget {
           // Disabled while in flight. A switch you can flip again before the
           // first write lands is how a consent log ends up with events in an
           // order nobody intended.
-          Switch(
-            value: value,
-            onChanged: busy ? null : onChanged,
-            activeThumbColor: SelahColors.accentBorder,
-          ),
+          SelahSwitch(value: value, onChanged: busy ? null : onChanged),
         ],
       ),
     );

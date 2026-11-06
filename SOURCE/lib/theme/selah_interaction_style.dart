@@ -39,7 +39,8 @@ enum SelahHapticLevel {
 class SelahInteractionStyle {
   SelahInteractionStyle._();
 
-  static const SelahNavStyle currentDefaultNavStyle = SelahNavStyle.floatingGlass;
+  static const SelahNavStyle currentDefaultNavStyle =
+      SelahNavStyle.labelledDock;
   static const SelahHapticLevel currentDefaultHapticLevel =
       SelahHapticLevel.subtle;
 
@@ -52,7 +53,7 @@ class SelahInteractionStyle {
   static SelahHapticLevel get hapticLevel => hapticLevelSelection.value;
 
   static void selectNavStyle(SelahNavStyle style) {
-    if (navStyleSelection.value != style) navStyleSelection.value = style;
+    navStyleSelection.value = currentDefaultNavStyle;
   }
 
   static bool selectHapticLevel(SelahHapticLevel level) {

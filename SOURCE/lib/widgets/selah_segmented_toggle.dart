@@ -27,8 +27,6 @@
 //    share of the width, so anything absolutely positioned lands on the
 //    text. Laid out inline it cannot collide with anything.
 
-import 'dart:ui' show ImageFilter;
-
 import 'package:flutter/material.dart';
 
 import '../theme/selah_colors.dart';
@@ -106,13 +104,13 @@ class SelahSegmentedToggle extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ClipRRect(
-      borderRadius: BorderRadius.circular(20),
-      child: BackdropFilter(
-        filter: ImageFilter.blur(sigmaX: 22, sigmaY: 22),
+      borderRadius: BorderRadius.circular(12),
+      child: ColoredBox(
+        color: Colors.transparent,
         child: DecoratedBox(
           decoration: BoxDecoration(
             color: SelahColors.frostFill,
-            borderRadius: BorderRadius.circular(20),
+            borderRadius: BorderRadius.circular(12),
             border: Border.all(color: SelahColors.frostBorder, width: 1),
           ),
           child: Padding(

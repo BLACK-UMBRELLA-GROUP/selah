@@ -24,7 +24,8 @@ import '../services/selah_mentor_journey_service.dart' show MentorJourneyView;
 import '../services/selah_family_messaging_service.dart';
 import '../screens/mentor/family_messaging_screens.dart';
 import '../screens/mentor/seeker_shepherd_designs.dart';
-import '../screens/mentor/mentor_seekers_screen.dart' show ShepherdSeekerRosterView;
+import '../screens/mentor/mentor_seekers_screen.dart'
+    show ShepherdSeekerRosterView;
 import '../screens/settings/help_support_screen.dart';
 import '../screens/settings/personalisation_screen.dart';
 import '../screens/profile/edit_profile_screen.dart';
@@ -47,8 +48,6 @@ import '../widgets/selah_quiet_dashboard.dart';
 import '../widgets/selah_pull_down_back_scope.dart';
 import '../widgets/selah_state_widgets.dart';
 import '../widgets/searchable_list_picker.dart';
-import 'dev_onboarding_gold_design.dart';
-import 'selah_app_gold_preview.dart';
 import 'selah_view_request_draft_model.dart';
 import 'selah_browse_filter.dart';
 import 'selah_browse_history.dart';
@@ -107,7 +106,8 @@ class SelahOneJourneyConceptShell extends StatefulWidget {
       _SelahOneJourneyConceptShellState();
 }
 
-class _SelahOneJourneyConceptShellState extends State<SelahOneJourneyConceptShell>
+class _SelahOneJourneyConceptShellState
+    extends State<SelahOneJourneyConceptShell>
     with SingleTickerProviderStateMixin {
   final _model = ViewRequestDraftModel(capacity: 3);
   final _appearanceOwner = Object();
@@ -162,7 +162,7 @@ class _SelahOneJourneyConceptShellState extends State<SelahOneJourneyConceptShel
 
   bool _shepherdRole = false;
   bool _shareHistory = false;
-  bool _gold = SelahDevAppGold.instance.renderingEnabled;
+  bool get _gold => false;
   late final _goldMotion = AnimationController(
     vsync: this,
     duration: const Duration(seconds: 12),
@@ -228,7 +228,13 @@ class _SelahOneJourneyConceptShellState extends State<SelahOneJourneyConceptShel
     _ =>
       _shepherdRole
           ? const ['My SELAH', 'Network', 'Seekers', 'Profile'][_tab]
-          : const ['Browse', 'Journey', 'My SELAH', 'Shepherd', 'Profile'][_tab],
+          : const [
+              'Browse',
+              'Journey',
+              'My SELAH',
+              'Shepherd',
+              'Profile',
+            ][_tab],
   };
 
   void _togglePageOptions() {
@@ -574,10 +580,7 @@ class _SelahOneJourneyConceptShellState extends State<SelahOneJourneyConceptShel
     );
     // Navigation resolves to Positioned; keep it directly under a Stack.
     // The separate cue never owns touch, semantics or destination authority.
-    return _BrowseOptionsNavigationCue(
-      key: ValueKey(('browse-options-cue', revision, page, id)),
-      navigation: navigation,
-    );
+    return navigation;
   }
 
   void _result(bool success, String message) {
@@ -694,174 +697,161 @@ class _SelahOneJourneyConceptShellState extends State<SelahOneJourneyConceptShel
           ? SystemUiOverlayStyle.dark
           : SystemUiOverlayStyle.light,
       child: PopScope(
-      canPop:
-          _pages.isEmpty &&
-          !_browseOptionsOpen &&
-          _expandedJourneyOptionsId == null,
-      onPopInvokedWithResult: (didPop, result) {
-        if (!didPop && _allowed) _back();
-      },
-      child: Scaffold(
-        backgroundColor: SelahColors.isWafaPreview
-            ? Colors.white
-            : SelahColors.luxuryDarkPurple,
-        extendBody: true,
-        body: DecoratedBox(
-          decoration: BoxDecoration(
-            gradient: SelahColors.isWafaPreview
-                ? SelahColors.wafaCanvas
-                : _accountSession.palette.gradient,
-          ),
-          child: Stack(
-            fit: StackFit.expand,
-            children: [
-              if (_gold && !fullPhoto)
-                Positioned.fill(
-                  child: IgnorePointer(
-                    child: AnimatedBuilder(
-                      animation: _goldMotion,
-                      builder: (context, _) => CustomPaint(
-                        painter: SelahOnboardingGoldPainter(
-                          SelahOnboardingGoldDesign.diagonalDust,
-                          motion: SelahOnboardingGoldMotion.liveDrift,
-                          motionValue: _goldMotion.value,
-                          reducedMotion:
-                              MediaQuery.disableAnimationsOf(context) ||
-                              MediaQuery.accessibleNavigationOf(context),
-                        ),
-                      ),
+        canPop:
+            _pages.isEmpty &&
+            !_browseOptionsOpen &&
+            _expandedJourneyOptionsId == null,
+        onPopInvokedWithResult: (didPop, result) {
+          if (!didPop && _allowed) _back();
+        },
+        child: Scaffold(
+          backgroundColor: SelahColors.mist,
+          extendBody: true,
+          body: DecoratedBox(
+            decoration: BoxDecoration(color: SelahColors.mist),
+            child: Stack(
+              fit: StackFit.expand,
+              children: [
+                if ((_pages.isNotEmpty || _expandedJourneyOptionsId != null) &&
+                    !_isRetainedAccountPage &&
+                    _page != 'own_profile_preview')
+                  SelahPullDownBackScope(
+                    key: const ValueKey('concept_pull_down_back_scope'),
+                    routeIdentity: (
+                      List<String>.of(_pages).join('/'),
+                      _tab,
+                      _shepherdRole,
+                      _personId,
+                      _uiRevision,
+                      _expandedJourneyOptionsId,
+                    ),
+                    enabled:
+                        _allowed &&
+                        !_browseOptionsOpen &&
+                        _confirmation == null,
+                    onBack: _bound(() {
+                      // A sheet can open before the parent rebuilds. Recheck
+                      // current decision ownership at dispatch, not just build.
+                      if (!_browseOptionsOpen &&
+                          !_journeyOptionsOpen &&
+                          !_capacityConfirmOpen &&
+                          _confirmation == null) {
+                        _back();
+                      }
+                    }),
+                    child: content,
+                  )
+                else
+                  content,
+                if (_browseOptionsOpen)
+                  Positioned.fill(
+                    child: GestureDetector(
+                      key: const ValueKey('concept_browse_options_dismiss'),
+                      behavior: HitTestBehavior.opaque,
+                      onTap: _bound(() => _act(() {})),
+                      child: const SizedBox.expand(),
                     ),
                   ),
-                ),
-              if ((_pages.isNotEmpty || _expandedJourneyOptionsId != null) &&
-                  !_isRetainedAccountPage &&
-                  _page != 'own_profile_preview')
-                SelahPullDownBackScope(
-                  key: const ValueKey('concept_pull_down_back_scope'),
-                  routeIdentity: (
-                    List<String>.of(_pages).join('/'),
-                    _tab,
-                    _shepherdRole,
-                    _personId,
-                    _uiRevision,
-                    _expandedJourneyOptionsId,
+                if (_browseOptionsOpen)
+                  _browseOptionsNavigation()
+                else if (_page == null)
+                  SelahShellNavigation(
+                    forceCurrent: true,
+                    hapticLevel: _accountSession.hapticLevel,
+                    contentEdgeInset: !_shepherdRole && _tab == 0 ? 20 : null,
+                    items: [
+                      for (var i = 0; i < names.length; i++)
+                        FloatingNavItem(
+                          icon: icons[i],
+                          label: names[i],
+                          useJourneyGlyph: !_shepherdRole && i == 1,
+                          dot:
+                              !_shepherdRole &&
+                              i == 2 &&
+                              _visibleRequests(
+                                DraftJourneyState.received,
+                              ).isNotEmpty,
+                        ),
+                    ],
+                    currentIndex: _tab,
+                    onTap: _tabTo,
                   ),
-                  enabled:
-                      _allowed && !_browseOptionsOpen && _confirmation == null,
-                  onBack: _bound(() {
-                    // A sheet can open before the parent rebuilds. Recheck
-                    // current decision ownership at dispatch, not just build.
-                    if (!_browseOptionsOpen &&
-                        !_journeyOptionsOpen &&
-                        !_capacityConfirmOpen &&
-                        _confirmation == null) {
-                      _back();
-                    }
-                  }),
-                  child: content,
-                )
-              else
-                content,
-              if (_browseOptionsOpen)
-                Positioned.fill(
-                  child: GestureDetector(
-                    key: const ValueKey('concept_browse_options_dismiss'),
-                    behavior: HitTestBehavior.opaque,
-                    onTap: _bound(() => _act(() {})),
-                    child: const SizedBox.expand(),
-                  ),
-                ),
-              if (_browseOptionsOpen)
-                _browseOptionsNavigation()
-              else if (_page == null)
-                SelahShellNavigation(
-                  forceCurrent: true,
-                  hapticLevel: _accountSession.hapticLevel,
-                  contentEdgeInset: !_shepherdRole && _tab == 0 ? 20 : null,
-                  items: [
-                    for (var i = 0; i < names.length; i++)
-                      FloatingNavItem(
-                        icon: icons[i],
-                        label: names[i],
-                        useJourneyGlyph: !_shepherdRole && i == 1,
-                        dot:
-                            !_shepherdRole &&
-                            i == 2 &&
-                            _visibleRequests(
-                              DraftJourneyState.received,
-                            ).isNotEmpty,
-                      ),
-                  ],
-                  currentIndex: _tab,
-                  onTap: _tabTo,
-                ),
-              // The same developer rail as the current app, not an extra footer
-              // that moves every header/content area upward.
-              Positioned(
-                right: 0,
-                top: 0,
-                bottom: 0,
-                width: SelahDevControlRail.width,
-                child: SelahDevControlRail(
-                  visibleSections: const [
-                    SelahDevControlSection.home,
-                    SelahDevControlSection.actions,
-                  ],
-                  open: false,
-                  selected: SelahDevControlSection.preview,
-                  buttonKeys: const {
-                    SelahDevControlSection.home: ValueKey('draft_close'),
-                    SelahDevControlSection.preview: ValueKey('draft_rules'),
-                    SelahDevControlSection.actions: ValueKey('draft_back'),
-                  },
-                  labels: {
-                    SelahDevControlSection.home: widget.onDeveloperHome == null
-                        ? 'Current SELAH · turn concept off'
-                        : 'Developer Home',
-                    SelahDevControlSection.preview: 'Sample preview controls',
-                    SelahDevControlSection.actions: _page == 'controls'
-                        ? 'Close page options'
-                        : _supportsPageOptions
-                        ? 'Page options for $_pageOptionsTitle'
-                        : 'Back',
-                  },
-                  onSelected: (section) {
-                    if (!railFresh()) return;
-                    switch (section) {
-                      case SelahDevControlSection.home:
-                        SelahVisualComparison.instance.release(_appearanceOwner);
-                        (widget.onDeveloperHome ?? widget.onExit)();
-                      case SelahDevControlSection.preview:
-                        _togglePageOptions();
-                      case SelahDevControlSection.actions:
-                        _togglePageOptions();
-                    }
-                  },
-                ),
-              ),
-              if (_notice != null)
+                // The same developer rail as the current app, not an extra footer
+                // that moves every header/content area upward.
                 Positioned(
-                  left: 20,
-                  right: 48,
-                  bottom: MediaQuery.paddingOf(context).bottom + 82,
-                  child: Semantics(
-                    liveRegion: true,
-                    child: IgnorePointer(
-                      child: Material(
-                        color: SelahColors.modalSheetSurface,
-                        borderRadius: BorderRadius.circular(14),
-                        child: Padding(
-                          padding: const EdgeInsets.all(12),
-                          child: _body(_notice!, small: true),
+                  right: 0,
+                  top: 0,
+                  bottom: 0,
+                  width: SelahDevControlRail.width,
+                  child: SelahDevControlRail(
+                    visibleSections: const [
+                      SelahDevControlSection.home,
+                      SelahDevControlSection.actions,
+                    ],
+                    open: false,
+                    selected: SelahDevControlSection.preview,
+                    buttonKeys: const {
+                      SelahDevControlSection.home: ValueKey('draft_close'),
+                      SelahDevControlSection.preview: ValueKey('draft_rules'),
+                      SelahDevControlSection.actions: ValueKey('draft_back'),
+                    },
+                    labels: {
+                      SelahDevControlSection.home:
+                          widget.onDeveloperHome == null
+                          ? 'Current SELAH · turn concept off'
+                          : 'Developer Home',
+                      SelahDevControlSection.preview: 'Sample preview controls',
+                      SelahDevControlSection.actions: _page == 'controls'
+                          ? 'Close page options'
+                          : _supportsPageOptions
+                          ? 'Page options for $_pageOptionsTitle'
+                          : 'Back',
+                    },
+                    onSelected: (section) {
+                      if (!railFresh()) return;
+                      switch (section) {
+                        case SelahDevControlSection.home:
+                          SelahVisualComparison.instance.release(
+                            _appearanceOwner,
+                          );
+                          (widget.onDeveloperHome ?? widget.onExit)();
+                        case SelahDevControlSection.preview:
+                          _togglePageOptions();
+                        case SelahDevControlSection.actions:
+                          _togglePageOptions();
+                      }
+                    },
+                  ),
+                ),
+                if (_notice != null)
+                  Positioned(
+                    left: 20,
+                    right: 48,
+                    bottom: MediaQuery.paddingOf(context).bottom + 82,
+                    child: Semantics(
+                      liveRegion: true,
+                      child: IgnorePointer(
+                        child: Material(
+                          color: SelahColors.inkColor,
+                          borderRadius: BorderRadius.circular(14),
+                          child: Padding(
+                            padding: const EdgeInsets.all(12),
+                            child: Text(
+                              _notice!,
+                              style: SelahText.body(
+                                size: 14,
+                                color: SelahColors.mist,
+                              ),
+                            ),
+                          ),
                         ),
                       ),
                     ),
                   ),
-                ),
-            ],
+              ],
+            ),
           ),
         ),
-      ),
       ),
     );
   }
@@ -1248,6 +1238,23 @@ class _SelahOneJourneyConceptShellState extends State<SelahOneJourneyConceptShel
     WidgetsBinding.instance.addPostFrameCallback((_) {
       if (current(displayed)) _seenBrowseProfileIds.add(displayed.id);
     });
+    if (_photos == null && !_photoLoadFailed) {
+      return _browseLoadFrame(const SelahLoading.browse());
+    }
+    if (_photoLoadFailed) {
+      return _browseLoadFrame(
+        SelahLoadFailure(
+          contentName: 'Profiles',
+          onRetry: _bound(() {
+            setState(() {
+              _photoLoadFailed = false;
+              _photos = null;
+            });
+            unawaited(_loadBrowsePhotos());
+          }),
+        ),
+      );
+    }
     return SelahOneJourneyBrowseDesigns(
       profiles: people.map(_displayProfile).toList(growable: false),
       selectedIndex: index,
@@ -1305,6 +1312,33 @@ class _SelahOneJourneyConceptShellState extends State<SelahOneJourneyConceptShel
       },
     );
   }
+
+  Widget _browseLoadFrame(Widget state) => SafeArea(
+    bottom: false,
+    child: Padding(
+      padding: const EdgeInsets.only(bottom: 81),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          Padding(
+            padding: const EdgeInsets.fromLTRB(22, 8, 22, 0),
+            child: Row(
+              children: [
+                const SelahWordmark(),
+                const Spacer(),
+                SelahBrowseOptionsButton(
+                  profile: null,
+                  alignToContentEdge: true,
+                  onOpen: (_) => _openBrowseOptions(null),
+                ),
+              ],
+            ),
+          ),
+          Expanded(child: state),
+        ],
+      ),
+    ),
+  );
 
   Widget _profileView() {
     final p = _person;
@@ -3664,10 +3698,7 @@ class _SelahOneJourneyConceptShellState extends State<SelahOneJourneyConceptShel
             children: [
               _mainHeading('Shepherd Dashboard'),
               const SizedBox(height: 4),
-              Text(
-                'Hello, Hassan.',
-                style: SelahText.subtext(size: 13.5),
-              ),
+              Text('Hello, Hassan.', style: SelahText.subtext(size: 13.5)),
             ],
           ),
         ),
@@ -4038,7 +4069,7 @@ class _SelahOneJourneyConceptShellState extends State<SelahOneJourneyConceptShel
 
   Widget _ownProfilePreview() {
     if (_photos == null && !_photoLoadFailed) {
-      return const SelahLoading();
+      return const SelahLoading.profile();
     }
     if (_ownProfilePreviewView != null &&
         _ownProfilePreviewRevision == _uiRevision) {
@@ -4197,13 +4228,13 @@ class _SelahOneJourneyConceptShellState extends State<SelahOneJourneyConceptShel
     if (!_allowed) return;
     // Local presentation updates are not navigation epochs. Keeping this
     // lifetime stable lets the retained choice sheet return to its own page.
-    setState(() => _gold = _accountSession.goldEnabled);
+    setState(() {});
     _syncGoldMotion();
   }
 
   Widget _retainedAccountLeaf() {
     if (_page == 'manage_photos' && _photos == null && !_photoLoadFailed) {
-      return const SelahLoading();
+      return const SelahLoading.profile();
     }
     if (_accountLeafView != null && _accountLeafRevision == _uiRevision) {
       return _accountLeafView!;
@@ -4534,7 +4565,9 @@ class _SelahOneJourneyConceptShellState extends State<SelahOneJourneyConceptShel
         for (final item in selahCountries)
           item.code: '${item.nationality} (${item.code})',
       },
-      'ethnicity' => {for (final item in selahEthnicities) item.code: item.name},
+      'ethnicity' => {
+        for (final item in selahEthnicities) item.code: item.name,
+      },
       _ => <String, String>{},
     };
     if (choices.isEmpty) return;
@@ -4816,32 +4849,6 @@ class _SelahOneJourneyConceptShellState extends State<SelahOneJourneyConceptShel
           style: SelahText.heading(size: 15),
         ),
         const SizedBox(height: 14),
-        _controlSection([
-          _title('App design', size: 13),
-          Row(
-            children: [
-              for (final white in [false, true]) ...[
-                if (white) const SizedBox(width: 8),
-                Expanded(
-                  child: _previewAction(
-                    white ? 'concept_design_option2' : 'concept_design_current',
-                    white ? 'Option 2' : 'Current',
-                    () => _act(() {
-                      SelahVisualComparison.instance.select(
-                        _appearanceOwner,
-                        option2: white,
-                      );
-                    }),
-                    selected: SelahColors.isWafaPreview == white,
-                    showChevron: false,
-                    centered: true,
-                  ),
-                ),
-              ],
-            ],
-          ),
-        ]),
-        const SizedBox(height: 12),
         if (_hasCircleDiscussionOptions) ...[
           _controlSection([
             _title('Journey discussion', size: 13),
@@ -4970,7 +4977,10 @@ class _SelahOneJourneyConceptShellState extends State<SelahOneJourneyConceptShel
             'draft_reset',
             'Reset preview',
             () => _move(() {
-              SelahVisualComparison.instance.select(_appearanceOwner, option2: false);
+              SelahVisualComparison.instance.select(
+                _appearanceOwner,
+                option2: false,
+              );
               _model.setCapacity(3);
               _model.reset();
               _seenBrowseProfileIds.clear();
@@ -4982,7 +4992,7 @@ class _SelahOneJourneyConceptShellState extends State<SelahOneJourneyConceptShel
               _conceptRemovedShepherds.clear();
               _conceptMainShepherdId = 'draft-shepherd-hassan';
               _shareHistory = false;
-              _gold = SelahDevAppGold.instance.renderingEnabled;
+
               _browseFilter = const SelahBrowseFilter();
               _editingBrowseFilter = _browseFilter;
               _seekerMembership = 'Seeker One';
@@ -5275,20 +5285,18 @@ class _SelahOneJourneyConceptShellState extends State<SelahOneJourneyConceptShel
     onPressed: action == null ? null : _bound(action),
     style: OutlinedButton.styleFrom(
       minimumSize: const Size(48, 48),
-      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
-      foregroundColor: SelahColors.foreground,
-      disabledForegroundColor: SelahColors.foregroundMuted.withValues(alpha: .5),
-      backgroundColor: primary
-          ? SelahColors.surfaceEmphasisFill
-          : SelahColors.surfaceFill,
+      padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 15),
+      foregroundColor: primary ? SelahColors.onLake : SelahColors.inkColor,
+      disabledForegroundColor: SelahColors.foregroundMuted.withValues(
+        alpha: .5,
+      ),
+      backgroundColor: primary ? SelahColors.lake : Colors.transparent,
       side: BorderSide(
         color: primary
             ? SelahColors.surfaceEmphasisBorder
             : SelahColors.surfaceBorder,
       ),
-      shape: SelahColors.isWafaPreview
-          ? RoundedRectangleBorder(borderRadius: BorderRadius.circular(14))
-          : const StadiumBorder(),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
     ),
     child: Row(
       mainAxisSize: alignStart ? MainAxisSize.max : MainAxisSize.min,
@@ -5323,6 +5331,8 @@ class _SelahOneJourneyConceptShellState extends State<SelahOneJourneyConceptShel
                     size: 14,
                     color: action == null
                         ? SelahColors.foregroundMuted.withValues(alpha: .5)
+                        : primary
+                        ? SelahColors.onLake
                         : SelahColors.foreground,
                   ),
                 ),
@@ -5395,103 +5405,3 @@ class _SelahOneJourneyConceptShellState extends State<SelahOneJourneyConceptShel
 
 /// Touch ends the opening cue before the bar begins its existing breathing
 /// interaction. The Listener observes only child hits and owns no gesture.
-class _BrowseOptionsNavigationCue extends StatefulWidget {
-  const _BrowseOptionsNavigationCue({super.key, required this.navigation});
-
-  final Widget navigation;
-
-  @override
-  State<_BrowseOptionsNavigationCue> createState() =>
-      _BrowseOptionsNavigationCueState();
-}
-
-class _BrowseOptionsNavigationCueState
-    extends State<_BrowseOptionsNavigationCue> {
-  bool _cueVisible = true;
-
-  @override
-  Widget build(BuildContext context) => Listener(
-    behavior: HitTestBehavior.deferToChild,
-    onPointerDown: (_) {
-      if (_cueVisible) setState(() => _cueVisible = false);
-    },
-    child: Stack(
-      fit: StackFit.expand,
-      children: [
-        widget.navigation,
-        if (_cueVisible) const _BrowseOptionsBarCue(),
-      ],
-    ),
-  );
-}
-
-/// A single, decorative opening cue on Browse's edge-aligned action-navigation
-/// pill. Quiet-motion modes show a stable subtle gold edge instead of a pulse.
-class _BrowseOptionsBarCue extends StatelessWidget {
-  const _BrowseOptionsBarCue();
-
-  @override
-  Widget build(BuildContext context) {
-    final quiet =
-        MediaQuery.disableAnimationsOf(context) ||
-        MediaQuery.accessibleNavigationOf(context);
-    Widget decoration(double strength) => DecoratedBox(
-      key: const ValueKey('concept_browse_options_cue'),
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(SelahNavBarMetrics.radius),
-        border: Border.all(
-          color: SelahColors.journeyGold.withValues(alpha: .58 * strength),
-          width: 1.5,
-        ),
-        color: SelahColors.journeyGold.withValues(alpha: .06 * strength),
-        boxShadow: quiet
-            ? const []
-            : [
-                BoxShadow(
-                  color: SelahColors.journeyGold.withValues(
-                    alpha: .18 * strength,
-                  ),
-                  blurRadius: 10,
-                ),
-              ],
-      ),
-      child: const SizedBox.expand(),
-    );
-    return Positioned(
-      left: 20,
-      right: 20,
-      bottom: 0,
-      child: SafeArea(
-        top: false,
-        minimum: const EdgeInsets.only(bottom: SelahNavBarMetrics.bottomInset),
-        child: SizedBox(
-          height: SelahNavBarMetrics.restingHeight,
-          child: IgnorePointer(
-            child: ExcludeSemantics(
-              // The quiet branch disposes an in-flight pulse immediately.
-              child: quiet
-                  ? decoration(.5)
-                  : TweenAnimationBuilder<double>(
-                      tween: Tween(begin: 0, end: 1),
-                      duration: const Duration(milliseconds: 850),
-                      builder: (context, value, child) {
-                        final strength = value <= .25
-                            ? Curves.easeOutCubic.transform(value / .25)
-                            : 1 -
-                                  Curves.easeInOut.transform(
-                                    (value - .25) / .75,
-                                  );
-                        return decoration(strength);
-                      },
-                    ),
-            ),
-          ),
-        ),
-      ),
-    );
-  }
-}
-
-// The existing Shepherd page's horizontal presentation, with an owned local
-// controller. Revisiting a page restores the local selection; reset starts at
-// the first Shepherd without reusing a stale PageStorage offset.

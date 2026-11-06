@@ -649,7 +649,7 @@ class _EditPhotosScreenState extends State<EditPhotosScreen> {
                     child: _loading
                         ? const Center(
                             key: ValueKey('photos-loading'),
-                            child: SelahLoading(),
+                            child: SelahLoading.profile(),
                           )
                         : _photos.isEmpty
                         ? _PhotoEmptyState(
@@ -1005,7 +1005,9 @@ class _RevealedPhotoActions extends StatelessWidget {
                 padding: EdgeInsets.zero,
                 foregroundColor: SelahColors.destructive,
                 side: BorderSide(color: SelahColors.destructiveBorder),
-                backgroundColor: SelahColors.destructive.withValues(alpha: 0.08),
+                backgroundColor: SelahColors.destructive.withValues(
+                  alpha: 0.08,
+                ),
                 shape: const CircleBorder(),
               ),
               child: const Icon(Icons.delete_outline_rounded, size: 21),

@@ -12,6 +12,8 @@ The draft has no configured member backend. Account and service integrations are
 
 Sample profile pictures are free stock photos, not real members.
 
+The LOCKed Still Water look uses a light mist canvas, lake accents, bundled Figtree and Cormorant Garamond, and a docked tab bar. Existing loading and failure states use the same theme; no live services are enabled.
+
 The first-draft handover records passing static and pure-Dart checks and a signed build; on-device checks are still pending. No TestFlight or App Store delivery yet.
 
 ## Repository layout
@@ -22,6 +24,18 @@ The first-draft handover records passing static and pure-Dart checks and a signe
 - `ROADMAP.md` — tentative major work remaining, with approval gates and effort ranges.
 
 The current implementation and measured limits are described in `SYSTEM/DOCUMENTS/SELAH_FIRST_DRAFT_HANDOVER_CURRENT_VERSION_V1.md`. The build contract is `SYSTEM/DOCUMENTS/SELAH_FIRST_DRAFT_BUILD_CONTRACT_CURRENT_VERSION_V1.md`.
+
+## Local visual checks
+
+Use the existing lockfile with Flutter 3.44.2:
+
+```bash
+cd SOURCE
+flutter pub get --offline --enforce-lockfile
+flutter test test/masters/look_masters_test.dart --dart-define=SELAH_DRAFT_LOCAL_ONLY=true
+```
+
+Approved comparisons use real Flutter widgets at 430 × 932 and pixel ratio 3. Images live under `APP/APPROVED/LOOK/BUILT/V1/`. The `APP/APPROVED/COMPARE/` standard explains capture and replay. These checks demonstrate layout and local states; phone installation and native behaviour remain separate.
 
 ## Private delivery route
 
@@ -55,6 +69,6 @@ The Founder designs with an AI design assistant and locks each design under `APP
 
 ## Licence and branding
 
-Original project code is offered under the Apache License, Version 2.0; see `LICENSE` and `NOTICE`. Third-party components and assets retain their own terms. Existing font licences and notices remain in `SOURCE/assets/fonts/`, including the Poppins, Syne and Jost notices.
+Original project code is offered under the Apache License, Version 2.0; see `LICENSE` and `NOTICE`. Third-party components and assets retain their own terms. Existing font licences and notices remain in `SOURCE/assets/fonts/`, including the Figtree and Cormorant Garamond SIL Open Font Licences.
 
 SELAH names, logos and domains are reserved. The code licence does not grant permission to use them as your own branding. Sample assets and inherited third-party notices must not be represented as original contributions by a downstream project.

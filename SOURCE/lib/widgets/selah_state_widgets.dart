@@ -10,7 +10,6 @@
 // with a pill button. Visuals copied 1:1 from seeker_mentor_tab.dart's
 // _AddShepherdButton(large: true) + its label line.
 
-import 'dart:ui';
 import 'package:flutter/material.dart';
 import '../theme/selah_colors.dart';
 import '../theme/selah_text.dart';
@@ -34,76 +33,96 @@ class SelahFieldError extends StatelessWidget {
   }
 }
 
-/// Soft glass banner for simulated backend / auth / network errors
-/// (Category 2) and send-failure style errors. Dismissible, non-blocking,
-/// appears near the action that triggered it rather than as a takeover.
+/// LOCK 2 action-failure presentation. Existing retry/dismiss callbacks stay
+/// with their original action; the banner never retries a write by itself.
 class SelahErrorBanner extends StatelessWidget {
   final String message;
   final VoidCallback? onRetry;
   final VoidCallback? onDismiss;
+  final Key? retryKey;
 
   const SelahErrorBanner({
     super.key,
     required this.message,
     this.onRetry,
     this.onDismiss,
+    this.retryKey,
   });
 
   @override
-  Widget build(BuildContext context) {
-    return ClipRRect(
+  Widget build(BuildContext context) => Container(
+    padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 12),
+    decoration: BoxDecoration(
+      color: SelahColors.dawnSoft,
       borderRadius: BorderRadius.circular(14),
-      child: BackdropFilter(
-        filter: ImageFilter.blur(sigmaX: 16, sigmaY: 16),
-        child: Container(
-          padding: const EdgeInsets.fromLTRB(14, 12, 10, 12),
-          decoration: BoxDecoration(
-            color: SelahColors.destructive.withValues(alpha: 0.16),
-            borderRadius: BorderRadius.circular(14),
-            border: Border.all(color: SelahColors.ink(0.22), width: 1),
+      border: Border.all(color: SelahColors.dawnLine),
+    ),
+    child: Row(
+      children: [
+        Container(
+          width: 28,
+          height: 28,
+          alignment: Alignment.center,
+          decoration: const BoxDecoration(
+            color: SelahColors.dawn,
+            shape: BoxShape.circle,
           ),
-          child: Row(
-            children: [
-              Icon(Icons.info_outline, color: SelahColors.foreground, size: 18),
-              SizedBox(width: 10),
-              Expanded(
-                flex: 3,
-                child: Text(message, style: SelahText.body(size: 13)),
-              ),
-              if (onRetry != null)
-                Flexible(
-                  flex: 2,
-                  child: TextButton(
-                    onPressed: onRetry,
-                    style: TextButton.styleFrom(
-                      padding: const EdgeInsets.symmetric(horizontal: 8),
-                    ),
-                    child: Text(
-                      'Try again',
-                      style: SelahText.body(
-                        size: 13,
-                      ).copyWith(fontWeight: FontWeight.w500),
-                    ),
-                  ),
-                ),
-              if (onDismiss != null)
-                GestureDetector(
-                  onTap: onDismiss,
-                  child: Padding(
-                    padding: const EdgeInsets.all(4),
-                    child: Icon(
-                      Icons.close,
-                      color: SelahColors.ink(0.70),
-                      size: 16,
-                    ),
-                  ),
-                ),
-            ],
+          child: Text(
+            '!',
+            style: SelahText.body(size: 18, color: Colors.white),
           ),
         ),
-      ),
-    );
-  }
+        const SizedBox(width: 12),
+        Expanded(
+          child: Text(
+            message,
+            style: SelahText.body(size: 14, color: SelahColors.foreground),
+          ),
+        ),
+        if (onRetry != null) ...[
+          const SizedBox(width: 12),
+          OutlinedButton(
+            key: retryKey,
+            onPressed: onRetry,
+            style: OutlinedButton.styleFrom(
+              foregroundColor: SelahColors.foreground,
+              side: const BorderSide(color: SelahColors.line),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(12),
+              ),
+              padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
+            ),
+            child: Text('Try again', style: SelahText.button(size: 13.5)),
+          ),
+        ],
+        if (onDismiss != null)
+          IconButton(
+            onPressed: onDismiss,
+            padding: const EdgeInsets.all(4),
+            constraints: const BoxConstraints(minWidth: 24, minHeight: 24),
+            icon: const Icon(Icons.close, color: SelahColors.muted, size: 16),
+          ),
+      ],
+    ),
+  );
+}
+
+/// LOCK 2 whole-screen failure, used only at an existing failed load gate.
+class SelahLoadFailure extends StatelessWidget {
+  const SelahLoadFailure({super.key, required this.contentName, this.onRetry});
+
+  final String contentName;
+  final VoidCallback? onRetry;
+
+  @override
+  Widget build(BuildContext context) => SelahEmptyState(
+    key: const ValueKey('selah_load_failure'),
+    icon: Icons.error_outline,
+    title: '$contentName didn’t load',
+    message: 'Check your connection, then try again. Nothing you did was lost.',
+    ctaLabel: onRetry == null ? null : 'Try again',
+    onCta: onRetry,
+  );
 }
 
 /// Full empty-state layout (Category 3) — "nothing here yet", not an
@@ -133,23 +152,34 @@ class SelahEmptyState extends StatelessWidget {
   Widget build(BuildContext context) {
     return Center(
       child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 36),
+        padding: const EdgeInsets.symmetric(horizontal: 22),
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            Icon(icon, color: SelahColors.ink(0.35), size: 30),
-            SizedBox(height: 14),
+            Text(
+              '’',
+              style: const TextStyle(
+                fontFamily: 'Cormorant Garamond',
+                fontWeight: FontWeight.w600,
+                fontSize: 70,
+                height: 1,
+                color: SelahColors.dawn,
+              ),
+            ),
+            const SizedBox(height: 14),
             if (title != null) ...[
               Text(
                 title!,
-                style: SelahText.heading(size: 15),
+                style: SelahText.body(
+                  size: 15,
+                ).copyWith(fontWeight: FontWeight.w600),
                 textAlign: TextAlign.center,
               ),
               SizedBox(height: 6),
             ],
             Text(
               message,
-              style: SelahText.subtext(size: 13.5),
+              style: SelahText.subtext(size: 13, color: SelahColors.muted),
               textAlign: TextAlign.center,
             ),
             if (ctaLabel != null) ...[
@@ -158,8 +188,18 @@ class SelahEmptyState extends StatelessWidget {
                 // Shared primary geometry, focus/semantics and disabled
                 // state, rather than a small purple gesture-only bubble.
                 onPressed: onCta,
-                style: FilledButton.styleFrom(minimumSize: const Size(0, 48)),
-                child: Text(ctaLabel!, style: SelahText.button(size: 13)),
+                style: FilledButton.styleFrom(
+                  backgroundColor: SelahColors.lake,
+                  foregroundColor: Colors.white,
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 14,
+                    vertical: 10,
+                  ),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                ),
+                child: Text(ctaLabel!, style: SelahText.button(size: 13.5)),
               ),
             ],
           ],
@@ -173,18 +213,16 @@ class SelahEmptyState extends StatelessWidget {
 /// exception or blank screen.
 class SelahUnknownErrorState extends StatelessWidget {
   final VoidCallback? onRetry;
-  const SelahUnknownErrorState({super.key, this.onRetry});
+  final String contentName;
+  const SelahUnknownErrorState({
+    super.key,
+    this.onRetry,
+    this.contentName = 'Content',
+  });
 
   @override
-  Widget build(BuildContext context) {
-    return SelahEmptyState(
-      icon: Icons.refresh,
-      message:
-          "Something didn't quite work. Please try again — and if it keeps happening, let us know.",
-      ctaLabel: onRetry != null ? 'Try again' : null,
-      onCta: onRetry,
-    );
-  }
+  Widget build(BuildContext context) =>
+      SelahLoadFailure(contentName: contentName, onRetry: onRetry);
 }
 
 /// Small "why is this disabled" hint (Category 4) — used under a

@@ -319,7 +319,8 @@ class _MentorJourneyDetailScreenState extends State<MentorJourneyDetailScreen> {
   /// Milestone types are the ones _milestoneLabel already knows — this
   /// invents no new vocabulary.
   List<SelahMilestone> get _stagedMilestones {
-    final order = SelahJourneyStages.of(widget.journey.journeyStage)?.order ?? 1;
+    final order =
+        SelahJourneyStages.of(widget.journey.journeyStage)?.order ?? 1;
     final now = DateTime.now();
     return [
       SelahMilestone(
@@ -644,7 +645,10 @@ class _MentorJourneyDetailScreenState extends State<MentorJourneyDetailScreen> {
     try {
       ok =
           await (widget.writeReviewDecision ??
-              SelahMentorJourneyService.mentorReviewDecision)(review.id, decision);
+              SelahMentorJourneyService.mentorReviewDecision)(
+            review.id,
+            decision,
+          );
     } catch (_) {
       // Failed writes retain the prior confirmed review and can be retried.
     }
@@ -764,7 +768,9 @@ class _MentorJourneyDetailScreenState extends State<MentorJourneyDetailScreen> {
     if (!_readCurrent(_sourceEpoch)) {
       return Scaffold(
         body: Container(
-          decoration: SelahAppGoldDecoration(gradient: SelahColors.brandGradient),
+          decoration: SelahAppGoldDecoration(
+            gradient: SelahColors.brandGradient,
+          ),
           child: const SafeArea(
             child: SelahEmptyState(
               icon: Icons.lock_outline,
@@ -778,7 +784,8 @@ class _MentorJourneyDetailScreenState extends State<MentorJourneyDetailScreen> {
     final actionEpoch = _sourceEpoch;
     final reviewId = _review?.id;
     final reviewWindowEpoch = _reviewWindowEpoch;
-    final answered = _myAnswers.length >= JourneyQuestions.seekerToMentor.length;
+    final answered =
+        _myAnswers.length >= JourneyQuestions.seekerToMentor.length;
 
     return Scaffold(
       // FIXED 2026-08-01 (Founder: "there should be no purple at top, it
@@ -953,7 +960,9 @@ class _MentorJourneyDetailScreenState extends State<MentorJourneyDetailScreen> {
                         _review != null) ...[
                       SizedBox(height: 20),
                       SelahErrorBanner(
-                        key: const ValueKey('mentor-review-decision-unavailable'),
+                        key: const ValueKey(
+                          'mentor-review-decision-unavailable',
+                        ),
                         message: 'Review decision could not refresh.',
                         onRetry: _decisionLoading
                             ? null
@@ -1031,10 +1040,7 @@ class _MentorJourneyDetailScreenState extends State<MentorJourneyDetailScreen> {
                                       ? SizedBox(
                                           width: 14,
                                           height: 14,
-                                          child: CircularProgressIndicator(
-                                            strokeWidth: 2,
-                                            color: Colors.white,
-                                          ),
+                                          child: SelahLoading(),
                                         )
                                       : Text(
                                           'Reopen Review',
@@ -1149,7 +1155,9 @@ class _MentorJourneyDetailScreenState extends State<MentorJourneyDetailScreen> {
                                 borderSide: BorderSide.none,
                               ),
                               hintText: 'Your answer…',
-                              hintStyle: TextStyle(color: SelahColors.ink(0.38)),
+                              hintStyle: TextStyle(
+                                color: SelahColors.ink(0.38),
+                              ),
                             ),
                           ),
                           SizedBox(height: 14),
@@ -1172,7 +1180,9 @@ class _MentorJourneyDetailScreenState extends State<MentorJourneyDetailScreen> {
                     SizedBox(height: 28),
                     Text(
                       'TIMELINE',
-                      style: SelahText.chapterLabel(color: SelahColors.ink(0.54)),
+                      style: SelahText.chapterLabel(
+                        color: SelahColors.ink(0.54),
+                      ),
                     ),
                     SizedBox(height: 10),
                     if (_timelineUnavailable) ...[
@@ -1233,7 +1243,9 @@ class _MentorJourneyDetailScreenState extends State<MentorJourneyDetailScreen> {
                       SizedBox(height: 10),
                       if (_messagesUnavailable) ...[
                         SelahErrorBanner(
-                          key: const ValueKey('mentor-conversation-unavailable'),
+                          key: const ValueKey(
+                            'mentor-conversation-unavailable',
+                          ),
                           message: _messagesLastKnown
                               ? 'Conversation could not refresh. Showing last confirmed messages.'
                               : 'Conversation could not refresh.',

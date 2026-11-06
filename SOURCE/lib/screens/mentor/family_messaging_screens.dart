@@ -117,7 +117,7 @@ class _SelahShepherdCirclesInboxScreenState
           child: _loading
               ? const SelahLoading(label: 'Loading messages…')
               : !_available
-              ? SelahUnknownErrorState(onRetry: _load)
+              ? SelahUnknownErrorState(contentName: 'Messages', onRetry: _load)
               : _circles.isEmpty
               ? const SelahEmptyState(
                   icon: Icons.forum_outlined,
@@ -685,7 +685,8 @@ class _SelahShepherdCircleScreenState extends State<SelahShepherdCircleScreen> {
         _threadId = widget.initialCircle?.threadId ?? 'dev-family-thread';
         _muted = widget.initialCircle?.muted ?? false;
         _participantCount = widget.initialCircle?.participantCount ?? 3;
-        _access = widget.initialCircle?.access ?? SelahFamilyMessageAccess.ready;
+        _access =
+            widget.initialCircle?.access ?? SelahFamilyMessageAccess.ready;
         _confirmedCanSend = widget.initialCircle?.canSend ?? true;
         _messages = [
           SelahFamilyMessage(
@@ -1164,7 +1165,9 @@ class _SelahShepherdCircleScreenState extends State<SelahShepherdCircleScreen> {
               onTap: () => FocusScope.of(context).unfocus(),
               child: Container(
                 decoration: SelahAppGoldDecoration(
-                  gradient: SelahColors.genderGradient(AppState.instance.gender),
+                  gradient: SelahColors.genderGradient(
+                    AppState.instance.gender,
+                  ),
                 ),
                 child: SafeArea(
                   child: Column(
@@ -1245,7 +1248,10 @@ class _SelahShepherdCircleScreenState extends State<SelahShepherdCircleScreen> {
                             : _loading
                             ? const SelahLoading(label: 'Opening conversation…')
                             : !_available
-                            ? SelahUnknownErrorState(onRetry: _load)
+                            ? SelahUnknownErrorState(
+                                contentName: 'Messages',
+                                onRetry: _load,
+                              )
                             : _messages.isEmpty && _discussionMarkers.isEmpty
                             ? const Center(
                                 child: Padding(
@@ -1265,7 +1271,8 @@ class _SelahShepherdCircleScreenState extends State<SelahShepherdCircleScreen> {
                           controller: _composer,
                           busy: _sending,
                           selectedContext:
-                              _discussionLayout == SelahCircleTopicLayout.current
+                              _discussionLayout ==
+                                  SelahCircleTopicLayout.current
                               ? _selectedContext
                               : null,
                           contextEnabled:
@@ -1284,7 +1291,8 @@ class _SelahShepherdCircleScreenState extends State<SelahShepherdCircleScreen> {
                             }
                           },
                           onOpenContext:
-                              _discussionLayout != SelahCircleTopicLayout.current
+                              _discussionLayout !=
+                                  SelahCircleTopicLayout.current
                               ? null
                               : switch (_selectedContext) {
                                   final selected? => () {
@@ -1660,7 +1668,7 @@ class _CircleMembersSheetState extends State<_CircleMembersSheet> {
           if (_loading)
             const Padding(
               padding: EdgeInsets.symmetric(vertical: 30),
-              child: Center(child: CircularProgressIndicator(strokeWidth: 2)),
+              child: Center(child: SelahLoading()),
             )
           else if (!_available)
             Center(
@@ -1964,7 +1972,11 @@ class _ReadOnlyBanner extends StatelessWidget {
       width: double.infinity,
       padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 12),
       color: SelahColors.surfaceFill,
-      child: Text(text, textAlign: TextAlign.center, style: SelahText.subtext()),
+      child: Text(
+        text,
+        textAlign: TextAlign.center,
+        style: SelahText.subtext(),
+      ),
     );
   }
 }
@@ -2063,7 +2075,9 @@ class _Composer extends StatelessWidget {
                           style: IconButton.styleFrom(
                             backgroundColor: selectedContext == null
                                 ? Colors.transparent
-                                : SelahColors.actionFill.withValues(alpha: 0.14),
+                                : SelahColors.actionFill.withValues(
+                                    alpha: 0.14,
+                                  ),
                           ),
                           icon: Icon(
                             Icons.person_add_alt_1_outlined,
@@ -2130,7 +2144,7 @@ class _Composer extends StatelessWidget {
                 icon: busy
                     ? const SizedBox.square(
                         dimension: 17,
-                        child: CircularProgressIndicator(strokeWidth: 2),
+                        child: SelahLoading(),
                       )
                     : const Icon(Icons.arrow_upward_rounded, size: 23),
               ),
@@ -2373,7 +2387,10 @@ class _ContextAvatar extends StatelessWidget {
     ),
     child: Text(
       this.context.firstName.substring(0, 1).toUpperCase(),
-      style: SelahText.body(size: size * 0.36, color: SelahColors.surfaceSignal),
+      style: SelahText.body(
+        size: size * 0.36,
+        color: SelahColors.surfaceSignal,
+      ),
     ),
   );
 }

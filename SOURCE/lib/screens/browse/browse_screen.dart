@@ -1598,7 +1598,7 @@ class _BrowseScreenState extends State<BrowseScreen> {
         decoration: SelahAppGoldDecoration(
           gradient: SelahColors.genderGradient(AppState.instance.gender),
         ),
-        child: const SelahLoading(),
+        child: const SelahLoading.browse(),
       );
     }
     if (_candidatesUnavailable) {
@@ -1606,13 +1606,7 @@ class _BrowseScreenState extends State<BrowseScreen> {
         decoration: SelahAppGoldDecoration(
           gradient: SelahColors.genderGradient(AppState.instance.gender),
         ),
-        child: SelahEmptyState(
-          icon: Icons.search_off_outlined,
-          title: 'Couldn’t load profiles',
-          message: 'Your search could not refresh. Please try again.',
-          ctaLabel: 'Try again',
-          onCta: _loadDeck,
-        ),
+        child: SelahLoadFailure(contentName: 'Profiles', onRetry: _loadDeck),
       );
     }
     final profile = _current;

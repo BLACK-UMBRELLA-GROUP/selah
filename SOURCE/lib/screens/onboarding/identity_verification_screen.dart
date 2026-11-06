@@ -5,6 +5,7 @@
 // production "verified" switch. Developer state never leaves this widget.
 
 import 'package:flutter/material.dart';
+import '../../widgets/selah_loading.dart';
 
 import '../../models/selah_identity_verification.dart';
 import '../../services/selah_auth.dart';
@@ -69,7 +70,8 @@ class _InitialIdentityCheckScreenState
 
   bool get _providerUnavailable =>
       _launchOutcome == SelahVerificationLaunchOutcome.unavailable ||
-      (!_isDevPreview && !SelahIdentityVerificationService.isProviderConfigured);
+      (!_isDevPreview &&
+          !SelahIdentityVerificationService.isProviderConfigured);
 
   bool get _hasOriginalPrincipal => _isDevPreview
       ? SelahDeveloperAccess.canUseDeveloperTools
@@ -111,7 +113,8 @@ class _InitialIdentityCheckScreenState
 
   SelahIdentityVerificationState _devState(
     SelahIdentityVerificationResult result, {
-    SelahDuplicateReviewState duplicate = SelahDuplicateReviewState.notEvaluated,
+    SelahDuplicateReviewState duplicate =
+        SelahDuplicateReviewState.notEvaluated,
     bool consentGranted = true,
   }) {
     final now = DateTime.now().toUtc();
@@ -122,7 +125,9 @@ class _InitialIdentityCheckScreenState
       consentVersion: kIdentityVerificationConsentVersion,
       consentRecordedAt: now,
       updatedAt: now,
-      decidedAt: result == SelahIdentityVerificationResult.verified ? now : null,
+      decidedAt: result == SelahIdentityVerificationResult.verified
+          ? now
+          : null,
     );
   }
 
@@ -635,7 +640,8 @@ class _InitialIdentityCheckScreenState
                 onPressed: _continue,
               )
           else ...[
-            if (state.result == SelahIdentityVerificationResult.reviewRequired ||
+            if (state.result ==
+                    SelahIdentityVerificationResult.reviewRequired ||
                 activeJourneyHold)
               _PrimaryButton(
                 key: const ValueKey('identity-refresh'),
@@ -890,7 +896,9 @@ class _IconMark extends StatelessWidget {
       decoration: BoxDecoration(
         shape: BoxShape.circle,
         color: SelahColors.frostFill,
-        border: Border.all(color: SelahColors.unlockDot.withValues(alpha: 0.72)),
+        border: Border.all(
+          color: SelahColors.unlockDot.withValues(alpha: 0.72),
+        ),
       ),
       child: Icon(icon, color: SelahColors.unlockText, size: 25),
     );
@@ -919,11 +927,7 @@ class _PrimaryButton extends StatelessWidget {
         onPressed: busy ? null : onPressed,
         style: previewStyle?.primaryButtonStyle,
         child: busy
-            ? const SizedBox(
-                width: 18,
-                height: 18,
-                child: CircularProgressIndicator(strokeWidth: 2),
-              )
+            ? const SizedBox(width: 18, height: 18, child: SelahLoading())
             : Text(label, textAlign: TextAlign.center),
       ),
     );

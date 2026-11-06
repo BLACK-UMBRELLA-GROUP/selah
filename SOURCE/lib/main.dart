@@ -61,22 +61,22 @@ class SelahApp extends StatelessWidget {
       navigatorObservers: [selahKeyboardDismissNavigatorObserver],
       scrollBehavior: const _SelahScrollBehavior(),
       theme: ThemeData(
-        brightness: Brightness.dark,
+        brightness: Brightness.light,
         useMaterial3: true,
-        scaffoldBackgroundColor: Colors.transparent,
-        textTheme: SelahText.textTheme(ThemeData.dark().textTheme),
+        scaffoldBackgroundColor: SelahColors.mist,
+        textTheme: SelahText.textTheme(ThemeData.light().textTheme),
         colorScheme: ColorScheme.fromSeed(
-          brightness: Brightness.dark,
+          brightness: Brightness.light,
           seedColor: SelahColors.candleBronze,
           primary: SelahColors.actionFill,
           onPrimary: SelahColors.onAction,
           secondary: SelahColors.sanctuarySage,
           onSecondary: SelahColors.sanctuaryInk,
-          surface: SelahColors.sanctuaryInk,
+          surface: SelahColors.surface,
           onSurface: SelahColors.foreground,
           error: SelahColors.destructive,
         ),
-        dividerColor: SelahColors.candleBronze.withValues(alpha: 0.18),
+        dividerColor: SelahColors.line,
         appBarTheme: AppBarTheme(
           backgroundColor: Colors.transparent,
           surfaceTintColor: Colors.transparent,
@@ -92,14 +92,12 @@ class SelahApp extends StatelessWidget {
         filledButtonTheme: FilledButtonThemeData(
           style: FilledButton.styleFrom(
             minimumSize: const Size(0, 50),
-            padding: const EdgeInsets.symmetric(horizontal: 22, vertical: 14),
+            padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 15),
             foregroundColor: SelahColors.onAction,
             backgroundColor: SelahColors.actionFill,
-            side: BorderSide(
-              color: SelahColors.warmIvory.withValues(alpha: 0.14),
-            ),
+            side: BorderSide(color: SelahColors.lake),
             shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(16),
+              borderRadius: BorderRadius.circular(12),
             ),
           ),
         ),
@@ -108,12 +106,63 @@ class SelahApp extends StatelessWidget {
             foregroundColor: SelahColors.foreground,
             side: BorderSide(color: SelahColors.surfaceEmphasisBorder),
             shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(16),
+              borderRadius: BorderRadius.circular(12),
             ),
           ),
         ),
         textButtonTheme: TextButtonThemeData(
           style: TextButton.styleFrom(foregroundColor: SelahColors.foreground),
+        ),
+        cardTheme: CardThemeData(
+          color: SelahColors.surface,
+          elevation: 0,
+          shadowColor: Colors.transparent,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(14),
+            side: const BorderSide(color: SelahColors.line),
+          ),
+        ),
+        chipTheme: ChipThemeData(
+          backgroundColor: SelahColors.soft,
+          side: BorderSide.none,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(12),
+          ),
+          padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 7),
+          labelStyle: const TextStyle(
+            fontFamily: 'Figtree',
+            fontSize: 12.5,
+            fontWeight: FontWeight.w500,
+            color: SelahColors.inkColor,
+          ),
+        ),
+        iconButtonTheme: IconButtonThemeData(
+          style: IconButton.styleFrom(
+            fixedSize: const Size(40, 40),
+            backgroundColor: SelahColors.surface,
+            foregroundColor: SelahColors.inkColor,
+            side: const BorderSide(color: SelahColors.line),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(12),
+            ),
+          ),
+        ),
+        progressIndicatorTheme: const ProgressIndicatorThemeData(
+          color: SelahColors.lake,
+          linearTrackColor: SelahColors.line,
+          linearMinHeight: 5,
+          borderRadius: BorderRadius.all(Radius.circular(3)),
+        ),
+        snackBarTheme: SnackBarThemeData(
+          backgroundColor: SelahColors.inkColor,
+          contentTextStyle: const TextStyle(
+            fontFamily: 'Figtree',
+            fontSize: 14,
+            color: SelahColors.mist,
+          ),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(14),
+          ),
         ),
         iconTheme: IconThemeData(color: SelahColors.foreground),
       ),
@@ -184,7 +233,7 @@ class _SelahDraftRootState extends State<SelahDraftRoot> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
-                    Text('SELAH', style: SelahText.wordmark(size: 26)),
+                    const SelahWordmark(),
                     const Spacer(),
                     const Align(
                       alignment: Alignment.centerLeft,

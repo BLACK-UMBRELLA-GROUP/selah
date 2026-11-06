@@ -121,7 +121,9 @@ class _PhotoCropReviewScreenState extends State<PhotoCropReviewScreen> {
       _error = null;
     });
     try {
-      final rotated = await SelahProfilePhotoProcessor.rotateClockwise(_current);
+      final rotated = await SelahProfilePhotoProcessor.rotateClockwise(
+        _current,
+      );
       if (!_checkCurrent()) return;
       setState(() {
         _current = rotated;
@@ -181,7 +183,9 @@ class _PhotoCropReviewScreenState extends State<PhotoCropReviewScreen> {
           decoration: _preview
               ? null
               : SelahAppGoldDecoration(
-                  gradient: SelahColors.genderGradient(AppState.instance.gender),
+                  gradient: SelahColors.genderGradient(
+                    AppState.instance.gender,
+                  ),
                 ),
           child: SafeArea(
             child: Column(
@@ -298,11 +302,7 @@ class _PhotoCropReviewScreenState extends State<PhotoCropReviewScreen> {
             key: const ValueKey('photo-crop-confirm'),
             onPressed: !_ready || _busy ? null : _confirmCrop,
             child: _busy
-                ? const SizedBox(
-                    width: 18,
-                    height: 18,
-                    child: CircularProgressIndicator(strokeWidth: 1.5),
-                  )
+                ? const SizedBox(width: 18, height: 18, child: SelahLoading())
                 : Text(
                     _reviewPhotos.length == 1
                         ? 'Confirm photo'

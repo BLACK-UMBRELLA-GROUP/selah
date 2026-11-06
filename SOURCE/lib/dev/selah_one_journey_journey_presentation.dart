@@ -81,19 +81,12 @@ class SelahConceptJourneyThresholdBody extends StatelessWidget {
                     width: 2,
                     color: greeting && !complete
                         ? Colors.transparent
-                        : (complete ? SelahColors.journeyGold : Colors.white)
+                        : (complete
+                                  ? SelahColors.journeyGold
+                                  : SelahColors.foreground)
                               .withValues(alpha: complete ? 0.9 : 0.32),
                   ),
-                  boxShadow: complete
-                      ? [
-                          BoxShadow(
-                            color: const Color(
-                              0xFFE8C98A,
-                            ).withValues(alpha: 0.2),
-                            blurRadius: 12,
-                          ),
-                        ]
-                      : const [],
+                  boxShadow: const [],
                 ),
                 child: ClipOval(
                   child: photo != null && photo.startsWith('data:image/')
@@ -232,7 +225,10 @@ class SelahConceptJourneyFirstQuestion extends StatelessWidget {
               ),
               Text(
                 'Question 1 of ${questions.length}',
-                style: SelahText.subtext(size: 11, color: SelahColors.ink(0.38)),
+                style: SelahText.subtext(
+                  size: 11,
+                  color: SelahColors.ink(0.38),
+                ),
               ),
             ],
           ),
@@ -276,7 +272,7 @@ class SelahConceptJourneyFirstQuestion extends StatelessWidget {
             readOnly: true,
             maxLines: 5,
             maxLength: JourneyQuestions.answerCharacterLimitForPhase(phase),
-            style: const TextStyle(color: Colors.white),
+            style: const TextStyle(color: SelahColors.foreground),
             decoration: InputDecoration(
               filled: true,
               fillColor: SelahColors.foreground.withValues(alpha: 0.06),
@@ -342,9 +338,7 @@ class _LocalRoundAction extends StatelessWidget {
                           decoration: BoxDecoration(
                             shape: BoxShape.circle,
                             border: Border.all(
-                              color: const Color(
-                                0xFFE8C98A,
-                              ).withValues(alpha: 0.28),
+                              color: SelahColors.lake.withValues(alpha: 0.28),
                             ),
                           ),
                         ),
@@ -360,14 +354,7 @@ class _LocalRoundAction extends StatelessWidget {
                               alpha: 0.28,
                             ),
                           ),
-                          boxShadow: [
-                            BoxShadow(
-                              color: const Color(
-                                0xFFCEA2D1,
-                              ).withValues(alpha: 0.14),
-                              blurRadius: 21,
-                            ),
-                          ],
+                          boxShadow: const [],
                         ),
                         child: Icon(
                           icon,
@@ -462,7 +449,6 @@ class _SelahConceptJourneyPresentationState
         decoration: BoxDecoration(gradient: SelahColors.brandGradient),
         child: Stack(
           children: [
-            Positioned.fill(child: _JourneyAtmosphere(stage: widget.stage)),
             SafeArea(
               child: Column(
                 children: [
@@ -564,12 +550,7 @@ class SelahConceptJourneyRibbon extends StatelessWidget {
                   borderRadius: BorderRadius.circular(999),
                   color: gold.withValues(alpha: 0.10),
                   border: Border.all(color: gold, width: 1.5),
-                  boxShadow: [
-                    BoxShadow(
-                      color: gold.withValues(alpha: 0.30),
-                      blurRadius: 10,
-                    ),
-                  ],
+                  boxShadow: const [],
                 ),
                 child: Text(
                   '${current.order} · ${reviewOpen ? SelahJourneyStages.familyReviewOverride : current.label}',
@@ -774,7 +755,9 @@ class _StagePagesState extends State<_StagePages> {
     if (page >= 0 && page < _arrival) {
       // Injected history can own a scrollable. Its boundary notifications must
       // decide when the member has finished reading that content.
-      if (widget.historyBodies.containsKey(SelahJourneyStages.all[page].value)) {
+      if (widget.historyBodies.containsKey(
+        SelahJourneyStages.all[page].value,
+      )) {
         return;
       }
       _historyPointerStartPage = page;
@@ -1072,7 +1055,9 @@ class SelahConceptJourneyArrival extends StatelessWidget {
                           stage.introduction,
                           style: SelahText.body(
                             size: 15,
-                            color: SelahColors.foreground.withValues(alpha: 0.9),
+                            color: SelahColors.foreground.withValues(
+                              alpha: 0.9,
+                            ),
                           ),
                           textAlign: TextAlign.center,
                         ),
@@ -1190,7 +1175,7 @@ class SelahConceptJourneyDecisionPresentation extends StatelessWidget {
                     ),
                   ),
                   _DecisionBeat(
-                    nodeColor: const Color(0xFFE0C678),
+                    nodeColor: SelahColors.lake,
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
@@ -1220,7 +1205,7 @@ class SelahConceptJourneyDecisionPresentation extends StatelessWidget {
                     ),
                   ),
                   _DecisionBeat(
-                    nodeColor: const Color(0xFF9D86AD),
+                    nodeColor: SelahColors.muted,
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
@@ -1450,7 +1435,10 @@ class _CompletedStage extends StatelessWidget {
             onPressed: onTimeline,
             child: Text(
               'Read this stage in your Timeline',
-              style: SelahText.subtext(size: 11.5, color: SelahColors.ink(0.70)),
+              style: SelahText.subtext(
+                size: 11.5,
+                color: SelahColors.ink(0.70),
+              ),
             ),
           ),
         ],
@@ -1656,12 +1644,12 @@ class _DecisionRail extends StatelessWidget {
                 children: [
                   _DecisionAction(
                     label: 'Request Pause',
-                    dotColor: const Color(0xFFDFBD62),
+                    dotColor: SelahColors.lake,
                     onTap: busy ? null : onPause,
                   ),
                   _DecisionAction(
                     label: 'End Journey',
-                    dotColor: const Color(0xFFDF7D82),
+                    dotColor: SelahColors.dawn,
                     destructive: true,
                     onTap: busy ? null : onEnd,
                   ),
@@ -1722,7 +1710,9 @@ class _DecisionAction extends StatelessWidget {
                   label,
                   style: SelahText.body(
                     size: 13,
-                    color: destructive ? SelahColors.destructive : Colors.white,
+                    color: destructive
+                        ? SelahColors.destructive
+                        : SelahColors.foreground,
                   ),
                 ),
               ),
@@ -1736,72 +1726,6 @@ class _DecisionAction extends StatelessWidget {
             ],
           ),
         ),
-      ),
-    ),
-  );
-}
-
-class _JourneyAtmosphere extends StatelessWidget {
-  const _JourneyAtmosphere({required this.stage});
-  final SelahJourneyStage stage;
-  @override
-  Widget build(BuildContext context) {
-    final shift = ((stage.order - 1) / (SelahJourneyStages.count - 1)) * 28;
-    return IgnorePointer(
-      child: ClipRect(
-        child: Stack(
-          children: [
-            Positioned(
-              top: -66,
-              right: -95 + shift,
-              child: Transform.scale(
-                scale: 1,
-                child: _Glow(
-                  size: 300,
-                  colour: SelahColors.actionFill,
-                  opacity: 0.24,
-                ),
-              ),
-            ),
-            Positioned(
-              bottom: -99,
-              left: -105 + 28 - shift,
-              child: Transform.scale(
-                scale: 1.005,
-                child: const _Glow(
-                  size: 330,
-                  colour: Color(0xFF73579A),
-                  opacity: 0.26,
-                ),
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-}
-
-class _Glow extends StatelessWidget {
-  const _Glow({
-    required this.size,
-    required this.colour,
-    required this.opacity,
-  });
-  final double size;
-  final Color colour;
-  final double opacity;
-  @override
-  Widget build(BuildContext context) => Container(
-    width: size,
-    height: size,
-    decoration: BoxDecoration(
-      shape: BoxShape.circle,
-      gradient: RadialGradient(
-        colors: [
-          colour.withValues(alpha: opacity),
-          colour.withValues(alpha: 0),
-        ],
       ),
     ),
   );

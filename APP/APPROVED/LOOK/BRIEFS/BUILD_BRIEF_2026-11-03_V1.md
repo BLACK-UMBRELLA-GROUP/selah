@@ -8,7 +8,7 @@ links: [DOC-SELAH-0009, OA-SELAH-003, AD-AIOS-123]
 owner: SELAH chat
 ---
 
-# BUILD BRIEF — SELAH LOOK (LOCKs 1 and 2) — 3 NOV 2026 — V1 (updated after QUESTIONS row 1)
+# BUILD BRIEF — SELAH LOOK (LOCKs 1 and 2) — 3 NOV 2026 — V1 (updated after QUESTIONS rows 1 and 2)
 
 **Copy exactly. No improvements. Unclear or conflicting → stop and report (QUESTIONS.md, rule 10).**
 
@@ -26,6 +26,6 @@ ROADMAP row: **SELAH's own identity and private delivery acceptance** (do not ti
 | 6b | States (LOCK 2) | Apply spec §5 to every loading and failure point the existing code already has (list each one in the task note: screen, which state). Add none where the code has none. |
 | 7 | Wordmark | "Selah" + dawn ’ as spec §2 wherever the app shows its name in a header. |
 | 8 | Checks | `flutter analyze` (no new issues), `dart run tool/test_models.dart`, `node tool/analyze_cached.mjs`; app still starts on the current Browse shell; release mode still refuses the draft. |
-| 9 | Compare | Run the app in Profile (or the nearest run DOC-SELAH-0004 allows if the phone is offline) at 430 × 932. For each master that shows an existing screen, save `LOOK/BUILT/V1/<master>__master_beside_build.png`. If no run is possible, add a QUESTIONS.md row and mark the line QUESTION. |
+| 9 | Compare | Use `APP/APPROVED/COMPARE/SELAH_MASTER_COMPARE_ROUTE_CURRENT_VERSION_V1.md` (widget screenshots in `flutter test`; the phone delivery route is not used). Test file `SOURCE/test/masters/look_masters_test.dart`; one `LOOK/BUILT/V1/<master>__master_beside_build.png` for each master that shows an existing screen (masters showing screens SELAH does not have yet are skipped - list them). |
 | 10 | Task note | Daily report: "Built from" (these paths), the list from step 3, screenshots, Disk, public checks A-F. |
 | 11 | Queue | Mark line 1 BUILT or FAILED in `APP/APPROVED/BUILD_QUEUE.md`. |

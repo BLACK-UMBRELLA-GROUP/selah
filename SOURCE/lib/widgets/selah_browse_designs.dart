@@ -12,17 +12,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter/semantics.dart';
 
 import '../models/seeker_profile.dart';
-import '../theme/selah_card_metrics.dart';
 import '../theme/selah_colors.dart';
 import '../theme/selah_interaction_style.dart';
 import '../theme/selah_text.dart';
 import 'floating_nav_bar.dart';
-import 'selah_browse_options_button.dart';
 import 'selah_browse_next_photo_motion.dart';
 import 'selah_invitation_label.dart';
-import 'selah_invitation_outline.dart';
 import 'selah_press_feedback.dart';
-import 'selah_profile_name_block.dart';
 
 /// Explicit rendering seam. The caller supplies already-authorised photo
 /// references and the renderer; a reference alone never initiates a fetch here.
@@ -107,13 +103,13 @@ class SelahBrowseDesigns extends StatefulWidget {
 }
 
 class _SelahBrowseDesignsState extends State<SelahBrowseDesigns> {
-  static const _backPillWidth = 50.0;
-  static const _nextPillWidth = 72.0;
-  static const _footerGap = 8.0;
+  static const _backPillWidth = 40.0;
+  static const _nextPillWidth = 40.0;
+  static const _footerGap = 14.0;
   static const _pillBorderExtent = 2.0;
   static const _pillMinTapHeight = 48.0;
-  static const _pillHorizontalTextPadding = 10.0;
-  static const _pillVerticalPadding = 8.0;
+  static const _pillHorizontalTextPadding = 18.0;
+  static const _pillVerticalPadding = 15.0;
   final Map<String, int> _photoIndices = <String, int>{};
   final Map<String, GlobalKey> _cardAnchors = <String, GlobalKey>{};
   int _layoutRevision = 0;
@@ -179,82 +175,65 @@ class _SelahBrowseDesignsState extends State<SelahBrowseDesigns> {
               .id ==
           profile.id;
 
-  Widget _identity(
-    SeekerProfile profile, {
-    double nameSize = 28,
-    bool onPhoto = false,
-  }) => KeyedSubtree(
+  List<String> _publicDetails(SeekerProfile profile) => [
+    if (profile.publicNationality?.trim().isNotEmpty ?? false)
+      'Nationality: ${profile.publicNationality!.trim()}',
+    if (profile.publicEthnicity?.trim().isNotEmpty ?? false)
+      'Ethnicity: ${profile.publicEthnicity!.trim()}',
+  ];
+
+  String _profileMeta(SeekerProfile profile) {
+    final city = profile.city.trim();
+    final hasCity = city.isNotEmpty && city != '—';
+    return profile.age > 0
+        ? (hasCity ? '${profile.age} · $city' : '${profile.age}')
+        : (hasCity ? city : '');
+  }
+
+  Widget _identity(SeekerProfile profile) => KeyedSubtree(
     key: ValueKey('concept_browse_identity_${profile.id}'),
     child: Column(
       mainAxisSize: MainAxisSize.min,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        SelahProfileNameBlock(
-          profile: profile,
-          nameSize: nameSize,
-          onPhoto: onPhoto,
-        ),
-        for (final detail in [
-          if (profile.publicNationality?.trim().isNotEmpty ?? false)
-            'Nationality: ${profile.publicNationality!.trim()}',
-          if (profile.publicEthnicity?.trim().isNotEmpty ?? false)
-            'Ethnicity: ${profile.publicEthnicity!.trim()}',
-        ]) ...[
+        Text(profile.firstName, style: SelahText.memberName()),
+        if (profile.surnameLine?.trim().isNotEmpty ?? false) ...[
+          const SizedBox(height: 2),
+          Text(profile.surnameLine!.trim(), style: SelahText.memberName()),
+        ],
+        if (_profileMeta(profile).isNotEmpty) ...[
           const SizedBox(height: 4),
-          Text(
-            detail,
-            style: SelahText.body(
-              size: 12,
-              color: SelahColors.ink(.85),
-            ).copyWith(shadows: onPhoto ? kSelahOnPhotoTextShadows : null),
+          Text(_profileMeta(profile), style: SelahText.subtext()),
+        ],
+        if (_publicDetails(profile).isNotEmpty) ...[
+          const SizedBox(height: 14),
+          Wrap(
+            spacing: 6,
+            runSpacing: 6,
+            children: [
+              for (final detail in _publicDetails(profile))
+                Container(
+                  padding: const EdgeInsets.symmetric(
+                    vertical: 7,
+                    horizontal: 10,
+                  ),
+                  decoration: BoxDecoration(
+                    color: SelahColors.soft,
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                  child: Text(
+                    detail,
+                    style: SelahText.body(
+                      size: 12.5,
+                    ).copyWith(fontWeight: FontWeight.w500, height: 1),
+                  ),
+                ),
+            ],
           ),
         ],
       ],
     ),
   );
-
-  Widget _surface({
-    required SeekerProfile profile,
-    required Widget child,
-    bool selectOnTap = false,
-    bool edgeToEdge = false,
-  }) {
-    // Snapshot the guarded caller delegate for this render. An old card
-    // callback must not borrow a newer delegate after Next or a route change.
-    final onProfile = widget.onProfile;
-    return Material(
-      key: _cardAnchors.putIfAbsent(profile.id, GlobalKey.new),
-      color: edgeToEdge ? Colors.transparent : SelahColors.surfaceFill,
-      borderRadius: BorderRadius.circular(SelahCardMetrics.cardRadius),
-      clipBehavior: edgeToEdge ? Clip.antiAlias : Clip.none,
-      child: Stack(
-        children: [
-          InkWell(
-            key: ValueKey('concept_browse_open_${profile.id}'),
-            borderRadius: BorderRadius.circular(SelahCardMetrics.cardRadius),
-            onTap: selectOnTap && onProfile != null
-                ? () => onProfile(profile)
-                : null,
-            child: Padding(
-              // Portrait uses the same outer bounds, with the photo filling
-              // its former inset.
-              padding: edgeToEdge
-                  ? EdgeInsets.zero
-                  : const EdgeInsets.all(SelahCardMetrics.padding + 1),
-              child: child,
-            ),
-          ),
-          Positioned.fill(
-            child: SelahInvitationOutline(
-              key: ValueKey('browse_invitation_outline_${profile.id}'),
-              sent: widget.invitationSent?.call(profile) == true,
-              borderRadius: BorderRadius.circular(SelahCardMetrics.cardRadius),
-            ),
-          ),
-        ],
-      ),
-    );
-  }
 
   Widget _studyPhoto(
     SeekerProfile profile,
@@ -279,20 +258,14 @@ class _SelahBrowseDesignsState extends State<SelahBrowseDesigns> {
       width: double.infinity,
       child: rounded
           ? ClipRRect(
-              borderRadius: BorderRadius.circular(SelahCardMetrics.thumbRadius),
+              borderRadius: BorderRadius.circular(18),
               child: renderedPhoto,
             )
           : renderedPhoto,
     );
   }
 
-  Widget _swipeGallery(
-    SeekerProfile profile,
-    double height, {
-    bool identityOnPhoto = false,
-    bool sideIndicators = false,
-    bool tapToAdvance = false,
-  }) {
+  Widget _swipeGallery(SeekerProfile profile, double height) {
     final revision = _layoutRevision;
     return _BrowsePhotoPager(
       key: ValueKey('concept_browse_pager_${profile.id}'),
@@ -301,63 +274,77 @@ class _SelahBrowseDesignsState extends State<SelahBrowseDesigns> {
       photoCount: math.max(1, profile.photos.length),
       selectedIndex: _photoIndex(profile),
       height: height,
-      // Only the outer Current viewport is rounded. Rounding each sliding
-      // photo creates dark triangular notches at their moving seam.
-      photo: (index) =>
-          _studyPhoto(profile, index, height, rounded: !tapToAdvance),
+      // The viewport owns the shared radius, including moving photo seams.
+      photo: (index) => _studyPhoto(profile, index, height, rounded: false),
       onPageChanged: (index) => _selectPhoto(profile, index, revision),
-      overlay: identityOnPhoto ? _identity(profile, onPhoto: true) : null,
-      sideIndicators: sideIndicators,
-      tapToAdvance: tapToAdvance,
+      tapToAdvance: true,
     );
   }
 
-  Widget _portraitCard(SeekerProfile profile, double photoHeight) => _surface(
-    profile: profile,
-    edgeToEdge: true,
-    child: _swipeGallery(
-      profile,
-      photoHeight + 2 * SelahCardMetrics.padding + 2,
-      identityOnPhoto: true,
-      sideIndicators: true,
-      tapToAdvance: true,
-    ),
+  Widget _portraitCard(SeekerProfile profile, double photoHeight) => Material(
+    key: _cardAnchors.putIfAbsent(profile.id, GlobalKey.new),
+    color: Colors.transparent,
+    borderRadius: BorderRadius.circular(18),
+    clipBehavior: Clip.antiAlias,
+    child: _swipeGallery(profile, photoHeight),
   );
 
-  Widget _header() => Row(
-    key: const ValueKey('concept_browse_header'),
-    crossAxisAlignment: CrossAxisAlignment.start,
-    children: [
-      Expanded(
-        child: Text(
-          'Browse',
-          key: const ValueKey('concept_browse_title'),
-          textAlign: TextAlign.left,
-          style: SelahText.pageTitle(),
+  Widget _header() {
+    final person = widget.profiles.isEmpty
+        ? null
+        : widget.profiles[widget.selectedIndex.clamp(
+            0,
+            widget.profiles.length - 1,
+          )];
+    final name = person == null
+        ? null
+        : [
+            person.firstName.trim(),
+            if (person.surnameLine?.trim().isNotEmpty ?? false)
+              person.surnameLine!.trim(),
+          ].where((part) => part.isNotEmpty).join(' ');
+    final open = widget.onBrowseMenu;
+    return Row(
+      key: const ValueKey('concept_browse_header'),
+      children: [
+        const Expanded(
+          child: SelahWordmark(key: ValueKey('concept_browse_title')),
         ),
-      ),
-      if (widget.onBrowseMenu != null)
-        SelahBrowseOptionsButton(
-          alignToContentEdge: widget.alignHeaderActions,
-          profile: widget.profiles.isEmpty
-              ? null
-              : widget.profiles[widget.selectedIndex.clamp(
-                  0,
-                  widget.profiles.length - 1,
-                )],
-          onOpen: widget.onBrowseMenu!,
-        )
-      else if (widget.onFilters != null)
-        IconButton(
-          key: const ValueKey('concept_filters'),
-          tooltip: 'Browse filters',
-          onPressed: widget.onFilters,
-          color: SelahColors.journeyGold,
-          constraints: const BoxConstraints(minWidth: 48, minHeight: 48),
-          icon: const Icon(Icons.tune, size: 20),
-        ),
-    ],
-  );
+        if (open != null || widget.onFilters != null)
+          SizedBox.square(
+            dimension: 40,
+            child: Material(
+              color: SelahColors.surface,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(12),
+                side: BorderSide(color: SelahColors.line),
+              ),
+              child: IconButton(
+                key: ValueKey(
+                  open != null ? 'concept_browse_menu' : 'concept_filters',
+                ),
+                tooltip: open != null
+                    ? (name == null || name.isEmpty
+                          ? 'Browse options'
+                          : 'Browse options for $name')
+                    : 'Browse filters',
+                padding: EdgeInsets.zero,
+                constraints: const BoxConstraints.tightFor(
+                  width: 40,
+                  height: 40,
+                ),
+                onPressed: open != null ? () => open(person) : widget.onFilters,
+                color: SelahColors.inkColor,
+                icon: Icon(
+                  open != null ? Icons.more_horiz_rounded : Icons.tune,
+                  size: 23,
+                ),
+              ),
+            ),
+          ),
+      ],
+    );
+  }
 
   Widget _compactPill({
     required Key key,
@@ -368,83 +355,58 @@ class _SelahBrowseDesignsState extends State<SelahBrowseDesigns> {
     bool primary = false,
     bool? invitationSent,
     double minimumHeight = _pillMinTapHeight,
-  }) => Semantics(
-    button: true,
-    enabled: onTap != null,
-    label: invitationSent == true ? '$label. Tap to cancel invitation' : label,
-    onTap: onTap,
-    excludeSemantics: true,
-    child: SelahPressFeedback(
-      enabled: primary && onTap != null,
-      child: Material(
-        color: SelahColors.isWafaPreview && primary
-            ? SelahColors.wafaMint
-            : SelahColors.surfaceFill,
-        borderRadius: BorderRadius.circular(SelahColors.isWafaPreview ? 14 : 999),
-        child: Ink(
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(SelahColors.isWafaPreview ? 14 : 999),
-            border: Border.all(
-              color: SelahColors.isWafaPreview
-                  ? SelahColors.wafaLine
-                  : primary
-                  ? SelahColors.journeyGold.withValues(
-                      alpha: invitationSent == true ? .85 : .55,
-                    )
-                  : SelahColors.surfaceBorder,
+  }) {
+    final color = primary ? SelahColors.onLake : SelahColors.inkColor;
+    return Semantics(
+      button: true,
+      enabled: onTap != null,
+      label: invitationSent == true
+          ? '$label. Tap to cancel invitation'
+          : label,
+      onTap: onTap,
+      excludeSemantics: true,
+      child: SelahPressFeedback(
+        enabled: primary && onTap != null,
+        child: Material(
+          color: primary
+              ? SelahColors.lake
+              : (icon == null ? Colors.transparent : SelahColors.surface),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(12),
+            side: BorderSide(
+              color: primary ? SelahColors.lake : SelahColors.line,
             ),
           ),
+          clipBehavior: Clip.antiAlias,
           child: InkWell(
             key: key,
             onTap: onTap,
             excludeFromSemantics: true,
-            borderRadius: BorderRadius.circular(SelahColors.isWafaPreview ? 14 : 999),
             child: ConstrainedBox(
               constraints: BoxConstraints(
-                minWidth: 48,
-                minHeight: minimumHeight,
+                minWidth: 40,
+                minHeight: icon == null ? minimumHeight : 40,
               ),
               child: Padding(
-                padding: EdgeInsets.symmetric(
-                  horizontal: icon == null ? _pillHorizontalTextPadding : 8,
-                  vertical: _pillVerticalPadding,
-                ),
+                padding: icon == null
+                    ? const EdgeInsets.symmetric(
+                        horizontal: _pillHorizontalTextPadding,
+                        vertical: _pillVerticalPadding,
+                      )
+                    : EdgeInsets.zero,
                 child: Center(
-                  child: icon == null
-                      ? invitationSent != null
-                            ? SelahInvitationLabel(
-                                label: label,
-                                sent: invitationSent,
-                                style: _requestStyle(
-                                  color: SelahColors.ink(
-                                    onTap == null ? .34 : .90,
-                                  ),
-                                ),
-                              )
-                            : Text(
-                                label,
-                                textAlign: TextAlign.center,
-                                style: primary
-                                    ? _requestStyle(
-                                        color: SelahColors.ink(
-                                          onTap == null ? .34 : .90,
-                                        ),
-                                      )
-                                    : SelahText.button(
-                                        size: 12.5,
-                                        color: SelahColors.ink(
-                                          onTap == null ? .34 : .90,
-                                        ),
-                                      ),
-                              )
-                      : Icon(
-                          icon,
-                          size: iconSize,
-                          color: onTap == null
-                              ? SelahColors.ink(.34)
-                              : SelahColors.isWafaPreview
-                              ? SelahColors.wafaGreen
-                              : SelahColors.journeyGold,
+                  child: icon != null
+                      ? Icon(icon, size: iconSize, color: color)
+                      : invitationSent != null
+                      ? SelahInvitationLabel(
+                          label: label,
+                          sent: invitationSent,
+                          style: _requestStyle(color: color),
+                        )
+                      : Text(
+                          label,
+                          textAlign: TextAlign.center,
+                          style: _requestStyle(color: color),
                         ),
                 ),
               ),
@@ -452,8 +414,8 @@ class _SelahBrowseDesignsState extends State<SelahBrowseDesigns> {
           ),
         ),
       ),
-    ),
-  );
+    );
+  }
 
   Widget _compactFooter(SeekerProfile? profile) {
     final onPrevious = widget.onPrevious;
@@ -535,10 +497,8 @@ class _SelahBrowseDesignsState extends State<SelahBrowseDesigns> {
     return height;
   }
 
-  TextStyle _requestStyle({Color? color}) => SelahText.button(
-    size: 14,
-    color: color,
-  ).copyWith(fontWeight: FontWeight.w400, height: 1.25, letterSpacing: .1);
+  TextStyle _requestStyle({Color? color}) =>
+      SelahText.button(size: 15, color: color);
 
   double _requestTextWidth(double footerWidth) => math.max(
     1.0,
@@ -573,30 +533,50 @@ class _SelahBrowseDesignsState extends State<SelahBrowseDesigns> {
   }
 
   double _identityMinimumHeight(SeekerProfile profile, double width) {
-    var height = _textHeight(
-      profile.firstName,
-      SelahText.heading(size: 28).copyWith(fontWeight: FontWeight.w600),
-      width,
-    );
+    var height = _textHeight(profile.firstName, SelahText.memberName(), width);
     if (profile.surnameLine?.trim().isNotEmpty ?? false) {
       height +=
           2 +
           _textHeight(
             profile.surnameLine!.trim(),
-            SelahText.heading(size: 16.8).copyWith(fontWeight: FontWeight.w500),
+            SelahText.memberName(),
             width,
           );
     }
-    height += 4 + _textHeight('28 · City', SelahText.body(size: 14.924), width);
-    for (final detail in [
-      if (profile.publicNationality?.trim().isNotEmpty ?? false)
-        'Nationality: ${profile.publicNationality!.trim()}',
-      if (profile.publicEthnicity?.trim().isNotEmpty ?? false)
-        'Ethnicity: ${profile.publicEthnicity!.trim()}',
-    ]) {
-      height += 4 + _textHeight(detail, SelahText.body(size: 12), width);
+    if (_profileMeta(profile).isNotEmpty) {
+      height +=
+          4 + _textHeight(_profileMeta(profile), SelahText.subtext(), width);
     }
-    return height + 72; // Room for pagination and padding above the identity.
+    final details = _publicDetails(profile);
+    if (details.isNotEmpty) {
+      var rowWidth = 0.0;
+      var rowHeight = 0.0;
+      var chipsHeight = 0.0;
+      for (final detail in details) {
+        final painter = TextPainter(
+          text: TextSpan(
+            text: detail,
+            style: SelahText.body(
+              size: 12.5,
+            ).copyWith(fontWeight: FontWeight.w500, height: 1),
+          ),
+          textDirection: Directionality.of(context),
+          textScaler: MediaQuery.textScalerOf(context),
+        )..layout(maxWidth: math.max(1, width - 20));
+        final chipWidth = painter.width + 20;
+        final chipHeight = painter.height + 14;
+        painter.dispose();
+        if (rowWidth > 0 && rowWidth + 6 + chipWidth > width) {
+          chipsHeight += rowHeight + 6;
+          rowWidth = 0;
+          rowHeight = 0;
+        }
+        rowWidth += (rowWidth > 0 ? 6 : 0) + chipWidth;
+        rowHeight = math.max(rowHeight, chipHeight);
+      }
+      height += 14 + chipsHeight + rowHeight;
+    }
+    return height;
   }
 
   double _footerReserve(BuildContext context) => math.max(
@@ -615,65 +595,57 @@ class _SelahBrowseDesignsState extends State<SelahBrowseDesigns> {
       builder: (context, constraints) {
         final bottom = _footerReserve(context);
         final available = math.max(0.0, constraints.maxHeight - 16 - bottom);
-        final contentWidth = math.max(1.0, constraints.maxWidth - 40);
-        final requestHeight = _requestPillHeight(profile, contentWidth);
-        // Ink's one-pixel borders contribute two pixels to each pill/card.
+        final contentWidth = math.max(1.0, constraints.maxWidth - 44);
         final footerHeight =
-            requestHeight +
+            _requestPillHeight(profile, contentWidth) +
             _pillBorderExtent +
-            (widget.showSave && profile != null ? 58 : 0);
+            (widget.showSave && profile != null ? 62 : 0);
         final headerHeight = math.max(
-          widget.onFilters == null && widget.onBrowseMenu == null ? 0.0 : 48.0,
-          _textHeight('Browse', SelahText.pageTitle(), contentWidth - 48),
+          40.0,
+          _textHeight('Selah', SelahText.wordmark(), contentWidth - 54),
         );
+        final identityHeight = profile == null
+            ? 0.0
+            : _identityMinimumHeight(profile, contentWidth);
         final photoHeight = math.max(
-          profile == null
-              ? 240.0
-              : math.max(
-                  240.0,
-                  _identityMinimumHeight(profile, contentWidth - 64),
-                ),
+          240.0,
           math.min(
             620.0,
-            available -
-                headerHeight -
-                32 -
-                footerHeight -
-                2 * SelahCardMetrics.padding -
-                2,
+            available - headerHeight - identityHeight - footerHeight - 42,
           ),
         );
         return SingleChildScrollView(
           key: const ValueKey('concept_browse_design_scroll'),
           physics: const ClampingScrollPhysics(),
-          padding: EdgeInsets.fromLTRB(20, 16, 20, bottom),
+          padding: EdgeInsets.fromLTRB(22, 16, 22, bottom),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               _header(),
-              const SizedBox(height: 16),
-              profile == null
-                  ? Text(
-                      'No profiles to view right now.',
-                      style: SelahText.body(
-                        size: 14,
-                        color: SelahColors.ink(.65),
-                      ),
-                    )
-                  : KeyedSubtree(
-                      key: const ValueKey('concept_browse_portrait_card'),
-                      child: SizedBox(
-                        height: photoHeight + 2 * SelahCardMetrics.padding + 2,
-                        child: SelahBrowseNextPhotoMotion(
-                          key: const ValueKey('concept_browse_next_motion'),
-                          profileId: profile.id,
-                          epoch: widget.nextProfileMotionEpoch,
-                          style: widget.nextProfileMotion,
-                          child: _portraitCard(profile, photoHeight),
-                        ),
-                      ),
+              const SizedBox(height: 14),
+              if (profile == null)
+                Text(
+                  'No profiles to view right now.',
+                  style: SelahText.body(size: 14, color: SelahColors.muted),
+                )
+              else ...[
+                KeyedSubtree(
+                  key: const ValueKey('concept_browse_portrait_card'),
+                  child: SizedBox(
+                    height: photoHeight,
+                    child: SelahBrowseNextPhotoMotion(
+                      key: const ValueKey('concept_browse_next_motion'),
+                      profileId: profile.id,
+                      epoch: widget.nextProfileMotionEpoch,
+                      style: widget.nextProfileMotion,
+                      child: _portraitCard(profile, photoHeight),
                     ),
-              const SizedBox(height: 16),
+                  ),
+                ),
+                const SizedBox(height: 14),
+                _identity(profile),
+              ],
+              const SizedBox(height: 14),
               _compactFooter(profile),
             ],
           ),
@@ -704,8 +676,6 @@ class _BrowsePhotoPager extends StatefulWidget {
     required this.height,
     required this.photo,
     required this.onPageChanged,
-    this.overlay,
-    this.sideIndicators = false,
     this.tapToAdvance = false,
   });
 
@@ -716,8 +686,6 @@ class _BrowsePhotoPager extends StatefulWidget {
   final double height;
   final Widget Function(int) photo;
   final ValueChanged<int> onPageChanged;
-  final Widget? overlay;
-  final bool sideIndicators;
   final bool tapToAdvance;
 
   @override
@@ -967,7 +935,7 @@ class _BrowsePhotoPagerState extends State<_BrowsePhotoPager>
       child: SizedBox(
         height: widget.height,
         child: ClipRRect(
-          borderRadius: BorderRadius.circular(SelahCardMetrics.thumbRadius),
+          borderRadius: BorderRadius.circular(18),
           child: Stack(
             fit: StackFit.expand,
             children: [
@@ -984,42 +952,14 @@ class _BrowsePhotoPagerState extends State<_BrowsePhotoPager>
                     ),
                   ),
                 ),
-              if (widget.overlay != null) ...[
-                const IgnorePointer(
-                  child: DecoratedBox(
-                    decoration: BoxDecoration(
-                      gradient: LinearGradient(
-                        begin: Alignment.topCenter,
-                        end: Alignment.bottomCenter,
-                        stops: [.25, .60, 1],
-                        colors: [
-                          Colors.transparent,
-                          Color(0x35000000),
-                          Color(0xE6000000),
-                        ],
-                      ),
-                    ),
-                  ),
-                ),
-                Positioned(
-                  left: 16,
-                  right: 16,
-                  bottom: 18,
-                  child: IgnorePointer(child: widget.overlay!),
-                ),
-              ],
               if (widget.photoCount > 1)
                 Positioned(
-                  top: widget.sideIndicators ? 0 : 12,
-                  bottom: widget.sideIndicators ? 0 : null,
-                  left: widget.sideIndicators ? 16 : 12,
-                  right: widget.sideIndicators ? null : 12,
+                  top: 12,
+                  left: 12,
+                  right: 12,
                   child: IgnorePointer(
                     child: ExcludeSemantics(
-                      child: Flex(
-                        direction: widget.sideIndicators
-                            ? Axis.vertical
-                            : Axis.horizontal,
+                      child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           for (
@@ -1031,26 +971,14 @@ class _BrowsePhotoPagerState extends State<_BrowsePhotoPager>
                               key: ValueKey(
                                 'concept_browse_photo_dot_${widget.profileId}_$index',
                               ),
-                              width:
-                                  !widget.sideIndicators &&
-                                      index == widget.selectedIndex
-                                  ? 16
-                                  : 6,
-                              height: 6,
-                              margin: widget.sideIndicators
-                                  ? const EdgeInsets.symmetric(vertical: 3)
-                                  : const EdgeInsets.symmetric(horizontal: 3),
+                              width: 28,
+                              height: 3,
+                              margin: const EdgeInsets.symmetric(horizontal: 3),
                               decoration: BoxDecoration(
-                                color: index == widget.selectedIndex
-                                    ? SelahColors.journeyGold
-                                    : Colors.white.withValues(alpha: .65),
-                                borderRadius: BorderRadius.circular(999),
-                                boxShadow: const [
-                                  BoxShadow(
-                                    color: Colors.black54,
-                                    blurRadius: 3,
-                                  ),
-                                ],
+                                color: Colors.white.withValues(
+                                  alpha: index == widget.selectedIndex ? 1 : .5,
+                                ),
+                                borderRadius: BorderRadius.circular(3),
                               ),
                             ),
                         ],

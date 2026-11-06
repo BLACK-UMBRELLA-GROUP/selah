@@ -110,7 +110,7 @@ class SelahDevControlRail extends StatelessWidget {
                                 size: 17,
                                 color: open && selected == section
                                     ? SelahColors.unlockText
-                                    : Colors.white54,
+                                    : SelahColors.muted,
                               ),
                               if (open && selected == section)
                                 const Positioned(
@@ -287,10 +287,10 @@ class SelahDevAppSurfacePicker extends StatelessWidget {
         children: [
           Text(
             'APP SURFACE',
-            style: SelahText.chapterLabel(color: Colors.white38),
+            style: SelahText.chapterLabel(color: SelahColors.muted),
           ),
           const SizedBox(height: 7),
-          for (final style in SelahAppSurfaceStyle.values)
+          for (final style in [SelahColors.currentDefaultSurfaceStyle])
             _DevAppSurfaceOption(
               style: style,
               selected: SelahColors.appSurfaceStyle == style,
@@ -325,7 +325,7 @@ class _DevAppSurfaceOption extends StatelessWidget {
       child: Material(
         color: selected
             ? SelahColors.primaryAction.withValues(alpha: 0.18)
-            : Colors.white.withValues(alpha: 0.05),
+            : SelahColors.surface,
         borderRadius: BorderRadius.circular(12),
         child: InkWell(
           key: ValueKey('dev_app_surface_${style.name}'),
@@ -340,24 +340,29 @@ class _DevAppSurfaceOption extends StatelessWidget {
                   height: 30,
                   decoration: BoxDecoration(
                     shape: BoxShape.circle,
-                    color: Colors.white.withValues(alpha: 0.09),
+                    color: SelahColors.soft,
                     border: Border.all(
                       color: selected
                           ? SelahColors.primaryAction
-                          : Colors.white24,
+                          : SelahColors.muted,
                     ),
                   ),
                   child: Icon(
                     icon,
                     size: 16,
-                    color: selected ? SelahColors.primaryAction : Colors.white60,
+                    color: selected
+                        ? SelahColors.primaryAction
+                        : SelahColors.muted,
                   ),
                 ),
                 const SizedBox(width: 10),
                 Expanded(
                   child: Text(
                     style.label,
-                    style: SelahText.body(size: 12, color: Colors.white),
+                    style: SelahText.body(
+                      size: 12,
+                      color: SelahColors.inkColor,
+                    ),
                   ),
                 ),
                 if (selected)
@@ -395,66 +400,9 @@ class SelahDevStylePanel extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             Text('Style lab', style: SelahText.heading(size: 20)),
-            const SizedBox(height: 15),
-            Text(
-              'DARK BACKGROUNDS',
-              style: SelahText.chapterLabel(color: Colors.white38),
-            ),
-            const SizedBox(height: 8),
-            for (final palette in SelahDevPalette.values.where(
-              (palette) => !palette.isLight,
-            ))
-              _PaletteOption(
-                palette: palette,
-                selected: SelahColors.devPalette == palette,
-              ),
-            const SizedBox(height: 16),
-            Text(
-              'LIGHT BACKGROUNDS',
-              style: SelahText.chapterLabel(color: Colors.white38),
-            ),
-            const SizedBox(height: 8),
-            for (final palette in SelahDevPalette.values.where(
-              (palette) => palette.isLight,
-            ))
-              _PaletteOption(
-                palette: palette,
-                selected: SelahColors.devPalette == palette,
-              ),
-            if (SelahColors.isLightPalette) ...[
-              const SizedBox(height: 14),
-              Text(
-                'ACCENT ON WHITE',
-                style: SelahText.chapterLabel(color: Colors.white38),
-              ),
-              const SizedBox(height: 8),
-              Wrap(
-                spacing: 7,
-                runSpacing: 7,
-                children: [
-                  for (final accent in SelahDevLightAccent.values)
-                    _LightAccentChoice(
-                      accent: accent,
-                      selected: SelahColors.devLightAccent == accent,
-                    ),
-                ],
-              ),
-            ],
-            const SizedBox(height: 16),
-            Text(
-              'NAVIGATION',
-              style: SelahText.chapterLabel(color: Colors.white38),
-            ),
-            const SizedBox(height: 8),
-            for (final style in SelahNavStyle.values)
-              _NavStyleChoice(
-                style: style,
-                selected: SelahInteractionStyle.navStyle == style,
-              ),
-            const SizedBox(height: 16),
             Text(
               'HAPTIC FEEL',
-              style: SelahText.chapterLabel(color: Colors.white38),
+              style: SelahText.chapterLabel(color: SelahColors.muted),
             ),
             const SizedBox(height: 4),
             Row(
@@ -462,7 +410,7 @@ class SelahDevStylePanel extends StatelessWidget {
                 const Icon(
                   Icons.vibration_outlined,
                   size: 17,
-                  color: Colors.white54,
+                  color: SelahColors.muted,
                 ),
                 Expanded(
                   child: Slider(
@@ -490,15 +438,6 @@ class SelahDevStylePanel extends StatelessWidget {
                 ),
               ],
             ),
-            const SizedBox(height: 12),
-            Text(
-              'APP TEXT',
-              style: SelahText.chapterLabel(color: Colors.white38),
-            ),
-            const SizedBox(height: 8),
-            for (final font in SelahAppFont.values)
-              _FontChoice(font: font, selected: SelahText.appFont == font),
-            const SizedBox(height: 12),
             _DevSharedAction(
               key: const ValueKey('dev_style_reset'),
               icon: Icons.restore,
@@ -520,252 +459,6 @@ class SelahDevStylePanel extends StatelessWidget {
   }
 }
 
-class _NavStyleChoice extends StatelessWidget {
-  final SelahNavStyle style;
-  final bool selected;
-
-  const _NavStyleChoice({required this.style, required this.selected});
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.only(bottom: 7),
-      child: Material(
-        color: selected
-            ? Colors.white.withValues(alpha: 0.10)
-            : Colors.white.withValues(alpha: 0.04),
-        borderRadius: BorderRadius.circular(11),
-        child: InkWell(
-          key: ValueKey('dev_nav_style_${style.name}'),
-          borderRadius: BorderRadius.circular(11),
-          onTap: () => SelahInteractionStyle.selectNavStyle(style),
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 9),
-            child: Row(
-              children: [
-                _NavStyleGlyph(style: style),
-                const SizedBox(width: 10),
-                Expanded(
-                  child: Text(style.label, style: SelahText.body(size: 12.5)),
-                ),
-                if (selected)
-                  const Icon(
-                    Icons.check_circle,
-                    size: 16,
-                    color: SelahColors.unlockText,
-                  ),
-              ],
-            ),
-          ),
-        ),
-      ),
-    );
-  }
-}
-
-class _NavStyleGlyph extends StatelessWidget {
-  final SelahNavStyle style;
-  const _NavStyleGlyph({required this.style});
-
-  @override
-  Widget build(BuildContext context) {
-    final accent = switch (style) {
-      SelahNavStyle.goldUnderline => SelahColors.journeyGold,
-      SelahNavStyle.labelledDock => Colors.white,
-      _ => SelahColors.primaryAction,
-    };
-    return Container(
-      width: 52,
-      height: 28,
-      padding: const EdgeInsets.symmetric(horizontal: 5),
-      decoration: BoxDecoration(
-        color: style == SelahNavStyle.labelledDock
-            ? const Color(0xFF242326)
-            : Colors.white.withValues(alpha: 0.08),
-        borderRadius: BorderRadius.circular(15),
-        border: Border.all(color: Colors.white12),
-      ),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: List.generate(3, (index) {
-          final active = index == 0;
-          return Container(
-            width: active && style == SelahNavStyle.labelledDock ? 18 : 7,
-            height: style == SelahNavStyle.goldUnderline && active ? 2 : 7,
-            decoration: BoxDecoration(
-              color: active ? accent : Colors.white38,
-              shape: style == SelahNavStyle.accentRing
-                  ? BoxShape.circle
-                  : BoxShape.rectangle,
-              borderRadius: style == SelahNavStyle.accentRing
-                  ? null
-                  : BorderRadius.circular(8),
-              border: style == SelahNavStyle.accentRing && active
-                  ? Border.all(color: accent, width: 1.5)
-                  : null,
-            ),
-          );
-        }),
-      ),
-    );
-  }
-}
-
-class _LightAccentChoice extends StatelessWidget {
-  final SelahDevLightAccent accent;
-  final bool selected;
-
-  const _LightAccentChoice({required this.accent, required this.selected});
-
-  @override
-  Widget build(BuildContext context) {
-    return Semantics(
-      selected: selected,
-      button: true,
-      label: '${accent.label} accent',
-      child: InkWell(
-        key: ValueKey('dev_light_accent_${accent.name}'),
-        borderRadius: BorderRadius.circular(18),
-        onTap: () => SelahColors.selectDevLightAccent(accent),
-        child: AnimatedContainer(
-          duration: const Duration(milliseconds: 160),
-          padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 7),
-          decoration: BoxDecoration(
-            color: selected
-                ? accent.color.withValues(alpha: 0.30)
-                : Colors.white.withValues(alpha: 0.05),
-            borderRadius: BorderRadius.circular(18),
-            border: Border.all(
-              color: selected
-                  ? accent.color
-                  : Colors.white.withValues(alpha: 0.14),
-            ),
-          ),
-          child: Row(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Container(
-                width: 11,
-                height: 11,
-                decoration: BoxDecoration(
-                  color: accent.color,
-                  shape: BoxShape.circle,
-                ),
-              ),
-              const SizedBox(width: 6),
-              Text(accent.label, style: SelahText.subtext(size: 10.5)),
-            ],
-          ),
-        ),
-      ),
-    );
-  }
-}
-
-class _PaletteOption extends StatelessWidget {
-  final SelahDevPalette palette;
-  final bool selected;
-
-  const _PaletteOption({required this.palette, required this.selected});
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.only(bottom: 7),
-      child: Material(
-        color: selected
-            ? Colors.white.withValues(alpha: 0.10)
-            : Colors.white.withValues(alpha: 0.04),
-        borderRadius: BorderRadius.circular(11),
-        child: InkWell(
-          key: ValueKey('dev_palette_${palette.name}'),
-          borderRadius: BorderRadius.circular(11),
-          onTap: () => SelahColors.selectDevPalette(palette),
-          child: Padding(
-            padding: const EdgeInsets.all(8),
-            child: Row(
-              children: [
-                Container(
-                  width: 46,
-                  height: 34,
-                  decoration: BoxDecoration(
-                    gradient: palette.gradient,
-                    borderRadius: BorderRadius.circular(8),
-                    border: Border.all(color: Colors.white12),
-                  ),
-                ),
-                const SizedBox(width: 10),
-                Expanded(
-                  child: Text(
-                    palette.label,
-                    style: SelahText.body(size: 12.5, color: Colors.white),
-                  ),
-                ),
-                if (selected)
-                  const Icon(
-                    Icons.check_circle,
-                    size: 16,
-                    color: SelahColors.unlockText,
-                  ),
-              ],
-            ),
-          ),
-        ),
-      ),
-    );
-  }
-}
-
-class _FontChoice extends StatelessWidget {
-  final SelahAppFont font;
-  final bool selected;
-
-  const _FontChoice({required this.font, required this.selected});
-
-  @override
-  Widget build(BuildContext context) {
-    return Material(
-      color: Colors.transparent,
-      child: InkWell(
-        key: ValueKey('dev_font_${font.name}'),
-        onTap: () => SelahText.selectAppFont(font),
-        child: Padding(
-          padding: const EdgeInsets.symmetric(vertical: 8),
-          child: Row(
-            children: [
-              SizedBox(
-                width: 21,
-                child: selected
-                    ? const Icon(
-                        Icons.check,
-                        size: 15,
-                        color: SelahColors.unlockText,
-                      )
-                    : null,
-              ),
-              const SizedBox(width: 6),
-              Expanded(
-                child: Text(
-                  font.label,
-                  style: SelahText.preview(
-                    font,
-                    size: 13.5,
-                    color: selected ? Colors.white : Colors.white70,
-                  ),
-                ),
-              ),
-              Text(
-                'Aa',
-                style: SelahText.preview(font, size: 16, color: Colors.white38),
-              ),
-            ],
-          ),
-        ),
-      ),
-    );
-  }
-}
-
 class _DevSharedAction extends StatelessWidget {
   final IconData icon;
   final String title;
@@ -782,10 +475,10 @@ class _DevSharedAction extends StatelessWidget {
   Widget build(BuildContext context) {
     final radius = BorderRadius.circular(9);
     return Material(
-      color: Colors.white.withValues(alpha: 0.08),
+      color: SelahColors.surface,
       shape: RoundedRectangleBorder(
         borderRadius: radius,
-        side: BorderSide(color: Colors.white.withValues(alpha: 0.18)),
+        side: BorderSide(color: SelahColors.line),
       ),
       child: InkWell(
         onTap: onTap,
@@ -800,7 +493,7 @@ class _DevSharedAction extends StatelessWidget {
                   icon,
                   size: 17,
                   color: onTap == null
-                      ? Colors.white38
+                      ? SelahColors.muted
                       : SelahColors.primaryAction,
                 ),
                 const SizedBox(width: 10),
@@ -809,7 +502,9 @@ class _DevSharedAction extends StatelessWidget {
                     title,
                     style: SelahText.body(
                       size: 12.5,
-                      color: onTap == null ? Colors.white38 : Colors.white,
+                      color: onTap == null
+                          ? SelahColors.muted
+                          : SelahColors.inkColor,
                     ),
                   ),
                 ),
@@ -817,7 +512,7 @@ class _DevSharedAction extends StatelessWidget {
                 const Icon(
                   Icons.chevron_right,
                   size: 17,
-                  color: Colors.white24,
+                  color: SelahColors.muted,
                 ),
               ],
             ),

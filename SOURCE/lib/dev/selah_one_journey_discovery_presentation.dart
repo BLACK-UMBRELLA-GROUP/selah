@@ -1,5 +1,5 @@
-// Pure presentation for the protected One Journey comparison. The source of
-// the visual rules is the current Browse/Connections screen, not a new design.
+// Pure presentation for the protected One Journey comparison.
+// LOCK 1 supplies the common visual tokens; callers retain content and flows.
 // No account, service, persistence, matching or permission authority lives here.
 // Callers supply only local profiles, images and already-guarded callbacks.
 
@@ -16,7 +16,6 @@ import '../theme/selah_text.dart';
 import '../widgets/selah_profile_image.dart';
 import '../widgets/selah_invitation_label.dart';
 import '../widgets/selah_press_feedback.dart';
-import '../widgets/selah_profile_name_block.dart';
 import '../widgets/selah_segmented_toggle.dart';
 import '../widgets/floating_nav_bar.dart' show SelahNavBarMetrics;
 import 'selah_one_journey_card_content.dart';
@@ -28,8 +27,8 @@ typedef SelahOneJourneyPhotoBuilder =
 Widget _profileImage(BuildContext context, String photo) =>
     SelahProfileImage(photo, width: double.infinity, height: double.infinity);
 
-/// Current edge-to-edge Browse: the same photo, gallery, dots, scrim and public
-/// three-line name block. Only the decision verbs are replaced in this draft.
+/// Full-photo inspection keeps the existing gallery and public identity.
+/// Common LOCK 1 tokens replace the old photo scrim and floating styling.
 class SelahOneJourneyBrowsePresentation extends StatefulWidget {
   const SelahOneJourneyBrowsePresentation({
     super.key,
@@ -285,7 +284,22 @@ class _SelahOneJourneyBrowsePresentationState
     final photos = profile.photos;
     final photo = photos.isEmpty ? '' : photos[_photoIndex];
     final actionsBottom = widget.actionsBottom ?? 85;
-    final identityBottom = widget.identityBottom ?? 130;
+    final actionLabel = TextPainter(
+      text: TextSpan(
+        text: widget.requestLabel,
+        style: SelahText.button(size: 15),
+      ),
+      textDirection: Directionality.of(context),
+      textScaler: MediaQuery.textScalerOf(context),
+    )..layout();
+    final actionHeight = math.max(14.0, actionLabel.height) + 30;
+    actionLabel.dispose();
+    final identityBottom = widget.showActions
+        ? math.max(
+            widget.identityBottom ?? 130,
+            actionsBottom + actionHeight + 14,
+          )
+        : widget.identityBottom ?? 130;
     final epoch = _renderEpoch;
     return LayoutBuilder(
       builder: (context, constraints) => Listener(
@@ -334,53 +348,30 @@ class _SelahOneJourneyBrowsePresentationState
             child: Stack(
               fit: StackFit.expand,
               children: [
-                widget.imageBuilder(context, photo),
-                Positioned(
-                  left: 0,
-                  right: 0,
-                  bottom: 0,
-                  child: IgnorePointer(
-                    child: Container(
-                      height: 340,
-                      decoration: const BoxDecoration(
-                        gradient: LinearGradient(
-                          begin: Alignment.topCenter,
-                          end: Alignment.bottomCenter,
-                          colors: [
-                            Colors.transparent,
-                            Color(0x4D000000),
-                            Color(0xB3000000),
-                          ],
-                          stops: [0, .32, 1],
-                        ),
-                      ),
-                    ),
-                  ),
+                ClipRRect(
+                  borderRadius: BorderRadius.circular(18),
+                  child: widget.imageBuilder(context, photo),
                 ),
                 if (photos.length > 1)
                   Positioned(
-                    left: 16,
-                    top: 0,
-                    bottom: 0,
-                    child: Center(
-                      child: Column(
-                        mainAxisSize: MainAxisSize.min,
+                    left: 22,
+                    right: 22,
+                    top: MediaQuery.paddingOf(context).top + 12,
+                    child: IgnorePointer(
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           for (var i = 0; i < photos.length; i++)
                             Container(
                               key: ValueKey('concept_browse_photo_dot_$i'),
-                              margin: const EdgeInsets.symmetric(vertical: 3),
-                              width: 7,
-                              height: 7,
+                              margin: const EdgeInsets.symmetric(horizontal: 3),
+                              width: 28,
+                              height: 3,
                               decoration: BoxDecoration(
-                                shape: BoxShape.circle,
-                                border: Border.all(
-                                  color: Colors.white.withValues(alpha: .3),
-                                  width: .5,
+                                borderRadius: BorderRadius.circular(3),
+                                color: Colors.white.withValues(
+                                  alpha: i == _photoIndex ? 1 : .5,
                                 ),
-                                color: i == _photoIndex
-                                    ? Colors.white
-                                    : Colors.white.withValues(alpha: .32),
                               ),
                             ),
                         ],
@@ -388,17 +379,17 @@ class _SelahOneJourneyBrowsePresentationState
                     ),
                   ),
                 Positioned(
-                  left: 20,
-                  right: 20,
+                  left: 22,
+                  right: 22,
                   bottom: identityBottom,
                   child: IgnorePointer(
-                    child: SelahProfileNameBlock(profile: profile),
+                    child: _InspectionIdentity(profile: profile),
                   ),
                 ),
                 if (widget.showActions)
                   Positioned(
-                    left: 20,
-                    right: 20,
+                    left: 22,
+                    right: 22,
                     bottom: actionsBottom,
                     child: Row(
                       children: [
@@ -416,7 +407,7 @@ class _SelahOneJourneyBrowsePresentationState
                           ),
                         ),
                         if (widget.showSave) ...[
-                          const SizedBox(width: 7),
+                          const SizedBox(width: 14),
                           Expanded(
                             child: SelahOneJourneyConnectionsActionButton(
                               action: SelahOneJourneyConnectionsAction(
@@ -439,7 +430,7 @@ class _SelahOneJourneyBrowsePresentationState
                   child: Align(
                     alignment: Alignment.topLeft,
                     child: Padding(
-                      padding: const EdgeInsets.only(top: 8, left: 16),
+                      padding: const EdgeInsets.only(top: 8, left: 22),
                       child: Row(
                         mainAxisSize: MainAxisSize.min,
                         children: [
@@ -472,11 +463,25 @@ class _SelahOneJourneyBrowsePresentationState
                       child: Padding(
                         padding: EdgeInsets.only(
                           top: 8,
-                          left: widget.menuOnLeft ? 16 : 0,
-                          right: widget.menuOnLeft ? 0 : 16,
+                          left: widget.menuOnLeft ? 22 : 0,
+                          right: widget.menuOnLeft ? 0 : 22,
                         ),
                         child:
-                            widget.menuButton ??
+                            (widget.menuButton == null
+                                ? null
+                                : SizedBox.square(
+                                    dimension: 40,
+                                    child: DecoratedBox(
+                                      decoration: BoxDecoration(
+                                        color: SelahColors.surface,
+                                        border: Border.all(
+                                          color: SelahColors.line,
+                                        ),
+                                        borderRadius: BorderRadius.circular(12),
+                                      ),
+                                      child: widget.menuButton,
+                                    ),
+                                  )) ??
                             _PhotoIcon(
                               key: widget.menuKey,
                               label: widget.menuLabel,
@@ -490,6 +495,51 @@ class _SelahOneJourneyBrowsePresentationState
             ),
           ),
         ),
+      ),
+    );
+  }
+}
+
+/// No separate inspection master exists: retain its identity hierarchy while
+/// applying LOCK 1's explicit flat card and member-name roles.
+class _InspectionIdentity extends StatelessWidget {
+  const _InspectionIdentity({required this.profile});
+  final SeekerProfile profile;
+
+  @override
+  Widget build(BuildContext context) {
+    final surname = (profile.surnameLine ?? '').trim();
+    final city = profile.city.trim();
+    final hasCity = city.isNotEmpty && city != '—';
+    final meta = profile.age > 0
+        ? (hasCity ? '${profile.age} · $city' : '${profile.age}')
+        : (hasCity ? city : '');
+    return Container(
+      padding: const EdgeInsets.all(16),
+      decoration: BoxDecoration(
+        color: SelahColors.surface,
+        border: Border.all(color: SelahColors.line),
+        borderRadius: BorderRadius.circular(14),
+      ),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(profile.firstName, style: SelahText.memberName()),
+          if (surname.isNotEmpty) ...[
+            const SizedBox(height: 2),
+            Text(surname, style: SelahText.memberName()),
+          ],
+          if (meta.isNotEmpty) ...[
+            const SizedBox(height: 4),
+            Text(
+              meta,
+              style: SelahText.subtext(),
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+            ),
+          ],
+        ],
       ),
     );
   }
@@ -516,15 +566,15 @@ class _PhotoIcon extends StatelessWidget {
       child: GestureDetector(
         behavior: HitTestBehavior.opaque,
         onTap: onTap,
-        child: SizedBox(
+        child: Container(
           width: 40,
           height: 40,
-          child: Icon(
-            icon,
-            size: 24,
-            color: Colors.white,
-            shadows: const [Shadow(color: Color(0x8C000000), blurRadius: 6)],
+          decoration: BoxDecoration(
+            color: SelahColors.surface,
+            border: Border.all(color: SelahColors.line),
+            borderRadius: BorderRadius.circular(12),
           ),
+          child: Icon(icon, size: 23, color: SelahColors.inkColor),
         ),
       ),
     ),
@@ -859,32 +909,25 @@ class SelahOneJourneyConnectionsActionButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final tint = action.onTap == null
-        ? SelahColors.ink(.34)
-        : primary
-        ? SelahColors.foreground
-        : SelahColors.ink(.80);
+    final tint = primary ? SelahColors.onLake : SelahColors.inkColor;
     final button = Material(
-      color: SelahColors.surfaceFill,
-      borderRadius: BorderRadius.circular(999),
+      color: primary ? SelahColors.lake : Colors.transparent,
+      borderRadius: BorderRadius.circular(12),
       child: Ink(
         decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(999),
+          borderRadius: BorderRadius.circular(12),
           border: Border.all(
-            color: invitationSent == true
-                ? SelahColors.journeyGold.withValues(alpha: .85)
-                : SelahColors.surfaceBorder,
-            width: primary ? 1 : .6,
+            color: primary ? SelahColors.lake : SelahColors.line,
           ),
         ),
         child: InkWell(
           key: action.key,
-          borderRadius: BorderRadius.circular(999),
+          borderRadius: BorderRadius.circular(12),
           onTap: action.onTap,
           child: Padding(
             padding: EdgeInsets.symmetric(
-              horizontal: primary ? 14 : 10,
-              vertical: primary ? 11 : 8,
+              horizontal: primary ? 18 : 14,
+              vertical: primary ? 15 : 10,
             ),
             child: Row(
               mainAxisSize: MainAxisSize.min,
@@ -902,7 +945,7 @@ class SelahOneJourneyConnectionsActionButton extends StatelessWidget {
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
                           style: SelahText.button(
-                            size: primary ? 12.5 : 10.5,
+                            size: primary ? 15 : 13.5,
                             color: tint,
                           ),
                         )
@@ -911,7 +954,7 @@ class SelahOneJourneyConnectionsActionButton extends StatelessWidget {
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
                           style: SelahText.button(
-                            size: primary ? 12.5 : 10.5,
+                            size: primary ? 15 : 13.5,
                             color: tint,
                           ),
                         ),
@@ -1105,7 +1148,7 @@ class _SelahOneJourneyConnectionsPersonCardState
                 color: open
                     ? SelahColors.surfaceEmphasisBorder
                     : SelahColors.surfaceBorder,
-                width: open ? 1 : .5,
+                width: 1,
               ),
             ),
             child: Material(
@@ -1277,13 +1320,13 @@ class SelahOneJourneyConnectionsActiveCard extends StatelessWidget {
     final identityWidth = width - 96 - 16 - referenceReportWidth;
     var identity = textHeight(
       profile.firstName,
-      SelahText.heading(size: 19),
+      SelahText.rowTitle(),
       identityWidth,
     );
     if ((profile.surnameLine ?? '').trim().isNotEmpty) {
       identity += textHeight(
         profile.surnameLine!.trim(),
-        SelahText.heading(size: 15),
+        SelahText.rowTitle(),
         identityWidth,
       );
     }
@@ -1360,13 +1403,13 @@ class SelahOneJourneyConnectionsActiveCard extends StatelessWidget {
     child: DecoratedBox(
       decoration: BoxDecoration(
         color: SelahColors.surfaceFill,
-        borderRadius: BorderRadius.circular(18),
-        border: Border.all(color: SelahColors.surfaceEmphasisBorder),
+        borderRadius: BorderRadius.circular(14),
+        border: Border.all(color: SelahColors.line),
       ),
       child: Material(
         color: Colors.transparent,
         child: Padding(
-          padding: EdgeInsets.all(compact ? 12 : 16),
+          padding: const EdgeInsets.all(16),
           child: cardDesign != SelahOneJourneyCardDesign.classic
               ? Builder(builder: _alternateContent)
               : Column(
@@ -1376,10 +1419,10 @@ class SelahOneJourneyConnectionsActiveCard extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         ClipRRect(
-                          borderRadius: BorderRadius.circular(14),
+                          borderRadius: BorderRadius.circular(18),
                           child: SizedBox(
-                            width: compact ? (fillHeight ? 80 : 68) : 96,
-                            height: compact ? (fillHeight ? 80 : 68) : 96,
+                            width: 56,
+                            height: 56,
                             child: imageBuilder(context, profile.photoUrl),
                           ),
                         ),
@@ -1406,12 +1449,12 @@ class SelahOneJourneyConnectionsActiveCard extends StatelessWidget {
                                         ),
                                     ],
                                   ),
-                                  style: SelahText.heading(size: 19),
+                                  style: SelahText.rowTitle(),
                                 )
                               else
                                 Text(
                                   profile.firstName,
-                                  style: SelahText.heading(size: 19),
+                                  style: SelahText.rowTitle(),
                                 ),
                               if (!compact &&
                                   (profile.surnameLine ?? '').trim().isNotEmpty)

@@ -19,6 +19,8 @@
 // are here to add one of them, read that first.
 
 import 'package:flutter/material.dart';
+import '../../widgets/selah_switch.dart';
+import '../../widgets/selah_loading.dart';
 import '../../dev/selah_app_gold_preview.dart';
 import '../../services/selah_report_service.dart';
 import '../../services/selah_product_telemetry.dart';
@@ -657,7 +659,9 @@ class _ShepherdDetailScreenState extends State<ShepherdDetailScreen> {
                     SizedBox(height: 30),
                     Text(
                       'RELATIONSHIP HISTORY',
-                      style: SelahText.chapterLabel(color: SelahColors.ink(0.54)),
+                      style: SelahText.chapterLabel(
+                        color: SelahColors.ink(0.54),
+                      ),
                     ),
                     SizedBox(height: 4),
                     Text(
@@ -793,7 +797,9 @@ class _ShepherdDetailScreenState extends State<ShepherdDetailScreen> {
                         width: double.infinity,
                         padding: const EdgeInsets.all(16),
                         decoration: BoxDecoration(
-                          color: SelahColors.destructive.withValues(alpha: 0.10),
+                          color: SelahColors.destructive.withValues(
+                            alpha: 0.10,
+                          ),
                           borderRadius: BorderRadius.circular(
                             SelahCardMetrics.cardRadius,
                           ),
@@ -969,14 +975,11 @@ class _ShepherdHistoryConsentCardState
               ),
               const SizedBox(width: 12),
               if (widget.loading && confirmed == null)
-                const SizedBox.square(
-                  dimension: 24,
-                  child: CircularProgressIndicator(strokeWidth: 2),
-                )
+                const SizedBox.square(dimension: 24, child: SelahLoading())
               else if (confirmed != null)
                 Semantics(
                   label: 'Share past Journey summaries',
-                  child: Switch.adaptive(
+                  child: SelahSwitch(
                     key: const ValueKey('shepherd-history-consent-toggle'),
                     value: confirmed.enabled,
                     onChanged:
@@ -1013,7 +1016,10 @@ class _ShepherdHistoryConsentCardState
           ),
           if (widget.busy) ...[
             const SizedBox(height: 10),
-            Text('Confirming with SELAH…', style: SelahText.subtext(size: 11.5)),
+            Text(
+              'Confirming with SELAH…',
+              style: SelahText.subtext(size: 11.5),
+            ),
           ],
           if (!widget.available) ...[
             const SizedBox(height: 12),
@@ -1255,7 +1261,9 @@ class _Row extends StatelessWidget {
             value,
             style: SelahText.body(
               size: 14,
-              color: SelahColors.foreground.withValues(alpha: dim ? 0.35 : 0.95),
+              color: SelahColors.foreground.withValues(
+                alpha: dim ? 0.35 : 0.95,
+              ),
             ),
           ),
         ],

@@ -44,6 +44,7 @@ import 'dart:math' as math;
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import '../../widgets/selah_switch.dart';
 import '../../dev/selah_app_gold_preview.dart';
 import 'package:flutter/services.dart';
 import '../../data/journey_questions.dart';
@@ -132,7 +133,8 @@ class JourneyFlowScreen extends StatefulWidget {
 class _JourneyFlowScreenState extends State<JourneyFlowScreen> {
   late final DevPage _previousDevPage;
   String _status = 'active';
-  String? _stage = 'greeting_exchange'; // first stage — Greeting first, inherited decision 183
+  String? _stage =
+      'greeting_exchange'; // first stage — Greeting first, inherited decision 183
   SelahJourneyPauseState _pauseState = SelahJourneyPauseState.active;
   bool? _pauseCapacityAvailable;
   bool _loading = true;
@@ -2131,7 +2133,10 @@ class _JourneyPairStatusState extends State<_JourneyPairStatus>
           : widget.profile.firstName;
       final waiting = !complete;
       final highlightedWaiting =
-          !widget.greetingGoldWake && widget.emphasizeWaiting && !you && !complete;
+          !widget.greetingGoldWake &&
+          widget.emphasizeWaiting &&
+          !you &&
+          !complete;
       final statusLabel = complete
           ? (you ? widget.youCompleteLabel : widget.otherCompleteLabel)
           : (you ? widget.youWaitingLabel : widget.otherWaitingLabel);
@@ -2371,7 +2376,8 @@ class _JourneyPairStatusState extends State<_JourneyPairStatus>
                 height: widget.greetingGoldWake ? 1 : 1.5,
                 decoration: widget.greetingGoldWake
                     ? BoxDecoration(
-                        color: connection == SelahGreetingConnectionMotion.settled
+                        color:
+                            connection == SelahGreetingConnectionMotion.settled
                             ? SelahColors.journeyGold.withValues(alpha: 0.74)
                             : SelahColors.foreground.withValues(alpha: 0.28),
                       )
@@ -2512,7 +2518,10 @@ class _JourneyRibbon extends StatelessWidget {
                   color: _gold.withValues(alpha: 0.10),
                   border: Border.all(color: _gold, width: 1.5),
                   boxShadow: [
-                    BoxShadow(color: _gold.withValues(alpha: 0.30), blurRadius: 10),
+                    BoxShadow(
+                      color: _gold.withValues(alpha: 0.30),
+                      blurRadius: 10,
+                    ),
                   ],
                 ),
                 child: Text(
@@ -3230,7 +3239,9 @@ class _JourneyLifecycleCompleteScreen extends StatelessWidget {
                     SizedBox(height: 22),
                     Text(
                       'JOURNEY ENDED',
-                      style: SelahText.chapterLabel(color: SelahColors.ink(0.54)),
+                      style: SelahText.chapterLabel(
+                        color: SelahColors.ink(0.54),
+                      ),
                       textAlign: TextAlign.center,
                     ),
                     SizedBox(height: 12),
@@ -4007,7 +4018,8 @@ class _JourneyStageScrollShellState extends State<_JourneyStageScrollShell> {
       // be read again. Its boundary handler decides when a pull has gone past
       // the content; the raw fallback is only for non-scrollable history.
       if (_history[page].value == 'compatibility_reveal' ||
-          _history[page].value == SelahJourneyStages.lifeSnapshotPreview.value) {
+          _history[page].value ==
+              SelahJourneyStages.lifeSnapshotPreview.value) {
         return;
       }
       _historyPointerStartPage = page;
@@ -4974,10 +4986,7 @@ class _DevStageJumperState extends State<_DevStageJumper> {
                                 SizedBox(
                                   width: 12,
                                   height: 12,
-                                  child: CircularProgressIndicator(
-                                    strokeWidth: 1.6,
-                                    color: SelahColors.ink(0.70),
-                                  ),
+                                  child: SelahLoading(),
                                 ),
                             ],
                           ),
@@ -5066,7 +5075,7 @@ class _DevStageJumperState extends State<_DevStageJumper> {
                               style: SelahText.subtext(size: 10.5),
                             ),
                             SizedBox(height: 8),
-                            SwitchListTile.adaptive(
+                            SelahSwitchListTile(
                               contentPadding: EdgeInsets.zero,
                               dense: true,
                               title: Text(
@@ -5087,9 +5096,6 @@ class _DevStageJumperState extends State<_DevStageJumper> {
                               onChanged: widget.busy || widget.livePaused
                                   ? null
                                   : widget.onLifeSnapshotBioChanged,
-                              activeTrackColor: const Color(
-                                0xFFE8C98A,
-                              ).withValues(alpha: 0.65),
                             ),
                             Row(
                               children: [
@@ -5200,7 +5206,7 @@ class _DevStageJumperState extends State<_DevStageJumper> {
                             ),
                           ),
                           SizedBox(height: 8),
-                          SwitchListTile.adaptive(
+                          SelahSwitchListTile(
                             contentPadding: EdgeInsets.zero,
                             dense: true,
                             value: widget.hasPlus,
@@ -5569,7 +5575,8 @@ class _PauseDecisionView extends StatelessWidget {
                 ),
               ],
               if (capacityBlocked &&
-                  (perspective == SelahPausePerspective.pauseResponderDecision ||
+                  (perspective ==
+                          SelahPausePerspective.pauseResponderDecision ||
                       perspective ==
                           SelahPausePerspective
                               .continuationResponderDecision)) ...[
@@ -7348,7 +7355,11 @@ class _LifeSnapshotView extends StatelessWidget {
                           ),
                         ),
                       )
-                    : SelahProfileImage(profile.photoUrl, width: 86, height: 86),
+                    : SelahProfileImage(
+                        profile.photoUrl,
+                        width: 86,
+                        height: 86,
+                      ),
               ),
             ),
           ),
@@ -7890,7 +7901,9 @@ class _MentorGateViewState extends State<_MentorGateView> {
                               ? Icons.hourglass_top_rounded
                               : Icons.waving_hand_outlined,
                           onTap: _sendingShepherdIndex == null
-                              ? () => unawaited(_sendShepherdGreeting(currentPage))
+                              ? () => unawaited(
+                                  _sendShepherdGreeting(currentPage),
+                                )
                               : null,
                         ),
                 ),
@@ -8239,7 +8252,10 @@ class _ProtectedShepherdPortrait extends StatelessWidget {
             SizedBox(height: 11),
             Text(
               '$otherFirstName’s $role',
-              style: SelahText.subtext(size: 11.5, color: SelahColors.ink(0.60)),
+              style: SelahText.subtext(
+                size: 11.5,
+                color: SelahColors.ink(0.60),
+              ),
               textAlign: TextAlign.center,
             ),
             SizedBox(height: 8),
@@ -8482,7 +8498,9 @@ class _JourneyShepherdHistoryViewState
                     shepherd: shepherds[index],
                     otherFirstName: widget.otherFirstName,
                     revealed: true,
-                    greetingSent: widget.shepherdGreetingIndices.contains(index),
+                    greetingSent: widget.shepherdGreetingIndices.contains(
+                      index,
+                    ),
                   ),
                 ),
               ),
@@ -8882,7 +8900,8 @@ class _PhaseViewState extends State<_PhaseView> {
               style: SelahText.privacyText(),
             ),
             SizedBox(height: 8),
-            if (_summary != null) SelahIntelligenceCard(intelligence: _summary!),
+            if (_summary != null)
+              SelahIntelligenceCard(intelligence: _summary!),
             if (_followUps != null)
               SelahIntelligenceCard(intelligence: _followUps!),
             if (_checkpointAdvice != null)
@@ -8974,7 +8993,8 @@ class _PhaseViewState extends State<_PhaseView> {
     // One question per screen, then review-and-seal. The shared scroll shell
     // above this view has already provided the chapter's arrival and meaning.
     final chapterLabel =
-        SelahJourneyStages.phase(widget.phase)?.label ?? 'Phase ${widget.phase}';
+        SelahJourneyStages.phase(widget.phase)?.label ??
+        'Phase ${widget.phase}';
 
     if (_reviewing) {
       final missing = _questions
@@ -9073,7 +9093,10 @@ class _PhaseViewState extends State<_PhaseView> {
               ),
               Text(
                 'Question ${_qIndex + 1} of ${_questions.length}',
-                style: SelahText.subtext(size: 11, color: SelahColors.ink(0.38)),
+                style: SelahText.subtext(
+                  size: 11,
+                  color: SelahColors.ink(0.38),
+                ),
               ),
             ],
           ),
@@ -9223,7 +9246,10 @@ class _SealedAnswersState extends State<_SealedAnswers> {
           for (final q in widget.questions) ...[
             Text(q.text, style: SelahText.subtext(size: 11.5)),
             SizedBox(height: 4),
-            Text(widget.answers[q.id] ?? '—', style: SelahText.body(size: 13.5)),
+            Text(
+              widget.answers[q.id] ?? '—',
+              style: SelahText.body(size: 13.5),
+            ),
             SizedBox(height: 14),
           ],
         ],
@@ -9260,7 +9286,9 @@ class _JourneyRevealedQuestion extends StatelessWidget {
       padding: const EdgeInsets.symmetric(vertical: 20),
       decoration: BoxDecoration(
         border: Border(
-          top: BorderSide(color: SelahColors.foreground.withValues(alpha: 0.12)),
+          top: BorderSide(
+            color: SelahColors.foreground.withValues(alpha: 0.12),
+          ),
         ),
       ),
       child: Column(
@@ -9589,7 +9617,8 @@ class _FamilyStageViewState extends State<_FamilyStageView> {
     if (!isCurrentLoad()) return;
     final ratings = await SelahJourneyService.fetchAllMyRatings(widget.matchId);
     if (!isCurrentLoad()) return;
-    final submitted = myAnswers.length >= JourneyQuestions.mentorToSeeker.length;
+    final submitted =
+        myAnswers.length >= JourneyQuestions.mentorToSeeker.length;
     final mentorAnswered =
         mentorAnswers.length >= JourneyQuestions.seekerToMentor.length;
     setState(() {
@@ -9858,7 +9887,9 @@ class _OpenConversationViewState extends State<_OpenConversationView> {
                           Icon(
                             Icons.check,
                             size: 14,
-                            color: SelahColors.foreground.withValues(alpha: 0.6),
+                            color: SelahColors.foreground.withValues(
+                              alpha: 0.6,
+                            ),
                           ),
                           SizedBox(width: 8),
                           Expanded(

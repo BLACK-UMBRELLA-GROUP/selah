@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../../widgets/selah_switch.dart';
 
 import '../../models/journey_bio.dart';
 import '../../services/selah_onboarding_answers_service.dart';
@@ -582,7 +583,7 @@ class _JourneyShareSwitch extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SwitchListTile.adaptive(
+    return SelahSwitchListTile(
       contentPadding: EdgeInsets.zero,
       dense: true,
       title: Text(
@@ -593,8 +594,6 @@ class _JourneyShareSwitch extends StatelessWidget {
         ),
       ),
       value: enabled && value,
-      activeTrackColor: SelahColors.unlockDot.withValues(alpha: 0.5),
-      activeThumbColor: SelahColors.unlockText,
       onChanged: enabled ? onChanged : null,
     );
   }
@@ -711,12 +710,7 @@ class _ReviewToggle extends StatelessWidget {
               ],
             ),
           ),
-          Switch.adaptive(
-            value: shared,
-            activeTrackColor: SelahColors.unlockDot.withValues(alpha: 0.5),
-            activeThumbColor: SelahColors.unlockText,
-            onChanged: onChanged,
-          ),
+          SelahSwitch(value: shared, onChanged: onChanged),
         ],
       ),
     );

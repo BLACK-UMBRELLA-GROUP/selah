@@ -157,18 +157,11 @@ class _SelahBottomPromotionState extends State<SelahBottomPromotion>
                 SelahColors.surfaceEmphasisFill,
                 SelahColors.mentorSheetBg,
               ),
-              borderRadius: BorderRadius.circular(19),
+              borderRadius: BorderRadius.circular(14),
               border: Border.all(
                 color: SelahColors.surfaceEmphasisBorder,
                 width: 0.8,
               ),
-              boxShadow: const [
-                BoxShadow(
-                  color: Color(0x55000000),
-                  blurRadius: 22,
-                  offset: Offset(0, 8),
-                ),
-              ],
             ),
             child: Column(
               mainAxisSize: MainAxisSize.min,

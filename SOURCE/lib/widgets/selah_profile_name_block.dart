@@ -59,6 +59,7 @@ import 'package:flutter/material.dart';
 
 import '../models/seeker_profile.dart';
 import '../theme/selah_text.dart';
+import '../theme/selah_colors.dart';
 
 /// Two-layer shadow for any text sitting directly on a photograph.
 ///
@@ -70,10 +71,7 @@ import '../theme/selah_text.dart';
 /// Two layers on purpose: a tight dark shadow for edge definition
 /// against a pale photo, and a wide soft one that lifts the whole block
 /// off a busy background without looking like a drop shadow.
-const List<Shadow> kSelahOnPhotoTextShadows = [
-  Shadow(color: Color(0xCC000000), blurRadius: 3, offset: Offset(0, 1)),
-  Shadow(color: Color(0x99000000), blurRadius: 14),
-];
+const List<Shadow> kSelahOnPhotoTextShadows = [];
 
 class SelahProfileNameBlock extends StatelessWidget {
   final SeekerProfile profile;
@@ -162,7 +160,7 @@ class SelahProfileNameBlock extends StatelessWidget {
             meta,
             style: SelahText.body(
               size: _metaSize,
-              color: Colors.white,
+              color: onPhoto ? Colors.white : SelahColors.foreground,
             ).copyWith(shadows: shadows),
             maxLines: 1,
             overflow: TextOverflow.ellipsis,

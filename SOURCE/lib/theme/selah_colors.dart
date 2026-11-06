@@ -1,20 +1,17 @@
-// SELAH visual foundation.
-//
-// Quiet Sanctuary / Stillness & Light is the current Selah-only direction:
-// deep sanctuary navy, warm ivory, candle bronze and restrained sage. Older
-// comparison palettes remain available to protected developer tooling, but
-// they are not the launch identity and must not become the default again.
-
+// LOCKs 1 and 2: Still Water. Historical enum values are inert compatibility data.
 import 'package:flutter/material.dart';
-import 'selah_visual_comparison.dart';
 export 'selah_visual_comparison.dart';
-
-import '../services/selah_local_prefs.dart';
 
 /// Background directions available to members from Profile → Personalisation.
 /// Light studies remain in the enum only for historical visual fixtures and
 /// are rejected by the member-facing selection boundary.
 enum SelahDevPalette {
+  stillWater(
+    'Still Water',
+    'LOCK 1',
+    LinearGradient(colors: [Color(0xFFEEF1F0), Color(0xFFEEF1F0)]),
+    isLight: true,
+  ),
   quietSanctuary(
     'Quiet Sanctuary · Current',
     'Deep sanctuary navy with a still, candlelit finish',
@@ -147,6 +144,7 @@ enum SelahDevPalette {
 /// Founder's explicit additional 2026-08-24 light-theme comparison. All are
 /// developer-only and reset on relaunch.
 enum SelahDevLightAccent {
+  lake('Still Water', Color(0xFF3E6B78)),
   purple('Purple', Color(0xFF6B4B7D)),
   royalBlue('Royal Blue', Color(0xFF395B88)),
   rose('Rose', Color(0xFF8A4E69)),
@@ -187,558 +185,132 @@ enum SelahBackgroundVariant { neutral, male, female }
 
 class SelahColors {
   SelahColors._();
+  static const mist = Color(0xFFEEF1F0);
+  static const surface = Color(0xFFFFFFFF);
+  static const inkColor = Color(0xFF1E2B33);
+  static const muted = Color(0xFF5E6C72);
+  static const line = Color(0xFFD5DCDC);
+  static const lake = Color(0xFF3E6B78);
+  static const onLake = Color(0xFFFFFFFF);
+  static const soft = Color(0xFFDCE7E8);
+  static const dawn = Color(0xFFC7826B);
+  static const dawnSoft = Color(0xFFF6E9E3);
+  static const dawnLine = Color(0xFFE8C9BC);
 
-  // Quiet Sanctuary — current Selah identity, 2026-10-13.
-  static const Color sanctuaryInk = Color(0xFF101B26);
-  static const Color sanctuaryBlue = Color(0xFF182A36);
-  static const Color sanctuaryRaised = Color(0xFF203440);
-  static const Color warmIvory = Color(0xFFF5F0E8);
-  static const Color mutedStone = Color(0xFFB9B3A9);
-  static const Color candleBronze = Color(0xFFC79A62);
-  static const Color mutedCopper = Color(0xFFC98363);
-  static const Color sanctuarySage = Color(0xFF809587);
+  // Retained names resolve to the locked look for existing screen callers.
+  static const sanctuaryInk = inkColor;
+  static const sanctuaryBlue = surface;
+  static const sanctuaryRaised = soft;
+  static const warmIvory = inkColor;
+  static const mutedStone = muted;
+  static const candleBronze = lake;
+  static const mutedCopper = dawn;
+  static const sanctuarySage = lake;
+  static const royalPurple = lake;
+  static const luxuryDarkPurple = mist;
+  static const darkPlumSurface = surface;
+  static const splashWordmark = inkColor;
+  static const splashTagline = muted;
+  static const journeyGold = lake;
+  static const positiveGreen = lake;
+  static const journeyDotGreen = lake;
+  static const negativeRed = dawn;
+  static const successTick = lake;
+  static const primaryAction = lake;
+  static const onPrimaryAction = onLake;
+  static const destructive = dawn;
+  static const destructiveBorder = dawn;
+  static const progressCompleteFill = lake;
+  static const publicDot = lake;
+  static const publicText = muted;
+  static const unlockDot = lake;
+  static const unlockText = lake;
+  static const privateDot = muted;
+  static const privateText = muted;
 
-  /// Founder-requested Wafa visual study. This does not re-enable retired
-  /// member light palettes, persist a theme or replace the Current default.
-  static bool get isWafaPreview => SelahVisualComparison.instance.option2;
-  static const Color wafaGreen = Color(0xFF123F32);
-  static const Color wafaInk = Color(0xFF182D25);
-  static const Color wafaMuted = Color(0xFF68776F);
-  static const Color wafaMint = Color(0xFFEDF5EF);
-  static const Color wafaLine = Color(0xFFE3EAE5);
-  static const LinearGradient wafaCanvas = LinearGradient(
+  // Historical, unused comparison constants: deliberately not recoloured.
+  static const wafaGreen = Color(0xFF123F32);
+  static const wafaInk = Color(0xFF182D25);
+  static const wafaMuted = Color(0xFF68776F);
+  static const wafaMint = Color(0xFFEDF5EF);
+  static const wafaLine = Color(0xFFE3EAE5);
+  static const wafaCanvas = LinearGradient(
     colors: [Colors.white, Colors.white],
   );
-
-  // Compatibility aliases keep inherited call sites functional while the
-  // product moves away from the copied purple identity. New Selah code should
-  // use the sanctuary names above.
-  static const Color royalPurple = sanctuaryBlue;
-  static const Color luxuryDarkPurple = sanctuaryInk;
-  static const Color darkPlumSurface = sanctuaryBlue;
-
-  // The main Quiet Horizon splash is the colour authority for the brand
-  // lockup on Welcome as well. Keep these separate from theme-dependent
-  // foreground and from the slightly different Journey gold accent.
-  static const Color splashWordmark = warmIvory;
-  static Color get splashTagline => mutedStone.withValues(alpha: 0.88);
-
-  // Soft selected-state accent. Paper White follows its explicitly selected
-  // comparison accent; the live dark direction uses candle bronze.
-  static Color get accentBg => isWafaPreview
-      ? wafaMint
-      : isLightPalette
-      ? devLightAccent.color.withValues(alpha: 0.14)
-      : candleBronze.withValues(alpha: 0.12);
-  static Color get accentBorder => isWafaPreview
-      ? wafaLine
-      : isLightPalette
-      ? devLightAccent.color.withValues(alpha: 0.40)
-      : candleBronze.withValues(alpha: 0.38);
-
-  // ── UI GATE P1 (inherited upstream action 257 / inherited decision 214, 2026-08-23): repeated screen
-  //    literals promoted to named tokens VALUE-UNCHANGED — zero pixels
-  //    moved by this change. NOTE the near-duplicate families (greens
-  //    84D0A8 / 78C69D / 50B478, soft reds E08080 / E18A91 / DF7D82):
-  //    whether they merge is a Founder design decision recorded in
-  //    SYSTEM/RESOURCES/UI_GATE/P1_TRIAGE_2026-08-23.md — do not unify
-  //    values here without that ruling.
-  static const Color journeyGold = candleBronze;
-  static const Color positiveGreen = sanctuarySage;
-  static const Color journeyDotGreen = sanctuarySage;
-  static const Color negativeRed = Color(0xFFE18A91);
-  static const Color successTick = Color(0xFF50B478);
-
-  /// Canonical surface for every modal sheet that rises from the bottom.
-  ///
-  /// Keep this opaque: sheets can appear over photos, gradients and cards,
-  /// and must retain the same colour in every part of the app.
-  static Color get modalSheetSurface => isWafaPreview
-      ? Colors.white
-      : isLightPalette
-      ? const Color(0xFFF7F2F8)
-      : darkPlumSurface;
-
-  /// Backwards-compatible name used by the Shepherd and membership flows.
-  static Color get mentorSheetBg => modalSheetSurface;
-
-  // Contrast-aware foreground and translucent chrome. Dark palettes retain
-  // their exact approved values; Paper White swaps only the neutral ink.
-  static bool get isLightPalette => isWafaPreview || devPalette.isLight;
-  static Color get foreground => isWafaPreview
-      ? wafaInk
-      : isLightPalette
-      ? luxuryDarkPurple
-      : warmIvory;
-  static Color get foregroundBody => isWafaPreview
-      ? wafaInk
-      : isLightPalette
-      ? const Color(0xE63D2A4A)
-      : warmIvory.withValues(alpha: 0.90);
-  static Color get foregroundSecondary => isWafaPreview
-      ? wafaMuted
-      : isLightPalette
-      ? const Color(0xB33D2A4A)
-      : mutedStone.withValues(alpha: 0.92);
-  static Color get foregroundMuted => isWafaPreview
-      ? wafaMuted
-      : isLightPalette
-      ? const Color(0x8A3D2A4A)
-      : mutedStone.withValues(alpha: 0.68);
-
-  /// Neutral app-card fill. This is the shared visual-language boundary for
-  /// the three App Surface choices; page code should use this rather than
-  /// inventing a private white-alpha recipe.
-  static Color get surfaceFill {
-    if (isWafaPreview) return Colors.white;
-    final neutral = devPalette.usesWhiteGlass
-        ? const Color(0xB8FFFFFF)
-        : isLightPalette
-        ? const Color(0x123D2A4A)
-        : sanctuaryBlue.withValues(alpha: 0.88);
-    return switch (appSurfaceStyle) {
-      SelahAppSurfaceStyle.classicGlass ||
-      SelahAppSurfaceStyle.glassSignals => neutral,
-      SelahAppSurfaceStyle.statusAccents => Color.alphaBlend(
-        actionFill.withValues(alpha: 0.10),
-        neutral,
-      ),
-    };
+  static bool get isWafaPreview => false;
+  static bool get isLightPalette => true;
+  static const currentDefaultPalette = SelahDevPalette.stillWater;
+  static const currentPaletteRevision = 'still-water-lock-1-2026-11-03';
+  static const currentDefaultSurfaceStyle = SelahAppSurfaceStyle.classicGlass;
+  static final devPaletteSelection = ValueNotifier<SelahDevPalette>(
+    currentDefaultPalette,
+  );
+  static final devLightAccentSelection = ValueNotifier<SelahDevLightAccent>(
+    SelahDevLightAccent.purple,
+  );
+  static final appSurfaceStyleSelection = ValueNotifier<SelahAppSurfaceStyle>(
+    currentDefaultSurfaceStyle,
+  );
+  static SelahDevPalette get devPalette => currentDefaultPalette;
+  static SelahDevLightAccent get devLightAccent => SelahDevLightAccent.lake;
+  static SelahAppSurfaceStyle get appSurfaceStyle => currentDefaultSurfaceStyle;
+  static void selectDevPalette(SelahDevPalette _) {
+    devPaletteSelection.value = currentDefaultPalette;
   }
 
-  static Color get surfaceBorder {
-    if (isWafaPreview) return wafaLine;
-    final neutral = devPalette.usesWhiteGlass
-        ? const Color(0xE8FFFFFF)
-        : isLightPalette
-        ? const Color(0x303D2A4A)
-        : candleBronze.withValues(alpha: 0.20);
-    return switch (appSurfaceStyle) {
-      SelahAppSurfaceStyle.classicGlass ||
-      SelahAppSurfaceStyle.glassSignals => neutral,
-      SelahAppSurfaceStyle.statusAccents => Color.alphaBlend(
-        actionFill.withValues(alpha: 0.32),
-        neutral,
-      ),
-    };
-  }
-
-  /// Stronger surface used for selected/expanded/priority cards.
-  static Color get surfaceEmphasisFill {
-    if (isWafaPreview) return wafaMint;
-    final neutral = devPalette.usesWhiteGlass
-        ? const Color(0xE6FFFFFF)
-        : isLightPalette
-        ? const Color(0x293D2A4A)
-        : sanctuaryRaised.withValues(alpha: 0.94);
-    return switch (appSurfaceStyle) {
-      SelahAppSurfaceStyle.classicGlass => neutral,
-      SelahAppSurfaceStyle.glassSignals => Color.alphaBlend(
-        journeyGold.withValues(alpha: 0.10),
-        neutral,
-      ),
-      SelahAppSurfaceStyle.statusAccents => Color.alphaBlend(
-        actionFill.withValues(alpha: 0.18),
-        neutral,
-      ),
-    };
-  }
-
-  static Color get surfaceEmphasisBorder {
-    if (isWafaPreview) return wafaLine;
-    final neutral = devPalette.usesWhiteGlass
-        ? Colors.white
-        : isLightPalette
-        ? const Color(0x383D2A4A)
-        : candleBronze.withValues(alpha: 0.30);
-    return switch (appSurfaceStyle) {
-      SelahAppSurfaceStyle.classicGlass => neutral,
-      SelahAppSurfaceStyle.glassSignals => Color.alphaBlend(
-        journeyGold.withValues(alpha: 0.46),
-        neutral,
-      ),
-      SelahAppSurfaceStyle.statusAccents => Color.alphaBlend(
-        actionFill.withValues(alpha: 0.46),
-        neutral,
-      ),
-    };
-  }
-
-  /// App-surface signal colour. Semantic colours remain authoritative where
-  /// the domain has one (destructive, traffic light, Journey gold).
-  static Color get surfaceSignal => isWafaPreview
-      ? wafaGreen
-      : switch (appSurfaceStyle) {
-          SelahAppSurfaceStyle.classicGlass => foreground,
-          SelahAppSurfaceStyle.glassSignals => journeyGold,
-          SelahAppSurfaceStyle.statusAccents => actionFill,
-        };
-
-  // Progress bar. Glass Signals limits colour to meaningful progress and
-  // selection; Status Accents also tints containing surfaces.
-  static Color get progressFill {
-    if (isWafaPreview) return wafaGreen;
-    final neutral = isLightPalette
-        ? const Color(0x473D2A4A)
-        : const Color(0x47FFFFFF);
-    return switch (appSurfaceStyle) {
-      SelahAppSurfaceStyle.classicGlass => neutral,
-      SelahAppSurfaceStyle.glassSignals => Color.alphaBlend(
-        journeyGold.withValues(alpha: 0.58),
-        neutral,
-      ),
-      SelahAppSurfaceStyle.statusAccents => Color.alphaBlend(
-        actionFill.withValues(alpha: 0.48),
-        neutral,
-      ),
-    };
-  }
-
-  static Color get progressTrack {
-    if (isWafaPreview) return wafaMint;
-    final neutral = isLightPalette
-        ? const Color(0x143D2A4A)
-        : const Color(0x12FFFFFF);
-    return switch (appSurfaceStyle) {
-      SelahAppSurfaceStyle.classicGlass => neutral,
-      SelahAppSurfaceStyle.glassSignals => Color.alphaBlend(
-        journeyGold.withValues(alpha: 0.10),
-        neutral,
-      ),
-      SelahAppSurfaceStyle.statusAccents => Color.alphaBlend(
-        actionFill.withValues(alpha: 0.12),
-        neutral,
-      ),
-    };
-  }
-
-  static const Color progressCompleteFill = Color(
-    0x9950B478,
-  ); // rgba(80,180,120,0.6)
-
-  // Icon buttons
-  static Color get iconButtonBg {
-    return surfaceFill;
-  }
-
-  static Color get iconButtonBorder {
-    return surfaceBorder;
-  }
-
-  // Shared Quiet Sanctuary action and surface tokens. These compatibility
-  // names are retained because existing screens already use them, but their
-  // live values now resolve to opaque navy surfaces and candle-bronze focus
-  // rather than the inherited lavender/white-glass treatment.
-
-  /// Primary action fill — restrained candle bronze on the sanctuary canvas.
-  static const Color primaryAction = candleBronze;
-
-  /// Text/icon colour ON [primaryAction]. Always this, never white.
-  static const Color onPrimaryAction = luxuryDarkPurple;
-
-  /// Destructive text/accents (End Journey coral).
-  static const Color destructive = Color(0xFFE08080);
-  static const Color destructiveBorder = Color(0x66E08080); // coral 0.4
-
-  // Frost pills — sampled from the Connections segmented control.
-  static Color get frostFill => isWafaPreview
-      ? wafaMint
-      : devPalette.usesWhiteGlass
-      ? const Color(0x8FFFFFFF)
-      : isLightPalette
-      ? const Color(0x123D2A4A)
-      : sanctuaryBlue.withValues(alpha: 0.88);
-  static Color get frostBorder => isWafaPreview
-      ? wafaLine
-      : devPalette.usesWhiteGlass
-      ? const Color(0xD9FFFFFF)
-      : isLightPalette
-      ? const Color(0x293D2A4A)
-      : candleBronze.withValues(alpha: 0.20);
-  static Color get frostSelectedFill {
-    if (isWafaPreview) return wafaMint;
-    final neutral = devPalette.usesWhiteGlass
-        ? const Color(0xE6FFFFFF)
-        : isLightPalette
-        ? const Color(0x293D2A4A)
-        : sanctuaryRaised.withValues(alpha: 0.96);
-    return switch (appSurfaceStyle) {
-      SelahAppSurfaceStyle.classicGlass => neutral,
-      SelahAppSurfaceStyle.glassSignals => Color.alphaBlend(
-        journeyGold.withValues(alpha: 0.13),
-        neutral,
-      ),
-      SelahAppSurfaceStyle.statusAccents => Color.alphaBlend(
-        actionFill.withValues(alpha: 0.16),
-        neutral,
-      ),
-    };
-  }
-
-  static Color get frostSelectedBorder {
-    if (isWafaPreview) return wafaLine;
-    final neutral = devPalette.usesWhiteGlass
-        ? const Color(0xFFFFFFFF)
-        : isLightPalette
-        ? const Color(0x383D2A4A)
-        : candleBronze.withValues(alpha: 0.28);
-    return switch (appSurfaceStyle) {
-      SelahAppSurfaceStyle.classicGlass => neutral,
-      SelahAppSurfaceStyle.glassSignals => Color.alphaBlend(
-        journeyGold.withValues(alpha: 0.46),
-        neutral,
-      ),
-      SelahAppSurfaceStyle.statusAccents => Color.alphaBlend(
-        actionFill.withValues(alpha: 0.40),
-        neutral,
-      ),
-    };
-  }
-
-  // Glass cards — the ratified selah_glass_dialog recipe (blur σ30).
-  static Color get glassFill {
-    if (isWafaPreview) return Colors.white;
-    final neutral = devPalette.usesWhiteGlass
-        ? const Color(0xC2FFFFFF)
-        : isLightPalette
-        ? const Color(0x143D2A4A)
-        : sanctuaryBlue.withValues(alpha: 0.92);
-    return switch (appSurfaceStyle) {
-      SelahAppSurfaceStyle.classicGlass ||
-      SelahAppSurfaceStyle.glassSignals => neutral,
-      SelahAppSurfaceStyle.statusAccents => Color.alphaBlend(
-        actionFill.withValues(alpha: 0.10),
-        neutral,
-      ),
-    };
-  }
-
-  static Color get glassBorder {
-    if (isWafaPreview) return wafaLine;
-    final neutral = devPalette.usesWhiteGlass
-        ? const Color(0xF2FFFFFF)
-        : isLightPalette
-        ? const Color(0x303D2A4A)
-        : candleBronze.withValues(alpha: 0.26);
-    return switch (appSurfaceStyle) {
-      SelahAppSurfaceStyle.classicGlass ||
-      SelahAppSurfaceStyle.glassSignals => neutral,
-      SelahAppSurfaceStyle.statusAccents => Color.alphaBlend(
-        actionFill.withValues(alpha: 0.34),
-        neutral,
-      ),
-    };
-  }
-
-  // ---------------------------------------------------------------------
-  // CORRECTED 2026-08-11, same-day (Founder, on-device: "the top right
-  // isnt clear"). The Journey ⋮ menu shipped that morning wearing
-  // glassFill — white 14% — which is fine for a CENTRED dialog because
-  // the black-55% barrier darkens everything behind it first. An
-  // anchored menu has NO barrier (the ratified no-dim rule in
-  // anchored_card_overlay.dart) and hangs at the TOP of the screen,
-  // where the gender gradient is at its lightest — white text on white
-  // glass over pale rose, and the coral End Journey row disappeared
-  // into it entirely.
-  //
-  // Anchored menus therefore wear dark plum glass: Luxury Dark Purple at
-  // 92% + blur, the same ratified family as sheetSurface below. White
-  // and coral text both pass on it over ANY gradient region.
-  // ---------------------------------------------------------------------
-
-  /// Anchored floating menus (Journey ⋮, etc.) — dark plum glass.
-  static Color get menuSurface => isWafaPreview
-      ? Colors.white
-      : isLightPalette
-      ? const Color(0xF7FCFAFD)
-      : darkPlumSurface.withValues(alpha: .92);
-
-  // Bottom-sheet colour is centralised in modalSheetSurface. This retained
-  // getter prevents an older shell from reintroducing a second colour.
-
-  /// Backwards-compatible gradient shape for existing sheet shells.
-  /// Both stops intentionally use [modalSheetSurface], so these shells render
-  /// exactly like sheets that use a solid colour.
-  static LinearGradient get sheetGradient {
-    final surface = modalSheetSurface;
-    return LinearGradient(
-      begin: Alignment.topCenter,
-      end: Alignment.bottomCenter,
-      colors: [surface, surface],
-    );
-  }
-
-  /// Compatibility alias for older sheet call sites.
-  static Color get sheetSurface => modalSheetSurface;
-
-  /// Toasts/SnackBars — same family, fully opaque since they sit over
-  /// arbitrary content (often a photo) and must stay legible.
-  static Color get toastSurface => isWafaPreview
-      ? Colors.white
-      : isLightPalette
-      ? const Color(0xFFFCFAFD)
-      : darkPlumSurface;
-
-  // FAB states
-  static Color get fabDimmedBg =>
-      isLightPalette ? const Color(0x0A3D2A4A) : const Color(0x0AFFFFFF);
-  static Color get fabDimmedBorder =>
-      isLightPalette ? const Color(0x173D2A4A) : const Color(0x17FFFFFF);
-  static Color get fabDimmedArrow =>
-      isLightPalette ? const Color(0x663D2A4A) : const Color(0x33FFFFFF);
-  static Color get fabActiveBg =>
-      isLightPalette ? const Color(0x143D2A4A) : const Color(0x1AFFFFFF);
-  static Color get fabActiveBorder =>
-      isLightPalette ? const Color(0x473D2A4A) : const Color(0x38FFFFFF);
-  static Color get fabActiveArrow =>
-      isLightPalette ? luxuryDarkPurple : const Color(0xD9FFFFFF);
-
-  // Privacy indicator states
-  static const Color publicDot = Color(0xD9809587);
-  static const Color publicText = Color(0x99809587);
-  static const Color unlockDot = Color(0xD9C79A62);
-  static const Color unlockText = Color(0x99C79A62);
-  static const Color privateDot = Color(0xB3B9B3A9);
-  static const Color privateText = Color(0x80B9B3A9);
-
-  // ---------------------------------------------------------------------
-  // UNIFIED 2026-08-20 — Founder direction.
-  //
-  // Selah no longer changes its background palette according to gender.
-  // Quiet Sanctuary is shared by every role; safety and destructive feedback
-  // remain semantic accents rather than alternate app themes.
-  // ---------------------------------------------------------------------
-
-  /// Current Selah launch identity. The revision deliberately migrates older
-  /// inherited palette choices to Quiet Sanctuary once, while still allowing
-  /// explicit protected comparisons during the current session.
-  static const SelahDevPalette currentDefaultPalette =
-      SelahDevPalette.quietSanctuary;
-  static const String currentPaletteRevision = 'quiet-sanctuary-2026-10-13-v1';
-
-  /// Current app-wide surface treatment for Quiet Sanctuary.
-  static const SelahAppSurfaceStyle currentDefaultSurfaceStyle =
-      SelahAppSurfaceStyle.glassSignals;
-
-  static final ValueNotifier<SelahDevPalette> devPaletteSelection =
-      ValueNotifier<SelahDevPalette>(currentDefaultPalette);
-
-  static final ValueNotifier<SelahDevLightAccent> devLightAccentSelection =
-      ValueNotifier<SelahDevLightAccent>(SelahDevLightAccent.purple);
-
-  static final ValueNotifier<SelahAppSurfaceStyle> appSurfaceStyleSelection =
-      ValueNotifier<SelahAppSurfaceStyle>(currentDefaultSurfaceStyle);
-
-  static SelahDevPalette get devPalette => devPaletteSelection.value;
-  static SelahDevLightAccent get devLightAccent =>
-      devLightAccentSelection.value;
-  static SelahAppSurfaceStyle get appSurfaceStyle =>
-      appSurfaceStyleSelection.value;
-
-  static void selectDevPalette(SelahDevPalette palette) {
-    if (devPaletteSelection.value != palette) {
-      devPaletteSelection.value = palette;
-    }
-  }
-
-  /// Selects the member's persisted background from Profile →
-  /// Personalisation. Light experiments are deliberately refused here, not
-  /// merely hidden by the screen, so an old/deep link cannot reactivate a
-  /// retired light appearance.
-  static void selectAppPalette(SelahDevPalette palette) {
-    if (palette.isLight) return;
-    selectDevPalette(palette);
-    SelahLocalPrefs.setCachedAppPaletteName(palette.name);
-    SelahLocalPrefs.setCachedAppPaletteRevision(currentPaletteRevision);
-  }
-
-  /// Startup-only adoption of the current app-wide theme. Only palette
-  /// preferences change; account state, fonts, haptics and app lock survive.
-  /// Both writes capture the same owner/generation synchronously, so a queued
-  /// update cannot stamp the next account. Later explicit choices still work.
-  static void restoreCurrentAppPalette() {
-    if (SelahLocalPrefs.cachedAppPaletteRevision == currentPaletteRevision) {
-      restoreAppPalette(SelahLocalPrefs.cachedAppPaletteName);
-      return;
-    }
-    restoreAppPalette(null);
-    SelahLocalPrefs.setCachedAppPaletteName(currentDefaultPalette.name);
-    SelahLocalPrefs.setCachedAppPaletteRevision(currentPaletteRevision);
-  }
-
-  /// Hydrates the background before `runApp` without rewriting disk.
-  /// Unknown, retired and light values fall back to Quiet Sanctuary.
-  static void restoreAppPalette(String? storedName) {
-    final restored = SelahDevPalette.values.where(
-      (palette) => !palette.isLight && palette.name == storedName,
-    );
-    devPaletteSelection.value = restored.isEmpty
-        ? currentDefaultPalette
-        : restored.first;
-  }
-
-  static void selectDevLightAccent(SelahDevLightAccent accent) {
-    if (devLightAccentSelection.value != accent) {
-      devLightAccentSelection.value = accent;
-    }
-  }
-
-  static void selectAppSurfaceStyle(SelahAppSurfaceStyle style) {
-    if (appSurfaceStyleSelection.value != style) {
-      appSurfaceStyleSelection.value = style;
-    }
-  }
-
-  /// Restores the locked production surface and removes any retired stored
-  /// comparison from builds that previously exposed the three-way picker.
-  static void restoreAppSurfaceStyle(String? _) {
+  static void selectAppPalette(SelahDevPalette _) =>
+      selectDevPalette(currentDefaultPalette);
+  static void restoreCurrentAppPalette() =>
+      selectDevPalette(currentDefaultPalette);
+  static void restoreAppPalette(String? _) => restoreCurrentAppPalette();
+  static void selectDevLightAccent(SelahDevLightAccent _) {}
+  static void selectAppSurfaceStyle(SelahAppSurfaceStyle _) {
     appSurfaceStyleSelection.value = currentDefaultSurfaceStyle;
-    SelahLocalPrefs.setCachedAppSurfaceStyleName(null);
   }
 
-  /// Active interactive accent. Dark backgrounds use candle bronze; Paper
-  /// White keeps its explicit comparison accent.
-  static Color get actionFill => isWafaPreview
-      ? wafaGreen
-      : isLightPalette
-      ? devLightAccent.color
-      : primaryAction;
-  static Color get onAction => isLightPalette ? Colors.white : onPrimaryAction;
-
-  /// Neutral contrast helpers for glass and page-level UI.
-  static Color ink(double opacity) => foreground.withValues(alpha: opacity);
-  static Color get accentOnCanvas => isWafaPreview
-      ? wafaGreen
-      : isLightPalette
-      ? devLightAccent.color
-      : unlockText;
-
-  /// The live app background. Quiet Sanctuary is the launch identity;
-  /// explicit protected comparison choices remain session-local.
-  static LinearGradient get brandGradient =>
-      isWafaPreview ? wafaCanvas : devPalette.gradient;
-
-  /// Compatibility aliases retained while older call sites and documents
-  /// are retired. Both deliberately resolve to the one SELAH gradient.
-  @Deprecated('Use brandGradient; SELAH has one unified background theme.')
-  static LinearGradient get brandGradientMale => brandGradient;
-
-  @Deprecated('Use brandGradient; SELAH has one unified background theme.')
-  static LinearGradient get brandGradientFemale => brandGradient;
-
-  /// Compatibility helper for existing profile-context call sites.
-  /// [gender] remains accepted so this colour change does not disturb
-  /// identity or onboarding data; it no longer changes presentation.
-  static LinearGradient genderGradient(String? gender) => brandGradient;
-
-  /// Onboarding shares the same unified background. The enum remains a flow
-  /// input only so the colour change does not alter navigation or saved data.
-  static LinearGradient backgroundFor(SelahBackgroundVariant variant) {
-    switch (variant) {
-      case SelahBackgroundVariant.neutral:
-      case SelahBackgroundVariant.male:
-      case SelahBackgroundVariant.female:
-        return brandGradient;
-    }
-  }
+  static void restoreAppSurfaceStyle(String? _) =>
+      selectAppSurfaceStyle(currentDefaultSurfaceStyle);
+  static Color ink(double opacity) => inkColor.withValues(alpha: opacity);
+  static const brandGradient = LinearGradient(colors: [mist, mist]);
+  static const brandGradientMale = brandGradient;
+  static const brandGradientFemale = brandGradient;
+  static LinearGradient genderGradient(String? _) => brandGradient;
+  static LinearGradient backgroundFor(SelahBackgroundVariant _) =>
+      brandGradient;
+  static const sheetGradient = LinearGradient(colors: [surface, surface]);
+  static const accentBg = soft;
+  static const accentBorder = line;
+  static const modalSheetSurface = surface;
+  static const mentorSheetBg = surface;
+  static const foreground = inkColor;
+  static const foregroundBody = inkColor;
+  static const foregroundSecondary = muted;
+  static const foregroundMuted = muted;
+  static const surfaceFill = surface;
+  static const surfaceBorder = line;
+  static const surfaceEmphasisFill = soft;
+  static const surfaceEmphasisBorder = line;
+  static const surfaceSignal = lake;
+  static const progressFill = lake;
+  static const progressTrack = line;
+  static const iconButtonBg = surface;
+  static const iconButtonBorder = line;
+  static const frostFill = soft;
+  static const frostBorder = line;
+  static const frostSelectedFill = soft;
+  static const frostSelectedBorder = line;
+  static const glassFill = surface;
+  static const glassBorder = line;
+  static const menuSurface = surface;
+  static const sheetSurface = surface;
+  static const toastSurface = inkColor;
+  static const fabDimmedBg = soft;
+  static const fabDimmedBorder = line;
+  static const fabDimmedArrow = muted;
+  static const fabActiveBg = lake;
+  static const fabActiveBorder = lake;
+  static const fabActiveArrow = onLake;
+  static const actionFill = lake;
+  static const onAction = onLake;
+  static const accentOnCanvas = lake;
 }

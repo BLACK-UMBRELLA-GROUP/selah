@@ -801,7 +801,10 @@ class _SelahCodeScreenState extends State<SelahCodeScreen> {
                     ),
                     const SizedBox(width: 12),
                     Expanded(
-                      child: Text('Enter code', style: SelahText.body(size: 14)),
+                      child: Text(
+                        'Enter code',
+                        style: SelahText.body(size: 14),
+                      ),
                     ),
                     AnimatedRotation(
                       turns: _showEnterCode ? 0.25 : 0,
@@ -1095,7 +1098,8 @@ class _InlineEnterSelahCodePanel extends StatefulWidget {
       _InlineEnterSelahCodePanelState();
 }
 
-class _InlineEnterSelahCodePanelState extends State<_InlineEnterSelahCodePanel> {
+class _InlineEnterSelahCodePanelState
+    extends State<_InlineEnterSelahCodePanel> {
   late final TextEditingController _controller;
   late final FocusNode _focusNode;
   SelahPersonalCodePreview? _preview;
@@ -1972,11 +1976,7 @@ class _RequestCard extends StatelessWidget {
           const SizedBox(height: 12),
           if (busy)
             const Center(
-              child: SizedBox(
-                width: 20,
-                height: 20,
-                child: CircularProgressIndicator(strokeWidth: 1.5),
-              ),
+              child: SizedBox(width: 20, height: 20, child: SelahLoading()),
             )
           else if (request.isIncoming)
             Row(

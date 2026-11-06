@@ -1,5 +1,5 @@
 {
-  "status": "UNCOMMITTED_CANDIDATE_NOT_BUILT",
+  "status": "SUPERSEDED_BY_COMPLETED_LOOK",
   "date_uk": "2026-11-06",
   "base_commit": "59c079814559af0a4b961cfc4bbe232a6977f215",
   "trace": [
@@ -493,5 +493,5 @@
     "Journey loading: no current async gate",
     "My Selah action failed: no current async send gate"
   ],
-  "instructions": "Keep candidate SOURCE uncommitted until scoped model repair and required tests pass; no native/tooling pin changes authorised."
+  "instructions": "Historical candidate snapshot only; final source, checks and image hashes are recorded in BUILD.json in this folder."
 }

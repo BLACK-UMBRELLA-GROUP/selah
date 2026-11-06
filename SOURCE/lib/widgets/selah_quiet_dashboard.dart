@@ -1,13 +1,11 @@
 import 'package:flutter/foundation.dart' show kReleaseMode;
 import 'package:flutter/material.dart';
 import '../data/selah_membership_catalog.dart';
-import '../dev/selah_app_gold_preview.dart';
 
 import '../models/selah_dashboard_resolution.dart';
 import '../models/selah_supportive_dashboard.dart';
 import '../services/selah_developer_access.dart';
 import '../services/selah_promotion_engine.dart';
-import '../state/app_state.dart';
 import '../theme/selah_colors.dart';
 import '../theme/selah_text.dart';
 import 'selah_my_selah_design_kit.dart';
@@ -195,10 +193,7 @@ class _SelahQuietDashboardState extends State<SelahQuietDashboard> {
     return Container(
       key: const ValueKey('my-selah-quiet-dashboard'),
       decoration:
-          widget.decoration ??
-          SelahAppGoldDecoration(
-            gradient: SelahColors.genderGradient(AppState.instance.gender),
-          ),
+          widget.decoration ?? const BoxDecoration(color: SelahColors.mist),
       child: Material(
         color: Colors.transparent,
         child: SafeArea(
@@ -206,7 +201,7 @@ class _SelahQuietDashboardState extends State<SelahQuietDashboard> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Padding(
-                padding: const EdgeInsets.fromLTRB(20, 16, 20, 8),
+                padding: const EdgeInsets.fromLTRB(22, 16, 22, 8),
                 child: Align(
                   alignment: widget.titleAlignment,
                   child: Text(
@@ -221,7 +216,7 @@ class _SelahQuietDashboardState extends State<SelahQuietDashboard> {
               ),
               if (!widget.singlePage)
                 Padding(
-                  padding: const EdgeInsets.fromLTRB(20, 0, 20, 4),
+                  padding: const EdgeInsets.fromLTRB(22, 0, 22, 4),
                   child: _navigation(),
                 ),
               Expanded(
@@ -260,7 +255,7 @@ class _SelahQuietDashboardState extends State<SelahQuietDashboard> {
           key: ValueKey('my-selah-quiet-scroll-$tab'),
           controller: scroll,
           physics: const AlwaysScrollableScrollPhysics(),
-          padding: const EdgeInsets.fromLTRB(24, 28, 24, 130),
+          padding: const EdgeInsets.fromLTRB(22, 14, 22, 130),
         ),
         current,
         tab,
@@ -388,7 +383,7 @@ class _SelahQuietDashboardState extends State<SelahQuietDashboard> {
         key: ValueKey('my-selah-quiet-scroll-$tab'),
         controller: scroll,
         physics: const AlwaysScrollableScrollPhysics(),
-        padding: const EdgeInsets.fromLTRB(24, 28, 24, 130),
+        padding: const EdgeInsets.fromLTRB(22, 14, 22, 130),
         children: [
           if (insightsBlocked)
             Padding(
@@ -400,7 +395,7 @@ class _SelahQuietDashboardState extends State<SelahQuietDashboard> {
                   Icon(
                     Icons.lock_rounded,
                     key: const ValueKey('seeker-insights-content-lock'),
-                    color: SelahColors.journeyGold,
+                    color: SelahColors.lake,
                     size: 28,
                   ),
                   const SizedBox(height: 16),
@@ -454,8 +449,8 @@ class _SelahQuietDashboardState extends State<SelahQuietDashboard> {
                 child: Divider(
                   key: ValueKey('quiet-index-group-rule-$i'),
                   height: 1,
-                  thickness: .7,
-                  color: MySelahDesignKit.ink.withValues(alpha: .25),
+                  thickness: 1,
+                  color: SelahColors.line,
                 ),
               ),
             groups[i],
@@ -484,7 +479,9 @@ class _SelahQuietDashboardState extends State<SelahQuietDashboard> {
         'dashboard-nav-scroll-fade-${tab == 0 ? 'now' : 'insights'}',
       ),
       bottom:
-          SelahNavBarMetrics.restingHeight + SelahNavBarMetrics.bottomInset + 10,
+          SelahNavBarMetrics.restingHeight +
+          SelahNavBarMetrics.bottomInset +
+          10,
       child: child,
     );
   }
@@ -495,8 +492,16 @@ class _SelahQuietDashboardState extends State<SelahQuietDashboard> {
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         for (var i = 0; i < items.length; i++) ...[
-          if (i > 0) const SizedBox(height: 24),
-          items[i],
+          if (i > 0) const SizedBox(height: 14),
+          Container(
+            padding: const EdgeInsets.all(16),
+            decoration: BoxDecoration(
+              color: SelahColors.surface,
+              border: Border.all(color: SelahColors.line),
+              borderRadius: BorderRadius.circular(14),
+            ),
+            child: items[i],
+          ),
         ],
       ],
     );
@@ -520,9 +525,13 @@ class _SelahQuietDashboardState extends State<SelahQuietDashboard> {
             key: ValueKey('quiet-index-disclosure-${card.id}'),
             onPressed: () => kit.onEvidence(card.id),
             style: TextButton.styleFrom(
-              foregroundColor: MySelahDesignKit.secondary,
-              minimumSize: const Size(48, 48),
-              padding: const EdgeInsets.symmetric(vertical: 10),
+              foregroundColor: SelahColors.lake,
+              minimumSize: const Size(48, 40),
+              padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 14),
+              side: const BorderSide(color: SelahColors.line),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(12),
+              ),
               alignment: Alignment.centerLeft,
             ),
             child: Semantics(

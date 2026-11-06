@@ -20,6 +20,7 @@
 // the three things a user should never be asked to type.
 
 import 'package:flutter/material.dart';
+import '../../widgets/selah_loading.dart';
 import '../../dev/selah_app_gold_preview.dart';
 
 import '../../services/selah_feedback_service.dart';
@@ -219,7 +220,10 @@ class _FeedbackScreenState extends State<FeedbackScreen> {
                 'What happened, and what did you expect instead?',
               SelahFeedbackCategory.other => 'Tell us anything.',
             },
-            hintStyle: SelahText.subtext(size: 14, color: SelahColors.ink(0.24)),
+            hintStyle: SelahText.subtext(
+              size: 14,
+              color: SelahColors.ink(0.24),
+            ),
           ),
         ),
       ),
@@ -236,14 +240,7 @@ class _FeedbackScreenState extends State<FeedbackScreen> {
             border: Border.all(color: SelahColors.accentBorder),
           ),
           child: _sending
-              ? SizedBox(
-                  width: 18,
-                  height: 18,
-                  child: CircularProgressIndicator(
-                    strokeWidth: 2,
-                    color: SelahColors.ink(0.70),
-                  ),
-                )
+              ? SizedBox(width: 18, height: 18, child: SelahLoading())
               : Text(
                   'Send',
                   style: SelahText.body(size: 15, color: Colors.white),

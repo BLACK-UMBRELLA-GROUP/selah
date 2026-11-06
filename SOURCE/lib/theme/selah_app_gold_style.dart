@@ -15,10 +15,7 @@ class SelahAppGoldStyle extends ChangeNotifier {
   int _generation = SelahAccountState.generation;
   int _revision = 0;
 
-  bool get enabled =>
-      _selected &&
-      _generation == SelahAccountState.generation &&
-      !SelahAccountState.isSigningOut;
+  bool get enabled => false;
   int get revision => _revision;
 
   bool select(

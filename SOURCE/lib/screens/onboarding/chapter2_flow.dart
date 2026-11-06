@@ -7,6 +7,7 @@
 // preserved for Chapter 2 (only Ch3/Ch4 were separated).
 
 import 'package:flutter/material.dart';
+import '../../widgets/selah_switch.dart';
 import '../../widgets/selah_profile_image.dart';
 import '../../data/selah_christian_traditions.dart';
 import '../../data/selah_reference_data.dart';
@@ -179,10 +180,8 @@ class _Chapter2FlowState extends State<Chapter2Flow> {
   void _applySavedDetails(SeekerDetails details) {
     _christianFamily = details.christianFamily;
     _christianDenomination = details.christianDenomination;
-    _christianDenominationOther =
-        details.christianDenominationOther ?? '';
-    _showChristianTraditionOnProfile =
-        details.showChristianTraditionOnProfile;
+    _christianDenominationOther = details.christianDenominationOther ?? '';
+    _showChristianTraditionOnProfile = details.showChristianTraditionOnProfile;
     _faithJourney = details.faithJourney;
     _countryOfBirth = details.countryOfBirth;
     _nationality = details.nationality;
@@ -211,9 +210,7 @@ class _Chapter2FlowState extends State<Chapter2Flow> {
     }
     _churchHardRequirement = church?['hard_requirement'] == true;
     _traditionOutsideFlex = _light(church?['outside_flexibility']);
-    _faithJourneyFlex = _light(
-      (p['faith_journey'] as Map?)?['flexibility'],
-    );
+    _faithJourneyFlex = _light((p['faith_journey'] as Map?)?['flexibility']);
 
     _restoreReferencePreference(
       p['country_of_birth'],
@@ -859,8 +856,7 @@ class _Chapter2FlowState extends State<Chapter2Flow> {
             if (_familyNeedsDenomination) ...[
               const SizedBox(height: 12),
               _SearchPickButton(
-                label:
-                    _christianDenomination ?? 'Choose your denomination…',
+                label: _christianDenomination ?? 'Choose your denomination…',
                 onTap: () async {
                   final result = await showSingleSearchPicker(
                     context,
@@ -889,10 +885,9 @@ class _Chapter2FlowState extends State<Chapter2Flow> {
             ],
             if (_christianFamily != null) ...[
               const SizedBox(height: 14),
-              SwitchListTile.adaptive(
+              SelahSwitchListTile(
                 contentPadding: EdgeInsets.zero,
                 value: _showChristianTraditionOnProfile,
-                activeColor: SelahColors.royalPurple,
                 title: Text(
                   'Show my Christian tradition on my profile',
                   style: SelahText.body(size: 15),
@@ -901,9 +896,8 @@ class _Chapter2FlowState extends State<Chapter2Flow> {
                   'Off by default. Your private answer can still support compatibility.',
                   style: SelahText.subtext(size: 13),
                 ),
-                onChanged: (value) => setState(
-                  () => _showChristianTraditionOnProfile = value,
-                ),
+                onChanged: (value) =>
+                    setState(() => _showChristianTraditionOnProfile = value),
               ),
             ],
           ],
@@ -921,8 +915,7 @@ class _Chapter2FlowState extends State<Chapter2Flow> {
               value: _churchPreferenceScope,
               onChanged: (value) => setState(() {
                 _churchPreferenceScope = value;
-                if (value !=
-                    selahChurchPreferenceScopeLabels['selected']) {
+                if (value != selahChurchPreferenceScopeLabels['selected']) {
                   _selectedChristianFamilies = [];
                 }
                 if (value ==
@@ -952,10 +945,9 @@ class _Chapter2FlowState extends State<Chapter2Flow> {
             if (_churchPreferenceScope != null &&
                 _churchPreferenceScope !=
                     selahChurchPreferenceScopeLabels['no_preference'])
-              SwitchListTile.adaptive(
+              SelahSwitchListTile(
                 contentPadding: EdgeInsets.zero,
                 value: _churchHardRequirement,
-                activeColor: SelahColors.royalPurple,
                 title: Text(
                   'Make this a firm preference',
                   style: SelahText.body(size: 15),
@@ -1514,14 +1506,7 @@ class _PhotoGridState extends State<_PhotoGrid> {
                 ),
                 child: Center(
                   child: _uploading
-                      ? SizedBox(
-                          width: 20,
-                          height: 20,
-                          child: CircularProgressIndicator(
-                            strokeWidth: 2,
-                            color: SelahColors.ink(0.54),
-                          ),
-                        )
+                      ? SizedBox(width: 20, height: 20, child: SelahLoading())
                       : Icon(
                           Icons.add_photo_alternate_outlined,
                           color: SelahColors.ink(0.54),

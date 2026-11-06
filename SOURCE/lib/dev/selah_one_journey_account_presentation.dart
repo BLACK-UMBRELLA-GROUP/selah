@@ -291,7 +291,8 @@ class SelahConceptProfilePresentation extends StatelessWidget {
                     icon: Icons.edit_outlined,
                     label: 'Edit profile',
                     hint: 'About you, preferences and compatibility answers',
-                    onTap: () => onAction(SelahConceptAccountAction.editProfile),
+                    onTap: () =>
+                        onAction(SelahConceptAccountAction.editProfile),
                   ),
                   const _ProfileDivider(),
                   _ProfileAction(
@@ -529,13 +530,7 @@ class SelahConceptSettingsPresentation extends StatelessWidget {
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  Text(
-                    'SELAH',
-                    style: SelahText.wordmark(
-                      size: 11,
-                      color: SelahColors.ink(0.24),
-                    ),
-                  ),
+                  const SelahWordmark(),
                   if (data.versionLine != null) ...[
                     const SizedBox(height: 3),
                     SelectableText(
@@ -617,7 +612,10 @@ class SelahConceptMembershipPresentation extends StatelessWidget {
                 ),
                 padding: const EdgeInsets.fromLTRB(20, 14, 20, 64),
                 children: [
-                  Text('Current membership', style: SelahText.heading(size: 25)),
+                  Text(
+                    'Current membership',
+                    style: SelahText.heading(size: 25),
+                  ),
                   const SizedBox(height: 6),
                   Text(
                     'Your plan, family places and billing controls in one place.',
@@ -747,7 +745,10 @@ class _ProfileAction extends StatelessWidget {
               children: [
                 Text(
                   label,
-                  style: SelahText.body(size: 14, color: SelahColors.foreground),
+                  style: SelahText.body(
+                    size: 14,
+                    color: SelahColors.foreground,
+                  ),
                 ),
                 const SizedBox(height: 2),
                 Text(
@@ -796,7 +797,7 @@ class _ProfileSettingsRow extends StatelessWidget {
           Expanded(
             child: Text(
               label,
-              style: SelahText.body(size: 13.5, color: Colors.white),
+              style: SelahText.body(size: 13.5, color: SelahColors.foreground),
             ),
           ),
           Icon(Icons.chevron_right, color: SelahColors.ink(0.24), size: 16),
@@ -832,7 +833,7 @@ class _InfoRow extends StatelessWidget {
             textAlign: TextAlign.end,
             style: SelahText.body(
               size: 13,
-              color: shepherd ? SelahColors.foreground : Colors.white,
+              color: shepherd ? SelahColors.foreground : SelahColors.foreground,
             ),
           ),
         ),
@@ -881,7 +882,10 @@ class _UnlockBalance extends StatelessWidget {
               children: [
                 Text(
                   'Compatibility unlocks',
-                  style: SelahText.body(size: 14, color: SelahColors.foreground),
+                  style: SelahText.body(
+                    size: 14,
+                    color: SelahColors.foreground,
+                  ),
                 ),
                 const SizedBox(height: 6),
                 Wrap(
@@ -936,7 +940,7 @@ class _SettingsSummary extends StatelessWidget {
             textAlign: TextAlign.right,
             maxLines: 2,
             overflow: TextOverflow.ellipsis,
-            style: SelahText.body(size: 14, color: Colors.white),
+            style: SelahText.body(size: 14, color: SelahColors.foreground),
           ),
         ),
       ],
@@ -1098,7 +1102,7 @@ class _SettingsRow extends StatelessWidget {
             Expanded(
               child: Text(
                 label,
-                style: SelahText.body(size: 15, color: Colors.white),
+                style: SelahText.body(size: 15, color: SelahColors.foreground),
               ),
             ),
             if (value != null && value!.isNotEmpty) ...[
@@ -1265,7 +1269,10 @@ class _BasketButton extends StatelessWidget {
               decoration: BoxDecoration(
                 color: SelahColors.journeyGold,
                 borderRadius: BorderRadius.circular(9),
-                border: Border.all(color: SelahColors.mentorSheetBg, width: 1.5),
+                border: Border.all(
+                  color: SelahColors.mentorSheetBg,
+                  width: 1.5,
+                ),
               ),
               alignment: Alignment.center,
               child: Text(

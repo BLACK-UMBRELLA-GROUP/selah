@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import '../../widgets/selah_loading.dart';
 import '../../dev/selah_app_gold_preview.dart';
 import 'package:flutter/services.dart';
 
@@ -705,11 +706,7 @@ class _SecurityActionButton extends StatelessWidget {
       child: FilledButton(
         onPressed: busy ? null : onTap,
         child: busy
-            ? SizedBox(
-                width: 18,
-                height: 18,
-                child: CircularProgressIndicator(strokeWidth: 1.8),
-              )
+            ? SizedBox(width: 18, height: 18, child: SelahLoading())
             : Text(label, style: SelahText.button(size: 14)),
       ),
     );

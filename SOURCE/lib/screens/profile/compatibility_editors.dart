@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../../widgets/selah_loading.dart';
 import '../../dev/selah_app_gold_preview.dart';
 
 import '../../data/chapter3_categories.dart';
@@ -430,7 +431,10 @@ class _CompatibilityEditorScreenState extends State<CompatibilityEditorScreen> {
             alignment: Alignment.centerLeft,
             child: Text(
               kind.description,
-              style: SelahText.subtext(size: 12.5, color: SelahColors.ink(0.56)),
+              style: SelahText.subtext(
+                size: 12.5,
+                color: SelahColors.ink(0.56),
+              ),
             ),
           ),
         ),
@@ -480,11 +484,7 @@ class _CompatibilityEditorScreenState extends State<CompatibilityEditorScreen> {
               key: const ValueKey('compatibility-save'),
               onPressed: _saving ? null : _save,
               child: _saving
-                  ? const SizedBox(
-                      width: 18,
-                      height: 18,
-                      child: CircularProgressIndicator(strokeWidth: 1.5),
-                    )
+                  ? const SizedBox(width: 18, height: 18, child: SelahLoading())
                   : const Text('Save changes'),
             ),
           ),
@@ -1056,7 +1056,10 @@ class _MeaningCard extends StatelessWidget {
           ),
         ),
         Expanded(
-          child: _LightMeaning(color: SelahColors.journeyGold, label: 'Neutral'),
+          child: _LightMeaning(
+            color: SelahColors.journeyGold,
+            label: 'Neutral',
+          ),
         ),
         Expanded(
           child: _LightMeaning(

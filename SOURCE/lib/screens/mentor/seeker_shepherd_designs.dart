@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../../widgets/selah_switch.dart';
 import 'dart:math' as math;
 
 import '../../services/selah_mentor_link_service.dart';
@@ -1133,7 +1134,9 @@ class _ManageActionButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final signal = destructive ? SelahColors.destructive : SelahColors.ink(0.68);
+    final signal = destructive
+        ? SelahColors.destructive
+        : SelahColors.ink(0.68);
     return Material(
       color: Colors.transparent,
       borderRadius: BorderRadius.circular(16),
@@ -1354,10 +1357,17 @@ class _ShepherdJourneyAccessHeading extends StatelessWidget {
   Widget build(BuildContext context) => Row(
     key: const ValueKey('shepherd-journey-access-heading'),
     children: [
-      const Icon(Icons.route_outlined, size: 17, color: SelahColors.journeyGold),
+      const Icon(
+        Icons.route_outlined,
+        size: 17,
+        color: SelahColors.journeyGold,
+      ),
       const SizedBox(width: 9),
       Expanded(
-        child: Text('Active Journey access', style: SelahText.body(size: 13.25)),
+        child: Text(
+          'Active Journey access',
+          style: SelahText.body(size: 13.25),
+        ),
       ),
     ],
   );
@@ -2053,28 +2063,7 @@ class _CompactSelahSwitch extends StatelessWidget {
     toggled: value,
     enabled: onChanged != null,
     excludeSemantics: true,
-    child: SizedBox(
-      width: 42,
-      height: 28,
-      child: FittedBox(
-        fit: BoxFit.contain,
-        child: Switch(
-          key: switchKey,
-          value: value,
-          onChanged: onChanged,
-          materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
-          activeThumbColor: SelahColors.journeyGold,
-          activeTrackColor: SelahColors.actionFill.withValues(alpha: 0.46),
-          inactiveThumbColor: SelahColors.ink(0.66),
-          inactiveTrackColor: SelahColors.surfaceFill,
-          trackOutlineColor: WidgetStateProperty.resolveWith(
-            (states) => states.contains(WidgetState.disabled)
-                ? SelahColors.surfaceBorder.withValues(alpha: 0.55)
-                : SelahColors.journeyGold.withValues(alpha: value ? 0.52 : 0.26),
-          ),
-        ),
-      ),
-    ),
+    child: SelahSwitch(key: switchKey, value: value, onChanged: onChanged),
   );
 }
 

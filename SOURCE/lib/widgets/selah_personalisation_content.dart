@@ -80,40 +80,6 @@ class SelahPersonalisationContent extends StatelessWidget {
         child: Column(
           children: [
             _PersonalisationRow(
-              key: const ValueKey('personalisation_background'),
-              icon: Icons.gradient_outlined,
-              title: 'Background',
-              value: snapshot.palette.label.replaceAll(' · Current', ''),
-              hint: 'Choose the colour atmosphere used across SELAH.',
-              onTap: onChooseBackground,
-            ),
-            const _PersonalisationDivider(),
-            _PersonalisationRow(
-              key: const ValueKey('personalisation_gold'),
-              icon: Icons.auto_awesome_outlined,
-              title: 'Gold accents',
-              value: snapshot.goldEnabled ? 'On' : 'Off',
-              hint: 'Soft, moving gold dots on app backgrounds.',
-              trailing: Semantics(
-                label: 'Gold accents',
-                child: Switch.adaptive(
-                  key: const ValueKey('personalisation_gold_toggle'),
-                  value: snapshot.goldEnabled,
-                  activeTrackColor: SelahColors.journeyGold,
-                  onChanged: onGoldChanged,
-                ),
-              ),
-            ),
-            const _PersonalisationDivider(),
-            const _PersonalisationRow(
-              key: ValueKey('personalisation_font'),
-              icon: Icons.text_fields_outlined,
-              title: 'App text',
-              value: 'Poppins',
-              hint: 'SELAH uses a separate wordmark font.',
-            ),
-            const _PersonalisationDivider(),
-            _PersonalisationRow(
               key: const ValueKey('personalisation_haptic'),
               icon: Icons.vibration_outlined,
               title: 'Haptic feel',
@@ -167,12 +133,12 @@ class _PersonalisationPreview extends StatelessWidget {
             ],
           ),
           const SizedBox(height: 15),
-          Text('SELAH', style: SelahText.wordmark(size: 25)),
+          const SelahWordmark(size: 36),
           const SizedBox(height: 5),
           Text(
             'Connecting Through Trust',
             style: SelahText.preview(
-              SelahAppFont.poppins,
+              SelahAppFont.figtree,
               size: 15,
               color: SelahColors.foreground,
             ),
@@ -181,7 +147,7 @@ class _PersonalisationPreview extends StatelessWidget {
           Text(
             'Your background changes appear immediately.',
             style: SelahText.preview(
-              SelahAppFont.poppins,
+              SelahAppFont.figtree,
               size: 11,
               color: SelahColors.ink(0.46),
             ),
@@ -207,28 +173,12 @@ class _PersonalisationPreview extends StatelessWidget {
   }
 }
 
-class _PersonalisationDivider extends StatelessWidget {
-  const _PersonalisationDivider();
-
-  @override
-  Widget build(BuildContext context) {
-    return Divider(
-      height: 1,
-      thickness: 0.5,
-      indent: 66,
-      endIndent: 14,
-      color: SelahColors.ink(0.12),
-    );
-  }
-}
-
 class _PersonalisationRow extends StatelessWidget {
   final IconData icon;
   final String title;
   final String value;
   final String hint;
   final VoidCallback? onTap;
-  final Widget? trailing;
 
   const _PersonalisationRow({
     super.key,
@@ -237,7 +187,6 @@ class _PersonalisationRow extends StatelessWidget {
     required this.value,
     required this.hint,
     this.onTap,
-    this.trailing,
   });
 
   @override
@@ -298,10 +247,7 @@ class _PersonalisationRow extends StatelessWidget {
                   ],
                 ),
               ),
-              if (trailing != null) ...[
-                const SizedBox(width: 8),
-                trailing!,
-              ] else if (onTap != null) ...[
+              if (onTap != null) ...[
                 const SizedBox(width: 8),
                 Padding(
                   padding: const EdgeInsets.only(top: 11),

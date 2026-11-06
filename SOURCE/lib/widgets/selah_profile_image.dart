@@ -52,7 +52,7 @@ class SelahProfileImage extends StatelessWidget {
   final BoxFit fit;
   final AlignmentGeometry alignment;
 
-  /// Shows a spinner while the image loads.
+  /// Shows the locked photo placeholder while the existing image load waits.
   final bool showLoader;
 
   const SelahProfileImage(
@@ -80,7 +80,7 @@ class SelahProfileImage extends StatelessWidget {
       return SizedBox(
         width: width,
         height: height,
-        child: const ColoredBox(color: SelahColors.luxuryDarkPurple),
+        child: const ColoredBox(color: SelahColors.soft),
       );
     }
 
@@ -102,14 +102,14 @@ class SelahProfileImage extends StatelessWidget {
           errorBuilder: (_, _, _) => SizedBox(
             width: width,
             height: height,
-            child: const ColoredBox(color: SelahColors.luxuryDarkPurple),
+            child: const ColoredBox(color: SelahColors.soft),
           ),
         );
       } on FormatException {
         return SizedBox(
           width: width,
           height: height,
-          child: const ColoredBox(color: SelahColors.luxuryDarkPurple),
+          child: const ColoredBox(color: SelahColors.soft),
         );
       }
     }
@@ -207,26 +207,13 @@ class SelahProfileImage extends StatelessWidget {
                       key: const ValueKey('placeholder'),
                       width: width,
                       height: height,
-                      // LayoutBuilder, not the width/height fields: both
-                      // are usually null here (the image fills its
-                      // parent), so the fields say nothing about the
-                      // space this actually gets. The constraints do.
-                      child: LayoutBuilder(
-                        builder: (context, c) {
-                          final roomy = c.maxWidth >= 120 && c.maxHeight >= 60;
-                          // On a small avatar, nothing at all. A loading
-                          // animation inside a 40px circle is noise.
-                          return roomy
-                              ? const SelahLoading()
-                              : const SizedBox.shrink();
-                        },
-                      ),
+                      child: const SelahLoading.photo(),
                     ),
             ),
       errorBuilder: (_, _, _) => SizedBox(
         width: width,
         height: height,
-        child: const ColoredBox(color: SelahColors.luxuryDarkPurple),
+        child: const ColoredBox(color: SelahColors.soft),
       ),
     );
   }

@@ -16,6 +16,7 @@
 /// coupling the audit flagged. A design token lives in the theme, beside
 /// the colours and text it composes with. Values unchanged, byte for byte.
 library;
+
 import 'selah_colors.dart';
 
 class SelahCardMetrics {
@@ -25,14 +26,16 @@ class SelahCardMetrics {
   /// whether the row carries one line of text or three — the 56×64
   /// portrait used on suggestions is what made those cards taller than
   /// everything around them.
-  static const double thumb = 52;
-  static const double thumbRadius = 10;
-  static const double padding = 12;
+  static const double thumb = 56;
+  static const double thumbRadius = 18;
+  static const double padding = 16;
   static const double cardRadius = 14;
-  static double get comparisonPadding => SelahColors.isWafaPreview ? 20 : padding;
-  static double get comparisonRadius => SelahColors.isWafaPreview ? 20 : cardRadius;
+  static double get comparisonPadding =>
+      SelahColors.isWafaPreview ? 20 : padding;
+  static double get comparisonRadius =>
+      SelahColors.isWafaPreview ? 20 : cardRadius;
   static const double gap = 14;
 
   /// Vertical space between consecutive cards in a list.
-  static const double spacing = 10;
+  static const double spacing = 14;
 }

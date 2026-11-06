@@ -26,6 +26,7 @@
 // at once rather than only on the screen it was triggered from.
 
 import 'package:flutter/material.dart';
+import 'selah_loading.dart';
 import 'package:flutter/services.dart';
 import '../models/seeker_profile.dart';
 import '../models/selah_moderation_review.dart';
@@ -471,10 +472,7 @@ class _ReportProfileSheetState extends State<_ReportProfileSheet> {
                             ? SizedBox(
                                 width: 18,
                                 height: 18,
-                                child: CircularProgressIndicator(
-                                  strokeWidth: 2,
-                                  color: Colors.white,
-                                ),
+                                child: SelahLoading(),
                               )
                             : Text(
                                 _reportStored ? 'Retry hiding' : 'Send report',
@@ -553,10 +551,7 @@ class _ReportSentConfirmation extends StatelessWidget {
                     ? const SizedBox(
                         width: 18,
                         height: 18,
-                        child: CircularProgressIndicator(
-                          strokeWidth: 2,
-                          color: Colors.white,
-                        ),
+                        child: SelahLoading(),
                       )
                     : Text('Retry hiding', style: SelahText.button(size: 14)),
               ),
@@ -614,7 +609,10 @@ class _ReasonTile extends StatelessWidget {
                       children: [
                         Text(
                           reason.label,
-                          style: SelahText.body(size: 14.5, color: Colors.white),
+                          style: SelahText.body(
+                            size: 14.5,
+                            color: Colors.white,
+                          ),
                         ),
                         if (reason.isUrgent) ...[
                           SizedBox(height: 2),

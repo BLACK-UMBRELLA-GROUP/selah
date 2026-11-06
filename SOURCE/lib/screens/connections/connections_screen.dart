@@ -263,7 +263,8 @@ SelahActivityTestBuckets composeSelahActivityTestBuckets({
   required List<SeekerProfile> realPassed,
   String? viewerGender,
 }) {
-  final fixtures = <({SeekerProfile profile, SelahActivityTestState? origin})>[];
+  final fixtures =
+      <({SeekerProfile profile, SelahActivityTestState? origin})>[];
 
   void addActivityFixtures(SelahActivityTestState origin, int count) {
     fixtures.addAll(
@@ -724,7 +725,8 @@ class _ConnectionsScreenState extends State<ConnectionsScreen> {
             SelahAuth.currentUser?.id,
           );
           return perspective == SelahPausePerspective.pauseResponderDecision ||
-              perspective == SelahPausePerspective.continuationResponderDecision;
+              perspective ==
+                  SelahPausePerspective.continuationResponderDecision;
         }).length +
         _suspended.where((journey) {
           return journey.pause.perspectiveFor(SelahAuth.currentUser?.id) ==
@@ -809,13 +811,9 @@ class _ConnectionsScreenState extends State<ConnectionsScreen> {
       return Padding(
         padding: const EdgeInsets.fromLTRB(20, 16, 20, 100),
         child: unavailable
-            ? SelahEmptyState(
-                icon: Icons.groups_outlined,
-                title: 'Couldn’t load introductions',
-                message:
-                    'Your introductions are unavailable right now. Please try again.',
-                ctaLabel: 'Try again',
-                onCta: _loadSuggestions,
+            ? SelahLoadFailure(
+                contentName: 'Introductions',
+                onRetry: _loadSuggestions,
               )
             : const SelahEmptyState(
                 icon: Icons.groups_outlined,
@@ -3737,7 +3735,9 @@ class _JourneyExpandingCardState extends State<_JourneyExpandingCard> {
                               decoration: BoxDecoration(
                                 shape: BoxShape.circle,
                                 color: SelahColors.ink(0.10),
-                                border: Border.all(color: SelahColors.ink(0.25)),
+                                border: Border.all(
+                                  color: SelahColors.ink(0.25),
+                                ),
                               ),
                               child: Icon(
                                 Icons.close,
@@ -3956,7 +3956,8 @@ class _ConnectionsActionDeck extends StatelessWidget {
     this.fullWidthLastAction = false,
   });
 
-  SelahConnectionsCardStyle get _style => SelahConnectionsCardStyle.compactChips;
+  SelahConnectionsCardStyle get _style =>
+      SelahConnectionsCardStyle.compactChips;
 
   @override
   Widget build(BuildContext context) {
@@ -4000,7 +4001,8 @@ class _ConnectionsJourneyReference extends StatelessWidget {
     required this.onCompatibility,
   });
 
-  SelahConnectionsCardStyle get _style => SelahConnectionsCardStyle.compactChips;
+  SelahConnectionsCardStyle get _style =>
+      SelahConnectionsCardStyle.compactChips;
 
   @override
   Widget build(BuildContext context) => Container(
@@ -4303,7 +4305,8 @@ Widget buildSelahConnectionsActivityCardTestSurface(
 }) {
   assert(!movedIntroduction || localTestProfile);
   final kind = switch (state) {
-    SelahConnectionsActivityCardTestState.considered => _ActivityKind.considered,
+    SelahConnectionsActivityCardTestState.considered =>
+      _ActivityKind.considered,
     SelahConnectionsActivityCardTestState.saved => _ActivityKind.saved,
     SelahConnectionsActivityCardTestState.passed => _ActivityKind.passed,
   };
@@ -4311,7 +4314,8 @@ Widget buildSelahConnectionsActivityCardTestSurface(
     SelahConnectionsActivityCardTestState.considered =>
       SelahActivityTestState.considered,
     SelahConnectionsActivityCardTestState.saved => SelahActivityTestState.saved,
-    SelahConnectionsActivityCardTestState.passed => SelahActivityTestState.passed,
+    SelahConnectionsActivityCardTestState.passed =>
+      SelahActivityTestState.passed,
   };
   final profile = SeekerProfile(
     id:

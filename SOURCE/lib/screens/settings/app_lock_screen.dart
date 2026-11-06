@@ -12,6 +12,8 @@
 // itself is protected by this.
 
 import 'package:flutter/material.dart';
+import '../../widgets/selah_switch.dart';
+import '../../widgets/selah_loading.dart';
 
 import '../../services/selah_app_lock.dart';
 import '../../theme/selah_colors.dart';
@@ -112,16 +114,9 @@ class _AppLockScreenState extends State<AppLockScreen> {
                       // enclosing SizedBox survives. withValues() is
                       // a method call and cannot appear in a const
                       // expression.
-                      SizedBox(
-                        width: 18,
-                        height: 18,
-                        child: CircularProgressIndicator(
-                          strokeWidth: 2,
-                          color: SelahColors.ink(0.70),
-                        ),
-                      )
+                      SizedBox(width: 18, height: 18, child: SelahLoading())
                     else
-                      Switch(
+                      SelahSwitch(
                         value: _lock.enabled,
                         onChanged: supported == false ? null : _toggle,
                       ),
