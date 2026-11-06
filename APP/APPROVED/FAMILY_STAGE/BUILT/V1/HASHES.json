@@ -1,0 +1,157 @@
+{
+  "feature": "FAMILY_STAGE",
+  "lock": 22,
+  "spec": "V2",
+  "evidenceVersion": "V1",
+  "generatedUtc": "2026-11-06T23:23:48.784723+00:00",
+  "captureResult": "8 PASS (5 actual-root comparisons + 3 behavior cases)",
+  "plainReplayResult": "18 PASS (Family8 + JourneyStages10)",
+  "scopedAnalysis": "Six owned files: no issues before capture; root owns final full analysis after source freeze.",
+  "pairCount": 5,
+  "pngCount": 10,
+  "pngBytes": 4115352,
+  "allPairsVisuallyReviewed": true,
+  "route": "Actual SelahDraftRoot, real canonical seven-stage progression via existing guarded controls. Exact LOCK22 prototype sample answers enter actual TextFields; no direct saved-answer writes or sent-flag bypass.",
+  "behaviorProofs": [
+    "401 Unicode-rune input is limited to400 and counter agrees with controller.",
+    "Captured form text/Send/Back callbacks cannot write or navigate under Page options or after Page-options ABA.",
+    "Captured form text/Send/Back callbacks cannot write or navigate under a foreign Navigator route or after pop; a fresh current Send still succeeds.",
+    "Own send alone retains Family stage and disables existing next-step action.",
+    "Explicit guarded peer-send replaces Waiting with canonical completion copy; existing Continue actions reach Open Conversation.",
+    "Earlier JourneyStages10 plain replay, including all4 MarriagePrep states, passes through the updated real Family form driver."
+  ],
+  "knownReferenceDifferences": [
+    "Existing vertical Journey/ribbon presentation remains around the Answer questions entry; master shows a full seven-row overview, Back and dock. Queue27 changes the real entry action, not the earlier presentation architecture.",
+    "Native status/safe-area geometry, bundled-font rendering and private developer rail differ from the browser masters as in earlier evidence.",
+    "Family labels/questions/entered answers/counters/sending/failure/sent words and shared shape/color roles are retained. Scroll positions and resulting footer placement show native layout differences; no blanket pixel-match claim.",
+    "Actual root keeps its selected Journey dock destination/badge, while browser temporary-page masters show neutral dock icons."
+  ],
+  "initialDiagnostic": "First run had2 harness viewport assertions against unmounted lazy-list elements; corrected and rerun. Log preserved. Root also added explicit current-ModalRoute dispatch guard before final capture.",
+  "limits": "Widget evidence proves local presentation/actions only, not server Family Review or native phone delivery. Root owns final full suite, retained-service checks, task note and installation.",
+  "ownedSources": [
+    {
+      "path": "SOURCE/lib/widgets/selah_family_stage_views.dart",
+      "bytes": 12539,
+      "sha256": "189a169151c4dd2501dd440a8abfd35cf1d700d9e058924eda75c66e1bb0f1b2"
+    },
+    {
+      "path": "SOURCE/test/masters/family_stage_driver.dart",
+      "bytes": 6284,
+      "sha256": "6623fa2a6d05c107452a035f94562356d78de61fa5663680ec2d72addc424ee8"
+    },
+    {
+      "path": "SOURCE/test/masters/family_stage_masters_test.dart",
+      "bytes": 10123,
+      "sha256": "3ca87556b76d65bc6eb77b60403fe54765cd761a20c2610186e1396c4471bf5e"
+    },
+    {
+      "path": "SOURCE/test/masters/journey_stages_masters_test.dart",
+      "bytes": 12945,
+      "sha256": "1dc360488f896bdff8a262eb6e87ea7510c60603489caefffd6072d199b77c8c"
+    },
+    {
+      "path": "SOURCE/test/masters/marriage_prep_masters_test.dart",
+      "bytes": 11846,
+      "sha256": "20c4992ce2273a47109a6782534e81f776ab23dab24e4204beb23aa1fd17de86"
+    },
+    {
+      "path": "SOURCE/tool/test_shepherd_check_ins.dart",
+      "bytes": 13362,
+      "sha256": "e25fe3880a35c6c158d662987ca6df8659dda4aa808384c5bded8924c609e646"
+    }
+  ],
+  "logs": [
+    {
+      "path": "SOURCE/build/test_logs/family27_capture.log",
+      "bytes": 731,
+      "sha256": "68af66340e903e899e1676692d927570ef7c753dd7a8b350ac6b09c65192625a"
+    },
+    {
+      "path": "SOURCE/build/test_logs/family27_replay.log",
+      "bytes": 3425,
+      "sha256": "90cec7f92948a8feb4ea1b1d94b272a3c8f1dd8eabfbc380fbe04fad6219d85e"
+    },
+    {
+      "path": "SOURCE/build/test_logs/family27_views_analyze.log",
+      "bytes": 215,
+      "sha256": "5a46cc9bf83d94bb8a08e31735752fa0ca7ec676bf161419a8272d2c001eed72"
+    },
+    {
+      "path": "SOURCE/build/test_logs/family27_capture_before_viewport_and_route.log",
+      "bytes": 4435,
+      "sha256": "2b109743bce1d701988a8afd3fbf274205e35c86d03ec074a5c866f9b937ac27"
+    }
+  ],
+  "pngs": [
+    {
+      "path": "APP/APPROVED/FAMILY_STAGE/BUILT/V1/L22_family__didnt_send__build.png",
+      "bytes": 284132,
+      "sha256": "9d74141e11286341be8b071463079799b6cfbbeb9a5257f88bcad4484b34de6e",
+      "width": 1290,
+      "height": 2796
+    },
+    {
+      "path": "APP/APPROVED/FAMILY_STAGE/BUILT/V1/L22_family__didnt_send__master_beside_build.png",
+      "bytes": 599680,
+      "sha256": "25210202d83ac6249d7e62c18ea6c52ea6e21b59eb4ac5501cd4fd2c44aa0b29",
+      "width": 2580,
+      "height": 2796
+    },
+    {
+      "path": "APP/APPROVED/FAMILY_STAGE/BUILT/V1/L22_family__questions__build.png",
+      "bytes": 259743,
+      "sha256": "09e7c13c7d4516c96ed5a92a41ea9fd10a37e8ce2111b6e632f09345828319d5",
+      "width": 1290,
+      "height": 2796
+    },
+    {
+      "path": "APP/APPROVED/FAMILY_STAGE/BUILT/V1/L22_family__questions__master_beside_build.png",
+      "bytes": 544818,
+      "sha256": "bc153e50d28e02b7816e56790dd62e0a6cf28144cabfe39f3d182d669ad7aabf",
+      "width": 2580,
+      "height": 2796
+    },
+    {
+      "path": "APP/APPROVED/FAMILY_STAGE/BUILT/V1/L22_family__sending__build.png",
+      "bytes": 267986,
+      "sha256": "97bf378a241c77cbbf406f1609e564d001dbbe4bf702ef0a991587e6ecec1b2f",
+      "width": 1290,
+      "height": 2796
+    },
+    {
+      "path": "APP/APPROVED/FAMILY_STAGE/BUILT/V1/L22_family__sending__master_beside_build.png",
+      "bytes": 558709,
+      "sha256": "fe141a1a02c625691dfc9b99d14c47c557e6638ff87cc98448ae78853cb8bec7",
+      "width": 2580,
+      "height": 2796
+    },
+    {
+      "path": "APP/APPROVED/FAMILY_STAGE/BUILT/V1/L22_family__sent__build.png",
+      "bytes": 346642,
+      "sha256": "0bdc3b34fbac8bca334fdcaf1d9467c7f5b1bd6670bd58f79efed1be5a883408",
+      "width": 1290,
+      "height": 2796
+    },
+    {
+      "path": "APP/APPROVED/FAMILY_STAGE/BUILT/V1/L22_family__sent__master_beside_build.png",
+      "bytes": 725479,
+      "sha256": "bd84c4aa77563bcff45a2ccee6a9da82cf851320d4e38fe1a1d645facc86012e",
+      "width": 2580,
+      "height": 2796
+    },
+    {
+      "path": "APP/APPROVED/FAMILY_STAGE/BUILT/V1/L22_journey__family_stage__build.png",
+      "bytes": 117196,
+      "sha256": "9c87596adcd396b3bb74e3b2a84f40145986fc49a871d24658db3d16ebdbc7d6",
+      "width": 1290,
+      "height": 2796
+    },
+    {
+      "path": "APP/APPROVED/FAMILY_STAGE/BUILT/V1/L22_journey__family_stage__master_beside_build.png",
+      "bytes": 410967,
+      "sha256": "c34864ee98dac4d921b3004e9cc3e04133a76caaa9fe921ff5b8fdf77d5add9c",
+      "width": 2580,
+      "height": 2796
+    }
+  ]
+}

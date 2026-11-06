@@ -1,9 +1,11 @@
 import 'dart:collection';
 
 import '../data/selah_journey_stages.dart';
+import '../data/journey_questions.dart';
 import '../data/selah_reference_data.dart' show selahRelationshipLabel;
 import '../models/selah_marriage_values.dart';
 import '../models/selah_journey_stage_change.dart';
+import '../models/selah_family_answers.dart';
 
 /// Disposable request/transition UI, not a new canonical server lifecycle.
 /// This model has no account, storage, entitlement or backend dependency.
@@ -289,6 +291,10 @@ class _DraftJourneyProgress {
   bool peerStageContinue = false;
   final Set<int> marriagePrepCompleted = <int>{};
   final List<DraftJourneyStageChange> stageChanges = [];
+  final Map<String, String> familyAnswers = {};
+  final Map<String, String> peerFamilyAnswers = {};
+  bool familySent = false;
+  bool peerFamilySent = false;
 }
 
 /// Shared fictional state for all five alternative app destinations.
@@ -690,6 +696,83 @@ class ViewRequestDraftModel {
   bool conversationOpen(String id) =>
       canParticipateInJourney(id) && stageFor(id)?.value == 'conversation';
 
+  Map<String, String> familyAnswersFor(String id, {bool peer = false}) {
+    final progress = _progress[id];
+    return Map<String, String>.unmodifiable(
+      (peer ? progress?.peerFamilyAnswers : progress?.familyAnswers) ??
+          const {},
+    );
+  }
+
+  bool familyAnswersSent(String id, {bool peer = false}) {
+    final progress = _progress[id];
+    return (peer ? progress?.peerFamilySent : progress?.familySent) ?? false;
+  }
+
+  bool familyBothSent(String id) =>
+      familyAnswersSent(id) && familyAnswersSent(id, peer: true);
+
+  bool setFamilyAnswer(String id, String questionId, String text) {
+    if (!_atInteractiveStage(id, 'family_stage') ||
+        familyAnswersSent(id) ||
+        !JourneyQuestions.family.any((question) => question.id == questionId) ||
+        !JourneyQuestions.familyAnswerFitsCharacterLimit(text)) {
+      return false;
+    }
+    final answers = _progress[id]!.familyAnswers;
+    if (answers[questionId] == text) return false;
+    answers[questionId] = text;
+    return true;
+  }
+
+  bool sendFamilyAnswers(String id, {Map<String, String>? expectedAnswers}) {
+    if (!_atInteractiveStage(id, 'family_stage') || familyAnswersSent(id)) {
+      return false;
+    }
+    final progress = _progress[id]!;
+    final answers = SelahFamilyAnswers.fromMap(progress.familyAnswers);
+    if (!answers.canSend ||
+        (expectedAnswers != null && !answers.matches(expectedAnswers))) {
+      return false;
+    }
+    progress.familySent = true;
+    return true;
+  }
+
+  /// Explicit private simulation only. No peer answer or sent flag exists
+  /// until the caller deliberately supplies all four answers and its guard.
+  bool simulatePeerFamilyAnswers(
+    String id,
+    Map<String, String> value, {
+    required bool Function() canSimulate,
+  }) {
+    bool admitted() {
+      try {
+        return canSimulate();
+      } catch (_) {
+        return false;
+      }
+    }
+
+    if (!_atInteractiveStage(id, 'family_stage') ||
+        familyAnswersSent(id, peer: true) ||
+        !admitted()) {
+      return false;
+    }
+    final progress = _progress[id]!;
+    final answers = SelahFamilyAnswers.fromMap(value);
+    if (!answers.canSend ||
+        !admitted() ||
+        !identical(_progress[id], progress) ||
+        !_atInteractiveStage(id, 'family_stage') ||
+        progress.peerFamilySent) {
+      return false;
+    }
+    progress.peerFamilyAnswers.addAll(answers.values);
+    progress.peerFamilySent = true;
+    return true;
+  }
+
   /// Shared local Journey facts, not a viewer's own copy or a server record.
   /// Existing readers cannot mutate the set or bypass the Journey's gates.
   Set<int> marriagePrepCompletedFor(String id) => UnmodifiableSetView<int>(
@@ -828,6 +911,7 @@ class ViewRequestDraftModel {
     return switch (stage.value) {
       'greeting_exchange' => greetingComplete(id),
       'compatibility_reveal' => compatibilityRevealed(id),
+      'family_stage' => familyBothSent(id),
       _ => true,
     };
   }

@@ -15,6 +15,9 @@ import '../models/selah_action_pause.dart';
 import '../models/selah_action_pause_controller.dart';
 import '../models/selah_prayer.dart';
 import '../models/selah_prayer_controller.dart';
+import '../models/selah_family_answers.dart';
+import '../models/selah_family_stage_controller.dart';
+import '../widgets/selah_family_stage_views.dart';
 import '../models/selah_shepherd_recent.dart';
 import '../models/selah_shepherd_suggestion.dart';
 import '../models/selah_shepherd_dashboard.dart';
@@ -156,6 +159,8 @@ class _SelahOneJourneyConceptShellState
   );
   SelahPrayerController? _prayerComposerController;
   bool _prayerEmptyView = false;
+  SelahFamilyStageController? _familyController;
+  Object? _familyLifetime;
   bool _actionPauseOpen = false;
   Route<dynamic>? _ownedActionPauseRoute;
   final _replacementUpdates = <({String ending, String accepted})>[];
@@ -289,7 +294,7 @@ class _SelahOneJourneyConceptShellState
       _page == null ||
       _page == 'controls' ||
       _page == 'shepherd_circle' ||
-      (!_shepherdRole && _page == 'prayer') ||
+      (!_shepherdRole && (_page == 'prayer' || _page == 'journey_family')) ||
       (SelahDeveloperAccess.canUseDeveloperTools &&
           !_shepherdRole &&
           _page == 'journey' &&
@@ -314,6 +319,7 @@ class _SelahOneJourneyConceptShellState
   String get _pageOptionsTitle => switch (_pageOptionsSource) {
     'shepherd_circle' => 'Shepherd Circle',
     'prayer' => 'Prayer',
+    'journey_family' => 'Family Compatibility',
     'journey' => 'Journey',
     'journey_compatibility' => 'Journey compatibility',
     'bio' => 'Journey Bio',
@@ -491,6 +497,7 @@ class _SelahOneJourneyConceptShellState
           _capacityEndingId = null;
         }
       }
+      _retireFamilyIfNeeded();
       _uiRevision++;
       if (!preserveCircle) _circleScopeRevision++;
       _circleVisibility.value = _page == 'shepherd_circle';
@@ -740,6 +747,7 @@ class _SelahOneJourneyConceptShellState
     _scroll.dispose();
     _message.dispose();
     _prayerComposerController?.dispose();
+    _familyController?.dispose();
     _prayerStore.clear();
     _accountSession.removeListener(_accountChanged);
     if (widget.accountSession == null) _accountSession.dispose();
@@ -780,6 +788,7 @@ class _SelahOneJourneyConceptShellState
           'membership',
           'journey',
           'journey_marriage_profile',
+          'journey_family',
           'request_capacity',
           'journey_shepherds',
           'prayer',
@@ -876,6 +885,7 @@ class _SelahOneJourneyConceptShellState
                     (_shepherdRole && _page == 'shepherd_invite_review') ||
                     (!_shepherdRole &&
                         (_page == 'prayer' ||
+                            _page == 'journey_family' ||
                             _page == 'journey_marriage_profile')))
                   SelahShellNavigation(
                     forceCurrent: true,
@@ -1024,6 +1034,7 @@ class _SelahOneJourneyConceptShellState
     'journey_shepherds' => _journeyShepherds(),
     'shepherd_circle' => _shepherdCircle(),
     'prayer' => _prayerPage(),
+    'journey_family' => _familyPage(),
     'held_action' => _heldPreviewAction(),
     'own_profile_preview' => _ownProfilePreview(),
     'past_journeys' => _activityPage('Ended Journeys', _history(true)),
@@ -2987,42 +2998,19 @@ class _SelahOneJourneyConceptShellState
       ordinary = Padding(
         padding: const EdgeInsets.fromLTRB(0, 8, 0, 32),
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             Text(stage.label, style: SelahText.heading(size: 18)),
             const SizedBox(height: 6),
-            Text(
-              'Your families meet your Journey here. '
-              "${p.firstName}'s Shepherd asks you their questions; "
-              'yours asks theirs. Answer as if they were sitting across from you — they are.',
-              style: SelahText.subtext(),
-            ),
-            const SizedBox(height: 18),
-            Text(
-              "${p.firstName}'s family asks:",
-              style: SelahText.body(size: 13, color: SelahColors.ink(0.70)),
-            ),
-            const SizedBox(height: 10),
-            for (final q in JourneyQuestions.mentorToSeeker) ...[
-              Text(q.text, style: SelahText.body(size: 14)),
-              const SizedBox(height: 6),
-              TextField(
-                key: ValueKey('concept_family_display_${q.id}'),
-                readOnly: true,
-                maxLines: 3,
-                style: const TextStyle(color: Colors.white),
-                decoration: InputDecoration(
-                  filled: true,
-                  fillColor: SelahColors.foreground.withValues(alpha: 0.06),
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(10),
-                    borderSide: BorderSide.none,
-                  ),
-                  hintText: 'Your answer…',
-                  hintStyle: TextStyle(color: SelahColors.ink(0.38)),
-                ),
+            Text(stage.introduction, style: SelahText.subtext()),
+            if (!_model.familyAnswersSent(id)) ...[
+              const SizedBox(height: 18),
+              _button(
+                'draft_family_open_$id',
+                'Answer questions',
+                active ? () => _openFamily(p) : null,
+                primary: true,
               ),
-              const SizedBox(height: 16),
             ],
           ],
         ),
@@ -3062,7 +3050,8 @@ class _SelahOneJourneyConceptShellState
         if (stage.value == 'conversation') ...[
           for (final message in _messages[id] ?? <String>[])
             _body('You · $message'),
-        ] else ...[
+        ] else if (stage.value != 'family_stage' ||
+            _model.familyAnswersSent(id)) ...[
           const SizedBox(height: 28),
           _button(
             'draft_stage_ready_$id',
@@ -3113,6 +3102,101 @@ class _SelahOneJourneyConceptShellState
       if (_model.stateFor(id) == DraftJourneyState.ended)
         _body('• Journey ended · read-only history'),
     ]);
+  }
+
+  bool _familyScopeFor(String id, Object lifetime) =>
+      _allowed &&
+      !_shepherdRole &&
+      identical(_familyLifetime, lifetime) &&
+      _personId == id &&
+      (_page == 'journey_family' ||
+          (_page == 'controls' && _pageOptionsSource == 'journey_family')) &&
+      _model.canParticipateInJourney(id) &&
+      _model.stageFor(id)?.value == 'family_stage';
+
+  void _retireFamilyIfNeeded() {
+    final controller = _familyController;
+    if (controller != null && !controller.current) {
+      controller.dispose();
+      _familyController = null;
+      _familyLifetime = null;
+    }
+  }
+
+  void _openFamily(DraftProfile person) {
+    final id = person.id;
+    final route = ModalRoute.of(context);
+    if (route == null ||
+        !route.isCurrent ||
+        !_allowed ||
+        _shepherdRole ||
+        _page != 'journey' ||
+        _personId != id ||
+        !_model.canParticipateInJourney(id) ||
+        _model.stageFor(id)?.value != 'family_stage') {
+      return;
+    }
+    _familyController?.dispose();
+    _familyController = null;
+    _open('journey_family');
+    final lifetime = Object();
+    _familyLifetime = lifetime;
+    final mainId = _conceptShepherdPeople
+        .where((p) => p.isMain)
+        .firstOrNull
+        ?.id;
+    final mainName = _journeyMainShepherdName;
+    final tab = _tab;
+    bool current() =>
+        _familyScopeFor(id, lifetime) &&
+        _tab == tab &&
+        _conceptShepherdPeople.where((p) => p.isMain).firstOrNull?.id ==
+            mainId &&
+        _journeyMainShepherdName == mainName;
+    bool foreground() =>
+        route.isCurrent && identical(ModalRoute.of(context), route);
+    bool dispatch() => current() && _page == 'journey_family' && foreground();
+    final controller = SelahFamilyStageController(
+      canAct: current,
+      canDispatch: dispatch,
+      readAnswers: () =>
+          SelahFamilyAnswers.fromMap(_model.familyAnswersFor(id)),
+      readSent: () => _model.familyAnswersSent(id),
+      readPeerSent: () => _model.familyAnswersSent(id, peer: true),
+      onSetAnswer: (questionId, text) =>
+          dispatch() && _model.setFamilyAnswer(id, questionId, text),
+      onSend: (answers) =>
+          dispatch() && _model.sendFamilyAnswers(id, expectedAnswers: answers),
+      canUsePresets: () =>
+          current() &&
+          SelahDeveloperAccess.canUseDeveloperTools &&
+          _page == 'controls' &&
+          _pageOptionsSource == 'journey_family',
+    );
+    controller.addListener(_accountChanged);
+    _familyController = controller;
+  }
+
+  Widget _familyPage() {
+    final controller = _familyController;
+    final person = _person;
+    if (controller == null || person == null || !controller.current) {
+      return const SizedBox.shrink();
+    }
+    final fresh = _accountFreshGuard();
+    final route = ModalRoute.of(context);
+    return SelahFamilyCompatibilityView(
+      controller: controller,
+      counterpartFirstName: person.firstName,
+      ownMainShepherdName: _journeyMainShepherdName,
+      otherMainShepherdName: person.otherMainShepherdName,
+      canAct: () =>
+          fresh() &&
+          route != null &&
+          route.isCurrent &&
+          identical(ModalRoute.of(context), route),
+      onBack: _bound(_back),
+    );
   }
 
   MentorLinkedPerson? get _prayerMainShepherd =>
@@ -5440,7 +5524,9 @@ class _SelahOneJourneyConceptShellState
       ];
     }
     final person = _person;
-    if (source != 'journey' || person == null) return const [];
+    if ((source != 'journey' && source != 'journey_family') || person == null) {
+      return const [];
+    }
     final id = person.id;
     final state = _model.stateFor(id);
     final stage = _model.stageFor(id)?.value;
@@ -5513,6 +5599,17 @@ class _SelahOneJourneyConceptShellState
               !_model.peerHasChosenCompatibilityReveal(id),
           () => _model.simulatePeerCompatibilityReveal(id),
         ),
+      if (stage == 'family_stage')
+        option(
+          'draft_family_peer_send_$id',
+          'Demo: ${person.firstName} sends Family answers',
+          _model.canParticipateInJourney(id) &&
+              !_model.familyAnswersSent(id, peer: true),
+          () => _model.simulatePeerFamilyAnswers(id, {
+            for (final q in JourneyQuestions.family)
+              q.id: 'Local sample from ${person.firstName}.',
+          }, canSimulate: current),
+        ),
       if (stage == 'conversation') ...[
         TextField(
           key: const ValueKey('concept_message'),
@@ -5555,7 +5652,7 @@ class _SelahOneJourneyConceptShellState
           source == 'timeline' ||
           source == 'ended' ||
           source == 'past_journeys') ...[
-        'These controls simulate the other person and chapter checkpoints. Question fields are display-only here. No messages, private answers, credits or Family Review decisions are sent or approved.',
+        'These controls simulate the other person and chapter checkpoints. Family answers stay in this local session. No messages, real private answers, credits or Family Review decisions are sent or approved.',
         'The demo still requires both choices and the current threshold. Phase review is simulated, not a server approval.',
         'Invented local messages only. No real conversation is loaded.',
       ],
@@ -5600,6 +5697,9 @@ class _SelahOneJourneyConceptShellState
             sourcePage == 'past_journeys');
     final shepherd = mainPage && !_shepherdRole && _tab == 3;
     final prayer = !_shepherdRole && sourcePage == 'prayer';
+    final family = !_shepherdRole && sourcePage == 'journey_family';
+    final familyController = _familyController;
+    final familyFresh = _accountFreshGuard();
     final prayerDashboard = mainPage && _shepherdRole && _tab == 0;
     final introduce = mainPage && _shepherdRole && _tab == 1;
     final profile = mainPage && _tab == (_shepherdRole ? 3 : 4);
@@ -5658,6 +5758,34 @@ class _SelahOneJourneyConceptShellState
                   _introduceEmptyView = preset == 'empty';
                   _pages.removeLast();
                 });
+              }),
+          ]),
+        if (family)
+          _controlSection([
+            for (final state in const ['sending', 'failed', 'ready'])
+              _previewAction('family_$state', 'Family · $state', () {
+                final controller = familyController;
+                if (!familyFresh() ||
+                    !identical(controller, _familyController) ||
+                    !_allowed ||
+                    !SelahDeveloperAccess.canUseDeveloperTools ||
+                    _page != 'controls' ||
+                    _pageOptionsSource != 'journey_family' ||
+                    controller == null ||
+                    !controller.current) {
+                  return;
+                }
+                final changed = switch (state) {
+                  'sending' => controller.showSending(),
+                  'failed' => controller.showFailure(),
+                  _ => controller.showIdle(),
+                };
+                if (changed &&
+                    familyFresh() &&
+                    identical(controller, _familyController) &&
+                    controller.current) {
+                  _back();
+                }
               }),
           ]),
         if (prayer)

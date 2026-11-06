@@ -24,13 +24,9 @@
 // - "Ask More" is not offered as a checkpoint choice this pass — only
 //   Continue / End Journey. The `ask_more` decision value still exists
 //   in the database for future use.
-// - Family Compatibility Stage covers Seeker<->Shepherd directions only —
-//   Shepherd<->Shepherd is explicitly marked TBC in the source spec. There is
-//   no Shepherd-side screen to answer "seeker_to_mentor" questions yet
-//   (Shepherd app has no Journey visibility built at all — see
-//   MENTOR_ARCHITECTURE_CURRENT_VERSION_V5.md's "future dedicated
-//   session" note), so this stage completes once the signed-in Seeker
-//   has answered their own "mentor_to_seeker" questions.
+// - LOCK 22 replaces the two old Family question banks with four questions
+//   answered by each Seeker. Both real answerers must complete the exact new
+//   IDs before the existing Family Review continuation is offered.
 // - No Realtime — simultaneous-reveal / "waiting for the other party"
 //   states use bounded foreground polling rather than a Supabase Realtime
 //   channel. Requests are coalesced, stop in the background and run every
@@ -64,6 +60,8 @@ import '../../models/journey_match.dart';
 import '../../models/seeker_profile.dart';
 import '../../models/selah_gender.dart';
 import '../../models/selah_identity_verification.dart';
+import '../../models/selah_family_answers.dart';
+import '../../models/selah_family_stage_controller.dart';
 import '../../services/selah_auth.dart';
 import '../../services/selah_account_state.dart';
 import '../../services/selah_developer_access.dart';
@@ -92,7 +90,7 @@ import '../../widgets/selah_intelligence_card.dart';
 import '../../widgets/selah_loading.dart';
 import '../../widgets/selah_profile_image.dart';
 import '../../widgets/selah_state_widgets.dart';
-import '../../widgets/selah_write_feedback.dart';
+import '../../widgets/selah_family_stage_views.dart';
 
 /// Network polling must stop when iOS has put SELAH in the background. Timers
 /// otherwise keep waking the process until the OS suspends it, wasting radio
@@ -180,6 +178,7 @@ class _JourneyFlowScreenState extends State<JourneyFlowScreen> {
   Object _stageDecisionToken = Object();
   bool _stageContinueSelected = false;
   bool _stageActionVisible = false;
+  bool _familyAnswersSent = false;
   String? _viewedRibbonStage;
   bool _pauseActionBusy = false;
   SelahJourneyPauseState? _devPausePreview;
@@ -565,6 +564,7 @@ class _JourneyFlowScreenState extends State<JourneyFlowScreen> {
           _viewedRibbonStage = null;
         }
         if (stageChanged) {
+          _familyAnswersSent = false;
           _advanceReason = null;
           _lifeSnapshotOpen = false;
           _lifeSnapshotOpenedFromDevJump = false;
@@ -1148,8 +1148,7 @@ class _JourneyFlowScreenState extends State<JourneyFlowScreen> {
         'phase_1' => JourneyQuestions.phase1.map((q) => q.id).toList(),
         'phase_2' => JourneyQuestions.phase2.map((q) => q.id).toList(),
         'phase_3' => JourneyQuestions.phase3.map((q) => q.id).toList(),
-        'family_stage' =>
-          JourneyQuestions.seekerToMentor.map((q) => q.id).toList(),
+        'family_stage' => JourneyQuestions.family.map((q) => q.id).toList(),
         _ => const <String>[],
       };
       final said = await SelahJourneyService.devCounterpartComplete(
@@ -1550,6 +1549,7 @@ class _JourneyFlowScreenState extends State<JourneyFlowScreen> {
                       key: _scrollKeyFor(displayStage.value),
                       stage: displayStage,
                       stages: SelahJourneyStages.previewAll,
+                      familyAnswersSent: _familyAnswersSent,
                       compatibilityHistoryChild: _CompatibilityRevealView(
                         matchId: widget.matchId,
                         profile: widget.profile,
@@ -1850,10 +1850,23 @@ class _JourneyFlowScreenState extends State<JourneyFlowScreen> {
           ),
         );
       case 'family_stage':
+        final familyOwner = _captureJourneyOwner(requireMain: true);
         return _FamilyStageView(
           matchId: widget.matchId,
           profile: widget.profile,
           isActionVisible: _stageActionVisible,
+          canAct: familyOwner,
+          ownMainShepherdName: _ownMainShepherdName,
+          onBack: () => _scrollKeyFor('family_stage').currentState?._showPage(
+            SelahJourneyScroll.arrivalPage(
+              SelahJourneyStages.of('family_stage')!.order - 1,
+            ),
+          ),
+          onSentChanged: (sent) {
+            if (familyOwner() && _familyAnswersSent != sent) {
+              setState(() => _familyAnswersSent = sent);
+            }
+          },
           onAdvance: () => _advanceGated('family_stage', 'conversation'),
           onRequestDecision: (continueAction) => _openStageDecision(
             fromStage: 'family_stage',
@@ -3880,6 +3893,7 @@ class _JourneyStageScrollShell extends StatefulWidget {
   final Widget greetingHistoryChild;
   final Widget lifeSnapshotHistoryChild;
   final Widget? decisionChild;
+  final bool familyAnswersSent;
   final VoidCallback onOpenTimeline;
   final ValueChanged<bool> onActionVisibilityChanged;
   final ValueChanged<SelahJourneyStage> onViewedStageChanged;
@@ -3893,6 +3907,7 @@ class _JourneyStageScrollShell extends StatefulWidget {
     required this.greetingHistoryChild,
     required this.lifeSnapshotHistoryChild,
     this.decisionChild,
+    this.familyAnswersSent = false,
     required this.onOpenTimeline,
     required this.onActionVisibilityChanged,
     required this.onViewedStageChanged,
@@ -4357,7 +4372,11 @@ class _JourneyStageScrollShellState extends State<_JourneyStageScrollShell> {
                           child: Padding(
                             padding: const EdgeInsets.only(bottom: 28),
                             child: _JourneyDownCue(
-                              label: questionCount == null
+                              label: stage.value == 'family_stage'
+                                  ? widget.familyAnswersSent
+                                        ? 'Continue'
+                                        : 'Answer questions'
+                                  : questionCount == null
                                   ? history.isEmpty
                                         ? 'Scroll to begin'
                                         : 'Continue'
@@ -8463,12 +8482,21 @@ class _FamilyStageView extends StatefulWidget {
   final String matchId;
   final SeekerProfile profile;
   final bool isActionVisible;
+  final bool Function() canAct;
+  final String? ownMainShepherdName;
+  final VoidCallback onBack;
+  final ValueChanged<bool> onSentChanged;
   final Future<void> Function() onAdvance;
   final Future<void> Function(Future<void> Function()) onRequestDecision;
+
   const _FamilyStageView({
     required this.matchId,
     required this.profile,
     required this.isActionVisible,
+    required this.canAct,
+    required this.ownMainShepherdName,
+    required this.onBack,
+    required this.onSentChanged,
     required this.onAdvance,
     required this.onRequestDecision,
   });
@@ -8478,42 +8506,129 @@ class _FamilyStageView extends StatefulWidget {
 }
 
 class _FamilyStageViewState extends State<_FamilyStageView> {
-  final Map<String, TextEditingController> _controllers = {};
+  late final String? _ownerId;
+  late final int _ownerGeneration;
+  late SelahFamilyStageController _controller;
+  Map<String, String> _answers = {};
   bool _loading = true;
-  bool _submitted = false;
-  bool _mentorAnswered = false;
+  bool _loadedAnswers = false;
+  bool _hasDraftChanges = false;
+  bool _sent = false;
+  bool _peerSent = false;
+  int _surfaceRevision = 0;
+  int _readRequest = 0;
+  ModalRoute<dynamic>? _route;
+  bool? _routeCurrent;
   Timer? _poll;
   bool _pollLoadBusy = false;
-  Future<void>? _loadFlight;
+  Future<bool>? _loadFlight;
 
-  /// Ratings from ALL THREE phases, because the summary the Shepherd is given
-  /// is about the Journey, not about this stage.
-  Map<String, String> _ratings = {};
+  bool get _ownerCurrent =>
+      mounted &&
+      _ownerId != null &&
+      SelahAuth.currentUser?.id == _ownerId &&
+      !SelahAccountState.isSigningOut &&
+      SelahAccountState.isCurrent(_ownerId, _ownerGeneration) &&
+      _route?.isCurrent != false &&
+      widget.canAct();
+
+  bool Function() _captureOwner({bool requireAction = false}) {
+    final revision = _surfaceRevision;
+    final matchId = widget.matchId;
+    final profileId = widget.profile.id;
+    final parentCurrent = widget.canAct;
+    var retired = false;
+    return () {
+      if (retired) return false;
+      final current =
+          _ownerCurrent &&
+          parentCurrent() &&
+          revision == _surfaceRevision &&
+          matchId == widget.matchId &&
+          profileId == widget.profile.id &&
+          (!requireAction ||
+              (widget.isActionVisible && _journeyViewCanPoll(context)));
+      if (!current) retired = true;
+      return current;
+    };
+  }
+
+  void _createController() {
+    _controller = SelahFamilyStageController(
+      canAct: () => _ownerCurrent,
+      canDispatch: () => widget.isActionVisible && _journeyViewCanPoll(context),
+      readAnswers: () => SelahFamilyAnswers.fromMap(_answers),
+      readSent: () => _sent,
+      readPeerSent: () => _peerSent,
+      onSetAnswer: (questionId, text) {
+        if (!_ownerCurrent || !widget.isActionVisible) return false;
+        _answers[questionId] = text;
+        _hasDraftChanges = true;
+        return true;
+      },
+      onSend: _send,
+      canUsePresets: () => false,
+    );
+  }
 
   @override
   void initState() {
     super.initState();
-    for (final q in JourneyQuestions.mentorToSeeker) {
-      _controllers[q.id] = TextEditingController();
-    }
-    _load();
-    // Polls for the Mentor's answers so this screen advances the moment
-    // both sides are done, without the Seeker needing to reopen it.
+    _ownerId = SelahAuth.currentUser?.id;
+    _ownerGeneration = SelahAccountState.generation;
+    _createController();
+    unawaited(_load());
     _poll = Timer.periodic(const Duration(seconds: 8), (_) => _pollLoad());
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    final route = ModalRoute.of(context);
+    final current = route?.isCurrent;
+    if (_route != null &&
+        (!identical(route, _route) || current != _routeCurrent)) {
+      _surfaceRevision++;
+      _readRequest++;
+    }
+    _route = route;
+    _routeCurrent = current;
   }
 
   @override
   void didUpdateWidget(covariant _FamilyStageView oldWidget) {
     super.didUpdateWidget(oldWidget);
-    if (!oldWidget.isActionVisible && widget.isActionVisible) {
-      unawaited(_load(showSpinner: false));
+    final changedOwner =
+        oldWidget.matchId != widget.matchId ||
+        oldWidget.profile.id != widget.profile.id;
+    final changedSurface = oldWidget.isActionVisible != widget.isActionVisible;
+    final retiredParent = !oldWidget.canAct();
+    if (changedOwner ||
+        changedSurface ||
+        retiredParent ||
+        !_controller.current) {
+      _surfaceRevision++;
+      _readRequest++;
+      _controller.dispose();
+      if (changedOwner) {
+        _answers = {};
+        _loadedAnswers = false;
+        _hasDraftChanges = false;
+        _sent = false;
+        _peerSent = false;
+        _loading = true;
+      }
+      _createController();
+      if (widget.isActionVisible) unawaited(_load(force: true));
     }
   }
 
   Future<void> _pollLoad() async {
     if (_pollLoadBusy ||
+        !_ownerCurrent ||
         !_journeyViewCanPoll(context) ||
-        !widget.isActionVisible) {
+        !widget.isActionVisible ||
+        _controller.sendState == SelahFamilySendState.sending) {
       return;
     }
     _pollLoadBusy = true;
@@ -8526,121 +8641,120 @@ class _FamilyStageViewState extends State<_FamilyStageView> {
 
   @override
   void dispose() {
+    _surfaceRevision++;
+    _readRequest++;
     _poll?.cancel();
-    for (final c in _controllers.values) {
-      c.dispose();
-    }
+    _controller.dispose();
     super.dispose();
   }
 
-  Future<void> _load({bool showSpinner = true}) async {
+  Future<bool> _load({
+    bool showSpinner = true,
+    bool force = false,
+    Map<String, String>? expectedSubmission,
+  }) async {
     final active = _loadFlight;
-    if (active != null) return active;
-    final next = _loadOnce(showSpinner: showSpinner);
+    if (!force && active != null) return active;
+    final next = _loadOnce(
+      showSpinner: showSpinner,
+      expectedSubmission: expectedSubmission,
+    );
     _loadFlight = next;
     try {
-      await next;
+      return await next;
     } finally {
       if (identical(_loadFlight, next)) _loadFlight = null;
     }
   }
 
-  Future<void> _loadOnce({required bool showSpinner}) async {
-    final userId = SelahAuth.currentUser?.id;
-    if (userId == null) return;
-    final generation = SelahAccountState.generation;
-    bool isCurrentLoad() =>
-        mounted &&
-        SelahAuth.currentUser?.id == userId &&
-        SelahAccountState.isCurrent(userId, generation);
-
-    if (!isCurrentLoad()) return;
-    if (showSpinner && mounted) setState(() => _loading = true);
-    final myAnswers = await SelahJourneyService.fetchFamilyAnswers(
-      widget.matchId,
-      'mentor_to_seeker',
+  Future<bool> _loadOnce({
+    required bool showSpinner,
+    required Map<String, String>? expectedSubmission,
+  }) async {
+    final current = _captureOwner();
+    if (!current()) return false;
+    final request = ++_readRequest;
+    bool readCurrent() => current() && request == _readRequest;
+    if (showSpinner && !_loadedAnswers) setState(() => _loading = true);
+    final mine = SelahFamilyAnswers.fromMap(
+      await SelahJourneyService.fetchFamilyAnswers(
+        widget.matchId,
+        'mentor_to_seeker',
+        answererId: _ownerId,
+      ),
     );
-    if (!isCurrentLoad()) return;
-    final mentorAnswers = await SelahJourneyService.fetchFamilyAnswers(
-      widget.matchId,
-      'seeker_to_mentor',
+    if (!readCurrent()) return false;
+    final peer = SelahFamilyAnswers.fromMap(
+      await SelahJourneyService.fetchFamilyAnswers(
+        widget.matchId,
+        'mentor_to_seeker',
+        answererId: widget.profile.id,
+      ),
     );
-    if (!isCurrentLoad()) return;
-    final ratings = await SelahJourneyService.fetchAllMyRatings(widget.matchId);
-    if (!isCurrentLoad()) return;
-    final submitted =
-        myAnswers.length >= JourneyQuestions.mentorToSeeker.length;
-    final mentorAnswered =
-        mentorAnswers.length >= JourneyQuestions.seekerToMentor.length;
+    if (!readCurrent()) return false;
+    final typedSubmission = {
+      for (final entry in _answers.entries) entry.key: entry.value.trim(),
+    };
+    final matchesTyped = !_hasDraftChanges || mine.matches(typedSubmission);
+    final matchesSubmission =
+        expectedSubmission == null || mine.matches(expectedSubmission);
+    final confirmedSent = mine.canSend && matchesTyped && matchesSubmission;
     setState(() {
-      _submitted = submitted;
-      _mentorAnswered = mentorAnswered;
-      _ratings = ratings;
+      // A failed partial write or poll never replaces unsent typed answers.
+      if (!_loadedAnswers || confirmedSent) {
+        _answers = Map.of(mine.values);
+      } else {
+        for (final entry in mine.values.entries) {
+          _answers.putIfAbsent(entry.key, () => entry.value);
+        }
+      }
+      _loadedAnswers = true;
+      _hasDraftChanges = _hasDraftChanges && !confirmedSent;
+      _sent = confirmedSent;
+      _peerSent = peer.canSend;
       _loading = false;
     });
-    // BOTH sides must answer before Conversation (Founder, 2026-07-26) —
-    // the Shepherd's participation is real, not cosmetic. The AUTO-advance
-    // that used to fire here is GONE (2026-08-12, experience redesign):
-    // "Both families have spoken with you both" is plausibly the most
-    // reassuring sentence this app ever shows, and it replaced itself in
-    // under a second. The build now HOLDS that state until the couple
-    // continues by choice.
+    if (readCurrent()) widget.onSentChanged(_sent);
+    return readCurrent() && matchesSubmission;
   }
 
-  Future<void> _submit() async {
-    final userId = SelahAuth.currentUser?.id;
-    if (userId == null) return;
-    final generation = SelahAccountState.generation;
-    bool isCurrentSubmission() =>
-        mounted &&
-        SelahAuth.currentUser?.id == userId &&
-        SelahAccountState.isCurrent(userId, generation);
-
-    // BUG-03 (2026-08-14 audit, inherited upstream action 225 — fixed 2026-08-15):
-    // submitFamilyAnswer reports failure now, and this surfaces it. The
-    // text stays in the controllers either way, and _load() keeps
-    // deriving _submitted from what the SERVER holds — so a failed
-    // write can no longer masquerade as a submitted state, and pressing
-    // Submit again re-sends safely (duplicate rows are tolerated by
-    // fetchFamilyAnswers' later-insert-wins ordering).
-    var allSaved = true;
-    for (final q in JourneyQuestions.mentorToSeeker) {
-      if (!isCurrentSubmission()) return;
-      final text = _controllers[q.id]!.text.trim();
-      if (text.isNotEmpty) {
-        final ok = await SelahJourneyService.submitFamilyAnswer(
-          widget.matchId,
-          'mentor_to_seeker',
-          q.id,
-          text,
-        );
-        if (!isCurrentSubmission()) return;
-        if (!ok) allSaved = false;
-      }
+  Future<bool> _send(Map<String, String> answers) async {
+    final current = _captureOwner(requireAction: true);
+    final submitted = SelahFamilyAnswers.fromMap(answers);
+    if (!current() || !submitted.canSend || _sent) return false;
+    final expectedSubmission = {
+      for (final entry in submitted.values.entries)
+        entry.key: entry.value.trim(),
+    };
+    // Retire an earlier poll before any write. The controller's Sending state
+    // prevents a new poll from racing this explicit submission.
+    _readRequest++;
+    for (final question in JourneyQuestions.family) {
+      if (!current()) return false;
+      final saved = await SelahJourneyService.submitFamilyAnswer(
+        widget.matchId,
+        'mentor_to_seeker',
+        question.id,
+        expectedSubmission[question.id]!,
+      );
+      if (!current() || !saved) return false;
     }
-    if (!isCurrentSubmission()) return;
-    if (!allSaved && mounted) {
-      showSelahFamilyAnswersWriteFailure(context);
-    }
-    await _load();
+    // Success remains server-derived; four local writes alone never set Sent.
+    if (!current()) return false;
+    final loaded = await _load(
+      showSpinner: false,
+      force: true,
+      expectedSubmission: expectedSubmission,
+    );
+    return current() && loaded && _sent;
   }
 
   @override
   Widget build(BuildContext context) {
     if (_loading) return const SelahLoading();
-    final stage = SelahJourneyStages.of('family_stage')!;
-
-    if (_submitted) {
-      final shepherdSummary = SelahJourneyIntelligence.shepherdSummary(
-        plan: AppState.instance.plan,
-        otherName: widget.profile.firstName,
-        ratings: _ratings,
-        questions: [
-          ...JourneyQuestions.phase1,
-          ...JourneyQuestions.phase2,
-          ...JourneyQuestions.phase3,
-        ],
-      );
+    final current = _captureOwner(requireAction: true);
+    if (_controller.bothSent) {
+      final stage = SelahJourneyStages.of('family_stage')!;
       return Center(
         child: SingleChildScrollView(
           padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 20),
@@ -8648,96 +8762,37 @@ class _FamilyStageViewState extends State<_FamilyStageView> {
             mainAxisSize: MainAxisSize.min,
             children: [
               Text(
-                _mentorAnswered
-                    ? stage.completionHeading
-                    : 'Your Shepherd is answering',
+                stage.completionHeading,
                 style: SelahText.heading(size: 18),
                 textAlign: TextAlign.center,
               ),
               SizedBox(height: 8),
               Text(
-                _mentorAnswered
-                    ? stage.completionLine
-                    : "You've answered ${widget.profile.firstName}'s family. "
-                          'Your Journey continues once your own Shepherd has '
-                          'answered theirs — families are not hurried here.',
+                stage.completionLine,
                 style: SelahText.subtext(),
                 textAlign: TextAlign.center,
               ),
-              if (shepherdSummary != null)
-                SelahIntelligenceCard(intelligence: shepherdSummary)
-              else
-                const SelahIntelligenceInvitation(
-                  kind: SelahIntelligenceKind.summary,
-                ),
-              if (_mentorAnswered) ...[
-                SizedBox(height: 20),
-                _JourneyScrollToContinue(
-                  onContinue: () => widget.onRequestDecision(widget.onAdvance),
-                  openingLabel: 'Opening your choices…',
-                ),
-              ],
+              SizedBox(height: 20),
+              _JourneyScrollToContinue(
+                onContinue: () async {
+                  if (current() && _controller.bothSent) {
+                    await widget.onRequestDecision(widget.onAdvance);
+                  }
+                },
+                openingLabel: 'Opening your choices…',
+              ),
             ],
           ),
         ),
       );
     }
-
-    return SingleChildScrollView(
-      padding: const EdgeInsets.fromLTRB(20, 8, 20, 32),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            SelahJourneyStages.labelFor('family_stage'),
-            style: SelahText.heading(size: 18),
-          ),
-          SizedBox(height: 6),
-          Text(
-            'Your families meet your Journey here. '
-            "${widget.profile.firstName}'s Shepherd asks you their questions; "
-            'yours asks theirs. Answer as if they were sitting across from '
-            'you — they are.',
-            style: SelahText.subtext(),
-          ),
-          SizedBox(height: 18),
-          Text(
-            "${widget.profile.firstName}'s family asks:",
-            style: SelahText.body(size: 13, color: SelahColors.ink(0.70)),
-          ),
-          SizedBox(height: 10),
-          for (final q in JourneyQuestions.mentorToSeeker) ...[
-            Text(q.text, style: SelahText.body(size: 14)),
-            SizedBox(height: 6),
-            TextField(
-              controller: _controllers[q.id],
-              maxLines: 3,
-              style: TextStyle(color: Colors.white),
-              decoration: InputDecoration(
-                filled: true,
-                fillColor: SelahColors.foreground.withValues(alpha: 0.06),
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(10),
-                  borderSide: BorderSide.none,
-                ),
-                hintText: 'Your answer…',
-                hintStyle: TextStyle(color: SelahColors.ink(0.38)),
-              ),
-            ),
-            SizedBox(height: 16),
-          ],
-          SizedBox(
-            width: double.infinity,
-            child: Center(
-              child: _JourneyRoundAction(
-                label: 'Share my answers',
-                icon: Icons.send_outlined,
-                onTap: _submit,
-              ),
-            ),
-          ),
-        ],
-      ),
+    return SelahFamilyCompatibilityView(
+      controller: _controller,
+      counterpartFirstName: widget.profile.firstName,
+      ownMainShepherdName: widget.ownMainShepherdName,
+      canAct: current,
+      onBack: widget.onBack,
+      bottomInset: 0,
     );
   }
 }

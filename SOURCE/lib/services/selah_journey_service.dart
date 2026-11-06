@@ -1364,8 +1364,9 @@ class SelahJourneyService {
     }
   }
 
-  /// [direction] is 'seeker_to_mentor' or 'mentor_to_seeker'. Plain
-  /// insert, same reasoning as submitPhaseAnswer.
+  /// LOCK 22 uses 'mentor_to_seeker' for each Seeker's own four answers.
+  /// Historical directions and rows remain stored; no schema is changed.
+  /// Plain insert, same reasoning as submitPhaseAnswer.
   /// inherited decision 167: true when the answer is ON THE SERVER — including the
   /// duplicate-key case, which means a retry of an insert that already
   /// landed. False is a real failure the caller must SAY, not swallow.
@@ -1377,6 +1378,12 @@ class SelahJourneyService {
   ) async {
     final user = SelahAuth.currentUser;
     if (user == null) return false;
+    if (direction != 'mentor_to_seeker' ||
+        !JourneyQuestions.family.any((question) => question.id == questionId) ||
+        answerText.trim().isEmpty ||
+        !JourneyQuestions.familyAnswerFitsCharacterLimit(answerText)) {
+      return false;
+    }
     return runSelahTruthfulWrite(
       context: 'submitFamilyAnswer($matchId/$questionId)',
       duplicateIsSuccess: true,
@@ -1390,9 +1397,9 @@ class SelahJourneyService {
     );
   }
 
-  /// {questionId: answerText}. Ordered by created_at ASCENDING so that if
-  /// multiple rows ever share a question_id (multiple answerers on
-  /// one side), the later insert wins in the returned map.
+  /// {questionId: answerText} for one exact answerer, oldest-to-newest so
+  /// a later retry wins within that person's answers. A missing/blank actor
+  /// fails closed rather than merging two Seekers into a completed answer set.
   ///
   /// The `ascending: true` is load-bearing and was missing until 2026-08-11.
   /// postgrest-dart defaults .order() to DESCENDING, so the map was being
@@ -1401,8 +1408,10 @@ class SelahJourneyService {
   /// right about the intent and the code had never matched it.
   static Future<Map<String, String>> fetchFamilyAnswers(
     String matchId,
-    String direction,
-  ) async {
+    String direction, {
+    String? answererId,
+  }) async {
+    if (answererId == null || answererId.trim().isEmpty) return {};
     try {
       final rows =
           await supabase
@@ -1410,6 +1419,7 @@ class SelahJourneyService {
                   .select('question_id, answer_text, created_at')
                   .eq('match_id', matchId)
                   .eq('direction', direction)
+                  .eq('answerer_id', answererId)
                   .order('created_at', ascending: true)
               as List;
 

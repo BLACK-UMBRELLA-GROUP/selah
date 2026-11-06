@@ -223,57 +223,45 @@ class JourneyQuestions {
     return questions.isEmpty ? null : questions;
   }
 
-  // family_stage, shown as "Family Compatibility" — Seeker<->Mentor
-  // directions only. Mentor
-  // <-> Mentor engagement is explicitly marked TBC in the source spec
-  // ("Exact format and questions: TBC") and is not built here.
+  /// LOCK 22: each Seeker answers the other Seeker's Shepherd. The old
+  /// two-direction question IDs remain in storage, never in this list.
+  static const int familyAnswerCharacterLimit = 400;
 
-  /// Questions the SEEKER asks the OTHER PARTY's Shepherd.
-  static const List<JourneyQuestion> seekerToMentor = [
+  static bool familyAnswerFitsCharacterLimit(String answer) =>
+      answer.runes.length <= familyAnswerCharacterLimit;
+
+  static const List<JourneyQuestion> family = [
     JourneyQuestion(
-      id: 'fam_stw_q1',
-      text: 'What are your expectations for this marriage?',
-      topic: 'expectations for the marriage',
+      id: 'fam_q1',
+      text: 'How have you seen God lead you in this Journey so far?',
+      topic: '',
     ),
     JourneyQuestion(
-      id: 'fam_stw_q2',
-      text: 'How involved would you like to be in our life together?',
-      topic: 'how involved the family will be',
-    ),
-    JourneyQuestion(
-      id: 'fam_stw_q3',
-      text: 'What are your hopes for your daughter/son in this marriage?',
-      topic: 'their hopes for you',
-    ),
-    JourneyQuestion(
-      id: 'fam_stw_q4',
+      id: 'fam_q2',
       text:
-          'Is there anything about our family you would like to understand better before we go further?',
-      topic: 'understanding each other’s families',
+          'Which church would you belong to together, and how would you serve there?',
+      topic: '',
+    ),
+    JourneyQuestion(
+      id: 'fam_q3',
+      text:
+          'How will you welcome <Name>’s family and church into your life together?',
+      topic: '',
+    ),
+    JourneyQuestion(
+      id: 'fam_q4',
+      text: 'Who will you turn to for counsel and prayer when things are hard?',
+      topic: '',
     ),
   ];
 
-  /// Questions a MENTOR asks the OTHER PARTY's Seeker.
-  static const List<JourneyQuestion> mentorToSeeker = [
-    JourneyQuestion(
-      id: 'fam_wts_q1',
-      text: 'Why do you want to marry?',
-      topic: 'why you want to marry',
-    ),
-    JourneyQuestion(
-      id: 'fam_wts_q2',
-      text: 'What are your long-term intentions with my son/daughter?',
-      topic: 'your intentions',
-    ),
-    JourneyQuestion(
-      id: 'fam_wts_q3',
-      text: 'How will you support a family, financially and otherwise?',
-      topic: 'providing for a family',
-    ),
-    JourneyQuestion(
-      id: 'fam_wts_q4',
-      text: 'How do you plan to involve our family in your life together?',
-      topic: 'involving family',
-    ),
-  ];
+  static List<JourneyQuestion> familyFor(String otherName) =>
+      List.unmodifiable([
+        for (final question in family)
+          JourneyQuestion(
+            id: question.id,
+            text: question.text.replaceAll('<Name>', otherName),
+            topic: question.topic,
+          ),
+      ]);
 }

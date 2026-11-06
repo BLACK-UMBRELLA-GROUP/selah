@@ -217,7 +217,7 @@ void _expectStates(WidgetTester tester, Map<String, String> expected) {
   expect(cards.map((card) => card.profile.id), expected.keys);
   for (final card in cards) {
     expect(card.stateLabel, expected[card.profile.id]);
-    expect(card.stageLabel, 'First greeting');
+    expect(card.stageLabel, 'Stage 1 of 7 · First greeting');
   }
 }
 
@@ -439,6 +439,13 @@ void main() {
           expect(
             find.descendant(of: card, matching: find.text('First greeting')),
             findsNothing,
+          );
+          expect(
+            find.descendant(
+              of: card,
+              matching: find.text('Stage 1 of 7 · First greeting'),
+            ),
+            findsOneWidget,
           );
           final photo = find.descendant(of: card, matching: find.byType(Image));
           expect(photo, findsOneWidget);

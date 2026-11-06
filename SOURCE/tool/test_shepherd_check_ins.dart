@@ -1,4 +1,5 @@
 import 'package:selah/data/selah_journey_stages.dart';
+import 'package:selah/data/journey_questions.dart';
 import 'package:selah/dev/selah_view_request_draft_model.dart';
 import 'package:selah/models/selah_journey_stage_change.dart';
 import 'package:selah/models/selah_shepherd_dashboard.dart';
@@ -129,6 +130,17 @@ void runShepherdCheckInChecks(void Function(bool, String) check) {
     if (stage.value == 'compatibility_reveal') {
       model.chooseCompatibilityReveal(id);
       model.simulatePeerCompatibilityReveal(id);
+    }
+    if (stage.value == 'family_stage') {
+      final answers = {
+        for (final question in JourneyQuestions.family)
+          question.id: 'Local answer to ${question.id}.',
+      };
+      for (final answer in answers.entries) {
+        model.setFamilyAnswer(id, answer.key, answer.value);
+      }
+      model.sendFamilyAnswers(id);
+      model.simulatePeerFamilyAnswers(id, answers, canSimulate: () => true);
     }
     model.chooseStageContinue(id);
     model.simulatePeerStageContinue(id);

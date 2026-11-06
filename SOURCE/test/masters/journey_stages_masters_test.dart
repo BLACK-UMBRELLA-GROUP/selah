@@ -20,6 +20,7 @@ import 'package:selah/widgets/selah_shell_navigation.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'master_capture.dart';
+import 'family_stage_driver.dart';
 
 const _person = 'draft-sara';
 final _capture = MasterCaptureHarness(
@@ -153,6 +154,9 @@ Future<MasterScreen> _reachStage(WidgetTester tester, String target) async {
     } else if (journey.stage.value == 'compatibility_reveal') {
       await _journeyAction(tester, 'draft_reveal_$_person');
       await _journeyAction(tester, 'draft_peer_reveal_$_person');
+    } else if (journey.stage.value == 'family_stage') {
+      await _journeyAction(tester, 'draft_family_open_$_person');
+      await finishFamilyAnswers(tester, journeyId: _person);
     }
     await _journeyAction(tester, 'draft_stage_ready_$_person');
     await _journeyAction(tester, 'draft_stage_peer_ready_$_person');

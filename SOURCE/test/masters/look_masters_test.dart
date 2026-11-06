@@ -24,6 +24,23 @@ import 'master_capture.dart';
 final _look = Directory('../APP/APPROVED/LOOK').absolute;
 final _captureHarness = MasterCaptureHarness(feature: 'LOOK');
 final _profileCapture = MasterCaptureHarness(feature: 'LOOK', version: 'V1_1');
+// Exact current fixture images already reviewed under the later LOCKs. Keep
+// earlier LOOK evidence intact instead of updating its historical snapshots.
+final _stagesCapture = MasterCaptureHarness(
+  feature: 'JOURNEY_STAGES',
+  wordingRevision: false,
+);
+final _introduceCapture = MasterCaptureHarness(
+  feature: 'SHEPHERD_INTRODUCE',
+  wordingRevision: false,
+);
+// These distinct initial/preparing fixtures are not the phase-1 fixtures in
+// JOURNEY_STAGES/V1. Record them separately under LOCK21; never substitute data.
+final _initialJourneyCapture = MasterCaptureHarness(
+  feature: 'LOOK',
+  version: 'LOCK21_V1',
+  wordingRevision: false,
+);
 
 // Features absent from the current app are deliberately not reconstructed in
 // tests. The two absent async states are also not invented for screenshots.
@@ -166,22 +183,23 @@ Future<void> _preparingJourney(WidgetTester tester) async {
   await _tab(tester, 'Journey');
 }
 
-Future<void> _capture(
-  WidgetTester tester,
-  MasterScreen screen,
-  String master,
-) =>
-    (const {
-              'L01_seeker_profile__faith',
-              'L01_seeker_browse__profile',
-              'L01_seeker_journeys__pending_and_free_place',
-              'L01_seeker_journey__stages',
-              'L01_seeker_my_selah__request',
-              'L01_shepherd_seekers',
-            }.contains(master)
-            ? _profileCapture
-            : _captureHarness)
-        .capture(tester, screen, master);
+Future<void> _capture(WidgetTester tester, MasterScreen screen, String master) {
+  final harness = switch (master) {
+    'L01_seeker_profile__faith' ||
+    'L01_seeker_my_selah__request' => _stagesCapture,
+    'L01_shepherd_seekers' => _introduceCapture,
+    'L01_seeker_journeys__pending_and_free_place' ||
+    'L01_seeker_journey__stages' => _initialJourneyCapture,
+    'L01_seeker_browse__profile' => _profileCapture,
+    _ => _captureHarness,
+  };
+  return harness.capture(
+    tester,
+    screen,
+    master,
+    masterFile: File('${_look.path}/MASTERS/$master.png'),
+  );
+}
 
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();

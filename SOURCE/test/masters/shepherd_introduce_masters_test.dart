@@ -27,6 +27,12 @@ final _capture = MasterCaptureHarness(
   feature: 'SHEPHERD_INTRODUCE',
   wordingRevision: false,
 );
+// LOCK20 supersedes only the older Dashboard snapshots. These same real-root
+// Prayer cases now assert its reviewed evidence, preserving LOCK19 history.
+final _dashboardCapture = MasterCaptureHarness(
+  feature: 'SHEPHERD_DASHBOARD',
+  wordingRevision: false,
+);
 const _masters = {
   'L19_introduce',
   'L19_introduce__for_joel',
@@ -409,7 +415,7 @@ void main() {
         await _preset(tester, 'prayer_empty');
       }
       await _expireNotice(tester);
-      await _capture.capture(
+      await _dashboardCapture.capture(
         tester,
         screen,
         'L10_shepherd_dashboard__$state',

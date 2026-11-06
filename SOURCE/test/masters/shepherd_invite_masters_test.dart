@@ -44,6 +44,12 @@ final _correctionCapture = MasterCaptureHarness(
   feature: 'SHEPHERD_INVITE',
   version: 'V1_1',
 );
+final _draftReviewCapture = MasterCaptureHarness(
+  feature: 'SHEPHERD_INVITE',
+  // The isolated age31 fixture stays distinct from LOCK19's age30 root.
+  version: 'LOCK19_V1',
+  wordingRevision: false,
+);
 
 Finder _key(String value) => find.byKey(ValueKey<String>(value));
 
@@ -351,6 +357,9 @@ void main() {
   });
 
   testWidgets('Shepherd invitation: real review screen', (tester) async {
+    // This LOCK3 opposite-direction component fixture represents the offline
+    // draft's Shepherd dock (LOCK19). The retained from/theirAnswer caller and
+    // real HomeShell Network contract are separate and remain untouched.
     final screen = await _capture.mount(
       tester,
       home: AcceptShepherdInviteScreen.seekerRequest(
@@ -367,7 +376,10 @@ void main() {
         bottomNavigation: SelahShellNavigation(
           items: const [
             FloatingNavItem(icon: Icons.dashboard_outlined, label: 'Dashboard'),
-            FloatingNavItem(icon: Icons.diversity_3_outlined, label: 'Network'),
+            FloatingNavItem(
+              icon: Icons.diversity_3_outlined,
+              label: 'Introduce',
+            ),
             FloatingNavItem(icon: Icons.people_outline, label: 'Seekers'),
             FloatingNavItem(icon: Icons.person_outline, label: 'Profile'),
           ],
@@ -378,7 +390,11 @@ void main() {
     );
     await tester.pumpAndSettle();
     expect(find.text('Be James’s Shepherd?'), findsOneWidget);
-    await _correctionCapture.capture(tester, screen, 'L03_shepherd_invitation');
+    await _draftReviewCapture.capture(
+      tester,
+      screen,
+      'L03_shepherd_invitation',
+    );
   });
 
   testWidgets(

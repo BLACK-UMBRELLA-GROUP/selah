@@ -329,7 +329,13 @@ void main() {
       await _signup(tester);
       await _tap(tester, _key('draft_back'));
       await _tap(tester, _key('invite_shepherd_accepts'));
+      await _journey(tester);
+      await tester.binding.handlePopRoute();
+      await tester.pumpAndSettle();
+      expect(tester.takeException(), isNull);
       await _shepherd(tester);
+      await _tab(tester, 'Seekers');
+      await _tap(tester, find.text('Open current Journey'));
       await _tap(tester, find.text('View profile'));
       expect(find.byType(SelahOneJourneyBrowsePresentation), findsOneWidget);
       final gallery = _key('concept_browse_photo_gallery');

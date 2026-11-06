@@ -1,0 +1,1271 @@
+{
+  "purpose": "Exact later-LOCK golden routing audit; no product source/design changes",
+  "generatedUtc": "2026-11-06T23:34:57.524970+00:00",
+  "scope": "Five master test files only; generic master_capture and exact comparator/tolerance unchanged. No assertions removed, no skips added.",
+  "originalFullSuiteLog": "SOURCE/build/test_logs/family27_full_before_locked_references.log",
+  "originalFullSuiteResult": "488 PASS,1 existing skip,23 failures:6 theme caption assertions handled by root;16 golden cases below;1 separate marriage_upfront navigation driver handled by QA.",
+  "retargetedCaseCount": 13,
+  "newVersionedPairCount": 3,
+  "newPngCount": 6,
+  "newPngBytes": 1970490,
+  "captureResult": "3 PASS (exact-name filter only)",
+  "finalFocusedReplay": "72 PASS, exit0; all6 files including QA-owned marriage_upfront navigation repair.",
+  "scopedAnalysis": "Five edited master test files: No issues found.",
+  "historicalEvidence": "No historical PNG overwritten. Only3 new versioned comparisons written;13 later evidence routes tested plain.",
+  "knownDifferences": [
+    "LOOK accepted/preparing fixture remains Grace Start Journey and initial stage fixture remains Esther stage1, while the re-rendered masters depict Esther phase1 plus pending/free-place topology. Existing fixture data/architecture retained and disclosed, not replaced to force a match.",
+    "Isolated draft invitation remains James31 with existing bundled photo crop; current actualRoot fixture is James30 and is not substituted.",
+    "Native status area, bundled font metrics, private developer rail and existing vertical Journey architecture remain the previously documented browser-master differences."
+  ],
+  "routes": [
+    {
+      "testFile": "SOURCE/test/masters/look_masters_test.dart",
+      "master": "L01_seeker_my_selah__request",
+      "locks": [
+        21
+      ],
+      "reason": "Full-suite actual comparison PNG exactly matches reviewed LOCK21 evidence; same unchanged fixture facts.",
+      "newCapture": false,
+      "reference": {
+        "path": "APP/APPROVED/LOOK/MASTERS/L01_seeker_my_selah__request.png",
+        "bytes": 209397,
+        "sha256": "5b929a8a5fa34f42c7544f54a6c3579b8c566a2891c3c74c77488821e3176ca0",
+        "width": 1290,
+        "height": 2796
+      },
+      "oldBaseline": [
+        {
+          "path": "APP/APPROVED/LOOK/BUILT/V1_1_WORDING_V1/L01_seeker_my_selah__request__build.png",
+          "bytes": 165349,
+          "sha256": "1a82ecd7a0885d69fe53ce9c8b08223d8b4ab59116ee08436dbd650deacaee10",
+          "width": 1290,
+          "height": 2796
+        },
+        {
+          "path": "APP/APPROVED/LOOK/BUILT/V1_1_WORDING_V1/L01_seeker_my_selah__request__master_beside_build.png",
+          "bytes": 406951,
+          "sha256": "e9f8450c1722c2c153e55afea33abd4221645ba0753b174e1b883b133d3294a9",
+          "width": 2580,
+          "height": 2796
+        }
+      ],
+      "newBaseline": [
+        {
+          "path": "APP/APPROVED/JOURNEY_STAGES/BUILT/V1/L01_seeker_my_selah__request__build.png",
+          "bytes": 165349,
+          "sha256": "1a82ecd7a0885d69fe53ce9c8b08223d8b4ab59116ee08436dbd650deacaee10",
+          "width": 1290,
+          "height": 2796
+        },
+        {
+          "path": "APP/APPROVED/JOURNEY_STAGES/BUILT/V1/L01_seeker_my_selah__request__master_beside_build.png",
+          "bytes": 389392,
+          "sha256": "e0d3f16582d5367032ffa5bcde613122f067b12be878a50ebc226090024c5ae4",
+          "width": 2580,
+          "height": 2796
+        }
+      ]
+    },
+    {
+      "testFile": "SOURCE/test/masters/look_masters_test.dart",
+      "master": "L01_seeker_profile__faith",
+      "locks": [
+        21
+      ],
+      "reason": "Full-suite actual comparison PNG exactly matches reviewed LOCK21 evidence; same unchanged fixture facts.",
+      "newCapture": false,
+      "reference": {
+        "path": "APP/APPROVED/LOOK/MASTERS/L01_seeker_profile__faith.png",
+        "bytes": 276051,
+        "sha256": "29a9f1223245a60a7d6c273bdef80ad8918f989256c0b34f3ee4455bebf0bd0a",
+        "width": 1290,
+        "height": 2796
+      },
+      "oldBaseline": [
+        {
+          "path": "APP/APPROVED/LOOK/BUILT/V1_1_WORDING_V1/L01_seeker_profile__faith__build.png",
+          "bytes": 264013,
+          "sha256": "75bafebc06d822f0c7b1bf3727f238b7ae92593b9675d2779028c5e8e5c1c8cf",
+          "width": 1290,
+          "height": 2796
+        },
+        {
+          "path": "APP/APPROVED/LOOK/BUILT/V1_1_WORDING_V1/L01_seeker_profile__faith__master_beside_build.png",
+          "bytes": 496517,
+          "sha256": "d9026b6f12b6ec91c39f4abad6fe1997946d49393d1293a69e92216578d7265a",
+          "width": 2580,
+          "height": 2796
+        }
+      ],
+      "newBaseline": [
+        {
+          "path": "APP/APPROVED/JOURNEY_STAGES/BUILT/V1/L01_seeker_profile__faith__build.png",
+          "bytes": 264013,
+          "sha256": "75bafebc06d822f0c7b1bf3727f238b7ae92593b9675d2779028c5e8e5c1c8cf",
+          "width": 1290,
+          "height": 2796
+        },
+        {
+          "path": "APP/APPROVED/JOURNEY_STAGES/BUILT/V1/L01_seeker_profile__faith__master_beside_build.png",
+          "bytes": 564580,
+          "sha256": "43ed5cb9ec10dfd350c4a2cb203219b5c1fcb7232b4b1193c28fa87b649e41e4",
+          "width": 2580,
+          "height": 2796
+        }
+      ]
+    },
+    {
+      "testFile": "SOURCE/test/masters/look_masters_test.dart",
+      "master": "L01_shepherd_seekers",
+      "locks": [
+        19
+      ],
+      "reason": "Same no-Journey fixture exactly matches reviewed LOCK19 dock evidence; LOCK21 phase1 fixture deliberately not substituted.",
+      "newCapture": false,
+      "reference": {
+        "path": "APP/APPROVED/LOOK/MASTERS/L01_shepherd_seekers.png",
+        "bytes": 267072,
+        "sha256": "15bb4b47ba04368b61eeeb64935e5c26ef9e15a2f931c5f42307acbd30e4726f",
+        "width": 1290,
+        "height": 2796
+      },
+      "oldBaseline": [
+        {
+          "path": "APP/APPROVED/LOOK/BUILT/V1_1_WORDING_V1/L01_shepherd_seekers__build.png",
+          "bytes": 215940,
+          "sha256": "e07360e00babaf49f48376b8bb68104159961b7dae4a9d68139c1a662df68775",
+          "width": 1290,
+          "height": 2796
+        },
+        {
+          "path": "APP/APPROVED/LOOK/BUILT/V1_1_WORDING_V1/L01_shepherd_seekers__master_beside_build.png",
+          "bytes": 523445,
+          "sha256": "19b249914f30746ee339d85573ae4b9bb8f6296d761a1c3ff226128a3bd9dc1d",
+          "width": 2580,
+          "height": 2796
+        }
+      ],
+      "newBaseline": [
+        {
+          "path": "APP/APPROVED/SHEPHERD_INTRODUCE/BUILT/V1/L01_shepherd_seekers__build.png",
+          "bytes": 214378,
+          "sha256": "9394640c9cf30365245689e0feb6aa23ddd51dd2cc7006ef84dab8767c3e658e",
+          "width": 1290,
+          "height": 2796
+        },
+        {
+          "path": "APP/APPROVED/SHEPHERD_INTRODUCE/BUILT/V1/L01_shepherd_seekers__master_beside_build.png",
+          "bytes": 504709,
+          "sha256": "161ff2df8c791645d0467f882f1ddd878e3dcfa089c6de26fe609f467700c40d",
+          "width": 2580,
+          "height": 2796
+        }
+      ]
+    },
+    {
+      "testFile": "SOURCE/test/masters/look_masters_test.dart",
+      "master": "L01_seeker_journeys__pending_and_free_place",
+      "locks": [
+        19,
+        21
+      ],
+      "reason": "Distinct accepted/preparing Grace or initial stage1 fixture retained. Current reviewed seven-stage/header behavior requires separate evidence, not a phase1 fixture substitution.",
+      "newCapture": true,
+      "reference": {
+        "path": "APP/APPROVED/LOOK/MASTERS/L01_seeker_journeys__pending_and_free_place.png",
+        "bytes": 223021,
+        "sha256": "1913548e9cc18f66d41528e6a5a24a4d81a5f919e3403b372ca8e09ba856ddcc",
+        "width": 1290,
+        "height": 2796
+      },
+      "oldBaseline": [
+        {
+          "path": "APP/APPROVED/LOOK/BUILT/V1_1_WORDING_V1/L01_seeker_journeys__pending_and_free_place__build.png",
+          "bytes": 209608,
+          "sha256": "e7d7efbf4cbdedbf4430fefe5c4547560a575975dd3c48204f869a85a27d83e6",
+          "width": 1290,
+          "height": 2796
+        },
+        {
+          "path": "APP/APPROVED/LOOK/BUILT/V1_1_WORDING_V1/L01_seeker_journeys__pending_and_free_place__master_beside_build.png",
+          "bytes": 458529,
+          "sha256": "beadccfbc03029c139fba93d87942379150a9e40f446c3f13552ac6d59f85080",
+          "width": 2580,
+          "height": 2796
+        }
+      ],
+      "newBaseline": [
+        {
+          "path": "APP/APPROVED/LOOK/BUILT/LOCK21_V1/L01_seeker_journeys__pending_and_free_place__build.png",
+          "bytes": 209608,
+          "sha256": "e7d7efbf4cbdedbf4430fefe5c4547560a575975dd3c48204f869a85a27d83e6",
+          "width": 1290,
+          "height": 2796
+        },
+        {
+          "path": "APP/APPROVED/LOOK/BUILT/LOCK21_V1/L01_seeker_journeys__pending_and_free_place__master_beside_build.png",
+          "bytes": 444184,
+          "sha256": "2c78807360ffe8ff9f7872f44d1c8f145022e9c1c71170b7534e7b62a74b10d6",
+          "width": 2580,
+          "height": 2796
+        }
+      ]
+    },
+    {
+      "testFile": "SOURCE/test/masters/look_masters_test.dart",
+      "master": "L01_seeker_journey__stages",
+      "locks": [
+        19,
+        21
+      ],
+      "reason": "Distinct accepted/preparing Grace or initial stage1 fixture retained. Current reviewed seven-stage/header behavior requires separate evidence, not a phase1 fixture substitution.",
+      "newCapture": true,
+      "reference": {
+        "path": "APP/APPROVED/LOOK/MASTERS/L01_seeker_journey__stages.png",
+        "bytes": 264921,
+        "sha256": "19e5da21cbeb47db2e76532b1d7a327924324023381a79149cf066e117fb5865",
+        "width": 1290,
+        "height": 2796
+      },
+      "oldBaseline": [
+        {
+          "path": "APP/APPROVED/LOOK/BUILT/V1_1_WORDING_V1/L01_seeker_journey__stages__build.png",
+          "bytes": 75852,
+          "sha256": "2454cf34407b1d98482d442e24872fcb46017fc574782982ac1586c6110b3eba",
+          "width": 1290,
+          "height": 2796
+        },
+        {
+          "path": "APP/APPROVED/LOOK/BUILT/V1_1_WORDING_V1/L01_seeker_journey__stages__master_beside_build.png",
+          "bytes": 361592,
+          "sha256": "ef6be3daf81c36bb053021b5a37179dbe8fc22d0d44740d0de076d815df54dba",
+          "width": 2580,
+          "height": 2796
+        }
+      ],
+      "newBaseline": [
+        {
+          "path": "APP/APPROVED/LOOK/BUILT/LOCK21_V1/L01_seeker_journey__stages__build.png",
+          "bytes": 94803,
+          "sha256": "fd69cda68dfdf350bfba37e21087da0444e0e13ac979d2219a696be213b5f92c",
+          "width": 1290,
+          "height": 2796
+        },
+        {
+          "path": "APP/APPROVED/LOOK/BUILT/LOCK21_V1/L01_seeker_journey__stages__master_beside_build.png",
+          "bytes": 383031,
+          "sha256": "f191123e64594fdcf8847d24958c1f2ffc8ddc8ffe71023c968948c595592b33",
+          "width": 2580,
+          "height": 2796
+        }
+      ]
+    },
+    {
+      "testFile": "SOURCE/test/masters/marriage_prep_masters_test.dart",
+      "master": "L09_marriage_prep__not_started",
+      "locks": [
+        21,
+        22
+      ],
+      "reason": "Full-suite actual build bytes match LOCK21 reviewed conversation7 evidence. Real new4answers/ownSend/peerSend driver reaches same stage under LOCK22.",
+      "newCapture": false,
+      "reference": {
+        "path": "APP/APPROVED/MARRIAGE_PREP/MASTERS/L09_marriage_prep__not_started.png",
+        "bytes": 298667,
+        "sha256": "e6cff8738ee66718f8e43310c41586a144bea94b86d47e16c301a3faa6fd5c53",
+        "width": 1290,
+        "height": 2796
+      },
+      "oldBaseline": [
+        {
+          "path": "APP/APPROVED/MARRIAGE_PREP/BUILT/V1_2_WORDING_V1/L09_marriage_prep__not_started__build.png",
+          "bytes": 227683,
+          "sha256": "14fcc1a8196be7fc1401099439873effd8490ebc6f3247409b37aa377bb35fa5",
+          "width": 1290,
+          "height": 2796
+        },
+        {
+          "path": "APP/APPROVED/MARRIAGE_PREP/BUILT/V1_2_WORDING_V1/L09_marriage_prep__not_started__master_beside_build.png",
+          "bytes": 552716,
+          "sha256": "87b944ad7591fa942790c189b8c4cdad4ea5547590859c5d261725422087afe7",
+          "width": 2580,
+          "height": 2796
+        }
+      ],
+      "newBaseline": [
+        {
+          "path": "APP/APPROVED/JOURNEY_STAGES/BUILT/V1/L09_marriage_prep__not_started__build.png",
+          "bytes": 245503,
+          "sha256": "70afe4a59a7da255e25c04a321f34fea87d9cbfe04c792040a18e49a842ecd42",
+          "width": 1290,
+          "height": 2796
+        },
+        {
+          "path": "APP/APPROVED/JOURNEY_STAGES/BUILT/V1/L09_marriage_prep__not_started__master_beside_build.png",
+          "bytes": 573319,
+          "sha256": "5b22b18dd1c81ef34d133acf30425a9915ba75335212d7cfcea81c424bf6717d",
+          "width": 2580,
+          "height": 2796
+        }
+      ]
+    },
+    {
+      "testFile": "SOURCE/test/masters/marriage_prep_masters_test.dart",
+      "master": "L09_marriage_prep__one_done",
+      "locks": [
+        21,
+        22
+      ],
+      "reason": "Full-suite actual build bytes match LOCK21 reviewed conversation7 evidence. Real new4answers/ownSend/peerSend driver reaches same stage under LOCK22.",
+      "newCapture": false,
+      "reference": {
+        "path": "APP/APPROVED/MARRIAGE_PREP/MASTERS/L09_marriage_prep__one_done.png",
+        "bytes": 298086,
+        "sha256": "e096091289a1babae112e3bb23e28db4c132c9287a79c8b78f4221560c06d6b8",
+        "width": 1290,
+        "height": 2796
+      },
+      "oldBaseline": [
+        {
+          "path": "APP/APPROVED/MARRIAGE_PREP/BUILT/V1_2_WORDING_V1/L09_marriage_prep__one_done__build.png",
+          "bytes": 226743,
+          "sha256": "bd9f997c69c471c7efae0c9acf59bc673f2cb03b0438e8dd64319a9238e09a8e",
+          "width": 1290,
+          "height": 2796
+        },
+        {
+          "path": "APP/APPROVED/MARRIAGE_PREP/BUILT/V1_2_WORDING_V1/L09_marriage_prep__one_done__master_beside_build.png",
+          "bytes": 551480,
+          "sha256": "b8d9c58534122e59825b686560a70840c6ee94ec797674311c024016d9693f0d",
+          "width": 2580,
+          "height": 2796
+        }
+      ],
+      "newBaseline": [
+        {
+          "path": "APP/APPROVED/JOURNEY_STAGES/BUILT/V1/L09_marriage_prep__one_done__build.png",
+          "bytes": 244622,
+          "sha256": "e86123ea073c50752b79217ef417f6e6eb263cf847154d10f3739ce18b01d975",
+          "width": 1290,
+          "height": 2796
+        },
+        {
+          "path": "APP/APPROVED/JOURNEY_STAGES/BUILT/V1/L09_marriage_prep__one_done__master_beside_build.png",
+          "bytes": 572006,
+          "sha256": "17ba6de509c0c627af883f56e894d61c7df626503391018028099cc6512bb8b7",
+          "width": 2580,
+          "height": 2796
+        }
+      ]
+    },
+    {
+      "testFile": "SOURCE/test/masters/marriage_prep_masters_test.dart",
+      "master": "L09_marriage_prep__all_done",
+      "locks": [
+        21,
+        22
+      ],
+      "reason": "Full-suite actual build bytes match LOCK21 reviewed conversation7 evidence. Real new4answers/ownSend/peerSend driver reaches same stage under LOCK22.",
+      "newCapture": false,
+      "reference": {
+        "path": "APP/APPROVED/MARRIAGE_PREP/MASTERS/L09_marriage_prep__all_done.png",
+        "bytes": 296655,
+        "sha256": "11532ed658aee78d5bfb7c6e281a4ca764ab2712c61ca387d3e48af3384b6734",
+        "width": 1290,
+        "height": 2796
+      },
+      "oldBaseline": [
+        {
+          "path": "APP/APPROVED/MARRIAGE_PREP/BUILT/V1_2_WORDING_V1/L09_marriage_prep__all_done__build.png",
+          "bytes": 224541,
+          "sha256": "50f1f2885003495b66f4b8f2ae4e90db17d6bf57e9f4dcf892272cb8bab7f8a1",
+          "width": 1290,
+          "height": 2796
+        },
+        {
+          "path": "APP/APPROVED/MARRIAGE_PREP/BUILT/V1_2_WORDING_V1/L09_marriage_prep__all_done__master_beside_build.png",
+          "bytes": 548105,
+          "sha256": "d67e3e4664c13a5f1901e565e19c81799e14bdc84a56237a0481b61de2bede89",
+          "width": 2580,
+          "height": 2796
+        }
+      ],
+      "newBaseline": [
+        {
+          "path": "APP/APPROVED/JOURNEY_STAGES/BUILT/V1/L09_marriage_prep__all_done__build.png",
+          "bytes": 242449,
+          "sha256": "fb03c942c247b69eef5c1bea4a274ee46c390b0c9d308b9cce4302d88243b18b",
+          "width": 1290,
+          "height": 2796
+        },
+        {
+          "path": "APP/APPROVED/JOURNEY_STAGES/BUILT/V1/L09_marriage_prep__all_done__master_beside_build.png",
+          "bytes": 568627,
+          "sha256": "fbcef2469296a7cc91ab2c6724cab3edb2087c918bf013410b61693f94b0379a",
+          "width": 2580,
+          "height": 2796
+        }
+      ]
+    },
+    {
+      "testFile": "SOURCE/test/masters/marriage_prep_masters_test.dart",
+      "master": "L09_marriage_prep__didnt_save",
+      "locks": [
+        21,
+        22
+      ],
+      "reason": "Full-suite actual build bytes match LOCK21 reviewed conversation7 evidence. Real new4answers/ownSend/peerSend driver reaches same stage under LOCK22.",
+      "newCapture": false,
+      "reference": {
+        "path": "APP/APPROVED/MARRIAGE_PREP/MASTERS/L09_marriage_prep__didnt_save.png",
+        "bytes": 294716,
+        "sha256": "fc4d804447f971b3e0b25225645090e6629de67304ba0897675d270bcc7ed9af",
+        "width": 1290,
+        "height": 2796
+      },
+      "oldBaseline": [
+        {
+          "path": "APP/APPROVED/MARRIAGE_PREP/BUILT/V1_2_WORDING_V1/L09_marriage_prep__didnt_save__build.png",
+          "bytes": 233853,
+          "sha256": "278c99e4e691a1d139663496d646c34e251f75d0bd3579dfd82cdab39aab7456",
+          "width": 1290,
+          "height": 2796
+        },
+        {
+          "path": "APP/APPROVED/MARRIAGE_PREP/BUILT/V1_2_WORDING_V1/L09_marriage_prep__didnt_save__master_beside_build.png",
+          "bytes": 557184,
+          "sha256": "24099473feb5bedf39f61bd8229a61f5a70fb38ee4a7aa15a96b57d3fdd86e65",
+          "width": 2580,
+          "height": 2796
+        }
+      ],
+      "newBaseline": [
+        {
+          "path": "APP/APPROVED/JOURNEY_STAGES/BUILT/V1/L09_marriage_prep__didnt_save__build.png",
+          "bytes": 227559,
+          "sha256": "d86094f15534095fe97a7dc3f65f59eda7dcea513465fafd64452f94924f4b43",
+          "width": 1290,
+          "height": 2796
+        },
+        {
+          "path": "APP/APPROVED/JOURNEY_STAGES/BUILT/V1/L09_marriage_prep__didnt_save__master_beside_build.png",
+          "bytes": 550959,
+          "sha256": "a8bd4bf07d4696c5ed03f41c4e3c97be95232a4271358ce00038cd7c4e21dd3d",
+          "width": 2580,
+          "height": 2796
+        }
+      ]
+    },
+    {
+      "testFile": "SOURCE/test/masters/prayer_masters_test.dart",
+      "master": "L10_shepherd_dashboard__requests",
+      "locks": [
+        19,
+        20
+      ],
+      "reason": "Same actualRoot role switch, real prayer counts/action/private empty projection; exact reviewed LOCK20 decluttered Dashboard evidence supersedes prior composition.",
+      "newCapture": false,
+      "reference": {
+        "path": "APP/APPROVED/PRAYER/MASTERS/L10_shepherd_dashboard__requests.png",
+        "bytes": 240925,
+        "sha256": "6825011c6152f243e94fdbd760e06ee44f5fcf45e539dd81fb427ace02b7b095",
+        "width": 1290,
+        "height": 2796
+      },
+      "oldBaseline": [
+        {
+          "path": "APP/APPROVED/PRAYER/BUILT/V1_FIX_LABELS/L10_shepherd_dashboard__requests__build.png",
+          "bytes": 285878,
+          "sha256": "2412d64260f5220b1a87f7b47f514a0cf357f5584e06a88ae9f17f7210b68dd4",
+          "width": 1290,
+          "height": 2796
+        },
+        {
+          "path": "APP/APPROVED/PRAYER/BUILT/V1_FIX_LABELS/L10_shepherd_dashboard__requests__master_beside_build.png",
+          "bytes": 548961,
+          "sha256": "04975a77331e4970aa19273b9e5515d19a7c7ae2190e1c1c7e0207ecad5f1c5f",
+          "width": 2580,
+          "height": 2796
+        }
+      ],
+      "newBaseline": [
+        {
+          "path": "APP/APPROVED/SHEPHERD_DASHBOARD/BUILT/V1/L10_shepherd_dashboard__requests__build.png",
+          "bytes": 229416,
+          "sha256": "466e7acc3122514441bc8e4fa0e6ab890d8b86275f60702cd5d14250eeb74e05",
+          "width": 1290,
+          "height": 2796
+        },
+        {
+          "path": "APP/APPROVED/SHEPHERD_DASHBOARD/BUILT/V1/L10_shepherd_dashboard__requests__master_beside_build.png",
+          "bytes": 488547,
+          "sha256": "b624c7190735b26657aae71b7540afab5f2c5f766b802b475b15596d5736d7ae",
+          "width": 2580,
+          "height": 2796
+        }
+      ]
+    },
+    {
+      "testFile": "SOURCE/test/masters/prayer_masters_test.dart",
+      "master": "L10_shepherd_dashboard__prayed",
+      "locks": [
+        19,
+        20
+      ],
+      "reason": "Same actualRoot role switch, real prayer counts/action/private empty projection; exact reviewed LOCK20 decluttered Dashboard evidence supersedes prior composition.",
+      "newCapture": false,
+      "reference": {
+        "path": "APP/APPROVED/PRAYER/MASTERS/L10_shepherd_dashboard__prayed.png",
+        "bytes": 240662,
+        "sha256": "be0dee0a6e872bd96e221632da368fe7af1cdc45991de9a87431e20cf6a59042",
+        "width": 1290,
+        "height": 2796
+      },
+      "oldBaseline": [
+        {
+          "path": "APP/APPROVED/PRAYER/BUILT/V1_FIX_LABELS/L10_shepherd_dashboard__prayed__build.png",
+          "bytes": 286529,
+          "sha256": "ed5055b9ec522a5d84e315f2271f18319caf521d1ad80c1f300f009258446f35",
+          "width": 1290,
+          "height": 2796
+        },
+        {
+          "path": "APP/APPROVED/PRAYER/BUILT/V1_FIX_LABELS/L10_shepherd_dashboard__prayed__master_beside_build.png",
+          "bytes": 549694,
+          "sha256": "d78021d7fd4449368a04552e8519673385a6cbda3ac68d7e8d7113f3a1ca452f",
+          "width": 2580,
+          "height": 2796
+        }
+      ],
+      "newBaseline": [
+        {
+          "path": "APP/APPROVED/SHEPHERD_DASHBOARD/BUILT/V1/L10_shepherd_dashboard__prayed__build.png",
+          "bytes": 230141,
+          "sha256": "c449a218af7e32655e33fb3fd8703d336f3948bb165427450e9d5367dbdc360f",
+          "width": 1290,
+          "height": 2796
+        },
+        {
+          "path": "APP/APPROVED/SHEPHERD_DASHBOARD/BUILT/V1/L10_shepherd_dashboard__prayed__master_beside_build.png",
+          "bytes": 488944,
+          "sha256": "74c9e8c7ec5f249b94f8d2f1503bfd1a17f9056f41c9bce37bd17b33a322d0b3",
+          "width": 2580,
+          "height": 2796
+        }
+      ]
+    },
+    {
+      "testFile": "SOURCE/test/masters/prayer_masters_test.dart",
+      "master": "L10_shepherd_dashboard__no_requests",
+      "locks": [
+        19,
+        20
+      ],
+      "reason": "Same actualRoot role switch, real prayer counts/action/private empty projection; exact reviewed LOCK20 decluttered Dashboard evidence supersedes prior composition.",
+      "newCapture": false,
+      "reference": {
+        "path": "APP/APPROVED/PRAYER/MASTERS/L10_shepherd_dashboard__no_requests.png",
+        "bytes": 256997,
+        "sha256": "5de0d4952eb6a4cecca28ec3776a04edc45e1cbfcdf09687e6ab5e4efedc2417",
+        "width": 1290,
+        "height": 2796
+      },
+      "oldBaseline": [
+        {
+          "path": "APP/APPROVED/PRAYER/BUILT/V1_FIX_LABELS/L10_shepherd_dashboard__no_requests__build.png",
+          "bytes": 294515,
+          "sha256": "95f9ea39600492dca7cce06bd8b83e72419387c639af07e29d04a6701a544b7d",
+          "width": 1290,
+          "height": 2796
+        },
+        {
+          "path": "APP/APPROVED/PRAYER/BUILT/V1_FIX_LABELS/L10_shepherd_dashboard__no_requests__master_beside_build.png",
+          "bytes": 578777,
+          "sha256": "12deeb347dff8912ac7def55f18159a6f50dbfab1b58569de9fec04fee59683c",
+          "width": 2580,
+          "height": 2796
+        }
+      ],
+      "newBaseline": [
+        {
+          "path": "APP/APPROVED/SHEPHERD_DASHBOARD/BUILT/V1/L10_shepherd_dashboard__no_requests__build.png",
+          "bytes": 212712,
+          "sha256": "f3e706708438d54ebdc06db7a080fa0d04626a3a2b3e159a15bed8cbc22c90ae",
+          "width": 1290,
+          "height": 2796
+        },
+        {
+          "path": "APP/APPROVED/SHEPHERD_DASHBOARD/BUILT/V1/L10_shepherd_dashboard__no_requests__master_beside_build.png",
+          "bytes": 492369,
+          "sha256": "c77fbaddd0a2c26890472fdfe25bbd9cbcabb42e370fc2e34739db80b50a37b2",
+          "width": 2580,
+          "height": 2796
+        }
+      ]
+    },
+    {
+      "testFile": "SOURCE/test/masters/shepherd_introduce_masters_test.dart",
+      "master": "L10_shepherd_dashboard__requests",
+      "locks": [
+        19,
+        20
+      ],
+      "reason": "Same actualRoot role switch, real prayer counts/action/private empty projection; exact reviewed LOCK20 decluttered Dashboard evidence supersedes prior composition.",
+      "newCapture": false,
+      "reference": {
+        "path": "APP/APPROVED/PRAYER/MASTERS/L10_shepherd_dashboard__requests.png",
+        "bytes": 240925,
+        "sha256": "6825011c6152f243e94fdbd760e06ee44f5fcf45e539dd81fb427ace02b7b095",
+        "width": 1290,
+        "height": 2796
+      },
+      "oldBaseline": [
+        {
+          "path": "APP/APPROVED/SHEPHERD_INTRODUCE/BUILT/V1/L10_shepherd_dashboard__requests__build.png",
+          "bytes": 286184,
+          "sha256": "cbfe0b41f5f9dc050f6bdaf7dc06dc804a7e388daee8e2ace43bca435724a53f",
+          "width": 1290,
+          "height": 2796
+        },
+        {
+          "path": "APP/APPROVED/SHEPHERD_INTRODUCE/BUILT/V1/L10_shepherd_dashboard__requests__master_beside_build.png",
+          "bytes": 549219,
+          "sha256": "0ee2d77b3d3f4abed6b37d2884f9a14f4faf19007dae98be8de78b53be45fe55",
+          "width": 2580,
+          "height": 2796
+        }
+      ],
+      "newBaseline": [
+        {
+          "path": "APP/APPROVED/SHEPHERD_DASHBOARD/BUILT/V1/L10_shepherd_dashboard__requests__build.png",
+          "bytes": 229416,
+          "sha256": "466e7acc3122514441bc8e4fa0e6ab890d8b86275f60702cd5d14250eeb74e05",
+          "width": 1290,
+          "height": 2796
+        },
+        {
+          "path": "APP/APPROVED/SHEPHERD_DASHBOARD/BUILT/V1/L10_shepherd_dashboard__requests__master_beside_build.png",
+          "bytes": 488547,
+          "sha256": "b624c7190735b26657aae71b7540afab5f2c5f766b802b475b15596d5736d7ae",
+          "width": 2580,
+          "height": 2796
+        }
+      ]
+    },
+    {
+      "testFile": "SOURCE/test/masters/shepherd_introduce_masters_test.dart",
+      "master": "L10_shepherd_dashboard__prayed",
+      "locks": [
+        19,
+        20
+      ],
+      "reason": "Same actualRoot role switch, real prayer counts/action/private empty projection; exact reviewed LOCK20 decluttered Dashboard evidence supersedes prior composition.",
+      "newCapture": false,
+      "reference": {
+        "path": "APP/APPROVED/PRAYER/MASTERS/L10_shepherd_dashboard__prayed.png",
+        "bytes": 240662,
+        "sha256": "be0dee0a6e872bd96e221632da368fe7af1cdc45991de9a87431e20cf6a59042",
+        "width": 1290,
+        "height": 2796
+      },
+      "oldBaseline": [
+        {
+          "path": "APP/APPROVED/SHEPHERD_INTRODUCE/BUILT/V1/L10_shepherd_dashboard__prayed__build.png",
+          "bytes": 286847,
+          "sha256": "407509256680e254597df5f437ed11ebc147125827f68f18666be464be53c82b",
+          "width": 1290,
+          "height": 2796
+        },
+        {
+          "path": "APP/APPROVED/SHEPHERD_INTRODUCE/BUILT/V1/L10_shepherd_dashboard__prayed__master_beside_build.png",
+          "bytes": 549969,
+          "sha256": "3b3f1641c947085071d4f72398f314b3750f23af1eabc78b070bedd3bbac7af4",
+          "width": 2580,
+          "height": 2796
+        }
+      ],
+      "newBaseline": [
+        {
+          "path": "APP/APPROVED/SHEPHERD_DASHBOARD/BUILT/V1/L10_shepherd_dashboard__prayed__build.png",
+          "bytes": 230141,
+          "sha256": "c449a218af7e32655e33fb3fd8703d336f3948bb165427450e9d5367dbdc360f",
+          "width": 1290,
+          "height": 2796
+        },
+        {
+          "path": "APP/APPROVED/SHEPHERD_DASHBOARD/BUILT/V1/L10_shepherd_dashboard__prayed__master_beside_build.png",
+          "bytes": 488944,
+          "sha256": "74c9e8c7ec5f249b94f8d2f1503bfd1a17f9056f41c9bce37bd17b33a322d0b3",
+          "width": 2580,
+          "height": 2796
+        }
+      ]
+    },
+    {
+      "testFile": "SOURCE/test/masters/shepherd_introduce_masters_test.dart",
+      "master": "L10_shepherd_dashboard__no_requests",
+      "locks": [
+        19,
+        20
+      ],
+      "reason": "Same actualRoot role switch, real prayer counts/action/private empty projection; exact reviewed LOCK20 decluttered Dashboard evidence supersedes prior composition.",
+      "newCapture": false,
+      "reference": {
+        "path": "APP/APPROVED/PRAYER/MASTERS/L10_shepherd_dashboard__no_requests.png",
+        "bytes": 256997,
+        "sha256": "5de0d4952eb6a4cecca28ec3776a04edc45e1cbfcdf09687e6ab5e4efedc2417",
+        "width": 1290,
+        "height": 2796
+      },
+      "oldBaseline": [
+        {
+          "path": "APP/APPROVED/SHEPHERD_INTRODUCE/BUILT/V1/L10_shepherd_dashboard__no_requests__build.png",
+          "bytes": 294821,
+          "sha256": "e27e308cc1aab2380d3a671d6fb8dddd58f4831999497fa512136a9e0d3c3a4f",
+          "width": 1290,
+          "height": 2796
+        },
+        {
+          "path": "APP/APPROVED/SHEPHERD_INTRODUCE/BUILT/V1/L10_shepherd_dashboard__no_requests__master_beside_build.png",
+          "bytes": 579013,
+          "sha256": "9547fb99bf261623fe6312936edacffdaad5192145b90051164549fa76295a29",
+          "width": 2580,
+          "height": 2796
+        }
+      ],
+      "newBaseline": [
+        {
+          "path": "APP/APPROVED/SHEPHERD_DASHBOARD/BUILT/V1/L10_shepherd_dashboard__no_requests__build.png",
+          "bytes": 212712,
+          "sha256": "f3e706708438d54ebdc06db7a080fa0d04626a3a2b3e159a15bed8cbc22c90ae",
+          "width": 1290,
+          "height": 2796
+        },
+        {
+          "path": "APP/APPROVED/SHEPHERD_DASHBOARD/BUILT/V1/L10_shepherd_dashboard__no_requests__master_beside_build.png",
+          "bytes": 492369,
+          "sha256": "c77fbaddd0a2c26890472fdfe25bbd9cbcabb42e370fc2e34739db80b50a37b2",
+          "width": 2580,
+          "height": 2796
+        }
+      ]
+    },
+    {
+      "testFile": "SOURCE/test/masters/shepherd_invite_masters_test.dart",
+      "master": "L03_shepherd_invitation",
+      "locks": [
+        3,
+        19
+      ],
+      "reason": "Explicit draft seekerRequest component fixture stays age31; its test-supplied dock label Network becomes Introduce under LOCK19. Separate retained from/theirAnswer constructor and HomeShell Network unchanged.",
+      "newCapture": true,
+      "reference": {
+        "path": "APP/APPROVED/SHEPHERD_INVITE/MASTERS/L03_shepherd_invitation.png",
+        "bytes": 255787,
+        "sha256": "8df09b253a136b512197102796634db54b072cf0e1948ad54d087f6fbaf6a844",
+        "width": 1290,
+        "height": 2796
+      },
+      "oldBaseline": [
+        {
+          "path": "APP/APPROVED/SHEPHERD_INVITE/BUILT/V1_1_WORDING_V1/L03_shepherd_invitation__build.png",
+          "bytes": 281119,
+          "sha256": "2b065b40e07b4e7b08e766eb32d1bd6e680c9b45933bb2bca4fd422c51baed8f",
+          "width": 1290,
+          "height": 2796
+        },
+        {
+          "path": "APP/APPROVED/SHEPHERD_INVITE/BUILT/V1_1_WORDING_V1/L03_shepherd_invitation__master_beside_build.png",
+          "bytes": 555656,
+          "sha256": "c2e0878bd623d1b5a6a006d6adb132816d59c82ee864ba1c5caa2201f2cc45e5",
+          "width": 2580,
+          "height": 2796
+        }
+      ],
+      "newBaseline": [
+        {
+          "path": "APP/APPROVED/SHEPHERD_INVITE/BUILT/LOCK19_V1/L03_shepherd_invitation__build.png",
+          "bytes": 281494,
+          "sha256": "dea5bd88f776c2727bf75800a1e53ce290efcd27699f6456e1739af734b015be",
+          "width": 1290,
+          "height": 2796
+        },
+        {
+          "path": "APP/APPROVED/SHEPHERD_INVITE/BUILT/LOCK19_V1/L03_shepherd_invitation__master_beside_build.png",
+          "bytes": 557370,
+          "sha256": "df31e6825ba96576ca22d2202583e3610b4fbc345a9dfce20eb8a794866c7ec8",
+          "width": 2580,
+          "height": 2796
+        }
+      ]
+    }
+  ],
+  "newImages": [
+    {
+      "path": "APP/APPROVED/LOOK/BUILT/LOCK21_V1/L01_seeker_journey__stages__build.png",
+      "bytes": 94803,
+      "sha256": "fd69cda68dfdf350bfba37e21087da0444e0e13ac979d2219a696be213b5f92c",
+      "width": 1290,
+      "height": 2796
+    },
+    {
+      "path": "APP/APPROVED/LOOK/BUILT/LOCK21_V1/L01_seeker_journey__stages__master_beside_build.png",
+      "bytes": 383031,
+      "sha256": "f191123e64594fdcf8847d24958c1f2ffc8ddc8ffe71023c968948c595592b33",
+      "width": 2580,
+      "height": 2796
+    },
+    {
+      "path": "APP/APPROVED/LOOK/BUILT/LOCK21_V1/L01_seeker_journeys__pending_and_free_place__build.png",
+      "bytes": 209608,
+      "sha256": "e7d7efbf4cbdedbf4430fefe5c4547560a575975dd3c48204f869a85a27d83e6",
+      "width": 1290,
+      "height": 2796
+    },
+    {
+      "path": "APP/APPROVED/LOOK/BUILT/LOCK21_V1/L01_seeker_journeys__pending_and_free_place__master_beside_build.png",
+      "bytes": 444184,
+      "sha256": "2c78807360ffe8ff9f7872f44d1c8f145022e9c1c71170b7534e7b62a74b10d6",
+      "width": 2580,
+      "height": 2796
+    },
+    {
+      "path": "APP/APPROVED/SHEPHERD_INVITE/BUILT/LOCK19_V1/L03_shepherd_invitation__build.png",
+      "bytes": 281494,
+      "sha256": "dea5bd88f776c2727bf75800a1e53ce290efcd27699f6456e1739af734b015be",
+      "width": 1290,
+      "height": 2796
+    },
+    {
+      "path": "APP/APPROVED/SHEPHERD_INVITE/BUILT/LOCK19_V1/L03_shepherd_invitation__master_beside_build.png",
+      "bytes": 557370,
+      "sha256": "df31e6825ba96576ca22d2202583e3610b4fbc345a9dfce20eb8a794866c7ec8",
+      "width": 2580,
+      "height": 2796
+    }
+  ],
+  "ownedTestFiles": [
+    {
+      "path": "SOURCE/test/masters/look_masters_test.dart",
+      "bytes": 13347,
+      "sha256": "ed9f7f81b0eb56100f723003b2647135330b851be50c0c0eecc9d6e52c88bdf6"
+    },
+    {
+      "path": "SOURCE/test/masters/marriage_prep_masters_test.dart",
+      "bytes": 12101,
+      "sha256": "e591c9658fd253a23b19e8e4948170692fc07d3c3b1261572eff201b78055a31"
+    },
+    {
+      "path": "SOURCE/test/masters/prayer_masters_test.dart",
+      "bytes": 13488,
+      "sha256": "9bd3a56bef911ee312e6d7d3c119d745332489643dcf5ac256e41dd529a93eb8"
+    },
+    {
+      "path": "SOURCE/test/masters/shepherd_introduce_masters_test.dart",
+      "bytes": 17601,
+      "sha256": "e2ec217a7ba311c8cf2daa85f4183f6333cc6d9e89fd488208372bd2c1d92f38"
+    },
+    {
+      "path": "SOURCE/test/masters/shepherd_invite_masters_test.dart",
+      "bytes": 18546,
+      "sha256": "a8d82e5dd19200dc8c49e43d2ebf4d4d756de1604d7efe11019b05ab570490f0"
+    }
+  ],
+  "diagnosticPngsBeforeFounderTrashMove": [
+    {
+      "path": "SOURCE/test/masters/failures/L01_seeker_journey__stages__build_isolatedDiff.png",
+      "bytes": 104451,
+      "sha256": "1c53efa2bb4fc5a485ffecdd007d5897cfb5e46c490465c8208c4a773bd7ec51",
+      "width": 1290,
+      "height": 2796
+    },
+    {
+      "path": "SOURCE/test/masters/failures/L01_seeker_journey__stages__build_maskedDiff.png",
+      "bytes": 127466,
+      "sha256": "5c3407bcc356eb13fa8ee06b7a2f456235d8fc0baa672f51110dbb33a4ec5f15",
+      "width": 1290,
+      "height": 2796
+    },
+    {
+      "path": "SOURCE/test/masters/failures/L01_seeker_journey__stages__build_masterImage.png",
+      "bytes": 75852,
+      "sha256": "2454cf34407b1d98482d442e24872fcb46017fc574782982ac1586c6110b3eba",
+      "width": 1290,
+      "height": 2796
+    },
+    {
+      "path": "SOURCE/test/masters/failures/L01_seeker_journey__stages__build_testImage.png",
+      "bytes": 94803,
+      "sha256": "fd69cda68dfdf350bfba37e21087da0444e0e13ac979d2219a696be213b5f92c",
+      "width": 1290,
+      "height": 2796
+    },
+    {
+      "path": "SOURCE/test/masters/failures/L01_seeker_journeys__pending_and_free_place__master_beside_build_isolatedDiff.png",
+      "bytes": 298221,
+      "sha256": "4cf6d7ef7ea16931a9676de37c02d81555553ffb6fbec5c63a123d89b5704688",
+      "width": 2580,
+      "height": 2796
+    },
+    {
+      "path": "SOURCE/test/masters/failures/L01_seeker_journeys__pending_and_free_place__master_beside_build_maskedDiff.png",
+      "bytes": 493895,
+      "sha256": "b8520bffab5c58a6f05bc83decd6a1a5f445f8c0a358bbf561a1448d3f274162",
+      "width": 2580,
+      "height": 2796
+    },
+    {
+      "path": "SOURCE/test/masters/failures/L01_seeker_journeys__pending_and_free_place__master_beside_build_masterImage.png",
+      "bytes": 458529,
+      "sha256": "beadccfbc03029c139fba93d87942379150a9e40f446c3f13552ac6d59f85080",
+      "width": 2580,
+      "height": 2796
+    },
+    {
+      "path": "SOURCE/test/masters/failures/L01_seeker_journeys__pending_and_free_place__master_beside_build_testImage.png",
+      "bytes": 444184,
+      "sha256": "2c78807360ffe8ff9f7872f44d1c8f145022e9c1c71170b7534e7b62a74b10d6",
+      "width": 2580,
+      "height": 2796
+    },
+    {
+      "path": "SOURCE/test/masters/failures/L01_seeker_my_selah__request__master_beside_build_isolatedDiff.png",
+      "bytes": 302652,
+      "sha256": "b41c1dbd5b35ac5aaaa3753c50a07c991160713130ac751e63cc2a50e1a2d879",
+      "width": 2580,
+      "height": 2796
+    },
+    {
+      "path": "SOURCE/test/masters/failures/L01_seeker_my_selah__request__master_beside_build_maskedDiff.png",
+      "bytes": 448106,
+      "sha256": "884a1b59097c1bfe126116c71dea945d8a5a168d4f4df2801af49ac90abce09b",
+      "width": 2580,
+      "height": 2796
+    },
+    {
+      "path": "SOURCE/test/masters/failures/L01_seeker_my_selah__request__master_beside_build_masterImage.png",
+      "bytes": 406951,
+      "sha256": "e9f8450c1722c2c153e55afea33abd4221645ba0753b174e1b883b133d3294a9",
+      "width": 2580,
+      "height": 2796
+    },
+    {
+      "path": "SOURCE/test/masters/failures/L01_seeker_my_selah__request__master_beside_build_testImage.png",
+      "bytes": 389392,
+      "sha256": "e0d3f16582d5367032ffa5bcde613122f067b12be878a50ebc226090024c5ae4",
+      "width": 2580,
+      "height": 2796
+    },
+    {
+      "path": "SOURCE/test/masters/failures/L01_seeker_profile__faith__master_beside_build_isolatedDiff.png",
+      "bytes": 381132,
+      "sha256": "c67f2f1fe8ecdb84e586d3801028c431c861fcbdf7f7fc12c0fde736e9f51ff0",
+      "width": 2580,
+      "height": 2796
+    },
+    {
+      "path": "SOURCE/test/masters/failures/L01_seeker_profile__faith__master_beside_build_maskedDiff.png",
+      "bytes": 627239,
+      "sha256": "1f43f128fa14f13ee52c8a06d0ac88deafdbcecdbbec3450189b928a4b50965f",
+      "width": 2580,
+      "height": 2796
+    },
+    {
+      "path": "SOURCE/test/masters/failures/L01_seeker_profile__faith__master_beside_build_masterImage.png",
+      "bytes": 496517,
+      "sha256": "d9026b6f12b6ec91c39f4abad6fe1997946d49393d1293a69e92216578d7265a",
+      "width": 2580,
+      "height": 2796
+    },
+    {
+      "path": "SOURCE/test/masters/failures/L01_seeker_profile__faith__master_beside_build_testImage.png",
+      "bytes": 564580,
+      "sha256": "43ed5cb9ec10dfd350c4a2cb203219b5c1fcb7232b4b1193c28fa87b649e41e4",
+      "width": 2580,
+      "height": 2796
+    },
+    {
+      "path": "SOURCE/test/masters/failures/L01_shepherd_seekers__build_isolatedDiff.png",
+      "bytes": 25693,
+      "sha256": "b8e0f720e7062b85fc83ac0ccc8a93abebd2dd7eb1a60592fc122b851d030d77",
+      "width": 1290,
+      "height": 2796
+    },
+    {
+      "path": "SOURCE/test/masters/failures/L01_shepherd_seekers__build_maskedDiff.png",
+      "bytes": 218915,
+      "sha256": "35e3133f39a59bd785ce235996991777f4ccdf990158b0b60498bf4ca0dbb230",
+      "width": 1290,
+      "height": 2796
+    },
+    {
+      "path": "SOURCE/test/masters/failures/L01_shepherd_seekers__build_masterImage.png",
+      "bytes": 215940,
+      "sha256": "e07360e00babaf49f48376b8bb68104159961b7dae4a9d68139c1a662df68775",
+      "width": 1290,
+      "height": 2796
+    },
+    {
+      "path": "SOURCE/test/masters/failures/L01_shepherd_seekers__build_testImage.png",
+      "bytes": 214378,
+      "sha256": "9394640c9cf30365245689e0feb6aa23ddd51dd2cc7006ef84dab8767c3e658e",
+      "width": 1290,
+      "height": 2796
+    },
+    {
+      "path": "SOURCE/test/masters/failures/L03_shepherd_invitation__master_beside_build_isolatedDiff.png",
+      "bytes": 32944,
+      "sha256": "816f47a721ecb166a7146c2aa72810a465aa5eb9ee7e13db4f13290eee78787c",
+      "width": 2580,
+      "height": 2796
+    },
+    {
+      "path": "SOURCE/test/masters/failures/L03_shepherd_invitation__master_beside_build_maskedDiff.png",
+      "bytes": 558075,
+      "sha256": "18456b03e79f229b3ea923c4a3321cdb6078af0fe90b279f4f72aa32299ad04b",
+      "width": 2580,
+      "height": 2796
+    },
+    {
+      "path": "SOURCE/test/masters/failures/L03_shepherd_invitation__master_beside_build_masterImage.png",
+      "bytes": 555656,
+      "sha256": "c2e0878bd623d1b5a6a006d6adb132816d59c82ee864ba1c5caa2201f2cc45e5",
+      "width": 2580,
+      "height": 2796
+    },
+    {
+      "path": "SOURCE/test/masters/failures/L03_shepherd_invitation__master_beside_build_testImage.png",
+      "bytes": 556942,
+      "sha256": "f75d835884061572d964ad8a81ac3616d92b813a2e684c33de9c55756536ffc7",
+      "width": 2580,
+      "height": 2796
+    },
+    {
+      "path": "SOURCE/test/masters/failures/L09_marriage_prep__all_done__build_isolatedDiff.png",
+      "bytes": 346981,
+      "sha256": "c5fbb6389be0d11405f6fae6c3c6e97c22cbf28dcc4fe56f645185b84d1281e3",
+      "width": 1290,
+      "height": 2796
+    },
+    {
+      "path": "SOURCE/test/masters/failures/L09_marriage_prep__all_done__build_maskedDiff.png",
+      "bytes": 356694,
+      "sha256": "7627878ddd3e82ab8cf1df462b12ce86d63be3c0b21b40f4df633cd41b480db3",
+      "width": 1290,
+      "height": 2796
+    },
+    {
+      "path": "SOURCE/test/masters/failures/L09_marriage_prep__all_done__build_masterImage.png",
+      "bytes": 224541,
+      "sha256": "50f1f2885003495b66f4b8f2ae4e90db17d6bf57e9f4dcf892272cb8bab7f8a1",
+      "width": 1290,
+      "height": 2796
+    },
+    {
+      "path": "SOURCE/test/masters/failures/L09_marriage_prep__all_done__build_testImage.png",
+      "bytes": 242449,
+      "sha256": "fb03c942c247b69eef5c1bea4a274ee46c390b0c9d308b9cce4302d88243b18b",
+      "width": 1290,
+      "height": 2796
+    },
+    {
+      "path": "SOURCE/test/masters/failures/L09_marriage_prep__didnt_save__build_isolatedDiff.png",
+      "bytes": 99895,
+      "sha256": "4db2ba0cf3ec7b1867e7f23e7f87f870cb71f892a8ddb21de3c0dacb8c52cff1",
+      "width": 1290,
+      "height": 2796
+    },
+    {
+      "path": "SOURCE/test/masters/failures/L09_marriage_prep__didnt_save__build_maskedDiff.png",
+      "bytes": 270947,
+      "sha256": "c93ad55312f52fc807768292bcf5df1cc6a88f056585178eb77bb6afb349e256",
+      "width": 1290,
+      "height": 2796
+    },
+    {
+      "path": "SOURCE/test/masters/failures/L09_marriage_prep__didnt_save__build_masterImage.png",
+      "bytes": 233853,
+      "sha256": "278c99e4e691a1d139663496d646c34e251f75d0bd3579dfd82cdab39aab7456",
+      "width": 1290,
+      "height": 2796
+    },
+    {
+      "path": "SOURCE/test/masters/failures/L09_marriage_prep__didnt_save__build_testImage.png",
+      "bytes": 227559,
+      "sha256": "d86094f15534095fe97a7dc3f65f59eda7dcea513465fafd64452f94924f4b43",
+      "width": 1290,
+      "height": 2796
+    },
+    {
+      "path": "SOURCE/test/masters/failures/L09_marriage_prep__not_started__build_isolatedDiff.png",
+      "bytes": 352101,
+      "sha256": "8baa34890e6f30607e278b1ed5374973f56111dbf7fbe6066f0f2943481823e6",
+      "width": 1290,
+      "height": 2796
+    },
+    {
+      "path": "SOURCE/test/masters/failures/L09_marriage_prep__not_started__build_maskedDiff.png",
+      "bytes": 361511,
+      "sha256": "cdffb0b0624dd86d5ad4a58206494fcd2c6cba7da0bbe9548460742b1e324114",
+      "width": 1290,
+      "height": 2796
+    },
+    {
+      "path": "SOURCE/test/masters/failures/L09_marriage_prep__not_started__build_masterImage.png",
+      "bytes": 227683,
+      "sha256": "14fcc1a8196be7fc1401099439873effd8490ebc6f3247409b37aa377bb35fa5",
+      "width": 1290,
+      "height": 2796
+    },
+    {
+      "path": "SOURCE/test/masters/failures/L09_marriage_prep__not_started__build_testImage.png",
+      "bytes": 245503,
+      "sha256": "70afe4a59a7da255e25c04a321f34fea87d9cbfe04c792040a18e49a842ecd42",
+      "width": 1290,
+      "height": 2796
+    },
+    {
+      "path": "SOURCE/test/masters/failures/L09_marriage_prep__one_done__build_isolatedDiff.png",
+      "bytes": 350830,
+      "sha256": "c6cea1b2a0cc0e3026fe1b0b1d169c83d38690495a35c5ff94be661779976ec8",
+      "width": 1290,
+      "height": 2796
+    },
+    {
+      "path": "SOURCE/test/masters/failures/L09_marriage_prep__one_done__build_maskedDiff.png",
+      "bytes": 360095,
+      "sha256": "5e7f1506616e27ba80aac80f09c638b50a662fad01a5f1cde197f181b4a00b88",
+      "width": 1290,
+      "height": 2796
+    },
+    {
+      "path": "SOURCE/test/masters/failures/L09_marriage_prep__one_done__build_masterImage.png",
+      "bytes": 226743,
+      "sha256": "bd9f997c69c471c7efae0c9acf59bc673f2cb03b0438e8dd64319a9238e09a8e",
+      "width": 1290,
+      "height": 2796
+    },
+    {
+      "path": "SOURCE/test/masters/failures/L09_marriage_prep__one_done__build_testImage.png",
+      "bytes": 244622,
+      "sha256": "e86123ea073c50752b79217ef417f6e6eb263cf847154d10f3739ce18b01d975",
+      "width": 1290,
+      "height": 2796
+    },
+    {
+      "path": "SOURCE/test/masters/failures/L10_shepherd_dashboard__no_requests__build_isolatedDiff.png",
+      "bytes": 423314,
+      "sha256": "ce35319d0cb0be1ac61348bb83e1dade12c7310798973f050cfed3dd47f9ca24",
+      "width": 1290,
+      "height": 2796
+    },
+    {
+      "path": "SOURCE/test/masters/failures/L10_shepherd_dashboard__no_requests__build_maskedDiff.png",
+      "bytes": 438508,
+      "sha256": "fb1388ee99a62811aecd9084d8643a5abeb898fb24e2f9e7f09ca4310f349e1f",
+      "width": 1290,
+      "height": 2796
+    },
+    {
+      "path": "SOURCE/test/masters/failures/L10_shepherd_dashboard__no_requests__build_masterImage.png",
+      "bytes": 294515,
+      "sha256": "95f9ea39600492dca7cce06bd8b83e72419387c639af07e29d04a6701a544b7d",
+      "width": 1290,
+      "height": 2796
+    },
+    {
+      "path": "SOURCE/test/masters/failures/L10_shepherd_dashboard__no_requests__build_testImage.png",
+      "bytes": 212712,
+      "sha256": "f3e706708438d54ebdc06db7a080fa0d04626a3a2b3e159a15bed8cbc22c90ae",
+      "width": 1290,
+      "height": 2796
+    },
+    {
+      "path": "SOURCE/test/masters/failures/L10_shepherd_dashboard__prayed__build_isolatedDiff.png",
+      "bytes": 439801,
+      "sha256": "cd623177a8ba5646b6b6602ccb224413dd572f0ed27f7337fb9df09aa6ec54ba",
+      "width": 1290,
+      "height": 2796
+    },
+    {
+      "path": "SOURCE/test/masters/failures/L10_shepherd_dashboard__prayed__build_maskedDiff.png",
+      "bytes": 448714,
+      "sha256": "0d2dc824f976431dd865868991daac5432efa1950f2c5649805d472be958cdb7",
+      "width": 1290,
+      "height": 2796
+    },
+    {
+      "path": "SOURCE/test/masters/failures/L10_shepherd_dashboard__prayed__build_masterImage.png",
+      "bytes": 286529,
+      "sha256": "ed5055b9ec522a5d84e315f2271f18319caf521d1ad80c1f300f009258446f35",
+      "width": 1290,
+      "height": 2796
+    },
+    {
+      "path": "SOURCE/test/masters/failures/L10_shepherd_dashboard__prayed__build_testImage.png",
+      "bytes": 230141,
+      "sha256": "c449a218af7e32655e33fb3fd8703d336f3948bb165427450e9d5367dbdc360f",
+      "width": 1290,
+      "height": 2796
+    },
+    {
+      "path": "SOURCE/test/masters/failures/L10_shepherd_dashboard__requests__build_isolatedDiff.png",
+      "bytes": 438039,
+      "sha256": "94862d92b66efb848a84df35f696c20f8471597217da53d1822adbf32c7f281d",
+      "width": 1290,
+      "height": 2796
+    },
+    {
+      "path": "SOURCE/test/masters/failures/L10_shepherd_dashboard__requests__build_maskedDiff.png",
+      "bytes": 447066,
+      "sha256": "9f27541e82920d8c5d2379ce4b793422ca65b50bed8aebc8494b1c5e17b50937",
+      "width": 1290,
+      "height": 2796
+    },
+    {
+      "path": "SOURCE/test/masters/failures/L10_shepherd_dashboard__requests__build_masterImage.png",
+      "bytes": 285878,
+      "sha256": "2412d64260f5220b1a87f7b47f514a0cf357f5584e06a88ae9f17f7210b68dd4",
+      "width": 1290,
+      "height": 2796
+    },
+    {
+      "path": "SOURCE/test/masters/failures/L10_shepherd_dashboard__requests__build_testImage.png",
+      "bytes": 229416,
+      "sha256": "466e7acc3122514441bc8e4fa0e6ab890d8b86275f60702cd5d14250eeb74e05",
+      "width": 1290,
+      "height": 2796
+    }
+  ],
+  "diagnosticPngCount": 52,
+  "diagnosticPngBytes": 16639153,
+  "exactLaterEvidenceProof": "All13 exact retarget cases passed both build-only and master-beside-build comparisons using the unchanged exact Flutter golden comparator.",
+  "logs": [
+    {
+      "path": "SOURCE/build/test_logs/approved_baselines_capture.log",
+      "bytes": 853,
+      "sha256": "d0fdac5b755593dd60177946f5b0b42d76cdc2805520909e7c11366561fb2340"
+    },
+    {
+      "path": "SOURCE/build/test_logs/approved_baselines_replay.log",
+      "bytes": 12344,
+      "sha256": "46838a1feff1de1cdd23e46ede2666fdaf9dc822a397713bbe145921e23053e9"
+    },
+    {
+      "path": "SOURCE/build/test_logs/approved_baselines_replay_before_fixture_scope.log",
+      "bytes": 21708,
+      "sha256": "809d442034dc30835d39f4793f72e85fb68dd2eddca7d50259efc4544029e6aa"
+    },
+    {
+      "path": "SOURCE/build/test_logs/approved_baselines_analyze.log",
+      "bytes": 185,
+      "sha256": "64a8154e7c7be5f6d506b54dea1d34f615504789ac3d8267e5db83ef05dbff16"
+    },
+    {
+      "path": "SOURCE/build/test_logs/family27_full_before_locked_references.log",
+      "bytes": 147713,
+      "sha256": "247dbd320139f0a3b1838b3cd1ff6170359ba1aba489f104ee936e5a10d8de10"
+    }
+  ],
+  "initialFocusedDiagnostic": "Initial focused run resolved16 intended golden failures but exposed overly broad review-harness version variable affecting2 unrelated unchanged cases; narrowed to review-only. QA separately added real Back before role switch. Diagnostic run preserved; final72 passed."
+}

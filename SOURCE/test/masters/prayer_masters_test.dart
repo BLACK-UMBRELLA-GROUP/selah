@@ -24,6 +24,12 @@ final _capture = MasterCaptureHarness(
   version: 'V1_FIX_LABELS',
   wordingRevision: false,
 );
+// LOCK20 replaces the Dashboard composition. The actual-root fixtures match
+// those reviewed images exactly; composer/My Selah keep their own baselines.
+final _dashboardCapture = MasterCaptureHarness(
+  feature: 'SHEPHERD_DASHBOARD',
+  wordingRevision: false,
+);
 const _masters = {
   'L10_seeker_ask_for_prayer',
   'L10_seeker_ask_for_prayer__sending',
@@ -212,7 +218,14 @@ void main() {
         await _preset(tester, 'prayer_empty');
         expect(_key('prayer_requests_empty'), findsOneWidget);
       }
-      await _capture.capture(tester, screen, 'L10_shepherd_dashboard__$state');
+      await _dashboardCapture.capture(
+        tester,
+        screen,
+        'L10_shepherd_dashboard__$state',
+        masterFile: File(
+          '../APP/APPROVED/PRAYER/MASTERS/L10_shepherd_dashboard__$state.png',
+        ),
+      );
     });
   }
 

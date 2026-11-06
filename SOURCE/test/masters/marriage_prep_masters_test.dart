@@ -21,6 +21,7 @@ import 'package:selah/widgets/selah_shell_navigation.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'master_capture.dart';
+import 'family_stage_driver.dart';
 
 const _person = 'draft-sara';
 const _masters = {
@@ -30,8 +31,10 @@ const _masters = {
   'L09_marriage_prep__didnt_save',
 };
 final _capture = MasterCaptureHarness(
-  feature: 'MARRIAGE_PREP',
-  version: 'V1_2',
+  // LOCK21's reviewed seven-stage images are byte-identical to these same
+  // real conversation fixtures. Earlier eight-stage evidence stays unchanged.
+  feature: 'JOURNEY_STAGES',
+  wordingRevision: false,
 );
 
 Finder _key(String value) => find.byKey(ValueKey<String>(value));
@@ -167,6 +170,9 @@ Future<MasterScreen> _conversation(WidgetTester tester) async {
     } else if (stage.value == 'compatibility_reveal') {
       await _local(tester, 'draft_reveal_$_person');
       await _local(tester, 'draft_peer_reveal_$_person');
+    } else if (stage.value == 'family_stage') {
+      await _local(tester, 'draft_family_open_$_person');
+      await finishFamilyAnswers(tester, journeyId: _person);
     }
     await _local(tester, 'draft_stage_ready_$_person');
     await _local(tester, 'draft_stage_peer_ready_$_person');
@@ -202,7 +208,12 @@ Future<void> _captureState(
   await tester.pump(const Duration(seconds: 4));
   await tester.pumpAndSettle();
   await _scrollToCard(tester);
-  await _capture.capture(tester, screen, master);
+  await _capture.capture(
+    tester,
+    screen,
+    master,
+    masterFile: File('../APP/APPROVED/MARRIAGE_PREP/MASTERS/$master.png'),
+  );
 }
 
 void main() {
@@ -211,7 +222,7 @@ void main() {
   bool? originalFontFetching;
 
   setUpAll(() async {
-    final present = Directory('${_capture.featureRoot.path}/MASTERS')
+    final present = Directory('../APP/APPROVED/MARRIAGE_PREP/MASTERS')
         .listSync()
         .whereType<File>()
         .where((file) => file.path.endsWith('.png'))

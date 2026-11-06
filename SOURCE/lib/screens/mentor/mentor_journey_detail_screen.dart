@@ -1,16 +1,10 @@
 // Shepherd-facing Journey detail. Shepherd Free can view the linked Seeker's
 // Journey and Timeline only. SELAH One — Shepherd also receives the existing
-// read-only Conversation and Family Stage answering surfaces. The current
+// read-only Conversation surface. The current
 // read path is backed by 20260726130000_mentor_journey_visibility.sql.
 //
-// Family Stage answering: journey_family_answers already had a
-// working Mentor-write RLS policy before this file existed (2026-07-25,
-// see that migration's own journey_family_answers_write policy —
-// `WITH CHECK (answerer_id = auth.uid())`, no seeker-only restriction)
-// — the only missing piece was ever the UI. Submits via the same
-// SelahJourneyService.submitFamilyAnswer/fetchFamilyAnswers the Seeker
-// side already uses, just with direction 'seeker_to_mentor' and the
-// Shepherd as answerer_id.
+// LOCK 22: Seekers answer the Family Compatibility questions. The retired
+// Shepherd writer is removed; existing Family Review decisions remain.
 //
 // 2026-07-26 (#31): Family Review Period Continue/Pause banner added —
 // the actual "Choose Continue or Pause during the Family Review
@@ -28,7 +22,6 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import '../../dev/selah_app_gold_preview.dart';
-import '../../data/journey_questions.dart';
 import '../../data/selah_journey_stages.dart';
 import '../../dev/selah_dev_scenario.dart';
 import '../../services/selah_account_state.dart';
@@ -52,7 +45,6 @@ import '../../theme/selah_colors.dart';
 import '../../theme/selah_text.dart';
 import '../../widgets/selah_state_widgets.dart';
 import '../../widgets/selah_loading.dart';
-import '../../widgets/selah_write_feedback.dart';
 
 typedef MentorTimelineSourceLoader =
     Future<SelahSourceResult<List<SelahMilestone>>> Function(String matchId);
@@ -62,13 +54,6 @@ typedef MentorFamilyReviewSourceLoader =
     Future<SelahSourceResult<SelahFamilyReview?>> Function(String matchId);
 typedef MentorReviewDecisionSourceLoader =
     Future<SelahSourceResult<String?>> Function(String reviewId);
-typedef MentorFamilyAnswerWriter =
-    Future<bool> Function(
-      String matchId,
-      String direction,
-      String questionId,
-      String answerText,
-    );
 typedef MentorReviewDecisionWriter =
     Future<bool> Function(String reviewId, String decision);
 
@@ -85,12 +70,7 @@ class MentorJourneyDetailScreen extends StatefulWidget {
   @visibleForTesting
   final MentorReviewDecisionSourceLoader? loadReviewDecision;
   @visibleForTesting
-  final Future<Map<String, String>> Function(String matchId, String direction)?
-  loadFamilyAnswers;
-  @visibleForTesting
   final bool enablePolling;
-  @visibleForTesting
-  final MentorFamilyAnswerWriter? writeFamilyAnswer;
   @visibleForTesting
   final MentorReviewDecisionWriter? writeReviewDecision;
   @visibleForTesting
@@ -104,9 +84,7 @@ class MentorJourneyDetailScreen extends StatefulWidget {
     this.loadMessages,
     this.loadFamilyReview,
     this.loadReviewDecision,
-    this.loadFamilyAnswers,
     this.enablePolling = true,
-    this.writeFamilyAnswer,
     this.writeReviewDecision,
     this.reopenReview,
   });
@@ -126,9 +104,6 @@ class _MentorJourneyDetailScreenState extends State<MentorJourneyDetailScreen> {
   bool _messagesLoading = true;
   bool _messagesUnavailable = false;
   bool _messagesLastKnown = false;
-  Map<String, String> _myAnswers =
-      {}; // seeker_to_mentor, answered by this Shepherd
-  final Map<String, TextEditingController> _controllers = {};
   Timer? _poll;
 
   // #31 — Family Review Period.
@@ -140,7 +115,6 @@ class _MentorJourneyDetailScreenState extends State<MentorJourneyDetailScreen> {
   bool _decisionLoading = true;
   bool _decisionUnavailable = false;
   bool _reviewActionBusy = false;
-  bool _familyActionBusy = false;
   bool _revoked = false;
   late final String? _owner;
   late final int _generation;
@@ -193,14 +167,9 @@ class _MentorJourneyDetailScreenState extends State<MentorJourneyDetailScreen> {
     _poll?.cancel();
     _milestones = const [];
     _messages = const [];
-    _myAnswers = const {};
     _review = null;
     _myDecision = null;
     _reviewActionBusy = false;
-    _familyActionBusy = false;
-    for (final controller in _controllers.values) {
-      controller.clear();
-    }
     if (SchedulerBinding.instance.schedulerPhase ==
         SchedulerPhase.persistentCallbacks) {
       WidgetsBinding.instance.addPostFrameCallback((_) {
@@ -220,9 +189,6 @@ class _MentorJourneyDetailScreenState extends State<MentorJourneyDetailScreen> {
     SelahDeveloperAccess.authorizationChanges.addListener(
       _withdrawSupersededAccount,
     );
-    for (final q in JourneyQuestions.seekerToMentor) {
-      _controllers[q.id] = TextEditingController();
-    }
     _load();
     _configurePolling();
   }
@@ -253,17 +219,11 @@ class _MentorJourneyDetailScreenState extends State<MentorJourneyDetailScreen> {
         oldWidget.loadMessages != widget.loadMessages ||
         oldWidget.loadFamilyReview != widget.loadFamilyReview ||
         oldWidget.loadReviewDecision != widget.loadReviewDecision ||
-        oldWidget.loadFamilyAnswers != widget.loadFamilyAnswers ||
-        oldWidget.writeFamilyAnswer != widget.writeFamilyAnswer ||
         oldWidget.writeReviewDecision != widget.writeReviewDecision ||
         oldWidget.reopenReview != widget.reopenReview) {
       _sourceEpoch++;
       _milestones = const [];
       _messages = const [];
-      _myAnswers = const {};
-      for (final controller in _controllers.values) {
-        controller.clear();
-      }
       _review = null;
       _myDecision = null;
       _timelineLoading = true;
@@ -278,7 +238,6 @@ class _MentorJourneyDetailScreenState extends State<MentorJourneyDetailScreen> {
       _decisionLoading = true;
       _decisionUnavailable = false;
       _reviewActionBusy = false;
-      _familyActionBusy = false;
       _load();
     }
   }
@@ -291,13 +250,8 @@ class _MentorJourneyDetailScreenState extends State<MentorJourneyDetailScreen> {
       _withdrawSupersededAccount,
     );
     _poll?.cancel();
-    for (final c in _controllers.values) {
-      c.dispose();
-    }
     super.dispose();
   }
-
-  bool get _atFamilyStage => widget.journey.journeyStage == 'family_stage';
 
   /// A dev-panel stand-in. BRANCHED ON BEFORE ANY SERVER CALL, not after:
   /// its matchId is `dev-wj0`, not a uuid, so fetchTimeline,
@@ -362,7 +316,6 @@ class _MentorJourneyDetailScreenState extends State<MentorJourneyDetailScreen> {
         _messagesLoading = false;
         _messagesUnavailable = false;
         _messagesLastKnown = false;
-        _myAnswers = const {};
         _replaceReview(SelahDevScenario.mentorStagedReview());
         _myDecision = SelahDevScenario.instance.mentorReviewDecision;
         _reviewLoading = false;
@@ -375,21 +328,13 @@ class _MentorJourneyDetailScreenState extends State<MentorJourneyDetailScreen> {
       return;
     }
     if (showSpinner && mounted) setState(() => _loading = true);
-    final myAnswersFuture = _atFamilyStage && widget.hasShepherdOne
-        ? (widget.loadFamilyAnswers ?? SelahJourneyService.fetchFamilyAnswers)(
-            widget.journey.matchId,
-            'seeker_to_mentor',
-          )
-        : Future.value(<String, String>{});
     await Future.wait<void>([
       _loadTimeline(),
       if (widget.hasShepherdOne) _loadMessages() else _clearMessages(),
       _loadReview(),
     ]);
-    final myAnswers = await myAnswersFuture;
     if (!_readCurrent(epoch) || request != _loadRequest) return;
     setState(() {
-      _myAnswers = myAnswers;
       _loading = false;
     });
   }
@@ -549,62 +494,6 @@ class _MentorJourneyDetailScreenState extends State<MentorJourneyDetailScreen> {
         _myDecision = result.valueOrNull;
       }
     });
-  }
-
-  Future<void> _submitFamilyAnswers(int epoch) async {
-    final matchId = widget.journey.matchId;
-    if (!_actionCurrent(epoch, matchId) ||
-        _familyActionBusy ||
-        !_atFamilyStage ||
-        !widget.hasShepherdOne ||
-        widget.journey.isJourneyLocked) {
-      return;
-    }
-    // A stand-in has no journey_family_answers row to write to. Answers
-    // are kept in the controllers and simply not submitted — the panel
-    // does not claim to stage this half.
-    if (_isMock) {
-      await _load();
-      return;
-    }
-    // BUG-03 (2026-08-14 audit, inherited upstream action 225 — fixed 2026-08-15): same
-    // truthful-submit rule as the Seeker side. A Shepherd's family
-    // answers are a Journey safeguard; a failed write now says so, the
-    // text stays in the controllers, and pressing Submit again re-sends
-    // safely (dup rows are tolerated by later-insert-wins ordering).
-    final answers = [
-      for (final q in JourneyQuestions.seekerToMentor)
-        if (_controllers[q.id]!.text.trim().isNotEmpty)
-          (q.id, _controllers[q.id]!.text.trim()),
-    ];
-    final writer =
-        widget.writeFamilyAnswer ?? SelahJourneyService.submitFamilyAnswer;
-    setState(() => _familyActionBusy = true);
-    var allSaved = true;
-    try {
-      for (final answer in answers) {
-        if (!_actionCurrent(epoch, matchId)) return;
-        final ok = await writer(
-          matchId,
-          'seeker_to_mentor',
-          answer.$1,
-          answer.$2,
-        );
-        if (!_actionCurrent(epoch, matchId)) return;
-        if (!ok) allSaved = false;
-      }
-    } catch (_) {
-      allSaved = false;
-    } finally {
-      if (_actionSourceCurrent(epoch, matchId)) {
-        setState(() => _familyActionBusy = false);
-      }
-    }
-    if (!mounted || !_actionCurrent(epoch, matchId)) return;
-    if (!allSaved) {
-      showSelahFamilyAnswersWriteFailure(context);
-    }
-    await _load();
   }
 
   Future<void> _reviewDecision(
@@ -784,8 +673,6 @@ class _MentorJourneyDetailScreenState extends State<MentorJourneyDetailScreen> {
     final actionEpoch = _sourceEpoch;
     final reviewId = _review?.id;
     final reviewWindowEpoch = _reviewWindowEpoch;
-    final answered =
-        _myAnswers.length >= JourneyQuestions.seekerToMentor.length;
 
     return Scaffold(
       // FIXED 2026-08-01 (Founder: "there should be no purple at top, it
@@ -1099,82 +986,6 @@ class _MentorJourneyDetailScreenState extends State<MentorJourneyDetailScreen> {
                           ],
                         ),
                       ),
-                    ],
-
-                    if (_atFamilyStage &&
-                        widget.hasShepherdOne &&
-                        _journeyWritable) ...[
-                      SizedBox(height: 24),
-                      Text(
-                        'FAMILY COMPATIBILITY STAGE',
-                        style: SelahText.chapterLabel(
-                          color: SelahColors.ink(0.54),
-                        ),
-                      ),
-                      SizedBox(height: 10),
-                      if (answered)
-                        Container(
-                          padding: const EdgeInsets.all(14),
-                          decoration: BoxDecoration(
-                            color: SelahColors.iconButtonBg,
-                            border: Border.all(
-                              color: SelahColors.iconButtonBorder,
-                              width: 0.5,
-                            ),
-                            borderRadius: BorderRadius.circular(12),
-                          ),
-                          child: Text(
-                            "You've answered ${j.partner.firstName}'s questions. "
-                            "${j.linkedSeekerName}'s Journey continues once both sides have answered.",
-                            style: SelahText.subtext(size: 12.5),
-                          ),
-                        )
-                      else ...[
-                        Text(
-                          "${j.partner.firstName}'s side has questions for you, as ${j.linkedSeekerName}'s Shepherd:",
-                          style: SelahText.body(
-                            size: 13,
-                            color: SelahColors.ink(0.70),
-                          ),
-                        ),
-                        SizedBox(height: 12),
-                        for (final q in JourneyQuestions.seekerToMentor) ...[
-                          Text(q.text, style: SelahText.body(size: 14)),
-                          SizedBox(height: 6),
-                          TextField(
-                            controller: _controllers[q.id],
-                            maxLines: 3,
-                            style: TextStyle(color: Colors.white),
-                            decoration: InputDecoration(
-                              filled: true,
-                              fillColor: SelahColors.foreground.withValues(
-                                alpha: 0.06,
-                              ),
-                              border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(10),
-                                borderSide: BorderSide.none,
-                              ),
-                              hintText: 'Your answer…',
-                              hintStyle: TextStyle(
-                                color: SelahColors.ink(0.38),
-                              ),
-                            ),
-                          ),
-                          SizedBox(height: 14),
-                        ],
-                        SizedBox(
-                          width: double.infinity,
-                          child: FilledButton(
-                            onPressed: _familyActionBusy
-                                ? null
-                                : () => _submitFamilyAnswers(actionEpoch),
-                            child: Text(
-                              'Submit',
-                              style: SelahText.button(size: 14),
-                            ),
-                          ),
-                        ),
-                      ],
                     ],
 
                     SizedBox(height: 28),

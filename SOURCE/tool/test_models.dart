@@ -19,8 +19,10 @@ import 'test_shepherd_introduce_models.dart'
     show runShepherdIntroduceModelChecks;
 import 'test_shepherd_check_ins.dart' show runShepherdCheckInChecks;
 import 'test_journey_stages.dart' show runJourneyStageChecks;
+import 'test_family_stage.dart' show runFamilyStageChecks;
+import 'package:selah/data/journey_questions.dart';
 
-void main() {
+Future<void> main() async {
   var checks = 0;
   void check(bool value, String label) {
     checks++;
@@ -36,6 +38,7 @@ void main() {
   runShepherdIntroduceModelChecks(check);
   runShepherdCheckInChecks(check);
   runJourneyStageChecks(check);
+  await runFamilyStageChecks(check);
 
   final pending = draftProfiles[4].id;
   final model = ViewRequestDraftModel(capacity: 3);
@@ -676,6 +679,28 @@ void main() {
         check(
           marriage.simulatePeerCompatibilityReveal(id),
           'marriage fixture receives reveal',
+        );
+      } else if (stage.value == 'family_stage') {
+        for (final question in JourneyQuestions.family) {
+          check(
+            marriage.setFamilyAnswer(
+              id,
+              question.id,
+              'Own ${question.id} answer.',
+            ),
+            'marriage fixture answers own ${question.id}',
+          );
+        }
+        check(
+          marriage.sendFamilyAnswers(id),
+          'marriage fixture sends four own Family answers',
+        );
+        check(
+          marriage.simulatePeerFamilyAnswers(id, {
+            for (final question in JourneyQuestions.family)
+              question.id: 'Peer ${question.id} answer.',
+          }, canSimulate: () => true),
+          'marriage fixture explicitly simulates four peer Family answers',
         );
       }
       check(
