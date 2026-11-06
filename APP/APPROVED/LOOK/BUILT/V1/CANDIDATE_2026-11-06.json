@@ -1,0 +1,497 @@
+{
+  "status": "UNCOMMITTED_CANDIDATE_NOT_BUILT",
+  "date_uk": "2026-11-06",
+  "base_commit": "59c079814559af0a4b961cfc4bbe232a6977f215",
+  "trace": [
+    "OA-SELAH-003",
+    "QUESTION 3",
+    "queue line 1"
+  ],
+  "source_files": [
+    {
+      "path": "SOURCE/assets/fonts/CormorantGaramond-Italic[wght].ttf",
+      "state": "present",
+      "bytes": 715644,
+      "sha256": "0f48ea6abb2084537854f7174c470991a463b13036309e3b50a81511611c530d"
+    },
+    {
+      "path": "SOURCE/assets/fonts/CormorantGaramond[wght].ttf",
+      "state": "present",
+      "bytes": 1195560,
+      "sha256": "b20b7d9626dd956b2c5e558692ad328b1f19e3275e2782db4fa07670d83f35e0"
+    },
+    {
+      "path": "SOURCE/assets/fonts/Figtree[wght].ttf",
+      "state": "present",
+      "bytes": 62712,
+      "sha256": "26ad3db9b31ff7dde67a91ff515d022d2f495cd506590699cf264f0bfe6fb714"
+    },
+    {
+      "path": "SOURCE/assets/fonts/Jost-Bold.ttf",
+      "state": "moved_out",
+      "bytes": 0,
+      "sha256": null
+    },
+    {
+      "path": "SOURCE/assets/fonts/Jost-ExtraLight.ttf",
+      "state": "moved_out",
+      "bytes": 0,
+      "sha256": null
+    },
+    {
+      "path": "SOURCE/assets/fonts/Jost-Light.ttf",
+      "state": "moved_out",
+      "bytes": 0,
+      "sha256": null
+    },
+    {
+      "path": "SOURCE/assets/fonts/Jost-Medium.ttf",
+      "state": "moved_out",
+      "bytes": 0,
+      "sha256": null
+    },
+    {
+      "path": "SOURCE/assets/fonts/Jost-OFL.txt",
+      "state": "moved_out",
+      "bytes": 0,
+      "sha256": null
+    },
+    {
+      "path": "SOURCE/assets/fonts/Jost-Regular.ttf",
+      "state": "moved_out",
+      "bytes": 0,
+      "sha256": null
+    },
+    {
+      "path": "SOURCE/assets/fonts/Jost-SemiBold.ttf",
+      "state": "moved_out",
+      "bytes": 0,
+      "sha256": null
+    },
+    {
+      "path": "SOURCE/assets/fonts/Poppins-Bold.ttf",
+      "state": "moved_out",
+      "bytes": 0,
+      "sha256": null
+    },
+    {
+      "path": "SOURCE/assets/fonts/Poppins-ExtraLight.ttf",
+      "state": "moved_out",
+      "bytes": 0,
+      "sha256": null
+    },
+    {
+      "path": "SOURCE/assets/fonts/Poppins-Light.ttf",
+      "state": "moved_out",
+      "bytes": 0,
+      "sha256": null
+    },
+    {
+      "path": "SOURCE/assets/fonts/Poppins-Medium.ttf",
+      "state": "moved_out",
+      "bytes": 0,
+      "sha256": null
+    },
+    {
+      "path": "SOURCE/assets/fonts/Poppins-OFL.txt",
+      "state": "moved_out",
+      "bytes": 0,
+      "sha256": null
+    },
+    {
+      "path": "SOURCE/assets/fonts/Poppins-Regular.ttf",
+      "state": "moved_out",
+      "bytes": 0,
+      "sha256": null
+    },
+    {
+      "path": "SOURCE/assets/fonts/Poppins-SemiBold.ttf",
+      "state": "moved_out",
+      "bytes": 0,
+      "sha256": null
+    },
+    {
+      "path": "SOURCE/assets/fonts/Syne-OFL-NOTICE.txt",
+      "state": "moved_out",
+      "bytes": 0,
+      "sha256": null
+    },
+    {
+      "path": "SOURCE/assets/fonts/Syne-OFL.txt",
+      "state": "moved_out",
+      "bytes": 0,
+      "sha256": null
+    },
+    {
+      "path": "SOURCE/assets/fonts/Syne-SemiBold.ttf",
+      "state": "moved_out",
+      "bytes": 0,
+      "sha256": null
+    },
+    {
+      "path": "SOURCE/assets/fonts/cormorantgaramond-OFL.txt",
+      "state": "present",
+      "bytes": 4387,
+      "sha256": "60700d351cac4650c51f3f9db318d2a420f8b45052dba2715eb5fec41f0f6956"
+    },
+    {
+      "path": "SOURCE/assets/fonts/figtree-OFL.txt",
+      "state": "present",
+      "bytes": 4388,
+      "sha256": "140d37233e7f3ce7313798befa9600893bcceaf41a55fa0fa5ad52f7f657a268"
+    },
+    {
+      "path": "SOURCE/lib/dev/selah_dev_control_system.dart",
+      "state": "present",
+      "bytes": 17920,
+      "sha256": "206c41de066c7c3a207e4c83dfb436c2492a3f73daeefa31c4a074469d2f8916"
+    },
+    {
+      "path": "SOURCE/lib/dev/selah_one_journey_concept_shell.dart",
+      "state": "present",
+      "bytes": 190664,
+      "sha256": "03c56fe08c8b6da764b4f50641fca713ac7f035dc4190d176c88b2b5fbd31282"
+    },
+    {
+      "path": "SOURCE/lib/main.dart",
+      "state": "present",
+      "bytes": 11287,
+      "sha256": "af0db5eac03aaedec6960aa0e0c0c9367879a940fe1eee773709cbcddd8eca61"
+    },
+    {
+      "path": "SOURCE/lib/screens/auth/email_recovery_screen.dart",
+      "state": "present",
+      "bytes": 13536,
+      "sha256": "37b5bce59f2b6882b2469fa35c92896a5ae96c97a0b50288656d9b25ee570dc6"
+    },
+    {
+      "path": "SOURCE/lib/screens/browse/browse_screen.dart",
+      "state": "present",
+      "bytes": 110712,
+      "sha256": "62043835f24bc01bb0dfdab5b32a1478234fc7d64b466b85520d9f92269db373"
+    },
+    {
+      "path": "SOURCE/lib/screens/connections/connections_screen.dart",
+      "state": "present",
+      "bytes": 230624,
+      "sha256": "9437595c32445f31b85b9cd5b221f23c6ea08c0140e2e2e9226ddc81c4756c79"
+    },
+    {
+      "path": "SOURCE/lib/screens/journey/journey_flow_screen.dart",
+      "state": "present",
+      "bytes": 360024,
+      "sha256": "09c56abe482190592594f2dae3000577995686a490fd7343367f4df8b55e69a4"
+    },
+    {
+      "path": "SOURCE/lib/screens/mentor/family_messaging_screens.dart",
+      "state": "present",
+      "bytes": 82209,
+      "sha256": "5001bd41602c7e5da89eaeef94e6da3e34cf0d37770fd7d1919d00c32e5426ad"
+    },
+    {
+      "path": "SOURCE/lib/screens/mentor/mentor_journey_detail_screen.dart",
+      "state": "present",
+      "bytes": 53501,
+      "sha256": "4227eff709a2f790f60d98cfc5195bcb4d7c03ac0b2e4872e00749074c187872"
+    },
+    {
+      "path": "SOURCE/lib/screens/mentor/mentor_seekers_screen.dart",
+      "state": "present",
+      "bytes": 28714,
+      "sha256": "fa1a0bfd41a32b30a3cef4a677a1b7949c540bb4002eea5aeff2475a47a06bde"
+    },
+    {
+      "path": "SOURCE/lib/screens/mentor/selah_code_screen.dart",
+      "state": "present",
+      "bytes": 66009,
+      "sha256": "b63b72cbb013dabb6d3f36ea94be87489aaf75706d66780afc5992ebf84131ad"
+    },
+    {
+      "path": "SOURCE/lib/screens/mentor/shepherd_detail_screen.dart",
+      "state": "present",
+      "bytes": 50164,
+      "sha256": "53787724bb7d2e7a054f963a80692480bef4b6cf29bcc4aa8cd3fec9fdba1db4"
+    },
+    {
+      "path": "SOURCE/lib/screens/onboarding/chapter2_flow.dart",
+      "state": "present",
+      "bytes": 52658,
+      "sha256": "bdcfd7b7d397ed41637281d1f1d14afb0290cbb8ee806311ba0597ff87feffd8"
+    },
+    {
+      "path": "SOURCE/lib/screens/onboarding/identity_verification_screen.dart",
+      "state": "present",
+      "bytes": 35680,
+      "sha256": "7a440da448b27b59fb6bce0ecaa9292fec54c7f9b3868ea4a32d04c002e8970a"
+    },
+    {
+      "path": "SOURCE/lib/screens/profile/compatibility_editors.dart",
+      "state": "present",
+      "bytes": 42353,
+      "sha256": "6ad3d716b01e858a27e3c5604c035f52e7b7affe3e939a74b5c004a02e1c44b3"
+    },
+    {
+      "path": "SOURCE/lib/screens/profile/edit_photos_screen.dart",
+      "state": "present",
+      "bytes": 44582,
+      "sha256": "71703f3869410c7e693d88706b4d9ea9fe7548d79ab6f6dd7cfc232875118f33"
+    },
+    {
+      "path": "SOURCE/lib/screens/profile/edit_profile_screen.dart",
+      "state": "present",
+      "bytes": 18271,
+      "sha256": "e76e35f29ae384ec2018ff16f606e09d8ac28c0fdc9a9c8472cb31d4e08395f7"
+    },
+    {
+      "path": "SOURCE/lib/screens/profile/photo_crop_review_screen.dart",
+      "state": "present",
+      "bytes": 11561,
+      "sha256": "bf557b46053448291c51eeece1152217cdb00f2e75ab012be5b050df916b7fa5"
+    },
+    {
+      "path": "SOURCE/lib/screens/settings/app_lock_screen.dart",
+      "state": "present",
+      "bytes": 6468,
+      "sha256": "28e5162d469d778c962a4bf9db3553504a05924e96c4f5929987a24931ac3fff"
+    },
+    {
+      "path": "SOURCE/lib/screens/settings/feedback_screen.dart",
+      "state": "present",
+      "bytes": 9100,
+      "sha256": "61410ae40b1d747b8ca6dfdd2089276608037a26400e23b8108561e3e3e1a1af"
+    },
+    {
+      "path": "SOURCE/lib/screens/settings/safety_case_status_screen.dart",
+      "state": "present",
+      "bytes": 4932,
+      "sha256": "d8d5692de41931d923373f98d606657f563ae0574cc9e77221997478d596ada0"
+    },
+    {
+      "path": "SOURCE/lib/screens/settings/sign_in_security_screen.dart",
+      "state": "present",
+      "bytes": 22204,
+      "sha256": "24ae53dde95834c0bb6a39990df0e0848330796fafd5948e546b96dfdc4dda39"
+    },
+    {
+      "path": "SOURCE/lib/screens/welcome_screen.dart",
+      "state": "present",
+      "bytes": 16950,
+      "sha256": "ece02da3b29b96ee7e075b314b2b82ba192ad48f422d92d488432befb7cbf46a"
+    },
+    {
+      "path": "SOURCE/lib/theme/selah_app_gold_style.dart",
+      "state": "present",
+      "bytes": 1572,
+      "sha256": "f397dbf35364d2ae3020c74ae3252ddece43a62469ec3b8cb5ba0e29179dffde"
+    },
+    {
+      "path": "SOURCE/lib/theme/selah_card_metrics.dart",
+      "state": "present",
+      "bytes": 1890,
+      "sha256": "96e2e9e468f1f01e60e01c3bc80f76931c2b6826307a2d4fe79842068ed1d6c9"
+    },
+    {
+      "path": "SOURCE/lib/theme/selah_colors.dart",
+      "state": "present",
+      "bytes": 10655,
+      "sha256": "9706ab730fa9bbdc9a590798cfe8e767edad91ce5def5e080ff3985def09c356"
+    },
+    {
+      "path": "SOURCE/lib/theme/selah_interaction_style.dart",
+      "state": "present",
+      "bytes": 3641,
+      "sha256": "5e4cbddb94eb6ec83e8d9c10d100452945bc522ebd5fef7bd9891febc3bb7f67"
+    },
+    {
+      "path": "SOURCE/lib/theme/selah_text.dart",
+      "state": "present",
+      "bytes": 3914,
+      "sha256": "695935322837654da9915e412288d5d066e006d44d748a094e7a244f361e6c52"
+    },
+    {
+      "path": "SOURCE/lib/widgets/floating_nav_bar.dart",
+      "state": "present",
+      "bytes": 17248,
+      "sha256": "1707033e41e9a2033e2850b56ac39cb2de44811b79d866266090ae03b060573b"
+    },
+    {
+      "path": "SOURCE/lib/widgets/report_profile_sheet.dart",
+      "state": "present",
+      "bytes": 31178,
+      "sha256": "3d9b808fc777ebdaa90b78b908c4ce848eadbaa26a5818fd09084526112522bd"
+    },
+    {
+      "path": "SOURCE/lib/widgets/selah_browse_designs.dart",
+      "state": "present",
+      "bytes": 33784,
+      "sha256": "46fca1ff163ead8c48379cf62b0ddd28b942b25de8fd139f56f1bb186a4fe3ac"
+    },
+    {
+      "path": "SOURCE/lib/widgets/selah_gold_action_pill.dart",
+      "state": "present",
+      "bytes": 5299,
+      "sha256": "f751efbfcd55eddaac57386259a03fce57edf56f27345c3587b797e2dec5cd4c"
+    },
+    {
+      "path": "SOURCE/lib/widgets/selah_loading.dart",
+      "state": "present",
+      "bytes": 7139,
+      "sha256": "c35eda66644ee082e552025d0a944e261c4932f70a509cc08056c29fce08526d"
+    },
+    {
+      "path": "SOURCE/lib/widgets/selah_personalisation_content.dart",
+      "state": "present",
+      "bytes": 13226,
+      "sha256": "73fb898021854f140870ca7cd921151bde84eab49514966bab4ca3914760a850"
+    },
+    {
+      "path": "SOURCE/lib/widgets/selah_profile_image.dart",
+      "state": "present",
+      "bytes": 11112,
+      "sha256": "a06c2cd591484ef54b1e6735361cede7cc3da8214598f22d0551c096b18ec0c7"
+    },
+    {
+      "path": "SOURCE/lib/widgets/selah_shell_navigation.dart",
+      "state": "present",
+      "bytes": 1427,
+      "sha256": "496386ab17005c854855c811a55288ea6fa1e256c22bbfbf210bdd5684eeacd2"
+    },
+    {
+      "path": "SOURCE/lib/widgets/selah_state_widgets.dart",
+      "state": "present",
+      "bytes": 9797,
+      "sha256": "56a064a1c4833096e15be64bdb4035c53c3e795e893412feab009bec5a205894"
+    },
+    {
+      "path": "SOURCE/pubspec.yaml",
+      "state": "present",
+      "bytes": 1474,
+      "sha256": "5a8423d41b6ef6fea9de02c259cd4dbe5f95fda4f0f0ac20a7ef4c399f72f8f4"
+    },
+    {
+      "path": "SOURCE/test/masters/look_masters_test.dart",
+      "state": "present",
+      "bytes": 16277,
+      "sha256": "5578142e3875a0a3397a82f2dccb2758e5e1a4145e6e9d8664e8bef5de725883"
+    }
+  ],
+  "retired_fonts": [
+    {
+      "name": "Jost-Bold.ttf",
+      "bytes": 58856,
+      "sha256": "a88a3673e504711c8ce0c593f1f900f23a1b48acb307007ae13eda59bf5545a4"
+    },
+    {
+      "name": "Jost-ExtraLight.ttf",
+      "bytes": 58956,
+      "sha256": "e027a6dbf4b03d141e1ed5f6b08e31656b921a8bf51e48152460b0a36ac3b36d"
+    },
+    {
+      "name": "Jost-Light.ttf",
+      "bytes": 58880,
+      "sha256": "58a9ea8c5c24f64f2ac50587f02220aae981339dab7550822f4ebb9b33ba4f0b"
+    },
+    {
+      "name": "Jost-Medium.ttf",
+      "bytes": 58912,
+      "sha256": "f1cc75367ae5706826fc2a4e8b8e8dcc021bb565c4c8cc0721fdb4b680996804"
+    },
+    {
+      "name": "Jost-OFL.txt",
+      "bytes": 4384,
+      "sha256": "1af3438a4d5f0ed2bdbc5751a5a67ebf6d537334161184b7fbb68503ef0ea0c5"
+    },
+    {
+      "name": "Jost-Regular.ttf",
+      "bytes": 58772,
+      "sha256": "4f4b7aeff86df1af62f055f480fb144ff53f962f36b25b5abda40408a504f27f"
+    },
+    {
+      "name": "Jost-SemiBold.ttf",
+      "bytes": 58912,
+      "sha256": "54919e6be4c84bb76c13b9d7c8ae141958b079343d0252c8f6090f1968fb0cc1"
+    },
+    {
+      "name": "Poppins-Bold.ttf",
+      "bytes": 155996,
+      "sha256": "983676516167748b74de6f4771fb384c664fd913acb8b471122ecacf5da5ea6c"
+    },
+    {
+      "name": "Poppins-ExtraLight.ttf",
+      "bytes": 163568,
+      "sha256": "55c03314cc754e26f741f97890e5e9cbe3b3278fe3abcecfecafd60111b2643d"
+    },
+    {
+      "name": "Poppins-Light.ttf",
+      "bytes": 161936,
+      "sha256": "650ba57fa99d12ec40c31ccfb680be656be4497fbe14164617d67e32ffe9cd46"
+    },
+    {
+      "name": "Poppins-Medium.ttf",
+      "bytes": 158576,
+      "sha256": "90373e7d838d32468438fc3e152dca0bdb12edcab99ea639f158790b1ba1fd05"
+    },
+    {
+      "name": "Poppins-OFL.txt",
+      "bytes": 4385,
+      "sha256": "6be04893d770899a015649c7aa3b582f871b272f8747a92b78b17c3e5c8b2573"
+    },
+    {
+      "name": "Poppins-Regular.ttf",
+      "bytes": 160316,
+      "sha256": "7e65201e9b79159e2300267cc885e16c8dcef2424cdfa09a29bfb0980a94a7ba"
+    },
+    {
+      "name": "Poppins-SemiBold.ttf",
+      "bytes": 157312,
+      "sha256": "d3bf1bdaf0550e83da9ac0b1d1d9fe6db086835a83aa28578e609a394b9a0286"
+    },
+    {
+      "name": "Syne-OFL-NOTICE.txt",
+      "bytes": 1027,
+      "sha256": "b077a1e1cf8528b3a70ac87dc75e23443ebb6e0c1a8f7f5e6bdc4eaa2cb44321"
+    },
+    {
+      "name": "Syne-OFL.txt",
+      "bytes": 4402,
+      "sha256": "cc43cdce6f91c57989af8459341c276655e34224e954fa69c2ad700831a742d8"
+    },
+    {
+      "name": "Syne-SemiBold.ttf",
+      "bytes": 52736,
+      "sha256": "81eab38144227888f0acc178ecbe0c6fe6cfaa8125952194cc4a86e8ae7f7f62"
+    }
+  ],
+  "retired_fonts_folder": "~/_to_delete/SELAH_FONTS_2026-11-06",
+  "unchanged_checkpoint_sha256": "816d5188bf905e47b1c2ac4fcb640aa15249cddc8a6c3e5a5ebf43c4a07c1012",
+  "checks": {
+    "offline_pub_get_enforce_lockfile": "PASS; lock unchanged",
+    "flutter_analyze": "FAIL: 5 errors in unchanged checkpoint; 12 infos; 0 warnings",
+    "pure_model_checks": "PASS 193",
+    "cached_analyzer": "FAIL: 5 checkpoint errors, 0 warnings, 3 infos; 325 files",
+    "real_widget_master_tests": "COMPILE FAILED in unchanged checkpoint; no images produced",
+    "delivery_tooling_native_files": "unchanged"
+  },
+  "not_completed": [
+    "No master/build screenshot comparisons",
+    "No installed or native-run evidence",
+    "Full-photo inspection styling remains unchanged",
+    "The look candidate is not accepted or code-complete"
+  ],
+  "states": [
+    "Existing Browse portrait wait/failure and retry",
+    "Existing own-profile/photo preparation",
+    "Edit Photos load/error, compatibility save, crop processing",
+    "Circle member/conversation loads and send busy states",
+    "Shared retained backend loaders/errors/busy indicators; no new gates"
+  ],
+  "skipped_masters": [
+    "Seeker permissions",
+    "Ask for prayer",
+    "Pause before asking",
+    "Shepherd Prayer",
+    "Journey loading: no current async gate",
+    "My Selah action failed: no current async send gate"
+  ],
+  "instructions": "Keep candidate SOURCE uncommitted until scoped model repair and required tests pass; no native/tooling pin changes authorised."
+}
