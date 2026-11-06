@@ -1,0 +1,64 @@
+{
+  "schema": 1,
+  "feature": "SHEPHERD_DASHBOARD",
+  "lock": 20,
+  "built_from": [
+    "APP/APPROVED/SHEPHERD_DASHBOARD/BRIEFS/BUILD_BRIEF_2026-11-06_V1.md",
+    "APP/APPROVED/SHEPHERD_DASHBOARD/RECORD/SELAH_SHEPHERD_DASHBOARD_SPEC_CURRENT_VERSION_V1.md",
+    "APP/APPROVED/SHEPHERD_DASHBOARD/RECORD/LOCK_RECORD.md"
+  ],
+  "commit": "a52dabbb9a50bd8491e3461ce02e54d564163b57",
+  "flutter": "3.44.2",
+  "dart": "3.12.2",
+  "build_mode": "flutter-test real widgets; offline local-only define;430x932@3x",
+  "recorded_at_utc": "2026-11-06T22:36:02.926610+00:00",
+  "evidence": {
+    "pairs": 5,
+    "png_count": 10,
+    "png_bytes": 3658841,
+    "manifest": "HASHES.json",
+    "manifest_sha256": "8f35135d90734ac679975a093dfc6de5361a1ac7e395ba835bd1cd8525740785",
+    "routes": "2L20 actual widgets with actual-root Prayer/Needs/Updates plus genuine pure-model advances under injected dates;3L10 actualroot. No seeded event history."
+  },
+  "checks": {
+    "capture_and_component_cases": 13,
+    "plain_replay_cases": 13,
+    "component_and_existing_action_cases": 21,
+    "existing_larger_text_skip": 1,
+    "focused_pure_check_in_cases": 52,
+    "mandatory_pure_models": 1242,
+    "cached_files": 399,
+    "cached_errors": 0,
+    "cached_warnings": 0,
+    "cached_prior_infos": 1,
+    "flutter_errors": 0,
+    "flutter_warnings": 0,
+    "flutter_prior_infos": 10,
+    "static_boundaries": 20662
+  },
+  "behavior": [
+    "Active draft Dashboard order is Prayer, Needs you, recent stage check-ins, Updates, one Prayer note.",
+    "Actual successful stage advances record events in existing Journey progress. No initialization/history seeds emit timestamps; clock/guard failure commits nothing.",
+    "Seven-day inclusive window, no future events, admitted identities only, newest first, max3, with Seeker-scoped keys and immutable reads.",
+    "Actual pending Grace request supplies Encourage; Message and Encourage open the existing addressed James Circle, with original role/link/account/revision/event guards.",
+    "Both linked and unlinked draft Dashboard remove family snapshot/paid Insights. Link loss hides protected Prayer data.",
+    "Standalone Prayer footer default stays unchanged; composed Dashboard suppresses it and shows the exact note once after Updates."
+  ],
+  "retained_boundary": {
+    "implemented": "Existing MentorDashboardScreen removes active profile/family snapshot and insight/upgrade sections, relabels Needs you, preserves genuine Review actions and loading/failure/last-known priorities and Updates. Membership catalogue, server insight code and existing query/authority contracts unchanged.",
+    "source_only": "Legacy snapshot/insight/profile rendering helpers intentionally remain unreachable, with explicit unused annotations. Old public draft Dashboard presentation is not bound by the active shell.",
+    "written_refusal_OA_SELAH_003": "No unproved retained phase-entry card: current Timeline phase_N_complete facts are completion events, not entry times; defaultUpdates page mixes event types and cannot prove latest3stagechanges. No new server store/RPC, requester inference, updatedAt conversion, or fake Prayer source was introduced. Existing inactive backend parity remains OA-SELAH-002."
+  },
+  "visual_review": {
+    "all_pairs_viewed": true,
+    "known_differences": [
+      "Actual Grace request rather than unrecorded Naomi request.",
+      "Existing No Shepherd updates yet state rather than invented browser history.",
+      "Native font/safe-area/navigation/private rail and actual scroll offsets.",
+      "Controlled-date model capture makes only the actual final advance recent; actual-root callback tests cover all real recorded transitions."
+    ],
+    "claim": "No blanket pixel MATCH, live-service readiness or Founder visual acceptance."
+  },
+  "phone": "New source awaits final batch compiled-content pin review and phone update; earlier verified queue29phone delivery remains valid for its recorded source.",
+  "version": "0.1.0+1 unchanged"
+}
