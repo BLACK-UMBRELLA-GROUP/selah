@@ -31,7 +31,7 @@ re-run the tool.
 
 _Stop here unless you need to look up another ID._
 
-## Documents (43 live)
+## Documents (47 live)
 
 ### BASELINE
 
@@ -67,7 +67,7 @@ _Stop here unless you need to look up another ID._
 |---|---|---|---|---|---|
 | DOC-SELAH-0017 | `APP/APPROVED/FAITH_PROFILE/RECORD/SELAH_FAITH_PROFILE_SPEC_CURRENT_VERSION_V4.md` | SPEC | SELAH's faith profile - the seven questions a Seeker answers at sign-up, how they are asked, and where the… | OA-SELAH-003, AD-AIOS-123, DOC-SELAH-0009, DOC-SELAH-0014 | 5 |
 | DOC-SELAH-0018 | `APP/APPROVED/FAITH_PROFILE/RECORD/LOCK_RECORD.md` | REGISTER | LOCK record for the SELAH faith profile - each LOCK with the Founder's exact words |  | 1 |
-| DOC-SELAH-0019 | `APP/APPROVED/FAITH_PROFILE/BRIEFS/BUILD_BRIEF_2026-11-04_V1.md` | PLAN | Build brief for LOCK 4 - SELAH's seven faith questions at sign-up, one per screen, and the Profile faith card | DOC-SELAH-0020, DOC-SELAH-0017, DOC-SELAH-0014, DOC-SELAH-0009, OA-SELAH-003, AD-AIOS-123 | 2 |
+| DOC-SELAH-0019 | `APP/APPROVED/FAITH_PROFILE/BRIEFS/BUILD_BRIEF_2026-11-04_V1.md` | PLAN | Build brief for LOCK 4 - SELAH's seven faith questions at sign-up, one per screen, and the Profile faith card | DOC-SELAH-0020, DOC-SELAH-0017, DOC-SELAH-0014, DOC-SELAH-0009, OA-SELAH-003, AD-AIOS-123 | 4 |
 
 ### FIRST_DRAFT
 
@@ -81,8 +81,8 @@ _Stop here unless you need to look up another ID._
 
 | ID | File | Type | Purpose | Links | KB |
 |---|---|---|---|---|---|
-| DOC-SELAH-0006 | `APP/APPROVED/BUILD_QUEUE.md` | REGISTER | Build queue - every LOCKed brief waits here; Codex builds WAITING lines at 01:00 or on GO (charters rule 9) | AD-AIOS-115 | 5 |
-| DOC-SELAH-0007 | `APP/APPROVED/QUESTIONS.md` | REGISTER | Codex's questions for the SELAH chat - Codex never asks Shakeel in chat; he files the question here, marks… | AD-AIOS-116 | 5 |
+| DOC-SELAH-0006 | `APP/APPROVED/BUILD_QUEUE.md` | REGISTER | Build queue - every LOCKed brief waits here; Codex builds WAITING lines at 01:00 or on GO (charters rule 9) | AD-AIOS-115 | 6 |
+| DOC-SELAH-0007 | `APP/APPROVED/QUESTIONS.md` | REGISTER | Codex's questions for the SELAH chat - Codex never asks Shakeel in chat; he files the question here, marks… | AD-AIOS-116 | 8 |
 | DOC-SELAH-0008 | `ROADMAP.md` | PLAN | Approval-gated roadmap for SELAH - its own identity from 3 Nov 2026, then member services and launch… | OA-SELAH-001, OA-SELAH-002, OA-SELAH-003, OA-SELAH-004, OA-AIOS-414 | 4 |
 | INDEX-OUTSTANDING_ACTIONS_V1 | `SYSTEM/OUTSTANDING_ACTIONS/OUTSTANDING_ACTIONS_V1_INDEX.md` | INDEX | Generated one-line index of OUTSTANDING_ACTIONS_V1.md; find the ID here, then search the register for it |  | 1 |
 
@@ -137,11 +137,19 @@ _Stop here unless you need to look up another ID._
 | DOC-SELAH-0021 | `APP/APPROVED/REPAIRS/BRIEFS/REPAIR_BRIEF_2026-11-06_CHECKPOINT_V1.md` | PLAN | Founder-named repair - make seeker_setup_checkpoint.dart use SELAH's own Christian fields instead of ZYRA's… | OA-SELAH-003, AD-AIOS-123, DOC-SELAH-0020 | 3 |
 | DOC-SELAH-0028 | `APP/APPROVED/REPAIRS/BRIEFS/CLEANUP_BRIEF_2026-11-06_ZYRA_REMNANTS_V1.md` | PLAN | Founder-named clean-up - remove the remaining ZYRA faith remnants from SELAH source comments and switch the… | OA-SELAH-003, AD-AIOS-123, DOC-SELAH-0021 | 2 |
 
+### SEEKER_SHEPHERD
+
+| ID | File | Type | Purpose | Links | KB |
+|---|---|---|---|---|---|
+| DOC-SELAH-0044 | `APP/APPROVED/SEEKER_SHEPHERD/RECORD/SELAH_SEEKER_SHEPHERD_SPEC_CURRENT_VERSION_V1.md` | SPEC | The Seeker's Shepherd tab - the Main Shepherd shown first as a person (Ask for prayer, Message, what he has… | OA-SELAH-003, AD-AIOS-123, DOC-SELAH-0038, DOC-SELAH-0009 | 4 |
+| DOC-SELAH-0045 | `APP/APPROVED/SEEKER_SHEPHERD/RECORD/LOCK_RECORD.md` | REGISTER | LOCK record for the SELAH Seeker Shepherd tab - each LOCK with the Founder's exact words |  | 1 |
+| DOC-SELAH-0046 | `APP/APPROVED/SEEKER_SHEPHERD/BRIEFS/BUILD_BRIEF_2026-11-06_V1.md` | PLAN | Build brief for LOCK 12 - the Seeker's Shepherd tab with the Main Shepherd first | DOC-SELAH-0044, DOC-SELAH-0038, DOC-SELAH-0020, OA-SELAH-003, AD-AIOS-123 | 2 |
+
 ### SELAH_PAUSE
 
 | ID | File | Type | Purpose | Links | KB |
 |---|---|---|---|---|---|
-| DOC-SELAH-0029 | `APP/APPROVED/SELAH_PAUSE/RECORD/SELAH_PAUSE_SPEC_CURRENT_VERSION_V1.md` | SPEC | The Selah pause - SELAH's calm full-screen moment before asking someone to begin a Journey, accepting a… | OA-SELAH-003, AD-AIOS-123, DOC-SELAH-0009 | 3 |
+| DOC-SELAH-0029 | `APP/APPROVED/SELAH_PAUSE/RECORD/SELAH_PAUSE_SPEC_CURRENT_VERSION_V2.md` | SPEC | The Selah pause - SELAH's calm full-screen moment before asking someone to begin a Journey, accepting a… | OA-SELAH-003, AD-AIOS-123, DOC-SELAH-0009 | 4 |
 | DOC-SELAH-0030 | `APP/APPROVED/SELAH_PAUSE/RECORD/LOCK_RECORD.md` | REGISTER | LOCK record for the Selah pause - each LOCK with the Founder's exact words |  | 1 |
 | DOC-SELAH-0031 | `APP/APPROVED/SELAH_PAUSE/BRIEFS/BUILD_BRIEF_2026-11-06_V1.md` | PLAN | Build brief for LOCK 7 - the Selah pause before sending, accepting and ending a Journey | DOC-SELAH-0029, DOC-SELAH-0020, OA-SELAH-003, AD-AIOS-123 | 2 |
 
@@ -152,6 +160,7 @@ _Stop here unless you need to look up another ID._
 | DOC-SELAH-0014 | `APP/APPROVED/SHEPHERD_INVITE/RECORD/SELAH_SHEPHERD_INVITE_SPEC_CURRENT_VERSION_V4.md` | SPEC | How a new SELAH Seeker invites their Shepherd at sign-up, what they can do while waiting, and how the… | OA-SELAH-003, AD-AIOS-123, DOC-SELAH-0009 | 6 |
 | DOC-SELAH-0015 | `APP/APPROVED/SHEPHERD_INVITE/RECORD/LOCK_RECORD.md` | REGISTER | LOCK record for the SELAH Shepherd invite - each LOCK with the Founder's exact words |  | 1 |
 | DOC-SELAH-0016 | `APP/APPROVED/SHEPHERD_INVITE/BRIEFS/BUILD_BRIEF_2026-11-04_V1.md` | PLAN | Build brief for LOCK 3 - SELAH's own Shepherd invite at sign-up, replacing the copied code-and-scan link for… | DOC-SELAH-0014, DOC-SELAH-0009, OA-SELAH-003, AD-AIOS-123 | 3 |
+| DOC-SELAH-0047 | `APP/APPROVED/REPAIRS/BRIEFS/FIX_BRIEF_2026-11-06_INVITE_NAME_ERROR_V1.md` | PLAN | Fix brief from the line 2 build check - the "no name" state shows a filled name with the error | DOC-SELAH-0020, OA-SELAH-003, AD-AIOS-123 | 1 |
 
 ### WORDING
 

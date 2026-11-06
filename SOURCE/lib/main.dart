@@ -21,6 +21,10 @@ import 'widgets/selah_shepherd_invite_scope.dart';
 import 'screens/onboarding/selah_shepherd_invite_flow.dart';
 import 'services/selah_developer_access.dart';
 import 'dev/selah_dev_control_system.dart';
+import 'dev/selah_request_account_session.dart';
+import 'theme/selah_interaction_style.dart';
+import 'models/selah_faith_profile_controller.dart';
+import 'screens/onboarding/selah_faith_profile_flow.dart';
 
 final selahNavigatorKey = GlobalKey<NavigatorState>();
 final selahKeyboardDismissNavigatorObserver =
@@ -203,7 +207,47 @@ class _SelahDraftRootState extends State<SelahDraftRoot> {
   bool _home = false;
   bool _opening = false;
   bool _signup = false;
+  bool _faith = false;
   int _session = 0;
+  int _profileGeneration = 0;
+  late SelahRequestAccountSession _accountSession = _newAccountSession();
+  late SelahFaithProfileController _faithController = _newFaithController(
+    _accountSession,
+  );
+
+  SelahRequestAccountSession _newAccountSession() {
+    final generation = _profileGeneration;
+    return SelahRequestAccountSession(
+      canAct: () =>
+          mounted &&
+          SelahDraftRuntime.active &&
+          generation == _profileGeneration,
+      palette: SelahColors.devPalette,
+      hapticLevel: SelahInteractionStyle.hapticLevel,
+      goldEnabled: false,
+    );
+  }
+
+  SelahFaithProfileController _newFaithController(
+    SelahRequestAccountSession owner,
+  ) => SelahFaithProfileController(
+    canAct: () => mounted && owner.current,
+    read: () => owner.faithAnswers,
+    save: owner.saveFaithProfile,
+  );
+
+  void _replaceProfileSession() {
+    final oldSession = _accountSession;
+    final oldController = _faithController;
+    _profileGeneration++;
+    _accountSession = _newAccountSession();
+    _faithController = _newFaithController(_accountSession);
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      oldController.dispose();
+      oldSession.dispose();
+    });
+  }
+
   late final _invite = SelahShepherdInviteController(
     canAct: () => mounted && SelahDraftRuntime.active,
   )..addListener(_inviteChanged);
@@ -214,6 +258,7 @@ class _SelahDraftRootState extends State<SelahDraftRoot> {
         _invite.sendState == SelahShepherdInviteSendState.failed) {
       setState(() {
         _signup = true;
+        _faith = false;
         _home = false;
         _opening = false;
       });
@@ -224,18 +269,23 @@ class _SelahDraftRootState extends State<SelahDraftRoot> {
   void dispose() {
     _invite.removeListener(_inviteChanged);
     _invite.dispose();
+    _faithController.dispose();
+    _accountSession.dispose();
     super.dispose();
   }
 
   void _reset() {
     _invite.reset();
+    _replaceProfileSession();
     setState(() => _session++);
   }
 
   void _startSignup() {
     _invite.reset();
+    _replaceProfileSession();
     setState(() {
       _signup = true;
+      _faith = false;
       _home = false;
       _opening = false;
       _session++;
@@ -269,6 +319,18 @@ class _SelahDraftRootState extends State<SelahDraftRoot> {
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
                 Text('Page options', style: SelahText.heading(size: 18)),
+                if (_faith) ...[
+                  TextButton(
+                    key: const ValueKey('faith_saving'),
+                    onPressed: () => choose(_faithController.showSaving),
+                    child: const Text('Faith · saving'),
+                  ),
+                  TextButton(
+                    key: const ValueKey('faith_failed'),
+                    onPressed: () => choose(_faithController.showFailure),
+                    child: const Text("Faith · didn't save"),
+                  ),
+                ],
                 TextButton(
                   key: const ValueKey('invite_sending'),
                   onPressed: () => choose(_invite.showSending),
@@ -308,6 +370,7 @@ class _SelahDraftRootState extends State<SelahDraftRoot> {
     _home = false;
     _opening = false;
     _signup = false;
+    _faith = false;
     _session++;
   });
   @override
@@ -315,15 +378,29 @@ class _SelahDraftRootState extends State<SelahDraftRoot> {
       SelahShepherdInviteScope(controller: _invite, child: _content(context));
 
   Widget _content(BuildContext context) {
-    if (_signup) {
+    if (_signup || _faith) {
       return Stack(
         fit: StackFit.expand,
         children: [
-          SelahShepherdInviteFlow(
-            key: ValueKey('signup-$_session'),
-            controller: _invite,
-            onContinue: () => _explore(false),
-          ),
+          if (_faith)
+            SelahFaithProfileFlow(
+              key: ValueKey('faith-$_session'),
+              controller: _faithController,
+              onSaved: () => _explore(false),
+              onBack: () => setState(() {
+                _faith = false;
+                _signup = true;
+              }),
+            )
+          else
+            SelahShepherdInviteFlow(
+              key: ValueKey('signup-$_session'),
+              controller: _invite,
+              onContinue: () => setState(() {
+                _signup = false;
+                _faith = true;
+              }),
+            ),
           if (SelahDraftRuntime.active &&
               SelahDeveloperAccess.canUseDeveloperTools)
             Positioned(
@@ -347,6 +424,7 @@ class _SelahDraftRootState extends State<SelahDraftRoot> {
                   if (section == SelahDevControlSection.home) {
                     setState(() {
                       _signup = false;
+                      _faith = false;
                       _home = true;
                     });
                   } else {
@@ -436,6 +514,7 @@ class _SelahDraftRootState extends State<SelahDraftRoot> {
     return SelahOneJourneyConceptShell(
       key: ValueKey('selah-draft-session-$_session'),
       canAct: () => mounted && SelahDraftRuntime.active,
+      accountSession: _accountSession,
       initialShepherdRole: _shepherd,
       initialShepherdInviteReview: _shepherd && _invite.pending,
       onRoleChanged: (value) => _shepherd = value,

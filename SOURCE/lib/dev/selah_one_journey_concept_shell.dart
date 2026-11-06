@@ -15,6 +15,7 @@ import '../services/selah_developer_access.dart';
 import '../widgets/selah_shepherd_invite_scope.dart';
 import '../widgets/selah_shepherd_invite_views.dart';
 import '../widgets/selah_marriage_prep_card.dart';
+import '../widgets/selah_faith_profile_card.dart';
 import '../widgets/selah_profile_image.dart';
 import '../screens/onboarding/selah_shepherd_invite_flow.dart';
 import '../models/selah_dashboard_resolution.dart';
@@ -93,6 +94,7 @@ class SelahOneJourneyConceptShell extends StatefulWidget {
     this.onOption1,
     this.onDeveloperHome,
     this.onRoleChanged,
+    this.accountSession,
     this.initialShepherdRole = false,
     this.initialShepherdInviteReview = false,
     this.initialSeekerBasic = false,
@@ -106,6 +108,7 @@ class SelahOneJourneyConceptShell extends StatefulWidget {
   final VoidCallback? onOption1;
   final VoidCallback? onDeveloperHome;
   final ValueChanged<bool>? onRoleChanged;
+  final SelahRequestAccountSession? accountSession;
   final bool initialShepherdRole;
   final bool initialShepherdInviteReview;
   final bool initialSeekerBasic;
@@ -342,12 +345,15 @@ class _SelahOneJourneyConceptShellState
     if (widget.initialShepherdInviteReview && _shepherdRole) {
       _pages.add('shepherd_invite_review');
     }
-    _accountSession = SelahRequestAccountSession(
-      canAct: () => _allowed,
-      palette: SelahColors.devPalette,
-      hapticLevel: SelahInteractionStyle.hapticLevel,
-      goldEnabled: _gold,
-    )..addListener(_accountChanged);
+    _accountSession =
+        widget.accountSession ??
+        SelahRequestAccountSession(
+          canAct: () => _allowed,
+          palette: SelahColors.devPalette,
+          hapticLevel: SelahInteractionStyle.hapticLevel,
+          goldEnabled: _gold,
+        );
+    _accountSession.addListener(_accountChanged);
     SelahVisualComparison.instance.bind(
       _appearanceOwner,
       () => mounted && (widget.appearanceCanAct ?? widget.canAct)(),
@@ -669,7 +675,7 @@ class _SelahOneJourneyConceptShellState
     _scroll.dispose();
     _message.dispose();
     _accountSession.removeListener(_accountChanged);
-    _accountSession.dispose();
+    if (widget.accountSession == null) _accountSession.dispose();
     _circleTopicLayout.dispose();
     _circleVisibility.dispose();
     super.dispose();
@@ -4342,6 +4348,9 @@ class _SelahOneJourneyConceptShellState
     final shepherd = _shepherdRole;
     return SelahConceptProfilePresentation(
       data: _accountData,
+      faithProfile: shepherd
+          ? null
+          : SelahFaithProfileCard(answers: _accountSession.faithAnswers),
       simplifiedMethodology: true,
       onAction: (action) {
         if (fresh()) _accountDispatch(action);

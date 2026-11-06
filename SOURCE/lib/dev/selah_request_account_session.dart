@@ -5,10 +5,13 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart' show Offset;
 
 import '../models/seeker_profile.dart';
+import '../models/selah_faith_profile.dart';
+import '../models/selah_faith_profile_details.dart';
 import '../screens/profile/compatibility_editors.dart';
 import '../screens/profile/edit_profile_screen.dart';
 import '../services/selah_onboarding_answers_service.dart'
     show SelahOnboardingAnswersSnapshot;
+import '../services/selah_seeker_details_service.dart' show SeekerDetails;
 import '../theme/selah_colors.dart';
 import '../theme/selah_interaction_style.dart';
 
@@ -38,6 +41,8 @@ class SelahRequestAccountSession extends ChangeNotifier {
   SelahDevPalette _palette;
   SelahHapticLevel _hapticLevel;
   bool _goldEnabled;
+  SeekerDetails _details = const SeekerDetails();
+  bool _detailsSeeded = false;
 
   /// Denial is terminal for this review lifetime; it cannot become live or
   /// revive when an account changes A → B → A.
@@ -58,6 +63,56 @@ class SelahRequestAccountSession extends ChangeNotifier {
   List<String> photos(bool shepherd) =>
       List<String>.unmodifiable(_photos[shepherd] ?? const []);
   Offset avatar(bool shepherd) => _avatar[shepherd] ?? Offset.zero;
+
+  SeekerDetails get details => current ? _details : const SeekerDetails();
+  SelahFaithProfileAnswers get faithAnswers =>
+      selahFaithProfileAnswersFromDetails(details);
+
+  /// Seeds the existing details owner once for an isolated local review.
+  /// This never infers new answers from old Chapter 2 values.
+  bool seedDetails(SeekerDetails value) {
+    if (!current || _detailsSeeded) return false;
+    final detached = _copyDetails(value);
+    if (!current) return false;
+    _details = detached;
+    _detailsSeeded = true;
+    return true;
+  }
+
+  bool saveFaithProfile(SelahFaithProfileAnswers answers) {
+    if (!current || !answers.canSave) return false;
+    final next = _copyDetails(selahApplyFaithProfileAnswers(_details, answers));
+    if (!current) return false;
+    _details = next;
+    _detailsSeeded = true;
+    notifyListeners();
+    return true;
+  }
+
+  static SeekerDetails _copyDetails(SeekerDetails value) {
+    dynamic freeze(dynamic item) {
+      if (item is Map) {
+        return Map<String, dynamic>.unmodifiable(
+          item.map((key, nested) => MapEntry(key as String, freeze(nested))),
+        );
+      }
+      if (item is List) return List<dynamic>.unmodifiable(item.map(freeze));
+      return item;
+    }
+
+    return SeekerDetails(
+      christianFamily: value.christianFamily,
+      christianDenomination: value.christianDenomination,
+      christianDenominationOther: value.christianDenominationOther,
+      faithJourney: value.faithJourney,
+      showChristianTraditionOnProfile: value.showChristianTraditionOnProfile,
+      countryOfBirth: value.countryOfBirth,
+      nationality: value.nationality,
+      ethnicity: value.ethnicity,
+      languages: List.unmodifiable(value.languages),
+      preferences: freeze(value.preferences) as Map<String, dynamic>,
+    );
+  }
 
   bool seedPhotos(bool shepherd, List<String> value) {
     if (!current || _photos.containsKey(shepherd) || !_localPhotos(value)) {
@@ -128,6 +183,7 @@ class SelahRequestAccountSession extends ChangeNotifier {
     _revoked = true;
     _photos.clear();
     _avatar.clear();
+    _details = const SeekerDetails();
     compatibility.close();
     super.dispose();
   }

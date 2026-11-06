@@ -5,6 +5,7 @@ import '../lib/data/chapter3_categories.dart';
 import '../lib/data/selah_reference_data.dart';
 import '../lib/models/onboarding_question.dart';
 import 'package:selah/models/seeker_profile_completion.dart';
+import 'package:selah/models/selah_faith_profile.dart';
 import 'package:selah/data/selah_christian_traditions.dart';
 
 void main() {
@@ -157,6 +158,10 @@ void main() {
       'outside_flexibility': outsideFlexibility,
     },
     'faith_journey': {'flexibility': faithJourneyFlexibility},
+    'faith_profile': <String, dynamic>{
+      'church': 'Every week',
+      'baptised': 'Yes',
+    },
     'country_of_birth': {
       'preferred': ['GB'],
       'flexibility': 'green',
@@ -235,16 +240,16 @@ void main() {
     'selected church scope needs a list, not a scalar',
   );
   check(
-    !checkpointComplete(
+    checkpointComplete(
       preferences: checkpointPreferences(faithJourneyFlexibility: null),
     ),
-    'checkpoint needs faith journey flexibility',
+    'locked Faith completion no longer requires old faith journey flexibility',
   );
   check(
-    !checkpointComplete(
+    checkpointComplete(
       preferences: checkpointPreferences(faithJourneyFlexibility: 'blue'),
     ),
-    'faith journey flexibility must be a traffic light',
+    'unused old faith journey flexibility does not block locked completion',
   );
   for (final scope in selahChurchPreferenceScopeLabels.keys) {
     check(
@@ -329,6 +334,244 @@ void main() {
     !checkpointComplete(preferences: legacyFaithOnly),
     'legacy faith keys cannot satisfy Christian completion',
   );
+
+  // The new Faith questions use real shared pure answer/mapping logic.
+  final emptyFaith = SelahFaithProfileAnswers();
+  check(!emptyFaith.requiredComplete, 'Faith requires answers before saving');
+  final completeFaith = SelahFaithProfileAnswers(
+    tradition: 'Baptist',
+    church: 'Every week',
+    baptised: 'Yes',
+    christianFor: '5–10 years',
+    openness: 'Similar traditions only',
+  );
+  check(completeFaith.canSave, 'optional serving and words may stay empty');
+  for (final question in const [1, 2, 3, 4, 6]) {
+    final raw = completeFaith.toMap();
+    raw[const {
+          1: 'tradition',
+          2: 'church',
+          3: 'baptised',
+          4: 'christianFor',
+          6: 'openness',
+        }[question]!] =
+        null;
+    check(
+      !SelahFaithProfileAnswers.fromMap(raw).requiredComplete,
+      'Faith required question $question cannot be omitted',
+    );
+    raw[const {
+          1: 'tradition',
+          2: 'church',
+          3: 'baptised',
+          4: 'christianFor',
+          6: 'openness',
+        }[question]!] =
+        'invented answer';
+    check(
+      !SelahFaithProfileAnswers.fromMap(raw).requiredComplete,
+      'Faith required question $question rejects answers outside LOCK',
+    );
+  }
+  for (final entry in const {
+    'Anglican': 'Anglican & Episcopal',
+    'Baptist': 'Protestant',
+    'Methodist': 'Protestant',
+    'Presbyterian': 'Protestant',
+    'Catholic': 'Catholic',
+    'Orthodox': 'Orthodox & Eastern Christian',
+    'Pentecostal': 'Pentecostal, Charismatic & Apostolic',
+    'Non-denominational': 'Independent & Non-denominational',
+    'Another tradition': 'Another Christian tradition or movement',
+  }.entries) {
+    final answer = SelahFaithProfileAnswers(tradition: entry.key);
+    check(
+      answer.christianFamily == entry.value,
+      'Faith ${entry.key} maps to the locked canonical family',
+    );
+    check(
+      selahChristianFamilyForLabel(answer.christianFamily) != null,
+      'Faith ${entry.key} canonical family exists in real taxonomy',
+    );
+  }
+  check(
+    completeFaith.christianDenomination == 'Baptist',
+    'exact Protestant Baptist denomination is retained',
+  );
+  for (final choice in const ['Methodist', 'Presbyterian']) {
+    check(
+      SelahFaithProfileAnswers(tradition: choice).christianDenomination == null,
+      '$choice does not guess a broader denomination label',
+    );
+  }
+  for (final label in SelahFaithProfileAnswers.optionsFor(4)) {
+    final answer = SelahFaithProfileAnswers(christianFor: label);
+    check(
+      answer.faithJourneyCode ==
+          (label == 'All my life'
+              ? 'raised_christian'
+              : 'became_christian_later'),
+      'Christian duration $label maps to locked saved code',
+    );
+    check(
+      selahFaithJourneyCodeForLabel(answer.faithJourneyLabel) ==
+          answer.faithJourneyCode,
+      'Christian duration $label remains display typed at serializer boundary',
+    );
+    check(
+      answer.toMap()['christianFor'] == label,
+      'Christian duration $label remains exact for Profile',
+    );
+  }
+  for (final entry in const {
+    'Yes, any tradition': ['no_preference', 'green', false],
+    'Similar traditions only': ['same_family', 'yellow', false],
+    'My own tradition only': ['same_family', 'red', true],
+  }.entries) {
+    final answer = SelahFaithProfileAnswers(openness: entry.key);
+    check(
+      answer.churchPreferenceScope == entry.value[0] &&
+          answer.outsideFlexibility == entry.value[1] &&
+          answer.firmPreference == entry.value[2],
+      'Faith openness ${entry.key} has exact scope/light/firm mapping',
+    );
+  }
+  var serving = emptyFaith.choose(5, 0).choose(5, 1);
+  check(
+    serving.serving.join(', ') == 'Worship, Youth',
+    'Faith serving accepts multiple selected options',
+  );
+  serving = serving.choose(5, 7);
+  check(
+    serving.serving.length == 1 && serving.serving.single == 'Not right now',
+    'Not right now clears every serving selection',
+  );
+  serving = serving.choose(5, 5);
+  check(
+    serving.serving.length == 1 && serving.serving.single == 'Prayer',
+    'a real serving selection clears Not right now',
+  );
+  check(
+    serving.choose(5, 5).serving.isEmpty,
+    'serving selection can be unmarked',
+  );
+  check(
+    serving.withoutServing().serving.isEmpty,
+    'optional serving Skip clears selections',
+  );
+  check(
+    identical(serving.choose(5, -1), serving) &&
+        identical(serving.choose(5, 8), serving),
+    'invalid serving indexes do not mutate answers',
+  );
+  check(
+    SelahFaithProfileAnswers(
+          serving: ['Youth', 'Not right now', 'Prayer'],
+        ).serving.single ==
+        'Not right now',
+    'restored serving preserves exclusive Not right now',
+  );
+  final inputServing = <String>['Youth'];
+  final detachedServing = SelahFaithProfileAnswers(serving: inputServing);
+  inputServing.add('Prayer');
+  check(
+    detachedServing.serving.length == 1,
+    'Faith serving owns a detached list',
+  );
+  var servingMutationRejected = false;
+  try {
+    detachedServing.serving.add('Prayer');
+  } on UnsupportedError {
+    servingMutationRejected = true;
+  }
+  check(servingMutationRejected, 'Faith serving read is immutable');
+  final ascii150 = completeFaith.withWords(List.filled(150, 'a').join());
+  final emoji150 = completeFaith.withWords(List.filled(150, '🙏').join());
+  check(
+    ascii150.characterCount == 150 && ascii150.canSave,
+    '150 ordinary characters are accepted',
+  );
+  check(
+    emoji150.characterCount == 150 && emoji150.canSave,
+    '150 supplementary Unicode characters are accepted without UTF16 double count',
+  );
+  final over150 = emoji150.withWords('${emoji150.words}🙏');
+  check(
+    over150.characterCount == 151 && !over150.canSave,
+    '151 Unicode characters remain present and block saving',
+  );
+  final retainedPreferences = <String, dynamic>{
+    'unknown': {'keep': true},
+    'faith_journey': {'flexibility': 'red'},
+    'faith_profile': {'unknown': 'keep'},
+    'church_background': {
+      'scope': 'selected',
+      'family_codes': ['catholic'],
+      'hard_requirement': true,
+      'unknown': 'keep',
+    },
+  };
+  final mergedFaith = completeFaith.mergePreferences(retainedPreferences);
+  check(
+    (mergedFaith['faith_journey'] as Map)['flexibility'] == 'red',
+    'Faith save preserves unused old faith journey preference',
+  );
+  check(
+    (mergedFaith['unknown'] as Map)['keep'] == true &&
+        (mergedFaith['faith_profile'] as Map)['unknown'] == 'keep' &&
+        (mergedFaith['church_background'] as Map)['unknown'] == 'keep',
+    'Faith save preserves unrelated and unknown preferences',
+  );
+  check(
+    (mergedFaith['church_background'] as Map)['hard_requirement'] == false,
+    'Similar tradition choice clears stale own-tradition hard requirement',
+  );
+  check(
+    (retainedPreferences['church_background'] as Map)['scope'] == 'selected' &&
+        !(retainedPreferences['faith_profile'] as Map).containsKey('church'),
+    'Faith preference merge does not mutate the prior saved object',
+  );
+  final roundTripFaith = SelahFaithProfileAnswers.fromMap(
+    mergedFaith['faith_profile'] as Map,
+  );
+  check(
+    roundTripFaith.tradition == completeFaith.tradition &&
+        roundTripFaith.christianFor == '5–10 years' &&
+        roundTripFaith.church == completeFaith.church &&
+        roundTripFaith.baptised == completeFaith.baptised &&
+        roundTripFaith.openness == completeFaith.openness,
+    'exact Faith profile choices round trip through existing preferences JSON shape',
+  );
+  for (final field in const ['church', 'baptised']) {
+    for (final invalid in [null, '', 'invented answer', false]) {
+      final preferences = checkpointPreferences();
+      (preferences['faith_profile'] as Map)[field] = invalid;
+      check(
+        !checkpointComplete(preferences: preferences),
+        'checkpoint requires closed Faith $field answer ($invalid)',
+      );
+      check(
+        checkpointComplete(preferences: preferences, article9Consent: false),
+        'Article 9 false still bypasses Faith $field answer ($invalid)',
+      );
+    }
+  }
+  for (final label in SelahFaithProfileAnswers.optionsFor(2)) {
+    final preferences = checkpointPreferences();
+    (preferences['faith_profile'] as Map)['church'] = label;
+    check(
+      checkpointComplete(preferences: preferences),
+      'checkpoint accepts locked Church answer $label',
+    );
+  }
+  for (final label in SelahFaithProfileAnswers.optionsFor(3)) {
+    final preferences = checkpointPreferences();
+    (preferences['faith_profile'] as Map)['baptised'] = label;
+    check(
+      checkpointComplete(preferences: preferences),
+      'checkpoint accepts locked Baptised answer $label',
+    );
+  }
 
   final marriage = ViewRequestDraftModel(capacity: 3);
   check(

@@ -115,7 +115,22 @@ Future<MasterScreen> _pendingRoot(WidgetTester tester) async {
   await _openInvite(tester);
   await _tap(tester, _key('invite_send'));
   await _tap(tester, _key('invite_sent_continue'));
+  // LOCK 4 is now the real next sign-up step. Complete required answers and
+  // use both genuine optional Skip actions before continuing to Browse.
+  for (final (question, answer) in [(1, 1), (2, 0), (3, 0), (4, 1)]) {
+    await _tap(tester, _key('faith_choice_q${question}_$answer'));
+    await _tap(tester, _key('faith_continue'));
+  }
+  await _tap(tester, _key('faith_skip'));
+  await _tap(tester, _key('faith_choice_q6_0'));
+  await _tap(tester, _key('faith_continue'));
+  await _tap(tester, _key('faith_skip'));
   await _waitForBrowse(tester);
+  // The newly completed faith step shows its real save result before Browse.
+  // Let it expire naturally so it neither covers the dock nor enters a master
+  // whose pending state does not include that transient result.
+  await tester.pump(const Duration(seconds: 5));
+  await tester.pumpAndSettle();
   expect(find.text('Request later'), findsOneWidget);
   return screen;
 }

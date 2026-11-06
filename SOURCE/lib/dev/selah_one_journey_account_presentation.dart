@@ -114,12 +114,14 @@ class SelahConceptProfilePresentation extends StatelessWidget {
     required this.data,
     required this.onAction,
     required this.onSwitchRole,
+    this.faithProfile,
     this.simplifiedMethodology = false,
   });
 
   final SelahConceptAccountData data;
   final SelahConceptAccountActionCallback onAction;
   final VoidCallback onSwitchRole;
+  final Widget? faithProfile;
   final bool simplifiedMethodology;
 
   @override
@@ -254,6 +256,10 @@ class SelahConceptProfilePresentation extends StatelessWidget {
                     );
                   },
                 ),
+                if (!data.shepherd && faithProfile != null) ...[
+                  const SizedBox(height: 24),
+                  faithProfile!,
+                ],
                 const SizedBox(height: 28),
                 const _SectionLabel('MEMBERSHIP'),
                 KeyedSubtree(

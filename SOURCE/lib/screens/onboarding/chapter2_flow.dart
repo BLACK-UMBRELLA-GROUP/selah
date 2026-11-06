@@ -7,11 +7,13 @@
 // preserved for Chapter 2 (only Ch3/Ch4 were separated).
 
 import 'package:flutter/material.dart';
-import '../../widgets/selah_switch.dart';
 import '../../widgets/selah_profile_image.dart';
 import '../../data/selah_christian_traditions.dart';
 import '../../data/selah_reference_data.dart';
 import '../../models/onboarding_question.dart';
+import '../../models/selah_faith_profile_controller.dart';
+import '../../models/selah_faith_profile_details.dart';
+import 'selah_faith_profile_flow.dart';
 import '../../services/selah_auth.dart';
 import '../../services/selah_account_state.dart';
 import '../../services/selah_consent_service.dart';
@@ -61,6 +63,38 @@ class _Chapter2FlowState extends State<Chapter2Flow> {
   late int _ownerGeneration;
   String? _restoreError;
   String? _saveError;
+  // LOCK 4 replaces the former five faith prompts with one seven-screen flow.
+  // Existing reference-question IDs9+ and saved contracts stay intact.
+  static const int _faithStep = 21;
+  Map<String, dynamic> _faithProfileData = {};
+  Map<String, dynamic> _savedPreferences = {};
+  int _faithInitialQuestion = 1;
+  SelahFaithProfileController? _faithController;
+
+  SelahFaithProfileController get _faithFlowController =>
+      _faithController ??= SelahFaithProfileController(
+        canAct: () => _canProceed,
+        read: () => selahFaithProfileAnswersFromDetails(_currentDetails),
+        save: (answers) async {
+          if (!_canProceed ||
+              _step != _faithStep ||
+              ModalRoute.of(context)?.isCurrent != true) {
+            return false;
+          }
+          final details = selahApplyFaithProfileAnswers(
+            _currentDetails,
+            answers,
+          );
+          _applySavedDetails(details);
+          return _persistCheckpoint(_faithStep);
+        },
+      );
+
+  @override
+  void dispose() {
+    _faithController?.dispose();
+    super.dispose();
+  }
 
   // Latch the requested mode. Revocation must never turn this route into a
   // live persistence path while an old preview callback is still mounted.
@@ -189,6 +223,11 @@ class _Chapter2FlowState extends State<Chapter2Flow> {
     _languages = List<String>.from(details.languages);
 
     final p = details.preferences;
+    _savedPreferences = Map<String, dynamic>.from(p);
+    final faithProfile = p['faith_profile'];
+    _faithProfileData = faithProfile is Map
+        ? Map<String, dynamic>.from(faithProfile)
+        : {};
     final location = p['location'] as Map?;
     _distancePref = selahNameFor(
       selahLocationPreferences,
@@ -277,15 +316,6 @@ class _Chapter2FlowState extends State<Chapter2Flow> {
     return SelahBackgroundVariant.neutral;
   }
 
-  SelahChristianFamily? get _selectedFamily =>
-      selahChristianFamilyForLabel(_christianFamily);
-
-  bool get _familyNeedsDenomination =>
-      _selectedFamily?.denominations.isNotEmpty == true;
-
-  bool get _needsOtherDenominationText =>
-      selahChristianDenominationAcceptsOtherText(_christianDenomination);
-
   void _goto(int step) {
     if (!_canProceed || _saving) return;
     setState(() => _step = step);
@@ -303,7 +333,11 @@ class _Chapter2FlowState extends State<Chapter2Flow> {
     nationality: _nationality,
     ethnicity: _ethnicity,
     languages: _languages,
-    preferences: SelahSeekerDetailsService.buildPreferences(
+    preferences: _currentPreferences,
+  );
+
+  Map<String, dynamic> get _currentPreferences {
+    final updated = SelahSeekerDetailsService.buildPreferences(
       distancePref: _distancePref,
       distanceFlex: _distanceFlex,
       traditionPreferenceScope: _churchPreferenceScope,
@@ -323,8 +357,16 @@ class _Chapter2FlowState extends State<Chapter2Flow> {
       languagePrefs: _languagePrefs,
       languageSkipped: _languageSkipped,
       languageFlex: _languageFlex,
-    ),
-  );
+    );
+    return {
+      ..._savedPreferences,
+      for (final entry in updated.entries)
+        entry.key: entry.value is Map && _savedPreferences[entry.key] is Map
+            ? {..._savedPreferences[entry.key] as Map, ...entry.value as Map}
+            : entry.value,
+      if (_faithProfileData.isNotEmpty) 'faith_profile': _faithProfileData,
+    };
+  }
 
   Future<void> _finishLater() async {
     if (!_canProceed || _saving || _restoring || _restoreError != null) return;
@@ -487,7 +529,8 @@ class _Chapter2FlowState extends State<Chapter2Flow> {
             Navigator.of(context).pop();
             setState(() {
               _article9Consent = granted;
-              _step = granted ? _firstArticle9Step : _firstNonArticle9Step;
+              _faithInitialQuestion = 1;
+              _step = granted ? _faithStep : _firstNonArticle9Step;
             });
           },
         ),
@@ -530,6 +573,10 @@ class _Chapter2FlowState extends State<Chapter2Flow> {
     }
 
     switch (_step) {
+      case 3:
+        _faithInitialQuestion = 1;
+        _goto(_faithStep);
+        return;
       case 10: // Country compatibility -> skip Flexibility if skipped
         _goto(_countrySkipped ? 12 : 11);
         return;
@@ -565,7 +612,7 @@ class _Chapter2FlowState extends State<Chapter2Flow> {
         // Developer preview never persists these answers, so it may bypass
         // the consent ceremony while still visiting each question in order.
         _article9Consent = true;
-        _step = _firstArticle9Step;
+        _step = _faithStep;
       });
       return;
     }
@@ -581,6 +628,10 @@ class _Chapter2FlowState extends State<Chapter2Flow> {
   void _back() {
     if (!_canProceed || _saving) return;
     switch (_step) {
+      case 9:
+        _faithInitialQuestion = 7;
+        _goto(_faithStep);
+        return;
       case 12:
         _goto(_countrySkipped ? 10 : 11);
         return;
@@ -606,6 +657,7 @@ class _Chapter2FlowState extends State<Chapter2Flow> {
 
   int _firstIncompleteStep() {
     for (final step in _activeStepIds) {
+      if (step == _faithStep && _article9Consent != true) return 3;
       if (!_isStepComplete(step)) return step;
     }
     return _activeStepIds.last;
@@ -627,22 +679,9 @@ class _Chapter2FlowState extends State<Chapter2Flow> {
         return _distancePref != null;
       case 3:
         return _distanceFlex != null;
-      case 4:
-        return _christianFamily != null &&
-            (!_familyNeedsDenomination || _christianDenomination != null) &&
-            (!_needsOtherDenominationText ||
-                _christianDenominationOther.trim().isNotEmpty);
-      case 5:
-        return _churchPreferenceScope != null &&
-            (_churchPreferenceScope !=
-                    selahChurchPreferenceScopeLabels['selected'] ||
-                _selectedChristianFamilies.isNotEmpty);
-      case 6:
-        return _traditionOutsideFlex != null;
-      case 7:
-        return _faithJourney != null;
-      case 8:
-        return _faithJourneyFlex != null;
+      case _faithStep:
+        final faith = selahFaithProfileAnswersFromDetails(_currentDetails);
+        return faith.requiredComplete && faith.characterCount <= 150;
       case 9:
         return (_countryOfBirth ?? '').isNotEmpty;
       case 10:
@@ -679,13 +718,9 @@ class _Chapter2FlowState extends State<Chapter2Flow> {
   List<int> get _activeStepIds {
     final steps = <int>[0, 1, 2, 3];
     if (_article9Consent != false) {
+      steps.add(_faithStep);
       steps.addAll([
-        for (
-          var step = _firstArticle9Step;
-          step < _firstNonArticle9Step;
-          step++
-        )
-          step,
+        for (var step = 9; step < _firstNonArticle9Step; step++) step,
       ]);
     }
     steps.addAll([18, 19, 20]);
@@ -751,6 +786,16 @@ class _Chapter2FlowState extends State<Chapter2Flow> {
             ),
           ),
         ),
+      );
+    }
+    if (_step == _faithStep) {
+      return SelahFaithProfileFlow(
+        controller: _faithFlowController,
+        initialQuestion: _faithInitialQuestion,
+        onBack: _askArticle9Consent,
+        onSaved: () {
+          if (_canProceed && _step == _faithStep) _goto(9);
+        },
       );
     }
     late String question;
@@ -825,174 +870,6 @@ class _Chapter2FlowState extends State<Chapter2Flow> {
           redText: "No, I'd prefer to stay within my preferred area.",
           value: _distanceFlex,
           onChanged: (v) => setState(() => _distanceFlex = v),
-        );
-        break;
-      case 4:
-        question = 'Which Christian tradition feels closest to you?';
-        subtext =
-            'Choose a broad Christian tradition, then add your church or denomination where available.';
-        privacy = PrivacyLevel.unlock;
-        content = Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            _SearchPickButton(
-              label: _christianFamily ?? 'Choose a Christian tradition…',
-              onTap: () async {
-                final result = await showSingleSearchPicker(
-                  context,
-                  selahChristianFamilyLabels,
-                  current: _christianFamily,
-                );
-                if (result != null && mounted && result != _christianFamily) {
-                  setState(() {
-                    _christianFamily = result;
-                    _christianDenomination = null;
-                    _christianDenominationOther = '';
-                    _showChristianTraditionOnProfile = false;
-                  });
-                }
-              },
-            ),
-            if (_familyNeedsDenomination) ...[
-              const SizedBox(height: 12),
-              _SearchPickButton(
-                label: _christianDenomination ?? 'Choose your denomination…',
-                onTap: () async {
-                  final result = await showSingleSearchPicker(
-                    context,
-                    selahChristianDenominationLabelsFor(_christianFamily!),
-                    current: _christianDenomination,
-                  );
-                  if (result != null && mounted) {
-                    setState(() {
-                      _christianDenomination = result;
-                      if (!selahChristianDenominationAcceptsOtherText(result)) {
-                        _christianDenominationOther = '';
-                      }
-                    });
-                  }
-                },
-              ),
-            ],
-            if (_needsOtherDenominationText) ...[
-              const SizedBox(height: 12),
-              _TextField(
-                hint: 'Name your church or tradition…',
-                value: _christianDenominationOther,
-                onChanged: (v) =>
-                    setState(() => _christianDenominationOther = v),
-              ),
-            ],
-            if (_christianFamily != null) ...[
-              const SizedBox(height: 14),
-              SelahSwitchListTile(
-                contentPadding: EdgeInsets.zero,
-                value: _showChristianTraditionOnProfile,
-                title: Text(
-                  'Show my Christian tradition on my profile',
-                  style: SelahText.body(size: 15),
-                ),
-                subtitle: Text(
-                  'Off by default. Your private answer can still support compatibility.',
-                  style: SelahText.subtext(size: 13),
-                ),
-                onChanged: (value) =>
-                    setState(() => _showChristianTraditionOnProfile = value),
-              ),
-            ],
-          ],
-        );
-        break;
-      case 5:
-        question = 'Does Christian tradition matter in who you meet?';
-        subtext =
-            'Choose the level that reflects you. This preference stays private.';
-        content = Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            _LargeSelect(
-              options: selahChurchPreferenceScopeLabels.values.toList(),
-              value: _churchPreferenceScope,
-              onChanged: (value) => setState(() {
-                _churchPreferenceScope = value;
-                if (value != selahChurchPreferenceScopeLabels['selected']) {
-                  _selectedChristianFamilies = [];
-                }
-                if (value ==
-                    selahChurchPreferenceScopeLabels['no_preference']) {
-                  _churchHardRequirement = false;
-                }
-              }),
-            ),
-            if (_churchPreferenceScope ==
-                selahChurchPreferenceScopeLabels['selected']) ...[
-              const SizedBox(height: 2),
-              _MultiPrefPicker(
-                selected: _selectedChristianFamilies,
-                skipped: false,
-                items: [
-                  for (final family in selahChristianFamilies)
-                    if (family.code != 'not_sure_exploring' &&
-                        family.code != 'prefer_not_to_say')
-                      family.label,
-                ],
-                onPick: (values) =>
-                    setState(() => _selectedChristianFamilies = values),
-                onSkip: null,
-                label: 'Choose Christian traditions…',
-              ),
-            ],
-            if (_churchPreferenceScope != null &&
-                _churchPreferenceScope !=
-                    selahChurchPreferenceScopeLabels['no_preference'])
-              SelahSwitchListTile(
-                contentPadding: EdgeInsets.zero,
-                value: _churchHardRequirement,
-                title: Text(
-                  'Make this a firm preference',
-                  style: SelahText.body(size: 15),
-                ),
-                subtitle: Text(
-                  'Only show people who meet this church-background preference.',
-                  style: SelahText.subtext(size: 13),
-                ),
-                onChanged: (value) =>
-                    setState(() => _churchHardRequirement = value),
-              ),
-          ],
-        );
-        break;
-      case 6:
-        question =
-            'Would you consider someone from a different Christian tradition?';
-        content = FlexibilityChoice(
-          greenText: "Yes, I'd be happy to consider them.",
-          yellowText: 'Maybe, depending on the person and their church life.',
-          redText: "No, I'd prefer to stay within my chosen tradition.",
-          value: _traditionOutsideFlex,
-          onChanged: (v) => setState(() => _traditionOutsideFlex = v),
-        );
-        break;
-      case 7:
-        question = 'Which best describes your Christian journey?';
-        subtext =
-            'Choose the description that feels right today. This answer stays private.';
-        privacy = PrivacyLevel.unlock;
-        content = _LargeSelect(
-          options: selahFaithJourneyLabels.values.toList(),
-          value: _faithJourney,
-          onChanged: (v) => setState(() => _faithJourney = v),
-        );
-        break;
-      case 8:
-        question =
-            'Would you be open to someone whose Christian journey is different from yours?';
-        content = FlexibilityChoice(
-          greenText: "Yes, I'd be happy to hear their story.",
-          yellowText: 'Maybe, depending on where we each are in faith.',
-          redText: "No, I'd prefer a similar faith journey.",
-          value: _faithJourneyFlex,
-          onChanged: (v) => setState(() => _faithJourneyFlex = v),
         );
         break;
       case 9:

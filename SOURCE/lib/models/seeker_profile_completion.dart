@@ -1,4 +1,5 @@
 import '../data/selah_christian_traditions.dart';
+import 'selah_faith_profile.dart';
 
 /// Field-only completion rules shared by the typed checkpoint and local model
 /// checks. This does not save answers, change consent or grant app access.
@@ -44,10 +45,14 @@ bool seekerProfileFieldsComplete({
                 (church['family_codes'] as List).isEmpty))) {
       return false;
     }
-    // Chapter2Flow includes question 6 for every church-background scope;
-    // neither its active-step list nor next-step logic skips no_preference.
+    final faithProfile = section('faith_profile');
     if (!light(church['outside_flexibility']) ||
-        !light(section('faith_journey')['flexibility'])) {
+        !SelahFaithProfileAnswers.optionsFor(
+          2,
+        ).contains(faithProfile['church']) ||
+        !SelahFaithProfileAnswers.optionsFor(
+          3,
+        ).contains(faithProfile['baptised'])) {
       return false;
     }
 
