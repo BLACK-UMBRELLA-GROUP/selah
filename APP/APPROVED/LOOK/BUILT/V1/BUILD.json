@@ -1,6 +1,6 @@
 {
-  "commit_sha": "49728e05b1ddc67180754427ba7c35aca7d1a25d",
-  "source_fingerprint_sha256": "6f5f06942b45d61c0334768fe63a1e843c17520ae1869ea23ed749305d97a25e",
+  "commit_sha": "3f85c8ee23cb94a03f9eb71f2875d90e6c32c34f",
+  "source_fingerprint_sha256": "0d154b0662443da29b7e3e6ea906c60ec3bb676d911856f1234eec3870b4d4bf",
   "flutter_version": "3.44.2",
   "dart_version": "3.12.2",
   "build_mode": "debug widget tests, actual widgets and bundled fonts",
@@ -15,7 +15,7 @@
   "checks": {
     "models": "221 passed",
     "widget_capture": "12/12 passed, including two switch tests",
-    "widget_replay": "10/10 Look checks passed within39/39 combined replay",
+    "widget_replay": "Look10/10 pass; combined77 has one unrelated old invite LEFT-master mismatch assignedfix14",
     "flutter_analyze": "0errors/0warnings/10 pre-existing infos; --no-fatal-infos exit0",
     "cached_analyzer": "328files, 0errors/0warnings/1 pre-existing info",
     "draft_boundaries": "19854/19854 passed"
@@ -170,8 +170,8 @@
     },
     {
       "file": "L01_seeker_profile__faith__build.png",
-      "bytes": 247200,
-      "sha256": "493b6ee3d2bd9f26773ef790b4d0fdf9b09e9caf02f7f97c2750b99c6b4e82e8",
+      "bytes": 242557,
+      "sha256": "e368ed11303d47cf16cd7722f1f601115ca2c5fb28b5a7b8d3a013d74bb08422",
       "physical_size": [
         1290,
         2796
@@ -179,8 +179,8 @@
     },
     {
       "file": "L01_seeker_profile__faith__master_beside_build.png",
-      "bytes": 477217,
-      "sha256": "128ac125ed8c59d32ab2ae347862f4b310038d50709a79a4a28d972915602163",
+      "bytes": 473926,
+      "sha256": "eab9afc099995c2baf224e98a0cf1fb987467e91cfa6016522674111e7ec10f6",
       "physical_size": [
         2580,
         2796
@@ -206,6 +206,6 @@
     }
   ],
   "original_build_commit_sha": "04a7eee65ebca2ae3cec9819fb05c1e517251d76",
-  "evidence_updated_by": "Queue2: normal letterSpacing0 and common retry geometry corrected; original18PNGs preserved in ~/_to_delete/SELAH_LOOK_PRE_SPACING_2026-11-06 and earlier git commit",
-  "evidence_update_timestamp_utc": "2026-11-06T13:55:59.518853+00:00"
+  "evidence_updated_by": "Queue3 actual Faith card added to existing Profile; only Profile2PNGs refreshed; other Look images unchanged",
+  "evidence_update_timestamp_utc": "2026-11-06T14:45:04.260811+00:00"
 }
