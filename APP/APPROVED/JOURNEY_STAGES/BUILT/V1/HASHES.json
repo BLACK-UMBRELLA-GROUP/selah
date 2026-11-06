@@ -1,0 +1,190 @@
+{
+  "feature": "JOURNEY_STAGES",
+  "lock": 21,
+  "spec": "V2",
+  "evidenceVersion": "V1",
+  "generatedUtc": "2026-11-06T23:05:31.270680+00:00",
+  "captureResult": "10 PASS; subsequent caption-only recapture 2 PASS",
+  "plainReplayResult": "10 PASS",
+  "scopedAnalysis": "No issues found",
+  "pairCount": 9,
+  "pngCount": 18,
+  "pngBytes": 6658928,
+  "allPairsVisuallyReviewed": true,
+  "route": "All nine actual SelahDraftRoot; real seven-stage progression using existing guarded private peer controls. No fabricated saved profile answers, request records or events.",
+  "knownReferenceDifferences": [
+    "Existing vertical Journey arrival/ribbon architecture remains; masters show an overview list and dock. Header and seven visible stages are implemented.",
+    "Current queue23 Journey list keeps its Esther card/actions; Stage 3 of 7 caption is added. Pending/free-place topology is not recreated.",
+    "My Selah preserves actual Grace request and existing grouped navigation; no prototype Naomi incoming request or static Updates are fabricated.",
+    "Profile reads actual unanswered session and current account header; prototype saved Faith/Marriage facts are not seeded.",
+    "Shepherd Seekers keeps current detailed James workspace and Journey-with-name prefix; Stage 3 \u00b7 Faith & Values segment is present without a total.",
+    "Four MarriagePrep states preserve actual checked values and failure presentation; surrounding architecture, native status area, photo/cast and font-rendering differences remain as built."
+  ],
+  "ownedSources": [
+    {
+      "path": "SOURCE/lib/data/selah_journey_header.dart",
+      "bytes": 819,
+      "sha256": "b4042726de00bd1e11b1157f47ff2b797999fbf10db07ce006a6b031f65962e3"
+    },
+    {
+      "path": "SOURCE/lib/dev/selah_one_journey_journey_presentation.dart",
+      "bytes": 62453,
+      "sha256": "c8eae614a30de3567dde1a0d7b1655ac941ed70d0fb09994839aea97b032e510"
+    },
+    {
+      "path": "SOURCE/test/masters/journey_stages_masters_test.dart",
+      "bytes": 12727,
+      "sha256": "ee28cb06553f02c799ebaad11087dd6bf2b7959d6bfeb31b2a723f6f6172fb72"
+    }
+  ],
+  "logs": [
+    {
+      "path": "SOURCE/build/test_logs/journey26_capture.log",
+      "bytes": 860,
+      "sha256": "71b25d188e0d8d15ef2537c54d27a74e44d16ae6d19f0c161fd8ea92f565ae5d"
+    },
+    {
+      "path": "SOURCE/build/test_logs/journey26_caption_capture.log",
+      "bytes": 337,
+      "sha256": "ba8493797b240edcf954fdd673b150bfcc49debe54788aeb8c3495fe185fce20"
+    },
+    {
+      "path": "SOURCE/build/test_logs/journey26_replay.log",
+      "bytes": 860,
+      "sha256": "b0908dd59263d6095a780fadeb6e3180f1718bc2dbd160ad0d2a1cad75d94383"
+    },
+    {
+      "path": "SOURCE/build/test_logs/journey26_views_analyze.log",
+      "bytes": 135,
+      "sha256": "34eb80ad386968e3daddeb83cc80e3de3c61337e0da774be1432b40d4b87934f"
+    }
+  ],
+  "pngs": [
+    {
+      "path": "APP/APPROVED/JOURNEY_STAGES/BUILT/V1/L01_seeker_journey__stages__build.png",
+      "bytes": 159792,
+      "sha256": "173f996e34370bbad26f17b5006b2e840d015909e715f150adc18db8c53b50fa",
+      "width": 1290,
+      "height": 2796
+    },
+    {
+      "path": "APP/APPROVED/JOURNEY_STAGES/BUILT/V1/L01_seeker_journey__stages__master_beside_build.png",
+      "bytes": 448293,
+      "sha256": "f3a274e399f1040a81c03dc3087ded39a66f261d7231e5a000d53a68870d377c",
+      "width": 2580,
+      "height": 2796
+    },
+    {
+      "path": "APP/APPROVED/JOURNEY_STAGES/BUILT/V1/L01_seeker_journeys__pending_and_free_place__build.png",
+      "bytes": 222140,
+      "sha256": "17d13b82e9fdba8b64dcebc2d2f2543f6ea55ce21524fa38424c519f82a6c2d0",
+      "width": 1290,
+      "height": 2796
+    },
+    {
+      "path": "APP/APPROVED/JOURNEY_STAGES/BUILT/V1/L01_seeker_journeys__pending_and_free_place__master_beside_build.png",
+      "bytes": 456417,
+      "sha256": "b93e62e5c69a92d813c218f35ff8e6ee37eb25788d999d9235e4bc36aead099a",
+      "width": 2580,
+      "height": 2796
+    },
+    {
+      "path": "APP/APPROVED/JOURNEY_STAGES/BUILT/V1/L01_seeker_my_selah__request__build.png",
+      "bytes": 165349,
+      "sha256": "1a82ecd7a0885d69fe53ce9c8b08223d8b4ab59116ee08436dbd650deacaee10",
+      "width": 1290,
+      "height": 2796
+    },
+    {
+      "path": "APP/APPROVED/JOURNEY_STAGES/BUILT/V1/L01_seeker_my_selah__request__master_beside_build.png",
+      "bytes": 389392,
+      "sha256": "e0d3f16582d5367032ffa5bcde613122f067b12be878a50ebc226090024c5ae4",
+      "width": 2580,
+      "height": 2796
+    },
+    {
+      "path": "APP/APPROVED/JOURNEY_STAGES/BUILT/V1/L01_seeker_profile__faith__build.png",
+      "bytes": 264013,
+      "sha256": "75bafebc06d822f0c7b1bf3727f238b7ae92593b9675d2779028c5e8e5c1c8cf",
+      "width": 1290,
+      "height": 2796
+    },
+    {
+      "path": "APP/APPROVED/JOURNEY_STAGES/BUILT/V1/L01_seeker_profile__faith__master_beside_build.png",
+      "bytes": 564580,
+      "sha256": "43ed5cb9ec10dfd350c4a2cb203219b5c1fcb7232b4b1193c28fa87b649e41e4",
+      "width": 2580,
+      "height": 2796
+    },
+    {
+      "path": "APP/APPROVED/JOURNEY_STAGES/BUILT/V1/L01_shepherd_seekers__build.png",
+      "bytes": 236920,
+      "sha256": "1c2edae0186d031df7ff1f4af62c7be0ca0b348aedbc46e4fce06a1e89817fc6",
+      "width": 1290,
+      "height": 2796
+    },
+    {
+      "path": "APP/APPROVED/JOURNEY_STAGES/BUILT/V1/L01_shepherd_seekers__master_beside_build.png",
+      "bytes": 526988,
+      "sha256": "94c67ead12dc146798a60a79e8ad4c84ecf49fa88aa0d1a9af6b0f128c28d073",
+      "width": 2580,
+      "height": 2796
+    },
+    {
+      "path": "APP/APPROVED/JOURNEY_STAGES/BUILT/V1/L09_marriage_prep__all_done__build.png",
+      "bytes": 242449,
+      "sha256": "fb03c942c247b69eef5c1bea4a274ee46c390b0c9d308b9cce4302d88243b18b",
+      "width": 1290,
+      "height": 2796
+    },
+    {
+      "path": "APP/APPROVED/JOURNEY_STAGES/BUILT/V1/L09_marriage_prep__all_done__master_beside_build.png",
+      "bytes": 568627,
+      "sha256": "fbcef2469296a7cc91ab2c6724cab3edb2087c918bf013410b61693f94b0379a",
+      "width": 2580,
+      "height": 2796
+    },
+    {
+      "path": "APP/APPROVED/JOURNEY_STAGES/BUILT/V1/L09_marriage_prep__didnt_save__build.png",
+      "bytes": 227559,
+      "sha256": "d86094f15534095fe97a7dc3f65f59eda7dcea513465fafd64452f94924f4b43",
+      "width": 1290,
+      "height": 2796
+    },
+    {
+      "path": "APP/APPROVED/JOURNEY_STAGES/BUILT/V1/L09_marriage_prep__didnt_save__master_beside_build.png",
+      "bytes": 550959,
+      "sha256": "a8bd4bf07d4696c5ed03f41c4e3c97be95232a4271358ce00038cd7c4e21dd3d",
+      "width": 2580,
+      "height": 2796
+    },
+    {
+      "path": "APP/APPROVED/JOURNEY_STAGES/BUILT/V1/L09_marriage_prep__not_started__build.png",
+      "bytes": 245503,
+      "sha256": "70afe4a59a7da255e25c04a321f34fea87d9cbfe04c792040a18e49a842ecd42",
+      "width": 1290,
+      "height": 2796
+    },
+    {
+      "path": "APP/APPROVED/JOURNEY_STAGES/BUILT/V1/L09_marriage_prep__not_started__master_beside_build.png",
+      "bytes": 573319,
+      "sha256": "5b22b18dd1c81ef34d133acf30425a9915ba75335212d7cfcea81c424bf6717d",
+      "width": 2580,
+      "height": 2796
+    },
+    {
+      "path": "APP/APPROVED/JOURNEY_STAGES/BUILT/V1/L09_marriage_prep__one_done__build.png",
+      "bytes": 244622,
+      "sha256": "e86123ea073c50752b79217ef417f6e6eb263cf847154d10f3739ce18b01d975",
+      "width": 1290,
+      "height": 2796
+    },
+    {
+      "path": "APP/APPROVED/JOURNEY_STAGES/BUILT/V1/L09_marriage_prep__one_done__master_beside_build.png",
+      "bytes": 572006,
+      "sha256": "17ba6de509c0c627af883f56e894d61c7df626503391018028099cc6512bb8b7",
+      "width": 2580,
+      "height": 2796
+    }
+  ]
+}

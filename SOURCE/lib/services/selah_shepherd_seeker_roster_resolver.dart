@@ -97,11 +97,7 @@ final class SelahShepherdSeekerRosterResolver {
       final reviewOpen =
           journey != null &&
           context.openReviewMatchIds.contains(journey.matchId);
-      final shepherdGate =
-          journey != null &&
-          !journey.isJourneyLocked &&
-          journey.journeyStage == 'mentor_gate';
-      final needsAttention = reviewOpen || shepherdGate;
+      final needsAttention = reviewOpen;
       final group = needsAttention
           ? ShepherdSeekerRosterGroup.needsYou
           : journey == null
@@ -153,7 +149,7 @@ final class SelahShepherdSeekerRosterResolver {
     }
     if (journey.isSuspended) return 'Journey paused';
     return 'Journey with ${journey.partner.firstName} · '
-        '${SelahJourneyStages.labelFor(journey.journeyStage)}';
+        '${_stageCaption(journey.journeyStage)}';
   }
 
   static String _additionalContextLine(MentorJourneyView? journey) {
@@ -161,7 +157,14 @@ final class SelahShepherdSeekerRosterResolver {
     if (journey.isPauseDecisionPending) return 'Journey awaiting a decision';
     if (journey.isSuspended) return 'Journey paused';
     return 'Journey with ${journey.partner.firstName} · '
-        '${SelahJourneyStages.labelFor(journey.journeyStage)}';
+        '${_stageCaption(journey.journeyStage)}';
+  }
+
+  static String _stageCaption(String? rawStage) {
+    final stage = SelahJourneyStages.of(rawStage);
+    return stage == null
+        ? SelahJourneyStages.labelFor(rawStage)
+        : 'Stage ${stage.order} · ${stage.label}';
   }
 
   static int _compareNeedsYou(

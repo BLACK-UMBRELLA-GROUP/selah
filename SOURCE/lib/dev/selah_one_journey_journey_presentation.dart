@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import '../data/journey_questions.dart';
 import '../data/selah_journey_scroll.dart';
 import '../data/selah_journey_stages.dart';
+import '../data/selah_journey_header.dart';
 import '../theme/selah_colors.dart';
 import '../theme/selah_text.dart';
 import '../widgets/selah_profile_image.dart';
@@ -405,6 +406,8 @@ class SelahConceptJourneyPresentation extends StatefulWidget {
     this.onActionVisibilityChanged,
     this.onViewedStageChanged,
     this.reviewOpen = false,
+    this.ownMainShepherdName,
+    this.otherMainShepherdName,
   });
 
   final String firstName;
@@ -421,6 +424,8 @@ class SelahConceptJourneyPresentation extends StatefulWidget {
   final ValueChanged<bool>? onActionVisibilityChanged;
   final ValueChanged<SelahJourneyStage>? onViewedStageChanged;
   final bool reviewOpen;
+  final String? ownMainShepherdName;
+  final String? otherMainShepherdName;
 
   @override
   State<SelahConceptJourneyPresentation> createState() =>
@@ -484,6 +489,24 @@ class _SelahConceptJourneyPresentationState
                       ],
                     ),
                   ),
+                  Padding(
+                    padding: const EdgeInsets.fromLTRB(22, 0, 22, 14),
+                    child: Align(
+                      alignment: Alignment.centerLeft,
+                      child: Text(
+                        selahJourneyStageHeader(
+                          stageOrder: widget.stage.order,
+                          counterpartFirstName: widget.firstName,
+                          ownMainShepherdName: widget.ownMainShepherdName,
+                          otherMainShepherdName: widget.otherMainShepherdName,
+                        ),
+                        key: const ValueKey('concept_journey_stage_header'),
+                        style: SelahText.subtext(
+                          size: 13,
+                        ).copyWith(height: 1.5),
+                      ),
+                    ),
+                  ),
                   SelahConceptJourneyRibbon(
                     stage: _viewedStage ?? widget.stage.value,
                     reviewOpen: widget.reviewOpen,
@@ -522,7 +545,7 @@ class _SelahConceptJourneyPresentationState
   }
 }
 
-/// Exact current Quiet ribbon, using the unchanged eight canonical labels.
+/// Current Quiet ribbon, using LOCK 21's seven canonical visible stages.
 class SelahConceptJourneyRibbon extends StatelessWidget {
   const SelahConceptJourneyRibbon({
     super.key,
@@ -1200,13 +1223,13 @@ class SelahConceptJourneyDecisionPresentation extends StatelessWidget {
                               : 'Ready to move forward?',
                           style: SelahText.heading(size: 23),
                         ),
-                        const SizedBox(height: 7),
-                        Text(
-                          completionConfirmed
-                              ? stage.completionLine
-                              : 'Selah will first confirm that both Main Shepherds are present.',
-                          style: SelahText.subtext(size: 13.5),
-                        ),
+                        if (completionConfirmed) ...[
+                          const SizedBox(height: 7),
+                          Text(
+                            stage.completionLine,
+                            style: SelahText.subtext(size: 13.5),
+                          ),
+                        ],
                       ],
                     ),
                   ),

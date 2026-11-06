@@ -1,7 +1,7 @@
 // Pre-Journey Ritual host screen — APP/Journey/PRE-JOURNEY RITUAL/
 // Summary.md. Routes an Active Journey through its real stages
 // (matches.journey_stage): Greeting Exchange -> Compatibility Reveal ->
-// Mentor Gate -> Phase 1/2/3 -> Family Stage -> Conversation. Reached
+// Faith & Values -> Building a Life -> Navigating Life -> Family -> Conversation. Reached
 // from the Connections tab (screens/connections/connections_screen.dart,
 // formerly MatchesScreen — renamed 2026-07-26 nav bar fix) after
 // SelahJourneyService.promoteToActive().
@@ -48,14 +48,15 @@ import '../../widgets/selah_switch.dart';
 import '../../dev/selah_app_gold_preview.dart';
 import 'package:flutter/services.dart';
 import '../../data/journey_questions.dart';
-import '../../data/selah_journey_shepherd_selection.dart';
 import '../../data/selah_journey_life_snapshot.dart';
 import '../../data/selah_journey_advance_policy.dart';
 import '../../data/selah_journey_intelligence.dart';
 import '../../data/selah_journey_pause_state.dart';
 import '../../data/selah_journey_scroll.dart';
 import '../../data/selah_journey_stages.dart';
-import '../../data/selah_reference_data.dart';
+import '../../data/selah_journey_header.dart';
+import '../mentor/seeker_shepherd_designs.dart'
+    show selahShepherdShortDisplayName;
 import '../../data/selah_release_gates.dart';
 import '../../dev/selah_dev_scenario.dart';
 import '../../dev/selah_dev_tool_section.dart';
@@ -66,7 +67,6 @@ import '../../models/selah_identity_verification.dart';
 import '../../services/selah_auth.dart';
 import '../../services/selah_account_state.dart';
 import '../../services/selah_developer_access.dart';
-import '../../services/selah_shepherd_info_service.dart';
 import '../../services/selah_image_cache.dart';
 import '../../services/selah_journey_service.dart';
 import '../../services/selah_identity_verification_service.dart';
@@ -84,7 +84,6 @@ import '../onboarding/identity_verification_screen.dart';
 // on-device walks and three rounds of mocks ended at QUIET, which is
 // now simply how the Journey looks; journey_experience_lab.dart is
 // unreferenced and awaits git deletion.
-import '../mentor/link_mentor_screen.dart';
 // selah_report_service / anchored_card_overlay / report_profile_sheet
 // imports left with the ⋮ menu (2026-08-13) — reporting from a Journey
 // now happens at the person: the Active card's flag on Connections.
@@ -131,6 +130,8 @@ class JourneyFlowScreen extends StatefulWidget {
 }
 
 class _JourneyFlowScreenState extends State<JourneyFlowScreen> {
+  late final String? _journeyOwnerUserId;
+  late final int _journeyAccountGeneration;
   late final DevPage _previousDevPage;
   String _status = 'active';
   String? _stage =
@@ -148,6 +149,20 @@ class _JourneyFlowScreenState extends State<JourneyFlowScreen> {
   bool _shepherdGateLoading = true;
   SelahJourneyShepherdGate _shepherdGate = SelahJourneyShepherdGate.unavailable;
   int _shepherdGateGeneration = 0;
+  String? _ownMainShepherdName;
+  String? _legacyPassThroughFailureReason;
+  ModalRoute<dynamic>? _ownerRoute;
+  bool? _ownerRouteCurrent;
+  int _journeyOwnerRevision = 0;
+
+  bool get _journeyAccountCurrent =>
+      _journeyOwnerUserId != null &&
+      !SelahAccountState.isSigningOut &&
+      SelahAuth.currentUser?.id == _journeyOwnerUserId &&
+      SelahAccountState.isCurrent(
+        _journeyOwnerUserId,
+        _journeyAccountGeneration,
+      );
   ({SelahCompatibilityReadScope scope, Object context, bool admitted})?
   _compatibilitySurfaceContext;
   int _compatibilitySurfaceGeneration = 0;
@@ -162,6 +177,7 @@ class _JourneyFlowScreenState extends State<JourneyFlowScreen> {
   })?
   _stageDecision;
   bool _stageDecisionBusy = false;
+  Object _stageDecisionToken = Object();
   bool _stageContinueSelected = false;
   bool _stageActionVisible = false;
   String? _viewedRibbonStage;
@@ -169,15 +185,10 @@ class _JourneyFlowScreenState extends State<JourneyFlowScreen> {
   SelahJourneyPauseState? _devPausePreview;
   SelahPauseDevScenario _devPauseScenario = SelahPauseDevScenario.active;
   bool _devPauseEnded = false;
-  Set<int> _devShepherdSelections = const <int>{};
   bool _lifeSnapshotOpen = false;
   bool _lifeSnapshotOpenedFromDevJump = false;
   bool _lifeSnapshotMineRevealed = false;
   bool _lifeSnapshotTheirsRevealed = false;
-  bool _shepherdProfilesMineRevealed = false;
-  bool _shepherdProfilesTheirsRevealed = false;
-  Set<int> _shepherdGreetingIndices = const <int>{};
-  List<_JourneyShepherdPortrait>? _shepherdHistoryPortraits;
   bool _devLifeSnapshotHasBio = true;
   Set<String> _devLifeSnapshotFieldIds =
       SelahJourneyLifeSnapshotMock.defaultVisibleFieldIds;
@@ -202,6 +213,8 @@ class _JourneyFlowScreenState extends State<JourneyFlowScreen> {
   @override
   void initState() {
     super.initState();
+    _journeyOwnerUserId = SelahAuth.currentUser?.id;
+    _journeyAccountGeneration = SelahAccountState.generation;
     final dev = SelahDevScenario.instance;
     _previousDevPage = dev.currentPage;
     dev.setCurrentPage(DevPage.activeJourney);
@@ -251,6 +264,52 @@ class _JourneyFlowScreenState extends State<JourneyFlowScreen> {
         _identityGateError = error;
       });
     }
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    final route = ModalRoute.of(context);
+    final current = route?.isCurrent;
+    if (_ownerRoute != null &&
+        (!identical(route, _ownerRoute) || current != _ownerRouteCurrent)) {
+      _journeyOwnerRevision++;
+    }
+    _ownerRoute = route;
+    _ownerRouteCurrent = current;
+  }
+
+  bool Function() _captureJourneyOwner({bool requireMain = false}) {
+    final userId = _journeyOwnerUserId;
+    final accountGeneration = _journeyAccountGeneration;
+    final matchId = widget.matchId;
+    final profileId = widget.profile.id;
+    final revision = _journeyOwnerRevision;
+    final linksRevision = SelahMentorLinkService.linkRevision.value;
+    var retired = false;
+    return () {
+      if (retired) return false;
+      final current =
+          mounted &&
+          userId != null &&
+          SelahAuth.currentUser?.id == userId &&
+          !SelahAccountState.isSigningOut &&
+          SelahAccountState.isCurrent(userId, accountGeneration) &&
+          widget.matchId == matchId &&
+          widget.profile.id == profileId &&
+          revision == _journeyOwnerRevision &&
+          linksRevision == SelahMentorLinkService.linkRevision.value &&
+          _ownerRoute?.isCurrent == true &&
+          (!requireMain ||
+              (_status == 'active' &&
+                  !_devPauseEnded &&
+                  !(_devPausePreview ?? _pauseState).isLocked &&
+                  _review == null &&
+                  !_shepherdGateLoading &&
+                  _shepherdGate == SelahJourneyShepherdGate.ready));
+      if (!current) retired = true;
+      return current;
+    };
   }
 
   void _startJourneyExperience() {
@@ -349,10 +408,12 @@ class _JourneyFlowScreenState extends State<JourneyFlowScreen> {
   }
 
   void _onShepherdLinksChanged() {
+    _journeyOwnerRevision++;
     unawaited(_resolveMainShepherdGate());
   }
 
   void _onShepherdAuthorityChanged() {
+    _journeyOwnerRevision++;
     if (!mounted) return;
     setState(() {
       _shepherdGateLoading = true;
@@ -370,10 +431,18 @@ class _JourneyFlowScreenState extends State<JourneyFlowScreen> {
     final request = ++_shepherdGateGeneration;
     final accountGeneration = SelahAccountState.generation;
     final accountId = SelahAccountState.userId;
+    bool isCurrent() =>
+        mounted &&
+        _journeyAccountCurrent &&
+        request == _shepherdGateGeneration &&
+        !SelahAccountState.isSigningOut &&
+        accountGeneration == SelahAccountState.generation &&
+        accountId == SelahAccountState.userId;
     final dev = SelahDevScenario.instance;
     if (dev.shepherdOverride) {
-      if (!mounted) return;
+      if (!isCurrent()) return;
       setState(() {
+        _ownMainShepherdName = null;
         _shepherdGateLoading = false;
         _shepherdGate = dev.mainShepherd && dev.shepherdCount > 0
             ? SelahJourneyShepherdGate.ready
@@ -381,35 +450,45 @@ class _JourneyFlowScreenState extends State<JourneyFlowScreen> {
       });
       return;
     }
-
-    // A live refresh is not permission to keep a previously simulated or
-    // revoked ready gate visible while the server answer is pending.
-    if (!mounted) return;
+    if (!isCurrent()) return;
     setState(() {
+      _ownMainShepherdName = null;
       _shepherdGateLoading = true;
       _shepherdGate = SelahJourneyShepherdGate.unavailable;
     });
     final result =
         await (widget.shepherdGateLoader?.call(widget.matchId) ??
             SelahMentorLinkService.fetchJourneyShepherdGate(widget.matchId));
-    if (!mounted ||
-        request != _shepherdGateGeneration ||
-        SelahAccountState.isSigningOut ||
-        accountGeneration != SelahAccountState.generation ||
-        accountId != SelahAccountState.userId ||
-        SelahDevScenario.instance.shepherdOverride) {
-      return;
+    if (!isCurrent() || SelahDevScenario.instance.shepherdOverride) return;
+    String? ownMainName;
+    if (result == SelahJourneyShepherdGate.ready) {
+      final links = await SelahMentorLinkService.fetchLinkedPeopleResult(
+        asMentor: false,
+      );
+      if (!isCurrent() || SelahDevScenario.instance.shepherdOverride) return;
+      final main = links
+          .valueOr(const <MentorLinkedPerson>[])
+          .where((person) => person.isMain)
+          .firstOrNull;
+      if (main != null) ownMainName = selahShepherdShortDisplayName(main);
     }
     setState(() {
+      _ownMainShepherdName = ownMainName;
       _shepherdGateLoading = false;
       _shepherdGate = result;
     });
   }
 
-  Future<void> _refresh({bool showSpinner = true}) async {
+  Future<void> _refresh({
+    bool showSpinner = true,
+    bool allowLegacyPassThrough = true,
+  }) async {
     final active = _refreshFlight;
     if (active != null) return active;
-    final next = _refreshOnce(showSpinner: showSpinner);
+    final next = _refreshOnce(
+      showSpinner: showSpinner,
+      allowLegacyPassThrough: allowLegacyPassThrough,
+    );
     _refreshFlight = next;
     try {
       await next;
@@ -418,7 +497,15 @@ class _JourneyFlowScreenState extends State<JourneyFlowScreen> {
     }
   }
 
-  Future<void> _refreshOnce({required bool showSpinner}) async {
+  Future<void> _refreshOnce({
+    required bool showSpinner,
+    required bool allowLegacyPassThrough,
+  }) async {
+    if (!_journeyAccountCurrent ||
+        (_ownerRoute != null && _ownerRoute?.isCurrent != true)) {
+      return;
+    }
+    final current = _captureJourneyOwner();
     if (showSpinner && mounted) setState(() => _loading = true);
     // #31 — lazy-resolve a due review (48h elapsed, no Pause) before
     // reading the match's current stage, so a Journey whose review
@@ -426,51 +513,37 @@ class _JourneyFlowScreenState extends State<JourneyFlowScreen> {
     // moment either party next opens it, exactly like every other
     // poll-driven state in this screen.
     await SelahJourneyService.resolveFamilyReviewIfDue(widget.matchId);
+    if (!current()) return;
     var fresh = await SelahJourneyService.refetchOne(
       widget.matchId,
       widget.profile.id,
     );
+    if (!current()) return;
 
-    // ── THE STALLED-TRANSITION RETRY.
-    //
-    // WAS mentor_gate ONLY, with a comment giving the exact reason it was
-    // needed: "whoever linked first would otherwise sit on the gate screen
-    // indefinitely after the other party linked theirs." That reasoning was
-    // right and was never applied to the other two two-sided thresholds.
-    //
-    // ── THE BUG, found 2026-08-11. Founder: "on compatibility reveal I'm
-    // stuck on 'you've chosen to continue, waiting for other'."
-    //
-    // He was. Both Seekers had revealed, both had recorded their Continue,
-    // the score was computed — every condition selah_advance_stage() tests was
-    // satisfied — and the Journey sat at compatibility_reveal because NOTHING
-    // ASKED IT AGAIN. _advance() runs on a button press; the poll re-read the
-    // stage but never re-attempted the move. The screen was waiting on a
-    // question it had stopped asking.
-    //
-    // It is not a dev-tool gap. In production, the second person to press
-    // Continue is what moves the pair on — so if their client dies between
-    // recording the Continue and calling advance, or their half arrives by
-    // any other route, the first person waits for ever, and reopening the app
-    // does not help because the retry never ran for this stage either.
-    //
-    // ── WHY EVERY RETRY IS CONDITIONAL.
-    //
-    // selah_advance_stage() INSERTS the caller's own stage checkpoint before it
-    // checks anything, so an unconditional retry here would quietly record
-    // "they chose to continue" for someone who has not pressed anything. The
-    // Continue is a deliberate act and the server treats it as one.
-    //
-    // _advanceReason is non-null only after an explicit attempt, so gating on
-    // it means: you pressed it, the server said "waiting for them", and we
-    // keep asking on your behalf. Shepherd Gate used to retry unconditionally;
-    // if both Shepherds were already linked, observing Stage 3 immediately
-    // advanced it and the member saw Stage 2 jump straight to Stage 4. Stage 3
-    // now waits for its own deliberate transition choice instead.
-    fresh = await _retryStalledAdvance(fresh);
-
+    // LOCK 21: inspect the raw stored key before its display alias. A legacy
+    // Shepherd stage is passed through only while the real access gate allows
+    // it; existing deliberate-choice retries remain for the other thresholds.
     final review = await SelahJourneyService.fetchFamilyReview(widget.matchId);
-    if (!mounted) return;
+    if (!current()) return;
+    // An explicit Continue already attempted the existing RPC for this cycle.
+    // A conflicting/missing read is held for Retry, never another auto-write.
+    if (!allowLegacyPassThrough &&
+        review == null &&
+        (fresh == null ||
+            (fresh.status == 'active' &&
+                !fresh.isJourneyLocked &&
+                (fresh.journeyStage == 'mentor_gate' ||
+                    SelahJourneyStages.of(fresh.journeyStage) == null)))) {
+      setState(() {
+        _legacyPassThroughFailureReason = 'stage_not_confirmed';
+        _loading = false;
+      });
+      return;
+    }
+    if (review == null) {
+      fresh = await _retryStalledAdvance(fresh, refreshCurrent: current);
+    }
+    if (!current()) return;
     if (fresh != null) {
       final m = fresh;
       setState(() {
@@ -487,6 +560,7 @@ class _JourneyFlowScreenState extends State<JourneyFlowScreen> {
         _pauseState = m.pause;
         _review = review;
         if (journeySurfaceChanged) {
+          _journeyOwnerRevision++;
           _stageActionVisible = false;
           _viewedRibbonStage = null;
         }
@@ -500,14 +574,21 @@ class _JourneyFlowScreenState extends State<JourneyFlowScreen> {
           _stageDecisionBusy = false;
           _stageContinueSelected = false;
         }
+        if (m.journeyStage != 'mentor_gate' &&
+            m.journeyStage != 'compatibility_reveal') {
+          _legacyPassThroughFailureReason = null;
+        }
         _observeCompatibilitySurface();
         _loading = false;
       });
       if (m.pause.isLocked) {
+        final capacityCurrent = _captureJourneyOwner();
         final capacity = await SelahJourneyService.fetchPauseCapacity(
           widget.matchId,
         );
-        if (mounted) setState(() => _pauseCapacityAvailable = capacity);
+        if (capacityCurrent()) {
+          setState(() => _pauseCapacityAvailable = capacity);
+        }
       } else if (_pauseCapacityAvailable != null && mounted) {
         setState(() => _pauseCapacityAvailable = null);
       }
@@ -521,42 +602,125 @@ class _JourneyFlowScreenState extends State<JourneyFlowScreen> {
   ///
   /// Threshold stages only. The four gated ones go through a Family Review
   /// and resolveFamilyReviewIfDue() above already retries those.
-  Future<JourneyMatch?> _retryStalledAdvance(JourneyMatch? fresh) async {
+  Future<JourneyMatch?> _retryStalledAdvance(
+    JourneyMatch? fresh, {
+    required bool Function() refreshCurrent,
+  }) async {
     if (fresh == null || fresh.status != 'active' || fresh.isJourneyLocked) {
       return fresh;
     }
     final stage = fresh.journeyStage;
     if (stage == null) return fresh;
-
-    final retry = SelahJourneyAdvancePolicy.shouldRetryStalled(
-      stage: stage,
-      reason: _advanceReason,
-    );
-    if (!retry) return fresh;
-
-    final r = await SelahJourneyService.advanceStage(widget.matchId, stage);
-    _advanceReason = r.advanced ? null : r.reason;
-    if (!r.advanced) return fresh;
-    return await SelahJourneyService.refetchOne(
+    final legacy = stage == 'mentor_gate';
+    if (legacy && _legacyPassThroughFailureReason != null) return fresh;
+    if (!legacy &&
+        !SelahJourneyAdvancePolicy.shouldRetryStalled(
+          stage: stage,
+          reason: _advanceReason,
+        )) {
+      return fresh;
+    }
+    if (!refreshCurrent()) return fresh;
+    if (_shepherdGateLoading) await _resolveMainShepherdGate();
+    if (!refreshCurrent()) return fresh;
+    final stageCurrent = _captureJourneyOwner(requireMain: true);
+    bool current() => refreshCurrent() && stageCurrent();
+    if (!current()) return fresh;
+    final result = await SelahJourneyService.advanceVisibleThreshold(
       widget.matchId,
-      widget.profile.id,
+      stage,
+      canAct: current,
     );
+    if (result == null || !current()) return fresh;
+    final hiddenRefusal =
+        !result.accepted &&
+        (legacy ||
+            (stage == 'compatibility_reveal' &&
+                result.stage != 'compatibility_reveal'));
+    if (hiddenRefusal) {
+      _legacyPassThroughFailureReason = result.reason;
+      _advanceReason = null;
+      debugPrint(
+        'SELAH: legacy Journey pass-through refused: ${result.reason}',
+      );
+      return fresh;
+    }
+    _advanceReason = result.accepted ? null : result.reason;
+    if (!result.accepted) return fresh;
+    final confirmation = await confirmSelahVisibleThreshold<JourneyMatch>(
+      result: result,
+      fromStage: stage,
+      refetch: () =>
+          SelahJourneyService.refetchOne(widget.matchId, widget.profile.id),
+      stageOf: (match) => match.journeyStage,
+      canAct: current,
+    );
+    if (confirmation == null || !current()) return fresh;
+    _legacyPassThroughFailureReason = confirmation.failureReason;
+    return confirmation.failureReason == null
+        ? confirmation.value ?? fresh
+        : fresh;
   }
 
-  /// [fromStage] is the stage just COMPLETED, not the one wanted next —
-  /// the server owns the map. See SelahJourneyService.advanceStage.
-  ///
-  /// A false result is normal, not an error: it usually means the other
-  /// party has not acted yet. The reason is held so the stage view can
-  /// say which.
+  /// Continue still names the completed threshold; only the server moves it.
   Future<void> _advance(String fromStage) async {
-    final r = await SelahJourneyService.advanceStage(widget.matchId, fromStage);
-    if (!mounted) return;
-    setState(() => _advanceReason = r.advanced ? null : r.reason);
-    // Keep the completed page painted while the confirmed server state is
-    // read back. Showing the global loader here made every stage boundary
-    // flash like a new route instead of one continuous Journey.
-    await _refresh(showSpinner: false);
+    if (_stage != fromStage) return;
+    final current = _captureJourneyOwner(requireMain: true);
+    if (!current()) return;
+    final result = await SelahJourneyService.advanceVisibleThreshold(
+      widget.matchId,
+      fromStage,
+      canAct: current,
+    );
+    if (result == null || !current()) return;
+    final legacyRefusal =
+        fromStage == 'compatibility_reveal' &&
+        !result.accepted &&
+        result.stage != 'compatibility_reveal';
+    final confirmation = result.accepted && fromStage == 'compatibility_reveal'
+        ? await confirmSelahVisibleThreshold<JourneyMatch>(
+            result: result,
+            fromStage: fromStage,
+            refetch: () => SelahJourneyService.refetchOne(
+              widget.matchId,
+              widget.profile.id,
+            ),
+            stageOf: (match) => match.journeyStage,
+            canAct: current,
+          )
+        : null;
+    if (!current()) return;
+    setState(() {
+      _legacyPassThroughFailureReason = legacyRefusal
+          ? result.reason
+          : confirmation?.failureReason;
+      _advanceReason = result.accepted || legacyRefusal ? null : result.reason;
+    });
+    if (legacyRefusal) {
+      debugPrint(
+        'SELAH: legacy Journey pass-through refused: ${result.reason}',
+      );
+    }
+    if (legacyRefusal || confirmation?.failureReason != null) return;
+    await _refresh(showSpinner: false, allowLegacyPassThrough: false);
+  }
+
+  void _retryLegacyPassThrough() {
+    final current = _captureJourneyOwner(requireMain: true);
+    if (!current()) return;
+    setState(() => _legacyPassThroughFailureReason = null);
+    if (_stage == 'compatibility_reveal') {
+      unawaited(_advance('compatibility_reveal'));
+    } else {
+      unawaited(_refresh(showSpinner: false));
+    }
+  }
+
+  VoidCallback _captureLegacyPassThroughRetry() {
+    final current = _captureJourneyOwner(requireMain: true);
+    return () {
+      if (current()) _retryLegacyPassThrough();
+    };
   }
 
   /// #31 — the 4 "both Seekers complete a stage" transitions open a
@@ -639,6 +803,7 @@ class _JourneyFlowScreenState extends State<JourneyFlowScreen> {
             : null);
     if (nextLabel == null) return;
     setState(() {
+      _stageDecisionToken = Object();
       _stageDecision = (
         stage: stage,
         nextLabel: nextLabel,
@@ -656,17 +821,30 @@ class _JourneyFlowScreenState extends State<JourneyFlowScreen> {
     setState(() => _stageContinueSelected = !_stageContinueSelected);
   }
 
-  Future<void> _continueStageDecision() async {
+  Future<void> Function() _captureStageDecisionCommit() {
     final decision = _stageDecision;
-    if (decision == null || _stageDecisionBusy) return;
-    setState(() => _stageDecisionBusy = true);
-    await decision.continueAction();
-    if (!mounted) return;
-    setState(() {
-      _stageDecision = null;
-      _stageDecisionBusy = false;
-      _stageContinueSelected = false;
-    });
+    final token = _stageDecisionToken;
+    final ownerCurrent = _captureJourneyOwner(requireMain: true);
+    bool current() =>
+        ownerCurrent() &&
+        identical(token, _stageDecisionToken) &&
+        decision == _stageDecision;
+    return () async {
+      if (!current() ||
+          decision == null ||
+          _stageDecisionBusy ||
+          !_stageContinueSelected) {
+        return;
+      }
+      setState(() => _stageDecisionBusy = true);
+      await decision.continueAction();
+      if (!current()) return;
+      setState(() {
+        _stageDecision = null;
+        _stageDecisionBusy = false;
+        _stageContinueSelected = false;
+      });
+    };
   }
 
   Future<void> _pauseStageDecision() async {
@@ -846,12 +1024,6 @@ class _JourneyFlowScreenState extends State<JourneyFlowScreen> {
     unawaited(_endJourney());
   }
 
-  void _resetShepherdGate() {
-    if (!mounted) return;
-    setState(() => _advanceReason = null);
-    unawaited(_refresh(showSpinner: false));
-  }
-
   /// The server's vocabulary turned into something a person can act on.
   /// 'stage_moved' is the one a real user will actually hit — the other
   /// Seeker's client opened the same review a moment earlier — and it is
@@ -970,29 +1142,6 @@ class _JourneyFlowScreenState extends State<JourneyFlowScreen> {
       );
       return;
     }
-    if (_stage == 'mentor_gate') {
-      if (_shepherdProfilesTheirsRevealed) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: Text(
-              '${widget.profile.firstName} already chose to reveal their '
-              'Shepherds (dev)',
-            ),
-          ),
-        );
-        return;
-      }
-      setState(() => _shepherdProfilesTheirsRevealed = true);
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text(
-            '${widget.profile.firstName} chose to reveal their Shepherds '
-            '(dev)',
-          ),
-        ),
-      );
-      return;
-    }
     setState(() => _jumping = true);
     try {
       final ids = switch (_stage) {
@@ -1018,16 +1167,6 @@ class _JourneyFlowScreenState extends State<JourneyFlowScreen> {
     } finally {
       if (mounted) setState(() => _jumping = false);
     }
-  }
-
-  void _toggleDevShepherd(int index) {
-    if (_jumping || _pauseActionBusy) return;
-    setState(() {
-      _devShepherdSelections = SelahJourneyShepherdSelection.toggle(
-        _devShepherdSelections,
-        index,
-      );
-    });
   }
 
   void _setDevLifeSnapshotBio(bool value) {
@@ -1073,85 +1212,12 @@ class _JourneyFlowScreenState extends State<JourneyFlowScreen> {
     setState(() => _lifeSnapshotMineRevealed = true);
   }
 
-  void _revealShepherdProfiles() {
-    if (!mounted || _shepherdProfilesMineRevealed) return;
-    HapticFeedback.selectionClick();
-    setState(() => _shepherdProfilesMineRevealed = true);
-  }
-
-  void _recordShepherdGreeting(int shepherdIndex) {
-    if (!mounted || _shepherdGreetingIndices.contains(shepherdIndex)) return;
-    HapticFeedback.selectionClick();
-    setState(() {
-      _shepherdGreetingIndices = Set<int>.unmodifiable({
-        ..._shepherdGreetingIndices,
-        shepherdIndex,
-      });
-    });
-  }
-
-  List<_JourneyShepherdPortrait> get _shepherdPortraitsForHistory {
-    final remembered = _shepherdHistoryPortraits;
-    if (remembered != null && remembered.isNotEmpty) return remembered;
-    if (_isDevAccount) {
-      return [
-        for (final shepherd
-            in SelahJourneyShepherdSelection.otherShepherdPreview)
-          _JourneyShepherdPortrait(
-            firstName: shepherd.firstName,
-            relationship:
-                selahRelationshipLabel(shepherd.relationship) ??
-                shepherd.relationship,
-            isMain: shepherd.isMain,
-          ),
-      ];
-    }
-    return const [_JourneyShepherdPortrait(firstName: null, isMain: true)];
-  }
-
-  void _rememberShepherdPortraits(List<_JourneyShepherdPortrait> shepherds) {
-    if (!mounted || shepherds.isEmpty) return;
-    setState(() {
-      _shepherdHistoryPortraits = List<_JourneyShepherdPortrait>.unmodifiable(
-        shepherds,
-      );
-    });
-  }
-
   Future<void> _continueLifeSnapshot() async {
     if (_isDevAccount && _lifeSnapshotOpenedFromDevJump) {
-      await _jumpToStage('mentor_gate');
+      await _jumpToStage('phase_1');
       return;
     }
     await _advance('compatibility_reveal');
-  }
-
-  /// The Shepherd stage's six named Shepherds are a visual developer mock,
-  /// but its Main
-  /// Shepherd also needs to satisfy the real server gate before the tester can
-  /// move on. The existing dev RPC creates one active Main for each Seeker;
-  /// the five Additional selections remain display-only because production
-  /// has no artificial Shepherd count cap and this panel must not invent one.
-  Future<bool> _prepareDevShepherdGate() async {
-    if (!_isDevAccount ||
-        !_devShepherdSelections.contains(
-          SelahJourneyShepherdSelection.mainIndex,
-        ) ||
-        _jumping) {
-      return false;
-    }
-    setState(() => _jumping = true);
-    try {
-      await SelahJourneyService.devCounterpartComplete(widget.matchId);
-      await _refresh(showSpinner: false);
-      return true;
-    } catch (e) {
-      if (!mounted) return false;
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('$e')));
-      return false;
-    } finally {
-      if (mounted) setState(() => _jumping = false);
-    }
   }
 
   /// DEV ONLY, DESTRUCTIVE. Puts this Journey back to its first stage and
@@ -1182,14 +1248,6 @@ class _JourneyFlowScreenState extends State<JourneyFlowScreen> {
       final said = await SelahJourneyService.devRewindJourney(
         matchId: widget.matchId,
       );
-      if (mounted) {
-        setState(() {
-          _shepherdProfilesMineRevealed = false;
-          _shepherdProfilesTheirsRevealed = false;
-          _shepherdGreetingIndices = const <int>{};
-          _shepherdHistoryPortraits = null;
-        });
-      }
       await _refresh(showSpinner: false);
       if (!mounted) return;
       ScaffoldMessenger.of(
@@ -1203,7 +1261,7 @@ class _JourneyFlowScreenState extends State<JourneyFlowScreen> {
     }
   }
 
-  /// DEV ONLY. Skips the Pre-Journey Ritual, the Shepherd Gate and the
+  /// DEV ONLY. Skips the Pre-Journey Ritual and the
   /// 48-hour Family Review Period in one tap.
   Future<void> _jumpToStage(String stage) async {
     if (_jumping) return;
@@ -1213,17 +1271,6 @@ class _JourneyFlowScreenState extends State<JourneyFlowScreen> {
           ? 'compatibility_reveal'
           : stage;
       await SelahJourneyService.devSetStage(widget.matchId, serverStage);
-      final targetOrder = SelahJourneyStages.previewOf(stage)?.order;
-      if (mounted &&
-          targetOrder != null &&
-          targetOrder <= SelahJourneyStages.previewOf('mentor_gate')!.order) {
-        setState(() {
-          _shepherdProfilesMineRevealed = false;
-          _shepherdProfilesTheirsRevealed = false;
-          _shepherdGreetingIndices = const <int>{};
-          _shepherdHistoryPortraits = null;
-        });
-      }
       // The server is the source of truth for where the Journey now is, so
       // re-read rather than assuming the jump landed where it was asked to.
       // A local setState here would show the requested stage even if the
@@ -1337,8 +1384,6 @@ class _JourneyFlowScreenState extends State<JourneyFlowScreen> {
                 onLifeSnapshotBioChanged: _setDevLifeSnapshotBio,
                 onLifeSnapshotFieldToggle: _toggleDevLifeSnapshotField,
                 onLifeSnapshotShowAll: _setAllDevLifeSnapshotFields,
-                selectedShepherds: _devShepherdSelections,
-                onShepherdToggle: _toggleDevShepherd,
                 hasPlus: _hasPlus,
                 onHasPlusChanged: _setPlusUnlock,
                 onRewind: _rewindJourney,
@@ -1398,6 +1443,7 @@ class _JourneyFlowScreenState extends State<JourneyFlowScreen> {
           _shepherdGate == SelahJourneyShepherdGate.bothMissing;
       return _MainShepherdRequiredJourneyView(
         profile: widget.profile,
+        stage: _displayStage,
         paused: _pauseState.isLocked,
         busy: _pauseActionBusy,
         waitingOnOther: !selfMissing,
@@ -1425,6 +1471,34 @@ class _JourneyFlowScreenState extends State<JourneyFlowScreen> {
     }
 
     final displayStage = _displayStage;
+    if (_stage == 'mentor_gate') {
+      // The stored legacy key never exposes a retired screen or Phase 1
+      // actions before the unchanged server RPC confirms the pass-through.
+      return Column(
+        children: [
+          _JourneyAppBar(
+            profile: widget.profile,
+            stage: displayStage,
+            ownMainShepherdName: _ownMainShepherdName,
+          ),
+          Expanded(
+            child: Padding(
+              padding: const EdgeInsets.all(22),
+              child: Center(
+                child: _legacyPassThroughFailureReason == null
+                    ? const SelahLoading()
+                    : SelahErrorBanner(
+                        key: const ValueKey('journey_legacy_pass_failure'),
+                        message: 'That didn’t save. Try again.',
+                        retryKey: const ValueKey('journey_legacy_pass_retry'),
+                        onRetry: _captureLegacyPassThroughRetry(),
+                      ),
+              ),
+            ),
+          ),
+        ],
+      );
+    }
     final surfaceKey = _review != null ? 'family_review' : displayStage.value;
 
     return Column(
@@ -1432,7 +1506,21 @@ class _JourneyFlowScreenState extends State<JourneyFlowScreen> {
         // Persistent Journey management lives on the Connections Active
         // Journey card. Live chapter content contains only its own action;
         // Pause/End appear once, on the dedicated between-stage choice page.
-        _JourneyAppBar(profile: widget.profile),
+        _JourneyAppBar(
+          profile: widget.profile,
+          stage: displayStage,
+          ownMainShepherdName: _ownMainShepherdName,
+        ),
+        if (_legacyPassThroughFailureReason != null)
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 22, vertical: 8),
+            child: SelahErrorBanner(
+              key: const ValueKey('journey_legacy_pass_failure'),
+              message: 'That didn’t save. Try again.',
+              retryKey: const ValueKey('journey_legacy_pass_retry'),
+              onRetry: _captureLegacyPassThroughRetry(),
+            ),
+          ),
         // THE RIBBON — inherited decision 185 (chosen as "Quiet" after three
         // mock rounds): eight quiet marks, one named pill. Walked
         // chapters fill soft gold, the road ahead sits faint, and the
@@ -1487,11 +1575,6 @@ class _JourneyFlowScreenState extends State<JourneyFlowScreen> {
                         onContinue: () async {},
                         readOnly: true,
                       ),
-                      shepherdHistoryChild: _JourneyShepherdHistoryView(
-                        otherFirstName: widget.profile.firstName,
-                        shepherds: _shepherdPortraitsForHistory,
-                        shepherdGreetingIndices: _shepherdGreetingIndices,
-                      ),
                       decisionChild: _stageDecision == null
                           ? null
                           : _JourneyStageDecisionPage(
@@ -1505,7 +1588,7 @@ class _JourneyFlowScreenState extends State<JourneyFlowScreen> {
                                 displayStage.value,
                               ).currentState?.showActionPage(),
                               onSelectContinue: _selectStageContinue,
-                              onCommitContinue: _continueStageDecision,
+                              onCommitContinue: _captureStageDecisionCommit(),
                               onPause: _pauseStageDecision,
                               onEnd: _endJourney,
                             ),
@@ -1533,8 +1616,7 @@ class _JourneyFlowScreenState extends State<JourneyFlowScreen> {
         if (_advanceReason != null &&
             _review == null &&
             !_lifeSnapshotOpen &&
-            _stage != 'greeting_exchange' &&
-            _stage != 'mentor_gate')
+            _stage != 'greeting_exchange')
           Padding(
             padding: const EdgeInsets.only(top: 2, bottom: 6),
             child: SelahLoading(label: _waitingLine),
@@ -1702,7 +1784,7 @@ class _JourneyFlowScreenState extends State<JourneyFlowScreen> {
         onContinue: () => _openStageDecision(
           fromStage: 'compatibility_reveal',
           stageOverride: SelahJourneyStages.lifeSnapshotPreview,
-          nextLabelOverride: SelahJourneyStages.previewLabelFor('mentor_gate'),
+          nextLabelOverride: SelahJourneyStages.labelFor('phase_1'),
           continueAction: _continueLifeSnapshot,
         ),
       );
@@ -1716,8 +1798,8 @@ class _JourneyFlowScreenState extends State<JourneyFlowScreen> {
           isCurrentSurface: _captureCompatibilitySurfaceOwner(readOnly: false),
           onContinue: () => _openStageDecision(
             fromStage: 'compatibility_reveal',
-            nextLabelOverride: SelahJourneyStages.lifeSnapshotPreview.label,
-            continueAction: _openLifeSnapshot,
+            nextLabelOverride: SelahJourneyStages.labelFor('phase_1'),
+            continueAction: () => _advance('compatibility_reveal'),
           ),
           waitingReason: _advanceReason,
         );
@@ -1730,25 +1812,6 @@ class _JourneyFlowScreenState extends State<JourneyFlowScreen> {
             fromStage: 'greeting_exchange',
             continueAction: () => _advance('greeting_exchange'),
           ),
-        );
-      case 'mentor_gate':
-        return _MentorGateView(
-          profile: widget.profile,
-          otherFirstName: widget.profile.firstName,
-          reason: _advanceReason,
-          onChanged: _resetShepherdGate,
-          devMode: _isDevAccount,
-          selectedShepherdIndices: _devShepherdSelections,
-          onPrepareDevShepherds: _prepareDevShepherdGate,
-          mineRevealed: _shepherdProfilesMineRevealed,
-          theirsRevealed: _shepherdProfilesTheirsRevealed,
-          onReveal: _revealShepherdProfiles,
-          shepherdGreetingIndices: _shepherdGreetingIndices,
-          onShepherdGreeting: _recordShepherdGreeting,
-          onPortraitsResolved: _rememberShepherdPortraits,
-          // Mutual reveal completes this chapter. Individual Shepherd Greetings
-          // remain optional and never become another progression gate.
-          onContinue: () => _advance('mentor_gate'),
         );
       case 'phase_1':
         return _PhaseView(
@@ -1823,6 +1886,7 @@ class _JourneyFlowScreenState extends State<JourneyFlowScreen> {
 
 class _MainShepherdRequiredJourneyView extends StatelessWidget {
   final SeekerProfile profile;
+  final SelahJourneyStage stage;
   final bool paused;
   final bool busy;
   final bool waitingOnOther;
@@ -1832,6 +1896,7 @@ class _MainShepherdRequiredJourneyView extends StatelessWidget {
 
   const _MainShepherdRequiredJourneyView({
     required this.profile,
+    required this.stage,
     required this.paused,
     required this.busy,
     required this.waitingOnOther,
@@ -1845,7 +1910,7 @@ class _MainShepherdRequiredJourneyView extends StatelessWidget {
     padding: const EdgeInsets.fromLTRB(24, 18, 24, 28),
     child: Column(
       children: [
-        _JourneyAppBar(profile: profile),
+        _JourneyAppBar(profile: profile, stage: stage),
         Expanded(
           child: Center(
             child: ConstrainedBox(
@@ -2689,12 +2754,11 @@ class _JourneyStageDecisionPage extends StatelessWidget {
                             style: SelahText.heading(size: 23),
                           ),
                           SizedBox(height: 7),
-                          Text(
-                            completionConfirmed
-                                ? stage.completionLine
-                                : 'Selah will first confirm that both Main Shepherds are present.',
-                            style: SelahText.subtext(size: 13.5),
-                          ),
+                          if (completionConfirmed)
+                            Text(
+                              stage.completionLine,
+                              style: SelahText.subtext(size: 13.5),
+                            ),
                         ],
                       ),
                     ),
@@ -3379,14 +3443,11 @@ class _JourneyRoundAction extends StatefulWidget {
   final String label;
   final VoidCallback? onTap;
   final IconData icon;
-  final bool showLabel;
 
   const _JourneyRoundAction({
-    super.key,
     required this.label,
     required this.onTap,
     this.icon = Icons.waving_hand_outlined,
-    this.showLabel = true,
   });
 
   @override
@@ -3475,10 +3536,8 @@ class _JourneyRoundActionState extends State<_JourneyRoundAction>
                   ],
                 ),
               ),
-              if (widget.showLabel) ...[
-                SizedBox(height: 7),
-                Text(widget.label, style: SelahText.button(size: 13.5)),
-              ],
+              SizedBox(height: 7),
+              Text(widget.label, style: SelahText.button(size: 13.5)),
             ],
           ),
         ),
@@ -3820,7 +3879,6 @@ class _JourneyStageScrollShell extends StatefulWidget {
   final Widget compatibilityHistoryChild;
   final Widget greetingHistoryChild;
   final Widget lifeSnapshotHistoryChild;
-  final Widget shepherdHistoryChild;
   final Widget? decisionChild;
   final VoidCallback onOpenTimeline;
   final ValueChanged<bool> onActionVisibilityChanged;
@@ -3834,7 +3892,6 @@ class _JourneyStageScrollShell extends StatefulWidget {
     required this.compatibilityHistoryChild,
     required this.greetingHistoryChild,
     required this.lifeSnapshotHistoryChild,
-    required this.shepherdHistoryChild,
     this.decisionChild,
     required this.onOpenTimeline,
     required this.onActionVisibilityChanged,
@@ -4181,7 +4238,6 @@ class _JourneyStageScrollShellState extends State<_JourneyStageScrollShell> {
                   'compatibility_reveal' => widget.compatibilityHistoryChild,
                   'greeting_exchange' => widget.greetingHistoryChild,
                   'life_snapshot_preview' => widget.lifeSnapshotHistoryChild,
-                  'mentor_gate' => widget.shepherdHistoryChild,
                   _ => _JourneyCompletedStage(
                     stage: completedStage,
                     height: pageHeight,
@@ -4728,8 +4784,6 @@ class _DevStageJumper extends StatefulWidget {
   final ValueChanged<bool> onLifeSnapshotBioChanged;
   final ValueChanged<String> onLifeSnapshotFieldToggle;
   final ValueChanged<bool> onLifeSnapshotShowAll;
-  final Set<int> selectedShepherds;
-  final ValueChanged<int> onShepherdToggle;
   final bool hasPlus;
   final ValueChanged<bool> onHasPlusChanged;
   final VoidCallback onRewind;
@@ -4744,8 +4798,6 @@ class _DevStageJumper extends StatefulWidget {
     required this.onLifeSnapshotBioChanged,
     required this.onLifeSnapshotFieldToggle,
     required this.onLifeSnapshotShowAll,
-    required this.selectedShepherds,
-    required this.onShepherdToggle,
     required this.hasPlus,
     required this.onHasPlusChanged,
     required this.onRewind,
@@ -4762,69 +4814,10 @@ class _DevStageJumperState extends State<_DevStageJumper> {
   static const double _tabWidth = 22;
   static const double _panelWidth = 232;
 
-  // The display order includes the Journey-only Bio mock inserted between
-  // Compatibility Reveal and Shepherd Gate. Stored values still come from
-  // the canonical model; the preview never reaches the stage RPC.
+  // LOCK 21: private stage choices use the same seven visible stages.
   static final _stages = SelahJourneyStages.previewAll
       .map((stage) => stage.value)
       .toList(growable: false);
-
-  Widget _shepherdChip(int index) {
-    final shepherd = SelahDevScenario.fakeShepherds[index];
-    final selected = widget.selectedShepherds.contains(index);
-    final role = index == SelahJourneyShepherdSelection.mainIndex
-        ? 'Main'
-        : 'Additional';
-    return GestureDetector(
-      onTap: widget.busy || widget.livePaused
-          ? null
-          : () => widget.onShepherdToggle(index),
-      child: AnimatedContainer(
-        duration: const Duration(milliseconds: 180),
-        padding: const EdgeInsets.symmetric(horizontal: 9, vertical: 7),
-        decoration: BoxDecoration(
-          color: selected
-              ? SelahColors.journeyGold.withValues(alpha: 0.2)
-              : SelahColors.foreground.withValues(alpha: 0.06),
-          borderRadius: BorderRadius.circular(10),
-          border: Border.all(
-            color: selected
-                ? SelahColors.journeyGold.withValues(alpha: 0.72)
-                : SelahColors.foreground.withValues(alpha: 0.12),
-            width: 0.7,
-          ),
-        ),
-        child: Row(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Icon(
-              selected ? Icons.check_circle_rounded : Icons.circle_outlined,
-              size: 13,
-              color: selected ? SelahColors.journeyGold : SelahColors.ink(0.54),
-            ),
-            SizedBox(width: 5),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Text(
-                  shepherd.name,
-                  style: SelahText.subtext(size: 10.5, color: Colors.white),
-                ),
-                Text(
-                  role,
-                  style: SelahText.subtext(
-                    size: 8.5,
-                    color: SelahColors.foreground.withValues(alpha: 0.52),
-                  ),
-                ),
-              ],
-            ),
-          ],
-        ),
-      ),
-    );
-  }
 
   Widget _lifeSnapshotFieldChip(SelahJourneyLifeSnapshotField field) {
     final selected = widget.lifeSnapshotFieldIds.contains(field.id);
@@ -5138,53 +5131,6 @@ class _DevStageJumperState extends State<_DevStageJumper> {
                       ),
                     ],
 
-                    if (widget.current == 'mentor_gate') ...[
-                      const SizedBox(height: 16),
-                      SelahDevToolSection(
-                        key: const ValueKey('dev_journey_section_shepherds'),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.stretch,
-                          children: [
-                            Text(
-                              'STAGE 4 SHEPHERDS',
-                              style: SelahText.chapterLabel(
-                                color: SelahColors.ink(0.70),
-                              ),
-                            ),
-                            SizedBox(height: 6),
-                            Text(
-                              'Choose the one Main and any of the five Additional '
-                              'mock Shepherds, then send Greeting on the stage.',
-                              style: SelahText.subtext(size: 10.5),
-                            ),
-                            SizedBox(height: 9),
-                            Wrap(
-                              spacing: 6,
-                              runSpacing: 6,
-                              children: [
-                                for (
-                                  var index = 0;
-                                  index < SelahDevScenario.fakeShepherds.length;
-                                  index++
-                                )
-                                  _shepherdChip(index),
-                              ],
-                            ),
-                            SizedBox(height: 7),
-                            Text(
-                              widget.selectedShepherds.isEmpty
-                                  ? 'None selected'
-                                  : '${widget.selectedShepherds.length} selected',
-                              style: SelahText.subtext(
-                                size: 10,
-                                color: SelahColors.journeyGold,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ],
-
                     const SizedBox(height: 16),
                     SelahDevToolSection(
                       key: const ValueKey('dev_journey_section_account'),
@@ -5260,32 +5206,54 @@ class _DevStageJumperState extends State<_DevStageJumper> {
 // nothing here reads it now.
 class _JourneyAppBar extends StatelessWidget {
   final SeekerProfile profile;
-  const _JourneyAppBar({required this.profile});
+  final SelahJourneyStage stage;
+  final String? ownMainShepherdName;
+  const _JourneyAppBar({
+    required this.profile,
+    required this.stage,
+    this.ownMainShepherdName,
+  });
 
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.fromLTRB(8, 8, 12, 4),
-      child: Row(
+      child: Column(
         children: [
-          IconButton(
-            onPressed: () => Navigator.of(context).maybePop(),
-            icon: Icon(
-              Icons.arrow_back_ios_new,
-              color: SelahColors.ink(0.70),
-              size: 18,
-            ),
+          Row(
+            children: [
+              IconButton(
+                onPressed: () => Navigator.of(context).maybePop(),
+                icon: Icon(
+                  Icons.arrow_back_ios_new,
+                  color: SelahColors.ink(0.70),
+                  size: 18,
+                ),
+              ),
+              Expanded(
+                child: Text(
+                  'Journey with ${profile.firstName}',
+                  style: SelahText.heading(size: 16),
+                  textAlign: TextAlign.center,
+                ),
+              ),
+              // The old trailing controls' footprint, kept as space so the
+              // title stays centred — an IconButton is 48pt wide.
+              SizedBox(width: 48),
+            ],
           ),
-          Expanded(
+          Padding(
+            padding: const EdgeInsets.fromLTRB(14, 0, 14, 8),
             child: Text(
-              'Journey with ${profile.firstName}',
-              style: SelahText.heading(size: 16),
+              selahJourneyStageHeader(
+                stageOrder: stage.order,
+                counterpartFirstName: profile.firstName,
+                ownMainShepherdName: ownMainShepherdName,
+              ),
+              style: SelahText.subtext(),
               textAlign: TextAlign.center,
             ),
           ),
-          // The old trailing controls' footprint, kept as space so the
-          // title stays centred — an IconButton is 48pt wide.
-          SizedBox(width: 48),
         ],
       ),
     );
@@ -7548,1023 +7516,6 @@ class _LifeSnapshotFactRow extends StatelessWidget {
       ],
     ),
   );
-}
-
-// --- Mentor Gate -------------------------------------------------------
-
-/// Shepherd Gate.
-///
-/// REWRITTEN 2026-08-08. It used to read only the ACTING Seeker's own
-/// Shepherd and, on finding one, silently advance the SHARED journey_stage
-/// — so a Seeker who had a Shepherd pulled the pair past the gate while the
-/// other party had none and never saw this screen. (In practice it advanced
-/// nothing at all, because the write underneath it was being discarded by
-/// RLS; the two defects hid each other.)
-///
-/// Founder-decided 2026-08-08: BOTH Seekers must hold an active Main
-/// Shepherd. That check now lives in selah_advance_stage(), and this widget
-/// only renders which of the two is outstanding after an explicit server
-/// check. Polling never advances this gate: the Shepherd stage must be seen
-/// and chosen.
-class _MentorGateView extends StatefulWidget {
-  final SeekerProfile profile;
-  final String otherFirstName;
-
-  /// From selah_advance_stage(): 'shepherd_required_self' — you must link
-  /// one; 'shepherd_required_other' — they must. Null while the parent's
-  /// first attempt is in flight.
-  final String? reason;
-
-  /// Ask the parent to re-poll after the user has linked someone, rather
-  /// than waiting up to three seconds for the timer.
-  final VoidCallback onChanged;
-  final Future<void> Function() onContinue;
-  final bool devMode;
-  final Set<int> selectedShepherdIndices;
-  final Future<bool> Function() onPrepareDevShepherds;
-  final bool mineRevealed;
-  final bool theirsRevealed;
-  final VoidCallback onReveal;
-  final Set<int> shepherdGreetingIndices;
-  final ValueChanged<int> onShepherdGreeting;
-  final ValueChanged<List<_JourneyShepherdPortrait>> onPortraitsResolved;
-
-  const _MentorGateView({
-    required this.profile,
-    required this.otherFirstName,
-    required this.reason,
-    required this.onChanged,
-    required this.onContinue,
-    required this.devMode,
-    required this.selectedShepherdIndices,
-    required this.onPrepareDevShepherds,
-    required this.mineRevealed,
-    required this.theirsRevealed,
-    required this.onReveal,
-    required this.shepherdGreetingIndices,
-    required this.onShepherdGreeting,
-    required this.onPortraitsResolved,
-  });
-
-  @override
-  State<_MentorGateView> createState() => _MentorGateViewState();
-}
-
-class _MentorGateViewState extends State<_MentorGateView> {
-  late final PageController _shepherdPager = PageController(
-    viewportFraction: 0.72,
-  );
-  bool _revealing = false;
-  int? _sendingShepherdIndex;
-  int _shepherdPage = 0;
-  List<ShepherdInfo>? _otherShepherds;
-  Future<void>? _otherShepherdLookup;
-
-  @override
-  void initState() {
-    super.initState();
-    // Shepherd identities load quietly behind the protected portrait. Mutual
-    // consent can therefore reveal settled content without a second loader.
-    if (!widget.devMode) {
-      _otherShepherdLookup = _loadOtherShepherds();
-    }
-  }
-
-  Future<void> _loadOtherShepherds() async {
-    final shepherds = await SelahShepherdInfoService.fetchUnlocked(
-      widget.profile.id,
-    );
-    shepherds?.sort((a, b) {
-      if (a.isMain == b.isMain) return 0;
-      return a.isMain ? -1 : 1;
-    });
-    if (!mounted) return;
-    setState(() => _otherShepherds = shepherds);
-    if (shepherds != null && shepherds.isNotEmpty) {
-      widget.onPortraitsResolved(_portraitShepherds);
-    }
-  }
-
-  @override
-  void dispose() {
-    _shepherdPager.dispose();
-    super.dispose();
-  }
-
-  Future<void> _revealProfiles() async {
-    if (_revealing || widget.mineRevealed) return;
-    if (widget.devMode &&
-        !widget.selectedShepherdIndices.contains(
-          SelahJourneyShepherdSelection.mainIndex,
-        )) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text('Select the Main Shepherd in the Stage 4 toggle.'),
-        ),
-      );
-      return;
-    }
-
-    setState(() => _revealing = true);
-    final ready = !widget.devMode || await widget.onPrepareDevShepherds();
-    final shepherdLookup = _otherShepherdLookup;
-    if (shepherdLookup != null) {
-      try {
-        await shepherdLookup.timeout(const Duration(seconds: 2));
-      } on TimeoutException {
-        // Reveal is never held hostage by a slow optional identity lookup.
-        // The protected fallback remains honest until it completes.
-      }
-    }
-    if (!mounted) return;
-    setState(() => _revealing = false);
-    if (ready) widget.onReveal();
-  }
-
-  Future<void> _sendShepherdGreeting(int shepherdIndex) async {
-    if (_sendingShepherdIndex != null ||
-        widget.shepherdGreetingIndices.contains(shepherdIndex)) {
-      return;
-    }
-    setState(() => _sendingShepherdIndex = shepherdIndex);
-    widget.onShepherdGreeting(shepherdIndex);
-
-    // Let the gold Greeting confirmation land on this portrait before offering
-    // the next ungreeted Shepherd. The member can still swipe anywhere and
-    // can continue the stage without greeting everybody.
-    await Future<void>.delayed(const Duration(milliseconds: 420));
-    if (!mounted) return;
-    final greeted = {...widget.shepherdGreetingIndices, shepherdIndex};
-    final next = SelahJourneyShepherdGreetingPolicy.nextUngreeted(
-      currentIndex: shepherdIndex,
-      greetedIndices: greeted,
-      shepherdCount: _portraitShepherds.length,
-    );
-    if (next != null && _shepherdPager.hasClients) {
-      final reduceMotion =
-          MediaQuery.maybeOf(context)?.disableAnimations ?? false;
-      if (reduceMotion) {
-        _shepherdPager.jumpToPage(next);
-      } else {
-        await _shepherdPager.animateToPage(
-          next,
-          duration: const Duration(milliseconds: 420),
-          curve: Curves.easeOutCubic,
-        );
-      }
-    }
-    if (mounted) setState(() => _sendingShepherdIndex = null);
-  }
-
-  List<_JourneyShepherdPortrait> get _portraitShepherds {
-    if (widget.devMode) {
-      return [
-        for (final shepherd
-            in SelahJourneyShepherdSelection.otherShepherdPreview)
-          _JourneyShepherdPortrait(
-            firstName: shepherd.firstName,
-            relationship:
-                selahRelationshipLabel(shepherd.relationship) ??
-                shepherd.relationship,
-            isMain: shepherd.isMain,
-          ),
-      ];
-    }
-
-    final shepherds = _otherShepherds;
-    if (shepherds != null && shepherds.isNotEmpty) {
-      return [
-        for (final shepherd in shepherds)
-          _JourneyShepherdPortrait(
-            firstName: shepherd.firstName,
-            relationship: shepherd.relationshipLabel,
-            city: shepherd.city,
-            isMain: shepherd.isMain,
-          ),
-      ];
-    }
-
-    // The gate proves a Shepherd exists, but an older/standard unlock may
-    // not grant this client the identity RPC. Keep that truth protected
-    // instead of inventing a person or misusing the Seeker's own portrait.
-    return const [_JourneyShepherdPortrait(firstName: null, isMain: true)];
-  }
-
-  Widget _shepherdPortraitFocus({required bool revealed}) {
-    final shepherds = _portraitShepherds;
-    final currentPage = _shepherdPage.clamp(0, shepherds.length - 1);
-    final revealState = SelahJourneyShepherdRevealPolicy.resolve(
-      mine: widget.mineRevealed,
-      theirs: widget.theirsRevealed,
-    );
-    final preRevealCopy = switch (revealState) {
-      SelahJourneyShepherdRevealState.neither => (
-        'Meet ${widget.otherFirstName}’s Shepherds',
-        'You both choose when the Shepherd profiles are revealed.',
-      ),
-      SelahJourneyShepherdRevealState.mineWaiting => (
-        'Your reveal is ready',
-        'Waiting for ${widget.otherFirstName}. The profiles open together.',
-      ),
-      SelahJourneyShepherdRevealState.theirsWaiting => (
-        '${widget.otherFirstName} is ready',
-        'Reveal yours to open the Shepherd profiles together.',
-      ),
-      SelahJourneyShepherdRevealState.revealed => (
-        '${widget.otherFirstName}’s Shepherds',
-        'Their Shepherd profiles are now open for this Journey.',
-      ),
-    };
-    final reduceMotion =
-        MediaQuery.maybeOf(context)?.disableAnimations ?? false;
-    final duration = reduceMotion
-        ? Duration.zero
-        : const Duration(milliseconds: 420);
-
-    Widget changingText(String value, TextStyle style) => AnimatedSwitcher(
-      duration: duration,
-      child: Text(
-        value,
-        key: ValueKey(value),
-        style: style,
-        textAlign: TextAlign.center,
-      ),
-    );
-
-    return SizedBox(
-      width: double.infinity,
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          if (!revealed) ...[
-            _JourneyPairStatus(
-              profile: widget.profile,
-              youComplete: widget.mineRevealed,
-              otherComplete: widget.theirsRevealed,
-              youCompleteLabel: 'Reveal chosen',
-              youWaitingLabel: 'Not revealed',
-              otherCompleteLabel: 'Reveal chosen',
-              otherWaitingLabel: 'Not revealed',
-            ),
-            SizedBox(height: 14),
-          ],
-          changingText(
-            revealed
-                ? '${widget.otherFirstName}’s Shepherds'
-                : preRevealCopy.$1,
-            SelahText.heading(size: 23),
-          ),
-          SizedBox(height: 8),
-          changingText(
-            revealed
-                ? 'Profiles revealed. Greeting to each Shepherd is optional.'
-                : preRevealCopy.$2,
-            SelahText.subtext(size: 13.5),
-          ),
-          SizedBox(height: 16),
-          SizedBox(
-            height: 218,
-            child: PageView.builder(
-              controller: _shepherdPager,
-              physics: shepherds.length > 1
-                  ? const BouncingScrollPhysics()
-                  : const NeverScrollableScrollPhysics(),
-              itemCount: shepherds.length,
-              onPageChanged: (page) {
-                if (mounted) setState(() => _shepherdPage = page);
-              },
-              itemBuilder: (context, index) => Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 7),
-                child: _JourneyShepherdPortraitCard(
-                  shepherd: shepherds[index],
-                  otherFirstName: widget.otherFirstName,
-                  revealed: revealed,
-                  greetingSent: widget.shepherdGreetingIndices.contains(index),
-                ),
-              ),
-            ),
-          ),
-          SizedBox(height: 13),
-          Row(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              for (var index = 0; index < shepherds.length; index++) ...[
-                AnimatedContainer(
-                  duration: duration,
-                  width: index == currentPage ? 17 : 5,
-                  height: 5,
-                  decoration: BoxDecoration(
-                    color: index == currentPage
-                        ? SelahColors.journeyGold
-                        : SelahColors.foreground.withValues(alpha: 0.24),
-                    borderRadius: BorderRadius.circular(999),
-                  ),
-                ),
-                if (index != shepherds.length - 1) SizedBox(width: 7),
-              ],
-            ],
-          ),
-          if (revealed) ...[
-            SizedBox(height: 4),
-            SizedBox(
-              height: 96,
-              child: Center(
-                child: AnimatedSwitcher(
-                  duration: duration,
-                  child: widget.shepherdGreetingIndices.contains(currentPage)
-                      ? Column(
-                          key: ValueKey('shepherd-greeting-sent-$currentPage'),
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            Icon(
-                              Icons.waving_hand_rounded,
-                              size: 22,
-                              color: SelahColors.journeyGold,
-                            ),
-                            SizedBox(height: 5),
-                            Text(
-                              'Greeting sent',
-                              style: SelahText.subtext(
-                                size: 11,
-                                color: SelahColors.journeyGold,
-                              ),
-                            ),
-                          ],
-                        )
-                      : _JourneyRoundAction(
-                          key: ValueKey('shepherd-greeting-$currentPage'),
-                          label:
-                              'Send Greeting to '
-                              '${shepherds[currentPage].firstName ?? 'this Shepherd'}',
-                          showLabel: false,
-                          icon: _sendingShepherdIndex == currentPage
-                              ? Icons.hourglass_top_rounded
-                              : Icons.waving_hand_outlined,
-                          onTap: _sendingShepherdIndex == null
-                              ? () => unawaited(
-                                  _sendShepherdGreeting(currentPage),
-                                )
-                              : null,
-                        ),
-                ),
-              ),
-            ),
-          ],
-        ],
-      ),
-    );
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    final revealState = SelahJourneyShepherdRevealPolicy.resolve(
-      mine: widget.mineRevealed,
-      theirs: widget.theirsRevealed,
-    );
-    if (widget.reason == 'shepherd_required_other') {
-      return Center(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 32),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              _JourneyPairStatus(
-                profile: widget.profile,
-                youComplete: true,
-                otherComplete: false,
-              ),
-              SizedBox(height: 18),
-              Text(
-                SelahJourneyStages.labelFor('mentor_gate'),
-                style: SelahText.heading(size: 20),
-              ),
-              SizedBox(height: 6),
-              Text(
-                'Your Shepherd is with you. Waiting for '
-                '${widget.otherFirstName} to '
-                'bring theirs — a Journey in Selah is walked with both '
-                'families present.',
-                style: SelahText.subtext(),
-                textAlign: TextAlign.center,
-              ),
-              SizedBox(height: 14),
-              TextButton(
-                onPressed: widget.onChanged,
-                child: Text(
-                  'Check again',
-                  style: SelahText.subtext(
-                    size: 12,
-                    color: SelahColors.ink(0.70),
-                  ),
-                ),
-              ),
-            ],
-          ),
-        ),
-      );
-    }
-
-    if (widget.reason == null &&
-        revealState == SelahJourneyShepherdRevealState.revealed) {
-      // Mutual reveal completes the Shepherd introduction. Greetings inside the
-      // gallery remain optional; the same completion gesture can move forward
-      // before, between or after them.
-      return _JourneyScrollToContinue(
-        onContinue: widget.onContinue,
-        idleLabel: 'Continue',
-        openingLabel: 'Opening Faith & Values…',
-        expand: true,
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 22),
-          child: _shepherdPortraitFocus(revealed: true),
-        ),
-      );
-    }
-
-    if (widget.reason == null) {
-      return Padding(
-        padding: const EdgeInsets.fromLTRB(22, 12, 22, 4),
-        child: Column(
-          children: [
-            Expanded(
-              child: LayoutBuilder(
-                builder: (context, constraints) => SingleChildScrollView(
-                  child: ConstrainedBox(
-                    constraints: BoxConstraints(
-                      minHeight: constraints.maxHeight,
-                    ),
-                    child: Center(
-                      child: _shepherdPortraitFocus(revealed: false),
-                    ),
-                  ),
-                ),
-              ),
-            ),
-            SizedBox(
-              height: 96,
-              child: Center(
-                child:
-                    SelahJourneyShepherdRevealPolicy.canRevealMine(
-                      mine: widget.mineRevealed,
-                    )
-                    ? _JourneyRoundAction(
-                        label:
-                            'Reveal Shepherd profiles with '
-                            '${widget.otherFirstName}',
-                        showLabel: false,
-                        icon: _revealing
-                            ? Icons.hourglass_top_rounded
-                            : Icons.visibility_outlined,
-                        onTap: _revealing
-                            ? null
-                            : () => unawaited(_revealProfiles()),
-                      )
-                    : Column(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          Icon(
-                            Icons.visibility_outlined,
-                            size: 22,
-                            color: SelahColors.journeyGold,
-                          ),
-                          SizedBox(height: 6),
-                          Text(
-                            'Reveal chosen · waiting together',
-                            style: SelahText.subtext(
-                              size: 11,
-                              color: const Color(
-                                0xFFE8C98A,
-                              ).withValues(alpha: 0.72),
-                            ),
-                          ),
-                        ],
-                      ),
-              ),
-            ),
-          ],
-        ),
-      );
-    }
-
-    if (widget.reason != 'shepherd_required_self') {
-      return SelahEmptyState(
-        icon: Icons.refresh_rounded,
-        title: "Couldn't check the Shepherd step",
-        message: 'Please try again before moving forward.',
-        ctaLabel: 'Try again',
-        onCta: widget.onChanged,
-      );
-    }
-
-    return Center(
-      child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 32),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Text(
-              SelahJourneyStages.labelFor('mentor_gate'),
-              style: SelahText.heading(size: 20),
-            ),
-            SizedBox(height: 10),
-            Text(
-              'This is where your families join you. From here, nothing in '
-              'this Journey happens without a Shepherd beside each of you — '
-              'link yours to continue.',
-              style: SelahText.subtext(),
-              textAlign: TextAlign.center,
-            ),
-            SizedBox(height: 24),
-            _JourneyRoundAction(
-              label: 'Link a Shepherd',
-              icon: Icons.shield_outlined,
-              onTap: () async {
-                await Navigator.of(context).push(
-                  MaterialPageRoute(
-                    builder: (_) => const LinkMentorScreen(asMentor: false),
-                  ),
-                );
-                widget.onChanged();
-              },
-            ),
-            SizedBox(height: 10),
-            TextButton(
-              onPressed: widget.onChanged,
-              child: Text(
-                "I've linked my Shepherd — check again",
-                style: SelahText.subtext(size: 12),
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-}
-
-class _JourneyShepherdPortrait {
-  final String? firstName;
-  final String? relationship;
-  final String? city;
-  final bool isMain;
-
-  const _JourneyShepherdPortrait({
-    required this.firstName,
-    this.relationship,
-    this.city,
-    required this.isMain,
-  });
-
-  String get initials {
-    final words = firstName?.trim().split(RegExp(r'\s+')) ?? const <String>[];
-    if (words.isEmpty || words.first.isEmpty) return 'G';
-    return words.take(2).map((word) => word[0].toUpperCase()).join();
-  }
-}
-
-class _JourneyShepherdPortraitCard extends StatelessWidget {
-  final _JourneyShepherdPortrait shepherd;
-  final String otherFirstName;
-  final bool revealed;
-  final bool greetingSent;
-
-  const _JourneyShepherdPortraitCard({
-    required this.shepherd,
-    required this.otherFirstName,
-    required this.revealed,
-    this.greetingSent = false,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    final reduceMotion =
-        MediaQuery.maybeOf(context)?.disableAnimations ?? false;
-    final duration = reduceMotion
-        ? Duration.zero
-        : const Duration(milliseconds: 420);
-    const gold = SelahColors.journeyGold;
-    final role = shepherd.isMain ? 'Main Shepherd' : 'Additional Shepherd';
-
-    return AnimatedContainer(
-      duration: duration,
-      curve: Curves.easeOutCubic,
-      padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 19),
-      decoration: BoxDecoration(
-        color: SelahColors.foreground.withValues(
-          alpha: revealed ? 0.085 : 0.065,
-        ),
-        borderRadius: BorderRadius.circular(18),
-        border: Border.all(
-          color: shepherd.isMain && revealed
-              ? gold.withValues(alpha: 0.5)
-              : SelahColors.foreground.withValues(alpha: 0.14),
-          width: shepherd.isMain && revealed ? 1.2 : 0.8,
-        ),
-        boxShadow: shepherd.isMain && revealed
-            ? [BoxShadow(color: gold.withValues(alpha: 0.1), blurRadius: 22)]
-            : null,
-      ),
-      child: AnimatedSwitcher(
-        duration: duration,
-        switchInCurve: Curves.easeOutCubic,
-        switchOutCurve: Curves.easeInCubic,
-        transitionBuilder: (child, animation) => FadeTransition(
-          opacity: animation,
-          child: ScaleTransition(
-            scale: Tween<double>(begin: 0.96, end: 1).animate(animation),
-            child: child,
-          ),
-        ),
-        child: revealed
-            ? _RevealedShepherdPortrait(
-                key: ValueKey('revealed-${shepherd.firstName}'),
-                shepherd: shepherd,
-                otherFirstName: otherFirstName,
-                role: role,
-                greetingSent: greetingSent,
-              )
-            : _ProtectedShepherdPortrait(
-                key: ValueKey('protected-${shepherd.isMain}'),
-                otherFirstName: otherFirstName,
-                role: role,
-              ),
-      ),
-    );
-  }
-}
-
-class _ProtectedShepherdPortrait extends StatelessWidget {
-  final String otherFirstName;
-  final String role;
-
-  const _ProtectedShepherdPortrait({
-    super.key,
-    required this.otherFirstName,
-    required this.role,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Semantics(
-      label: '$otherFirstName’s $role, protected until both reveal',
-      child: ExcludeSemantics(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Flexible(
-              fit: FlexFit.loose,
-              child: FittedBox(
-                fit: BoxFit.scaleDown,
-                child: Container(
-                  width: 82,
-                  height: 82,
-                  decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    color: SelahColors.foreground.withValues(alpha: 0.055),
-                    border: Border.all(
-                      color: SelahColors.foreground.withValues(alpha: 0.12),
-                    ),
-                  ),
-                  child: Icon(
-                    Icons.person_rounded,
-                    size: 52,
-                    color: SelahColors.foreground.withValues(alpha: 0.11),
-                  ),
-                ),
-              ),
-            ),
-            SizedBox(height: 16),
-            Container(
-              width: 86,
-              height: 12,
-              decoration: BoxDecoration(
-                color: SelahColors.foreground.withValues(alpha: 0.11),
-                borderRadius: BorderRadius.circular(999),
-                boxShadow: [
-                  BoxShadow(
-                    color: SelahColors.foreground.withValues(alpha: 0.1),
-                    blurRadius: 9,
-                    spreadRadius: 2,
-                  ),
-                ],
-              ),
-            ),
-            SizedBox(height: 11),
-            Text(
-              '$otherFirstName’s $role',
-              style: SelahText.subtext(
-                size: 11.5,
-                color: SelahColors.ink(0.60),
-              ),
-              textAlign: TextAlign.center,
-            ),
-            SizedBox(height: 8),
-            Row(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Icon(
-                  Icons.lock_outline_rounded,
-                  size: 12,
-                  color: SelahColors.journeyGold,
-                ),
-                SizedBox(width: 5),
-                Flexible(
-                  child: Text(
-                    'Protected until both reveal',
-                    style: SelahText.subtext(
-                      size: 10,
-                      color: SelahColors.ink(0.54),
-                    ),
-                    textAlign: TextAlign.center,
-                  ),
-                ),
-              ],
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-}
-
-class _RevealedShepherdPortrait extends StatelessWidget {
-  final _JourneyShepherdPortrait shepherd;
-  final String otherFirstName;
-  final String role;
-  final bool greetingSent;
-
-  const _RevealedShepherdPortrait({
-    super.key,
-    required this.shepherd,
-    required this.otherFirstName,
-    required this.role,
-    required this.greetingSent,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    final name = shepherd.firstName?.trim();
-    final hasName = name != null && name.isNotEmpty;
-    final details = <String>[
-      if (shepherd.relationship != null && shepherd.relationship!.isNotEmpty)
-        '$otherFirstName’s ${shepherd.relationship!.toLowerCase()}',
-      role,
-      if (shepherd.city != null && shepherd.city!.isNotEmpty) shepherd.city!,
-    ];
-
-    return Semantics(
-      label: hasName ? '$name, ${details.join(', ')}' : role,
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Container(
-            width: 84,
-            height: 84,
-            alignment: Alignment.center,
-            decoration: BoxDecoration(
-              shape: BoxShape.circle,
-              gradient: LinearGradient(
-                begin: Alignment.topLeft,
-                end: Alignment.bottomRight,
-                colors: [
-                  SelahColors.foreground.withValues(alpha: 0.2),
-                  SelahColors.luxuryDarkPurple.withValues(alpha: 0.72),
-                ],
-              ),
-              border: Border.all(
-                color: shepherd.isMain
-                    ? SelahColors.journeyGold
-                    : SelahColors.foreground.withValues(alpha: 0.22),
-                width: shepherd.isMain ? 2 : 1,
-              ),
-              boxShadow: shepherd.isMain
-                  ? [
-                      BoxShadow(
-                        color: SelahColors.journeyGold.withValues(alpha: 0.2),
-                        blurRadius: 16,
-                      ),
-                    ]
-                  : null,
-            ),
-            child: hasName
-                ? Text(shepherd.initials, style: SelahText.heading(size: 20))
-                : Icon(
-                    Icons.person_outline_rounded,
-                    color: SelahColors.ink(0.70),
-                    size: 32,
-                  ),
-          ),
-          SizedBox(height: 14),
-          Text(
-            hasName ? name : role,
-            style: SelahText.heading(size: 18),
-            textAlign: TextAlign.center,
-          ),
-          SizedBox(height: 6),
-          Text(
-            details.join(' · '),
-            style: SelahText.subtext(size: 10.5, color: SelahColors.ink(0.60)),
-            textAlign: TextAlign.center,
-            maxLines: 2,
-            overflow: TextOverflow.ellipsis,
-          ),
-          SizedBox(height: 7),
-          AnimatedOpacity(
-            duration: const Duration(milliseconds: 320),
-            opacity: greetingSent ? 1 : 0,
-            child: Row(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Icon(
-                  Icons.waving_hand_rounded,
-                  size: 11,
-                  color: SelahColors.journeyGold,
-                ),
-                SizedBox(width: 4),
-                Text(
-                  'GREETING SENT',
-                  style: SelahText.chapterLabel(color: SelahColors.journeyGold),
-                ),
-              ],
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-/// Read-only Stage 4 history. The mutually revealed Shepherd portraits and
-/// any optional Greetings remain visible when the member scrolls back from a
-/// later stage, matching the durable Compatibility result above it.
-class _JourneyShepherdHistoryView extends StatefulWidget {
-  final String otherFirstName;
-  final List<_JourneyShepherdPortrait> shepherds;
-  final Set<int> shepherdGreetingIndices;
-
-  const _JourneyShepherdHistoryView({
-    required this.otherFirstName,
-    required this.shepherds,
-    required this.shepherdGreetingIndices,
-  });
-
-  @override
-  State<_JourneyShepherdHistoryView> createState() =>
-      _JourneyShepherdHistoryViewState();
-}
-
-class _JourneyShepherdHistoryViewState
-    extends State<_JourneyShepherdHistoryView> {
-  late final PageController _pager;
-  late int _page;
-
-  @override
-  void initState() {
-    super.initState();
-    final count = widget.shepherds.length;
-    final greeted =
-        widget.shepherdGreetingIndices
-            .where((index) => index >= 0 && index < count)
-            .toList()
-          ..sort();
-    _page = greeted.isEmpty ? 0 : greeted.first;
-    _pager = PageController(viewportFraction: 0.72, initialPage: _page);
-  }
-
-  @override
-  void dispose() {
-    _pager.dispose();
-    super.dispose();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    final shepherds = widget.shepherds.isEmpty
-        ? const [_JourneyShepherdPortrait(firstName: null, isMain: true)]
-        : widget.shepherds;
-    final currentPage = _page.clamp(0, shepherds.length - 1);
-    final reduceMotion =
-        MediaQuery.maybeOf(context)?.disableAnimations ?? false;
-    final duration = reduceMotion
-        ? Duration.zero
-        : const Duration(milliseconds: 320);
-    final greetedNames = widget.shepherdGreetingIndices
-        .where((index) => index >= 0 && index < shepherds.length)
-        .map(
-          (index) =>
-              shepherds[index].firstName ??
-              (shepherds[index].isMain ? 'the Main Shepherd' : 'a Shepherd'),
-        )
-        .toList(growable: false);
-    final greetingSummary = greetedNames.isEmpty
-        ? null
-        : greetedNames.length == 1
-        ? greetedNames.first
-        : greetedNames.length == 2
-        ? '${greetedNames.first} and ${greetedNames.last}'
-        : '${greetedNames.take(2).join(', ')} and '
-              '${greetedNames.length - 2} more';
-
-    return Center(
-      child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 22),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Text(
-              '${widget.otherFirstName}’s Shepherds',
-              style: SelahText.heading(size: 23),
-              textAlign: TextAlign.center,
-            ),
-            SizedBox(height: 7),
-            Text(
-              'Profiles revealed for this Journey.',
-              style: SelahText.subtext(size: 13),
-              textAlign: TextAlign.center,
-            ),
-            SizedBox(height: 17),
-            SizedBox(
-              height: 218,
-              child: PageView.builder(
-                controller: _pager,
-                physics: shepherds.length > 1
-                    ? const BouncingScrollPhysics()
-                    : const NeverScrollableScrollPhysics(),
-                itemCount: shepherds.length,
-                onPageChanged: (page) => setState(() => _page = page),
-                itemBuilder: (context, index) => Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 7),
-                  child: _JourneyShepherdPortraitCard(
-                    shepherd: shepherds[index],
-                    otherFirstName: widget.otherFirstName,
-                    revealed: true,
-                    greetingSent: widget.shepherdGreetingIndices.contains(
-                      index,
-                    ),
-                  ),
-                ),
-              ),
-            ),
-            SizedBox(height: 13),
-            Row(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                for (var index = 0; index < shepherds.length; index++) ...[
-                  AnimatedContainer(
-                    duration: duration,
-                    width: index == currentPage ? 17 : 5,
-                    height: 5,
-                    decoration: BoxDecoration(
-                      color: index == currentPage
-                          ? SelahColors.journeyGold
-                          : SelahColors.foreground.withValues(alpha: 0.24),
-                      borderRadius: BorderRadius.circular(999),
-                    ),
-                  ),
-                  if (index != shepherds.length - 1) SizedBox(width: 7),
-                ],
-              ],
-            ),
-            SizedBox(height: 14),
-            AnimatedSwitcher(
-              duration: duration,
-              child: greetingSummary == null
-                  ? SizedBox(height: 24)
-                  : Semantics(
-                      key: ValueKey(greetingSummary),
-                      label: 'Greeting was sent to $greetingSummary',
-                      child: ExcludeSemantics(
-                        child: Row(
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            Icon(
-                              Icons.waving_hand_rounded,
-                              size: 17,
-                              color: SelahColors.journeyGold,
-                            ),
-                            SizedBox(width: 7),
-                            Flexible(
-                              child: Text(
-                                'Greeting sent to $greetingSummary',
-                                style: SelahText.subtext(
-                                  size: 12,
-                                  color: SelahColors.journeyGold,
-                                ),
-                                textAlign: TextAlign.center,
-                                maxLines: 2,
-                                overflow: TextOverflow.ellipsis,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
 }
 
 // --- Phase 1/2/3 -------------------------------------------------------

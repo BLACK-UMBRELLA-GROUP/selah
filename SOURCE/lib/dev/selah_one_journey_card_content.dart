@@ -29,6 +29,7 @@ class SelahOneJourneyCardContent extends StatelessWidget {
     this.report,
     this.stateLabel,
     this.stageLabel,
+    this.showStageLabel = false,
     this.inlineOptions,
     this.inlineOptionsFillHeight = true,
   });
@@ -38,9 +39,10 @@ class SelahOneJourneyCardContent extends StatelessWidget {
   final Widget photo;
   final Widget action;
   final Widget? report;
-  // Retained caller metadata, deliberately not displayed by the locked layout.
+  // State metadata stays hidden. LOCK21 opts the draft into its stage caption.
   final String? stateLabel;
   final String? stageLabel;
+  final bool showStageLabel;
   final bool fillHeight;
   final Widget? inlineOptions;
   final bool inlineOptionsFillHeight;
@@ -69,6 +71,14 @@ class SelahOneJourneyCardContent extends StatelessWidget {
         '${profile.age} · ${profile.city}',
         style: SelahText.subtext(size: 12.5, color: SelahColors.ink(.78)),
       ),
+      if (showStageLabel && stageLabel != null) ...[
+        const SizedBox(height: 4),
+        Text(
+          stageLabel!,
+          key: ValueKey('journey_stage_caption_${profile.id}'),
+          style: SelahText.subtext(),
+        ),
+      ],
     ],
   );
 

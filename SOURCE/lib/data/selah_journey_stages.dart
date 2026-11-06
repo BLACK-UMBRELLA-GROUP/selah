@@ -1,88 +1,21 @@
-// THE CANONICAL JOURNEY STAGE MODEL — one definition, every surface.
+// The seven member-visible Journey stages — LOCK 21, 6 Nov 2026.
+// One definition supplies labels, order and copy for Seeker and Shepherd views.
+// Shepherd support is no longer a separate stage: every ordinary Journey
+// action still requires the existing Main Shepherd guards. The app moves
+// directly from Compatibility Reveal to Faith & Values.
 //
-// Agreed with the Founder 2026-08-09 after working the wording through
-// from the machine outwards rather than from a copy deck inwards.
-//
-// ── WHY THIS FILE EXISTS. Before it, three screens each carried their own
-// switch over the same eight strings, and they had already drifted:
-//
-//   mentor_journey_detail_screen  'Phase 1 — Foundations'
-//   mentor_dashboard_screen       'Phase 1'
-//   connections_screen          did not show stages at all — it said
-//                               'In the Pre-Journey Ritual' for seven of
-//                               the eight, which is not even true: the
-//                               Ritual is what turns a POTENTIAL Journey
-//                               into an Active one, and all eight of these
-//                               stages run while status is already
-//                               'active'.
-//
-// A fourth copy was about to be written for the Connections subtitle. That
-// is invariant I3 — "one path, or the paths will drift" — and this project
-// has paid for ignoring it twice already today, in four copies of an
-// age-fetch and two copies of a comet animation.
-//
-// ═══════════════════════════════════════════════════════════════════════
-// THE NAMING PHILOSOPHY. Read this before adding or renaming a stage.
-// ═══════════════════════════════════════════════════════════════════════
-//
-//   EVERY LABEL NAMES THE SUBJECT OF THE COUPLE'S ATTENTION AT THAT
-//   MOMENT.
-//
-// Not what the software is doing. Not what the stage is "for". What the
-// two of them are actually thinking about. Revealing their compatibility ·
-// the Greeting · their Shepherds · faith and values · building a life ·
-// navigating life · the two families · each other, freely.
-//
-// ── AND THE STAGES ARE NOT ALL ONE KIND OF THING, which is why an earlier
-// attempt to force them all into "topic" or all into "purpose" kept
-// producing one label that felt wrong:
-//
-//   THRESHOLD    a mutual act both parties must complete. Nothing is
-//                discussed; it is a door. selah_advance_stage() moves
-//                these directly.
-//   SUSTAINED    a subject worked through over days or weeks, with a
-//                question set behind it and a Family Review at the end.
-//                selah_advance_stage() REFUSES these with
-//                'gated_transition' — they go through open_family_review.
-//   DESTINATION  the end of the sequence.
-//
-// ── THE GRAMMAR IS LOAD-BEARING. Thresholds and the destination are noun
-// phrases; the two longest sustained phases are gerunds — "Building a
-// Life", "Navigating Life". That is deliberate. A threshold is something
-// you COMPLETE; a phase is something you DO OVER TIME. Flattening all
-// eight into tidy noun phrases would hide a distinction the user can feel.
-// If you add a stage, match the grammar of its kind.
-//
-// ── ONE KNOWN EXCEPTION, recorded rather than hidden: "Shepherd Gate"
-// names a mechanism, not a subject. It is kept because it is already
-// approved and already on two screens, and because "gate" is honest that
-// the Journey stops there.
-//
-// ═══════════════════════════════════════════════════════════════════════
-// EXTENDING THIS
-// ═══════════════════════════════════════════════════════════════════════
-//
-// Founder, 2026-08-09: "if we ever need icons, colours, descriptions,
-// helper text, progress indicators or localisation, I'd rather extend this
-// one shared definition than create separate mappings."
-//
-// So: add a FIELD to [SelahJourneyStage], never a second map somewhere
-// else. [icon] and [description] are deliberately absent rather than
-// stubbed — nobody has designed them, and a null field that every screen
-// null-checks is worse than a field that does not exist yet.
-//
-// Localisation, when it comes: [label] becomes a key and the lookup moves
-// behind a delegate. Having one map is the precondition for that being a
-// half-day change instead of a hunt.
+// Server stage IDs, the RPC map and database constraints remain unchanged.
+// A stored mentor_gate resolves to phase_1 for display; the retained service
+// passes its raw value through the existing RPC before continuing.
+// Sustained-stage Family Review gates and all stage copy remain unchanged.
 
-/// What kind of thing a stage is. See the philosophy note above — this is
-/// not decoration, it decides the grammar of the label and whether
+/// What kind of thing a stage is. It decides the label grammar and whether
 /// selah_advance_stage() can move it directly.
 enum SelahStageKind { threshold, sustained, destination }
 
 class SelahJourneyStage {
-  /// The value stored in `matches.journey_stage`. Authoritative — this
-  /// list is the CHECK constraint on that column, in order.
+  /// A stored stage value used by the member app. The server also retains
+  /// legacy mentor_gate; this display list does not redefine its constraint.
   final String value;
 
   /// The user-facing label. Identical for Seeker and Shepherd, on every
@@ -91,8 +24,7 @@ class SelahJourneyStage {
 
   final SelahStageKind kind;
 
-  /// 1-based position, for "step 4 of 8" style progress. Derived from the
-  /// list order rather than hand-written, so it cannot fall out of step.
+  /// The 1-based member-visible position in the seven-stage sequence.
   final int order;
 
   /// The question the couple is answering during this stage, where one
@@ -140,7 +72,7 @@ class SelahJourneyStage {
     this.supportingLine,
   });
 
-  /// Display-only renumbering used by the nine-stage Life Snapshot mock.
+  /// Retained display-only renumbering helper for historical previews.
   /// The stored [value] and every piece of copy remain canonical.
   SelahJourneyStage withOrder(int displayOrder) => SelahJourneyStage(
     value: value,
@@ -163,8 +95,8 @@ class SelahJourneyStages {
   /// Shown INSTEAD of the stage whenever a Family Review is open.
   ///
   /// An override, not a stage — there is no `family_review` value in the
-  /// database and there must not be. It is the gate between stages 4→5,
-  /// 5→6, 6→7 and 7→8. A Journey is never "in" Family Review; it is in
+  /// database and there must not be. It is the gate between stages 3→4,
+  /// 4→5, 5→6 and 6→7. A Journey is never "in" Family Review; it is in
   /// phase_2 with a review open.
   ///
   /// It wins because it is the only moment an Active Journey is stalled
@@ -199,22 +131,10 @@ class SelahJourneyStages {
       timelineMilestoneType: 'compatibility_revealed',
     ),
     SelahJourneyStage(
-      value: 'mentor_gate',
-      label: 'Shepherd support',
-      kind: SelahStageKind.threshold,
-      order: 3,
-      introduction: 'You do not have to walk towards marriage alone.',
-      supportingLine:
-          'Each of you needs a Shepherd beside you before the Journey continues.',
-      completionHeading: 'Both Shepherds are present.',
-      completionLine: 'Your trusted supporters walk with you from here.',
-      timelineMilestoneType: 'shepherd_linked',
-    ),
-    SelahJourneyStage(
       value: 'phase_1',
       label: 'Faith & Values',
       kind: SelahStageKind.sustained,
-      order: 4,
+      order: 3,
       introduction:
           'Share how faith, values and family shape your everyday life.',
       guidingQuestion: 'Are we fundamentally compatible?',
@@ -226,7 +146,7 @@ class SelahJourneyStages {
       value: 'phase_2',
       label: 'Building a Life',
       kind: SelahStageKind.sustained,
-      order: 5,
+      order: 4,
       introduction: 'Share your hopes for family, work, home and the future.',
       guidingQuestion: 'Could we realistically build a life together?',
       completionHeading: 'Building a Life complete.',
@@ -237,7 +157,7 @@ class SelahJourneyStages {
       value: 'phase_3',
       label: 'Navigating Life',
       kind: SelahStageKind.sustained,
-      order: 6,
+      order: 5,
       introduction: 'Share how you communicate, handle difficulty and grow.',
       guidingQuestion: 'Can we navigate life together?',
       completionHeading: 'Navigating Life complete.',
@@ -248,7 +168,7 @@ class SelahJourneyStages {
       value: 'family_stage',
       label: 'Family Compatibility',
       kind: SelahStageKind.sustained,
-      order: 7,
+      order: 6,
       introduction: 'Now your families enter the conversation.',
       supportingLine: 'Answer openly, as though you were sitting together.',
       completionHeading: 'Both families have spoken.',
@@ -267,7 +187,7 @@ class SelahJourneyStages {
       value: 'conversation',
       label: 'Open Conversation',
       kind: SelahStageKind.destination,
-      order: 8,
+      order: 7,
       introduction: 'The structure now begins to lift.',
       supportingLine:
           'You can speak freely, while your Timeline and Shepherds remain part of the Journey.',
@@ -277,13 +197,8 @@ class SelahJourneyStages {
     ),
   ];
 
-  /// Founder-requested Journey-only Bio mock (2026-08-18).
-  ///
-  /// This is deliberately NOT in [all]: `life_snapshot_preview` is not yet a
-  /// database stage and must never be sent to `selah_advance_stage()`. The
-  /// Active Journey inserts it between the two real server stages while the
-  /// experience and per-field sharing choices are tested. Once approved and
-  /// persisted, it can become a real stored value in one migration.
+  /// Historical preview data only. LOCK 21 excludes this value from both
+  /// numbered lists and lookups; it must never be sent to the server RPC.
   static const SelahJourneyStage lifeSnapshotPreview = SelahJourneyStage(
     value: 'life_snapshot_preview',
     label: 'Life Snapshot',
@@ -298,23 +213,10 @@ class SelahJourneyStages {
     timelineMilestoneType: 'life_snapshot_preview',
   );
 
-  /// Nine-stage visual sequence used by the Active Journey mock. The real
-  /// server stages after Compatibility keep their stored values and are
-  /// shifted by one only for numbering and the ribbon.
-  static final List<SelahJourneyStage> previewAll = List.unmodifiable([
-    all[0],
-    all[1],
-    lifeSnapshotPreview,
-    for (final stage in all.skip(2)) stage.withOrder(stage.order + 1),
-  ]);
+  /// The member preview uses the same seven stages as every other view.
+  static const List<SelahJourneyStage> previewAll = all;
 
-  static SelahJourneyStage? previewOf(String? value) {
-    if (value == null) return null;
-    for (final stage in previewAll) {
-      if (stage.value == value) return stage;
-    }
-    return null;
-  }
+  static SelahJourneyStage? previewOf(String? value) => of(value);
 
   static String previewLabelFor(
     String? value, {
@@ -327,17 +229,18 @@ class SelahJourneyStages {
 
   static final Map<String, SelahJourneyStage> _byValue = {
     for (final s in all) s.value: s,
+    'mentor_gate': all[2],
   };
 
   static final Map<String, SelahJourneyStage> _byTimelineMilestone = {
     for (final s in all) s.timelineMilestoneType: s,
   };
 
-  /// Total stages, for "step 4 of 8". Derived, never written down twice.
+  /// Total member-visible stages, derived from the locked list.
   static int get count => all.length;
 
-  /// Null for an unknown or absent stage — a Potential Journey has no
-  /// stage at all, so null is a legitimate answer, not an error.
+  /// Legacy mentor_gate displays as Faith & Values. Unknown or absent values
+  /// remain null; a Potential Journey has no stage at all.
   static SelahJourneyStage? of(String? value) =>
       value == null ? null : _byValue[value];
 

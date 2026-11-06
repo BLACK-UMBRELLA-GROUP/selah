@@ -370,77 +370,6 @@ class SelahMentorJourneyService {
         }
       }
 
-      // Entering Shepherd Gate is recorded by completing Compatibility
-      // Reveal. Its factual Timeline timestamp supplies the ruled oldest-
-      // waiting-first order without creating a due time.
-      final gateByAttempt = <String, String>{
-        for (final journey in journeys)
-          if (journey.journeyStage == 'mentor_gate' &&
-              journey.attemptId != null &&
-              !openReviews.contains(journey.matchId))
-            journey.attemptId!: journey.matchId,
-      };
-      if (gateByAttempt.isNotEmpty) {
-        final rawTimelines =
-            await supabase
-                    .from('timelines')
-                    .select('id, attempt_id')
-                    .inFilter('attempt_id', gateByAttempt.keys.toList())
-                as List;
-        final matchByTimeline = <String, String>{};
-        for (final raw in rawTimelines) {
-          if (raw is! Map) {
-            return const SelahSourceResult.unavailable(
-              SelahSourceFailure.invalidResponse,
-            );
-          }
-          final row = Map<String, dynamic>.from(raw);
-          final timelineId = row['id'];
-          final attemptId = row['attempt_id'];
-          if (timelineId is! String ||
-              timelineId.isEmpty ||
-              attemptId is! String ||
-              !gateByAttempt.containsKey(attemptId)) {
-            return const SelahSourceResult.unavailable(
-              SelahSourceFailure.invalidResponse,
-            );
-          }
-          matchByTimeline[timelineId] = gateByAttempt[attemptId]!;
-        }
-        if (matchByTimeline.isNotEmpty) {
-          final rawMilestones =
-              await supabase
-                      .from('timeline_milestones')
-                      .select('timeline_id, occurred_at')
-                      .inFilter('timeline_id', matchByTimeline.keys.toList())
-                      .eq('milestone_type', 'compatibility_revealed')
-                  as List;
-          for (final raw in rawMilestones) {
-            if (raw is! Map) {
-              return const SelahSourceResult.unavailable(
-                SelahSourceFailure.invalidResponse,
-              );
-            }
-            final row = Map<String, dynamic>.from(raw);
-            final timelineId = row['timeline_id'];
-            final occurredAt = _dateOrNull(row['occurred_at']);
-            if (timelineId is! String ||
-                !matchByTimeline.containsKey(timelineId) ||
-                occurredAt == null) {
-              return const SelahSourceResult.unavailable(
-                SelahSourceFailure.invalidResponse,
-              );
-            }
-            final matchId = matchByTimeline[timelineId]!;
-            final local = occurredAt.toLocal();
-            final previous = waitingSince[matchId];
-            if (previous == null || local.isBefore(previous)) {
-              waitingSince[matchId] = local;
-            }
-          }
-        }
-      }
-
       return SelahSourceResult.available(
         ShepherdSeekerRosterContext(
           journeys: journeys,
@@ -519,7 +448,9 @@ class SelahMentorJourneyService {
     if (user == null) return [];
 
     try {
-      final linked = await SelahMentorLinkService.fetchLinkedPeople(asMentor: true);
+      final linked = await SelahMentorLinkService.fetchLinkedPeople(
+        asMentor: true,
+      );
       if (linked.isEmpty) return [];
       final linkedIds = {for (final p in linked) p.id: p.firstName};
 

@@ -150,7 +150,6 @@ enum SelahShepherdDashboardTodayState {
   pausedJourney('Paused Journey'),
   journeyDecisionPending('Journey awaiting decision'),
   familyReviewWaiting('Family Review waiting'),
-  shepherdGateWaiting('Shepherd Gate waiting'),
   pendingInvitation('Pending invitation'),
   networkBasicLocked('Shepherd Network · No access'),
   networkPremiumActive('Shepherd Network · Shepherd access'),

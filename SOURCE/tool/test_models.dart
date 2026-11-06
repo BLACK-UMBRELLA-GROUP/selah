@@ -18,6 +18,7 @@ import 'test_marriage_upfront.dart' show runMarriageUpfrontChecks;
 import 'test_shepherd_introduce_models.dart'
     show runShepherdIntroduceModelChecks;
 import 'test_shepherd_check_ins.dart' show runShepherdCheckInChecks;
+import 'test_journey_stages.dart' show runJourneyStageChecks;
 
 void main() {
   var checks = 0;
@@ -34,6 +35,7 @@ void main() {
   runMarriageUpfrontChecks(check);
   runShepherdIntroduceModelChecks(check);
   runShepherdCheckInChecks(check);
+  runJourneyStageChecks(check);
 
   final pending = draftProfiles[4].id;
   final model = ViewRequestDraftModel(capacity: 3);

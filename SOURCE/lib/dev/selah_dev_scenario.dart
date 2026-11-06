@@ -684,12 +684,6 @@ class SelahDevScenario extends ChangeNotifier {
       case SelahShepherdDashboardTodayState.familyReviewWaiting:
         _mentorActiveJourneys = 1;
         _mentorReviewWaiting = true;
-      case SelahShepherdDashboardTodayState.shepherdGateWaiting:
-        _mentorActiveJourneys = 1;
-        final gate = SelahJourneyStages.all.indexWhere(
-          (stage) => stage.value == 'mentor_gate',
-        );
-        if (gate >= 0) _mentorStageIndex = gate;
       case SelahShepherdDashboardTodayState.pendingInvitation:
         _mentorLinkedSeekers = 0;
         _mentorSentInvites = 1;

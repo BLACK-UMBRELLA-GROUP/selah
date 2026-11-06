@@ -2223,7 +2223,12 @@ class _SelahOneJourneyConceptShellState
       null,
       () => _journey(p.id),
     );
-    final stageLabel = _model.stageFor(p.id)?.label ?? _stateLabel(state);
+    final cardStage = _model.stageFor(p.id);
+    final stageLabel = cardStage == null
+        ? _stateLabel(state)
+        : state == DraftJourneyState.preparing
+        ? cardStage.label
+        : 'Stage ${cardStage.order} of ${SelahJourneyStages.count} · ${cardStage.label}';
     final actions = SelahOneJourneyConnectionsActionDeck(
       primary: primary,
       primaryTrailing: SelahConceptJourneyOptionsButton(
@@ -2244,6 +2249,7 @@ class _SelahOneJourneyConceptShellState
         fillHeight: fillHeight,
         cardDesign: SelahOneJourneyCardDesign.quietMinimal,
         stageLabel: stageLabel,
+        showStageLabel: state != DraftJourneyState.preparing,
         primaryAction: actions.primaryRow,
         inlineOptions: expandedOptions ? _inlineJourneyOptions(p) : null,
         inlineOptionsFillHeight: inlineOptionsFillHeight,
@@ -2549,6 +2555,13 @@ class _SelahOneJourneyConceptShellState
     );
   }
 
+  String? get _journeyMainShepherdName {
+    final main = _conceptShepherdPeople
+        .where((person) => person.isMain)
+        .firstOrNull;
+    return main == null ? null : selahShepherdShortDisplayName(main);
+  }
+
   Widget _journeyView() {
     final p = _person;
     if (p == null || _model.stateFor(p.id) == null) return _unavailable();
@@ -2616,6 +2629,11 @@ class _SelahOneJourneyConceptShellState
       key: ValueKey('concept_journey_${p.id}'),
       firstName: p.firstName,
       stage: stage,
+      ownMainShepherdName: _model.peerMainShepherdPresentFor(p.id)
+          ? _journeyMainShepherdName
+          : null,
+      otherMainShepherdName:
+          p.otherMainShepherdName ?? '${p.firstName}’s Shepherd',
       localActionBody: actions,
       onBack: _bound(_back),
       showBackButton: false,
@@ -2960,31 +2978,6 @@ class _SelahOneJourneyConceptShellState
                     )
                   : null,
             );
-    } else if (stage.value == 'mentor_gate') {
-      ordinary = Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 42),
-        child: Column(
-          children: [
-            Text(
-              stage.completionHeading,
-              style: SelahText.heading(size: 20),
-              textAlign: TextAlign.center,
-            ),
-            const SizedBox(height: 6),
-            Text(
-              stage.completionLine,
-              style: SelahText.subtext(),
-              textAlign: TextAlign.center,
-            ),
-            const SizedBox(height: 24),
-            _button(
-              'concept_stage_shepherds',
-              'Go to Shepherd',
-              () => _tabTo(3),
-            ),
-          ],
-        ),
-      );
     } else if (stage.value.startsWith('phase_')) {
       ordinary = SelahConceptJourneyFirstQuestion(
         key: ValueKey('concept_phase_first_${stage.value}'),
@@ -3352,7 +3345,7 @@ class _SelahOneJourneyConceptShellState
                   ? 'Your Journey place is retained.'
                   : preparing
                   ? 'Preparing together'
-                  : '${stage?.label} · Stage ${stage?.order} of ${SelahJourneyStages.count}',
+                  : 'Stage ${stage?.order} of ${SelahJourneyStages.count} · ${stage?.label}',
               progress:
                   stage == null || focusBlocked || _currentJourneys.length > 1
                   ? null

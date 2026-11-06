@@ -1,7 +1,7 @@
 import 'selah_mentor_journey_service.dart';
 import 'selah_mentor_link_service.dart';
 
-enum ShepherdDashboardAttentionKind { familyReview, shepherdGate }
+enum ShepherdDashboardAttentionKind { familyReview }
 
 final class ShepherdDashboardAttention {
   final ShepherdDashboardAttentionKind kind;
@@ -53,7 +53,6 @@ final class SelahShepherdDashboardResolver {
         if (person.isMain) person.id,
     };
     final familyReviews = <ShepherdDashboardAttention>[];
-    final shepherdGates = <ShepherdDashboardAttention>[];
 
     for (final journey in journeys) {
       if (!mainSeekerIds.contains(journey.linkedSeekerId)) continue;
@@ -70,23 +69,10 @@ final class SelahShepherdDashboardResolver {
             actionLabel: 'Review',
           ),
         );
-      } else if (!journey.isJourneyLocked &&
-          journey.journeyStage == 'mentor_gate') {
-        shepherdGates.add(
-          ShepherdDashboardAttention(
-            kind: ShepherdDashboardAttentionKind.shepherdGate,
-            journey: journey,
-            title: '${journey.linkedSeekerName} needs a Shepherd step',
-            detail:
-                'The Journey is waiting at the Shepherd Gate. '
-                'Only a Shepherd can complete this step.',
-            actionLabel: 'Open',
-          ),
-        );
       }
     }
 
-    final attention = [...familyReviews, ...shepherdGates];
+    final attention = familyReviews;
     final seekersNeedingAttention = {
       for (final item in attention) item.journey.linkedSeekerId,
     };

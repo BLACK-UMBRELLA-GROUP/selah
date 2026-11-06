@@ -1264,6 +1264,7 @@ class SelahOneJourneyConnectionsActiveCard extends StatelessWidget {
     this.cardDesign = SelahOneJourneyCardDesign.classic,
     this.primaryAction,
     this.stageLabel,
+    this.showStageLabel = false,
     this.inlineOptions,
     this.inlineOptionsFillHeight = true,
   });
@@ -1278,6 +1279,7 @@ class SelahOneJourneyConnectionsActiveCard extends StatelessWidget {
   final SelahOneJourneyCardDesign cardDesign;
   final Widget? primaryAction;
   final String? stageLabel;
+  final bool showStageLabel;
   final Widget? inlineOptions;
   final bool inlineOptionsFillHeight;
 
@@ -1372,6 +1374,7 @@ class SelahOneJourneyConnectionsActiveCard extends StatelessWidget {
       fillHeight: fillHeight || !compact,
       stateLabel: stateLabel,
       stageLabel: stageLabel,
+      showStageLabel: showStageLabel,
       inlineOptions: inlineOptions,
       inlineOptionsFillHeight: inlineOptionsFillHeight,
       report: onReport == null

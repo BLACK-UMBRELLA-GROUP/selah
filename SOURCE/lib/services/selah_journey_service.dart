@@ -32,6 +32,9 @@ import 'package:supabase_flutter/supabase_flutter.dart'
     show AuthException, PostgrestException;
 
 import '../data/journey_questions.dart';
+import '../data/selah_journey_legacy_pass_through.dart';
+export '../data/selah_journey_legacy_pass_through.dart'
+    show SelahStageAdvance, confirmSelahVisibleThreshold;
 import '../data/selah_journey_pause_state.dart';
 import '../data/selah_release_gates.dart';
 import '../main.dart';
@@ -186,30 +189,6 @@ class PauseCapacityConflictException implements Exception {}
 /// after a decline (inherited upstream action 159), so a cooldown exception returns shortly.
 /// Deleting and re-adding it would lose the trail between the two rules.
 class CoolingPeriodActiveException implements Exception {}
-
-/// Outcome of [SelahJourneyService.advanceStage].
-///
-/// [reason] is the server's own vocabulary, returned by
-/// selah_advance_stage(): advanced · waiting_for_reveal ·
-/// waiting_for_continue · waiting_for_greeting · shepherd_required_self ·
-/// shepherd_required_other · stage_moved · journey_paused ·
-/// journey_not_active · terminal_stage · call_failed.
-///
-/// SURFACE IT. The defect this replaced (release blocker, Founder
-/// 2026-08-07) was invisible for a month precisely because the old
-/// advanceStage() returned void from inside a bare `catch (_) {}` — a
-/// write RLS discarded looked identical to one that worked.
-class SelahStageAdvance {
-  final bool advanced;
-  final String? stage;
-  final String reason;
-  const SelahStageAdvance(this.advanced, this.stage, this.reason);
-
-  /// The call itself failed — network, auth, or an exception the server
-  /// raised (not_a_party, gated_transition, match_not_found). Distinct
-  /// from a legitimate "not yet" reason.
-  static const failed = SelahStageAdvance(false, null, 'call_failed');
-}
 
 /// Outcome of [SelahJourneyService.openFamilyReview].
 ///
@@ -998,6 +977,17 @@ class SelahJourneyService {
       return SelahStageAdvance.failed;
     }
   }
+
+  /// LOCK 21 client pass-through; every write still uses the existing RPC.
+  static Future<SelahStageAdvance?> advanceVisibleThreshold(
+    String matchId,
+    String fromStage, {
+    required bool Function() canAct,
+  }) => advanceSelahVisibleThreshold(
+    fromStage: fromStage,
+    canAct: canAct,
+    advance: (stage) => advanceStage(matchId, stage),
+  );
 
   // --- Family Review Period (#31) ---------------------------------------
   //

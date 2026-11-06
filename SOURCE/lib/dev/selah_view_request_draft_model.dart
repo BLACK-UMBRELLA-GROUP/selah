@@ -41,6 +41,7 @@ class DraftProfile {
     this.baptised,
     this.faithWords = '',
     this.marriageValues = const {},
+    this.otherMainShepherdName,
   });
 
   final String id;
@@ -58,6 +59,9 @@ class DraftProfile {
   final String? baptised;
   final String faithWords;
   final Map<String, String> marriageValues;
+
+  /// LOCK 21's explicit local cast only, never paid or server metadata.
+  final String? otherMainShepherdName;
   SelahMarriageValuesAnswers get marriageAnswers =>
       SelahMarriageValuesAnswers.fromMap(marriageValues);
 }
@@ -66,6 +70,7 @@ const List<DraftProfile> draftProfiles = [
   DraftProfile(
     id: 'draft-amira',
     firstName: 'Grace',
+    otherMainShepherdName: 'Her mother, Ruth',
     marriageValues: {
       'marriedBefore': 'No',
       'children': 'No',
@@ -92,6 +97,7 @@ const List<DraftProfile> draftProfiles = [
   DraftProfile(
     id: 'draft-sara',
     firstName: 'Esther',
+    otherMainShepherdName: 'Pastor Ama Mensah',
     marriageValues: {
       'marriedBefore': 'No',
       'children': 'No',
@@ -118,6 +124,7 @@ const List<DraftProfile> draftProfiles = [
   DraftProfile(
     id: 'draft-aisha',
     firstName: 'Naomi',
+    otherMainShepherdName: 'Her father, Peter',
     marriageValues: {
       'marriedBefore': 'Yes, widowed',
       'children': 'Yes, they live with me',
@@ -144,6 +151,7 @@ const List<DraftProfile> draftProfiles = [
   DraftProfile(
     id: 'draft-maryam',
     firstName: 'Abigail',
+    otherMainShepherdName: 'Her aunt, Teresa',
     marriageValues: {
       'marriedBefore': 'Yes, divorced',
       'children': 'No',
@@ -820,7 +828,6 @@ class ViewRequestDraftModel {
     return switch (stage.value) {
       'greeting_exchange' => greetingComplete(id),
       'compatibility_reveal' => compatibilityRevealed(id),
-      'mentor_gate' => _mainLeadershipPresent(id),
       _ => true,
     };
   }
