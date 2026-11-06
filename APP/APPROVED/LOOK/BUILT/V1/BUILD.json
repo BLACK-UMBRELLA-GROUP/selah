@@ -1,6 +1,6 @@
 {
-  "commit_sha": "04a7eee65ebca2ae3cec9819fb05c1e517251d76",
-  "source_fingerprint_sha256": "5a99ab73ed233b08dbda45957d193b3ff9eb75724275cfba4a98b6da13a1d50a",
+  "commit_sha": "49728e05b1ddc67180754427ba7c35aca7d1a25d",
+  "source_fingerprint_sha256": "6f5f06942b45d61c0334768fe63a1e843c17520ae1869ea23ed749305d97a25e",
   "flutter_version": "3.44.2",
   "dart_version": "3.12.2",
   "build_mode": "debug widget tests, actual widgets and bundled fonts",
@@ -15,7 +15,7 @@
   "checks": {
     "models": "221 passed",
     "widget_capture": "12/12 passed, including two switch tests",
-    "widget_replay": "12/12 passed",
+    "widget_replay": "10/10 Look checks passed within39/39 combined replay",
     "flutter_analyze": "0errors/0warnings/10 pre-existing infos; --no-fatal-infos exit0",
     "cached_analyzer": "328files, 0errors/0warnings/1 pre-existing info",
     "draft_boundaries": "19854/19854 passed"
@@ -44,8 +44,8 @@
   "images": [
     {
       "file": "L01_seeker_browse__error__build.png",
-      "bytes": 87170,
-      "sha256": "c4f67c5044f182eeaf5ed0fb8a9778897ae32df46df5fb11651efbfb366aedd9",
+      "bytes": 86439,
+      "sha256": "e9c3aa46ecefc41792a74993ce65d012b8d576efb9d484c251e69925365e9ec9",
       "physical_size": [
         1290,
         2796
@@ -53,8 +53,8 @@
     },
     {
       "file": "L01_seeker_browse__error__master_beside_build.png",
-      "bytes": 177271,
-      "sha256": "c53cd61910521253fb2514d6fb313524ef3d018a53a35c17e449681b27a72245",
+      "bytes": 176777,
+      "sha256": "429ee4ae230e11475a8ba8577211e34a0c5eb407a4a6258dca87ee39d8338d6b",
       "physical_size": [
         2580,
         2796
@@ -62,8 +62,8 @@
     },
     {
       "file": "L01_seeker_browse__loading__build.png",
-      "bytes": 67624,
-      "sha256": "cd0078249c1b1444109ab75f9802817b4e8ee5b8939ef177afb349288aeaa874",
+      "bytes": 68506,
+      "sha256": "ad2244b6c87715e5580031fd5e232e7e8b90f4f143e02277c90ebf689c074eee",
       "physical_size": [
         1290,
         2796
@@ -71,8 +71,8 @@
     },
     {
       "file": "L01_seeker_browse__loading__master_beside_build.png",
-      "bytes": 138145,
-      "sha256": "d41226c25455d727f5bb23b75225f4d0ff316f5c3ef11316ef3def936c48de5a",
+      "bytes": 138938,
+      "sha256": "008829cbfc79626cf23cae5fd47a8b6e75f16f97c0f67eca5e77d85163606f24",
       "physical_size": [
         2580,
         2796
@@ -80,8 +80,8 @@
     },
     {
       "file": "L01_seeker_browse__profile__build.png",
-      "bytes": 1148895,
-      "sha256": "8e133fd5c56e652e2ff587a257862beedfe01255f6cb56b7098569d016c1488c",
+      "bytes": 1151157,
+      "sha256": "921f67d5cdee0ea4193f4cd2021d631d62ecdcf318635b12ca70e226f2ce097b",
       "physical_size": [
         1290,
         2796
@@ -89,8 +89,8 @@
     },
     {
       "file": "L01_seeker_browse__profile__master_beside_build.png",
-      "bytes": 1889299,
-      "sha256": "b1c93ee433b5a7423ba4c916cec52cebb3e5053bb908bbc8e4a8af007fb8f3fa",
+      "bytes": 1891145,
+      "sha256": "08ad91f8e9f73534b9dc0c39be89f1d15110045e96e7cf48d101ddc64cf31394",
       "physical_size": [
         2580,
         2796
@@ -98,8 +98,8 @@
     },
     {
       "file": "L01_seeker_journey__stages__build.png",
-      "bytes": 76237,
-      "sha256": "31ef04adb1e84523f27322f898b985ff5f867c30aa8ee0171faf994fcd4ad99b",
+      "bytes": 75776,
+      "sha256": "d02148c02ed6c58a02ed1f581f0d1484d230a5866c6dfbd42b34a4f77e70ec9c",
       "physical_size": [
         1290,
         2796
@@ -107,8 +107,8 @@
     },
     {
       "file": "L01_seeker_journey__stages__master_beside_build.png",
-      "bytes": 361897,
-      "sha256": "1105e3af98bc3baef9949edb22bec1a313bd0ad3c25891d3af4f49b3d940f5d2",
+      "bytes": 361517,
+      "sha256": "238034d73c2796f265c66f9722f9ce9931d00c4f4a10c95fe714534556bf8e5b",
       "physical_size": [
         2580,
         2796
@@ -116,8 +116,8 @@
     },
     {
       "file": "L01_seeker_journeys__empty__build.png",
-      "bytes": 95938,
-      "sha256": "e737bc5d4e0e37601d58cefac61876f157320a0133c493eba55fe5ac8fc710b1",
+      "bytes": 97603,
+      "sha256": "b2c84e7b13fa740874b08517cfaeb5dcd6511587a8da60811698031808cea34e",
       "physical_size": [
         1290,
         2796
@@ -125,8 +125,8 @@
     },
     {
       "file": "L01_seeker_journeys__empty__master_beside_build.png",
-      "bytes": 201286,
-      "sha256": "0d90f17af4f5a2a29d5906b1de92b9b7d9302c1e57d12e8a91ba4b020f0d9460",
+      "bytes": 203044,
+      "sha256": "3d6a72aa2922e38d47cf7394f2391339d05dbfb076d77a3468d9376ddd87f7fd",
       "physical_size": [
         2580,
         2796
@@ -134,8 +134,8 @@
     },
     {
       "file": "L01_seeker_journeys__pending_and_free_place__build.png",
-      "bytes": 211610,
-      "sha256": "28432c97effc6e733b33dc505e095ba25ea0cc2261df4c76bf4d192e33cce8af",
+      "bytes": 211206,
+      "sha256": "acc1511650ab789388f61f24f7ed06cebdc191e83448e99701e6fdcabadebd31",
       "physical_size": [
         1290,
         2796
@@ -143,8 +143,8 @@
     },
     {
       "file": "L01_seeker_journeys__pending_and_free_place__master_beside_build.png",
-      "bytes": 460721,
-      "sha256": "15fe95c735ba795332be9e30eefff79b293815aab7c3f82d2933baa08b3b28fd",
+      "bytes": 460246,
+      "sha256": "a6ba4b2d5bae78cbb77b7a9629fd958ddc1adecbb444db4e7e6b6b4f518faee7",
       "physical_size": [
         2580,
         2796
@@ -152,8 +152,8 @@
     },
     {
       "file": "L01_seeker_my_selah__request__build.png",
-      "bytes": 163171,
-      "sha256": "f485b1540db3690a4ddabd86d01ed62dd2589ed88f555ff547dc21995f5c3ee4",
+      "bytes": 165027,
+      "sha256": "81a3566b6c5a849448417ccc6bb29addece63a6f413e775972f79e0103cb6308",
       "physical_size": [
         1290,
         2796
@@ -161,8 +161,8 @@
     },
     {
       "file": "L01_seeker_my_selah__request__master_beside_build.png",
-      "bytes": 405707,
-      "sha256": "0685cf488994c1602def50ba1712a22478ba98062d35a17e7c2234b9b5006ddc",
+      "bytes": 406736,
+      "sha256": "594eb42c6fdcb999e787286bbb77b429df8dd8ad03120b67ee3087871cc4a6e0",
       "physical_size": [
         2580,
         2796
@@ -170,8 +170,8 @@
     },
     {
       "file": "L01_seeker_profile__faith__build.png",
-      "bytes": 246962,
-      "sha256": "fca6138100af0769d7a3a441971acf0c13c50cac451961d6c88325a0ae154c1b",
+      "bytes": 247200,
+      "sha256": "493b6ee3d2bd9f26773ef790b4d0fdf9b09e9caf02f7f97c2750b99c6b4e82e8",
       "physical_size": [
         1290,
         2796
@@ -179,8 +179,8 @@
     },
     {
       "file": "L01_seeker_profile__faith__master_beside_build.png",
-      "bytes": 477182,
-      "sha256": "69159d11a35d1b6e86211a22caae7adde288765983d0d595b9060eba86f11c9e",
+      "bytes": 477217,
+      "sha256": "128ac125ed8c59d32ab2ae347862f4b310038d50709a79a4a28d972915602163",
       "physical_size": [
         2580,
         2796
@@ -188,8 +188,8 @@
     },
     {
       "file": "L01_shepherd_seekers__build.png",
-      "bytes": 219556,
-      "sha256": "6d93f43061deb24104155f971d420915a08ab2a7f27280ca3798cdbe53e6cf2b",
+      "bytes": 214815,
+      "sha256": "65e5201e28020a36f4d8b94053e88226f99d7352027489795a06bb8871dcdb27",
       "physical_size": [
         1290,
         2796
@@ -197,12 +197,15 @@
     },
     {
       "file": "L01_shepherd_seekers__master_beside_build.png",
-      "bytes": 526286,
-      "sha256": "35d1e88a1fb71d1329b67b39846caa5111f6c577d45a5268b362e9a4bbc885b2",
+      "bytes": 522240,
+      "sha256": "78aa666e67d70a12ca59143d20549a21314aae6abeb10ef48d763022da3d1ea0",
       "physical_size": [
         2580,
         2796
       ]
     }
-  ]
+  ],
+  "original_build_commit_sha": "04a7eee65ebca2ae3cec9819fb05c1e517251d76",
+  "evidence_updated_by": "Queue2: normal letterSpacing0 and common retry geometry corrected; original18PNGs preserved in ~/_to_delete/SELAH_LOOK_PRE_SPACING_2026-11-06 and earlier git commit",
+  "evidence_update_timestamp_utc": "2026-11-06T13:55:59.518853+00:00"
 }

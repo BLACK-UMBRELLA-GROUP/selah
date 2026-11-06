@@ -1,0 +1,266 @@
+{
+  "commit_sha": "49728e05b1ddc67180754427ba7c35aca7d1a25d",
+  "source_fingerprint_sha256": "6f5f06942b45d61c0334768fe63a1e843c17520ae1869ea23ed749305d97a25e",
+  "flutter_version": "3.44.2",
+  "dart_version": "3.12.2",
+  "build_mode": "debug widget tests; actual widgets, exact-bundle draft admission, bundled fonts",
+  "target": "430x932 logical @3x; top59/bottom34 safe areas; text scale1.0/light",
+  "build_timestamp_utc": "2026-11-06T13:55:59.518853+00:00",
+  "status": "BUILT; design-chat review, Founder visual acceptance and native phone delivery remain pending",
+  "brief": "APP/APPROVED/SHEPHERD_INVITE/BRIEFS/BUILD_BRIEF_2026-11-04_V1.md",
+  "locks": [
+    "SHEPHERD_INVITE/RECORD/SELAH_SHEPHERD_INVITE_SPEC_CURRENT_VERSION_V4.md",
+    "SHEPHERD_INVITE/RECORD/LOCK_RECORD.md #3 and changes from LOCKs4/6/11",
+    "LOOK/RECORD/SELAH_LOOK_SPEC_CURRENT_VERSION_V2.md"
+  ],
+  "checks": {
+    "models": "221 passed",
+    "invite_capture": "16/16 passed (12 masters and4 integration behaviors)",
+    "combined_replay": "39/39 passed (Look10, invite16, switch2, controller11)",
+    "flutter_analyze": "0errors/0warnings/10 pre-existing infos; --no-fatal-infos exit0",
+    "cached_analyzer": "335files, 0errors/0warnings/1 pre-existing info",
+    "draft_boundaries": "20054/20054 passed",
+    "pubspec_lock_sha256": "adf4a5d8e8e3e3d9366b0be138f72b6a33564c35dc15e1fce1a585c1638f7ce8"
+  },
+  "behavior_checked": [
+    "Choice/name validation and local send/copy",
+    "Pending Request later and incoming Accept show exact toasts without changing requests",
+    "Private acceptance restores Request a Journey, entered full name and acceptance update",
+    "Shepherd review Accept/Not now and profile pronouns",
+    "Revoked/throwing/disposed owners fail closed; real activation required for private presets"
+  ],
+  "implementation_limits": [
+    "No network, share sheet, domain, clipboard, persistent account/link, permission grant or reminder schedule",
+    "Invite Continue temporarily opens Browse until queued faith/marriage/consent destinations",
+    "Existing old-direction invitation constructor retained; opposite-direction Seeker request is explicit with shared review body",
+    "Existing cast/content and current Shepherd dock retained; named review test uses master fixture James31",
+    "Native status bar/island outside widget rendering; no iPhone/native launch claim",
+    "Browser/font/safe-area metrics and preserved Browse content differ; no pixel-MATCH or Founder acceptance claimed"
+  ],
+  "shared_look_corrections": [
+    "Explicit normal letterSpacing0 prevents inherited Material spacing changing master linebreaks",
+    "Supported check/cross glyphs and exact row/button metrics/hidden-demo spacing",
+    "Dark status-bar style on mist; native appearance not verified",
+    "Look9pairs refreshed; original18PNGs preserved with manifest in ~/_to_delete/SELAH_LOOK_PRE_SPACING_2026-11-06"
+  ],
+  "files_removed": [],
+  "moved_diagnostics": "24 intermediate golden diagnostics (3661651B) to ~/_to_delete/SELAH_INVITE_GOLDEN_DIAGNOSTICS_2026-11-06 with hash manifest",
+  "images": [
+    {
+      "file": "L03_seeker_browse__waiting_for_shepherd__build.png",
+      "bytes": 1069269,
+      "sha256": "c8aa67c4b2b169f734dbf4c4e194d8a994fca1ce805fa270527088a155018488",
+      "physical_size": [
+        1290,
+        2796
+      ]
+    },
+    {
+      "file": "L03_seeker_browse__waiting_for_shepherd__master_beside_build.png",
+      "bytes": 1753414,
+      "sha256": "d0417fc1d2ac02d4c1604bc828298edbd1e3f66ed05734eac4690601f660511e",
+      "physical_size": [
+        2580,
+        2796
+      ]
+    },
+    {
+      "file": "L03_seeker_shepherd__invite_pending__build.png",
+      "bytes": 185582,
+      "sha256": "d98205e0298c6dc68f92e30f41dc84cd0f7d1fc3aa597274748db1fa2679ef46",
+      "physical_size": [
+        1290,
+        2796
+      ]
+    },
+    {
+      "file": "L03_seeker_shepherd__invite_pending__master_beside_build.png",
+      "bytes": 379634,
+      "sha256": "62c585f3bdce1de12d3c39b4a6e6cadce57230ccfb8e972e78e39f37efa0389b",
+      "physical_size": [
+        2580,
+        2796
+      ]
+    },
+    {
+      "file": "L03_shepherd_invitation__build.png",
+      "bytes": 281119,
+      "sha256": "2b065b40e07b4e7b08e766eb32d1bd6e680c9b45933bb2bca4fd422c51baed8f",
+      "physical_size": [
+        1290,
+        2796
+      ]
+    },
+    {
+      "file": "L03_shepherd_invitation__master_beside_build.png",
+      "bytes": 548631,
+      "sha256": "161ca136a1e817a6d3e1441b8ef98ceb3c091cfdaf089ded68c2b2ecd10328b2",
+      "physical_size": [
+        2580,
+        2796
+      ]
+    },
+    {
+      "file": "L03_signup_choose__empty__build.png",
+      "bytes": 152011,
+      "sha256": "e6b5c35b17df40c31cb5741e74abc66cac7a0549578dafb385d09763001910c4",
+      "physical_size": [
+        1290,
+        2796
+      ]
+    },
+    {
+      "file": "L03_signup_choose__empty__master_beside_build.png",
+      "bytes": 320166,
+      "sha256": "0ee7ed45801114016ee21a65d6e5042207c9f231f73905660541209221041a07",
+      "physical_size": [
+        2580,
+        2796
+      ]
+    },
+    {
+      "file": "L03_signup_choose__error__build.png",
+      "bytes": 163392,
+      "sha256": "037722e482b4a42898d2978a809dd5d2d67cec9c9616db96cfb6ec87e7ed1bea",
+      "physical_size": [
+        1290,
+        2796
+      ]
+    },
+    {
+      "file": "L03_signup_choose__error__master_beside_build.png",
+      "bytes": 341948,
+      "sha256": "2bacf704c889cf460fcabf4a87b387d3f26df5f7f269275d139c27aba4a39d17",
+      "physical_size": [
+        2580,
+        2796
+      ]
+    },
+    {
+      "file": "L03_signup_choose__selected__build.png",
+      "bytes": 152749,
+      "sha256": "06fefe960ed333210f730e4f23d126442c26c7778edae5df3e82f137e5b9208d",
+      "physical_size": [
+        1290,
+        2796
+      ]
+    },
+    {
+      "file": "L03_signup_choose__selected__master_beside_build.png",
+      "bytes": 322795,
+      "sha256": "4337de842ebd6a2f1f4625510bc4eb3acbffaaccece80d41e1abf58cb72c240d",
+      "physical_size": [
+        2580,
+        2796
+      ]
+    },
+    {
+      "file": "L03_signup_invite__build.png",
+      "bytes": 175265,
+      "sha256": "8ed5dc77560a2cba57447df899363f59bbda32dfee9d2f233b313894396bdee0",
+      "physical_size": [
+        1290,
+        2796
+      ]
+    },
+    {
+      "file": "L03_signup_invite__failed__build.png",
+      "bytes": 198938,
+      "sha256": "88db6e686aacdcbf030c610210a87b758c4f6851bc5dafd95e5bb5d9088b981c",
+      "physical_size": [
+        1290,
+        2796
+      ]
+    },
+    {
+      "file": "L03_signup_invite__failed__master_beside_build.png",
+      "bytes": 408548,
+      "sha256": "187ae65710d06430e15d002ae46c4569899a18be5fe13e6fc9af032e121117bf",
+      "physical_size": [
+        2580,
+        2796
+      ]
+    },
+    {
+      "file": "L03_signup_invite__master_beside_build.png",
+      "bytes": 360478,
+      "sha256": "65a11e6d96f527ec45fbd015444ccea73481bf6d35426328c12c141cf634b1f0",
+      "physical_size": [
+        2580,
+        2796
+      ]
+    },
+    {
+      "file": "L03_signup_invite__name_error__build.png",
+      "bytes": 184936,
+      "sha256": "c7ddcd3b2311ec83253d921c640913be5521c914fd2d92c4c66d02597c1856dc",
+      "physical_size": [
+        1290,
+        2796
+      ]
+    },
+    {
+      "file": "L03_signup_invite__name_error__master_beside_build.png",
+      "bytes": 374740,
+      "sha256": "c8f3313cbacc01142afc008543bb9ebced36560f6a6d5ce1061fe21691fb5975",
+      "physical_size": [
+        2580,
+        2796
+      ]
+    },
+    {
+      "file": "L03_signup_invite__sending__build.png",
+      "bytes": 159658,
+      "sha256": "6a3b6af7cb6354d15b37ad10b549b9c20e6d2699dc85738cee343de61b46e2da",
+      "physical_size": [
+        1290,
+        2796
+      ]
+    },
+    {
+      "file": "L03_signup_invite__sending__master_beside_build.png",
+      "bytes": 330538,
+      "sha256": "62ddfbe28dcad8ee2607a8f504e8869109c575773fc9c8351c8e5d1d22dcfb87",
+      "physical_size": [
+        2580,
+        2796
+      ]
+    },
+    {
+      "file": "L03_signup_sent__build.png",
+      "bytes": 93878,
+      "sha256": "19c4f97c6eea46ad9fa921750adfd515fe9e478ebf20ee554c709591eba7e335",
+      "physical_size": [
+        1290,
+        2796
+      ]
+    },
+    {
+      "file": "L03_signup_sent__master_beside_build.png",
+      "bytes": 193098,
+      "sha256": "b36e65e610ee43ae07da6cd7caf27aaccd6f1b1f16daf8ce1ff76661cca58073",
+      "physical_size": [
+        2580,
+        2796
+      ]
+    },
+    {
+      "file": "L03_signup_welcome__build.png",
+      "bytes": 152890,
+      "sha256": "9fbc4b2040dab3944474b66fda27fde8ca2fbc8e716d1c78124e42939809ce8d",
+      "physical_size": [
+        1290,
+        2796
+      ]
+    },
+    {
+      "file": "L03_signup_welcome__master_beside_build.png",
+      "bytes": 313649,
+      "sha256": "dc9c5e7b352d0598c8df07c08b6694329658517b571d299b388828a502808b74",
+      "physical_size": [
+        2580,
+        2796
+      ]
+    }
+  ]
+}
