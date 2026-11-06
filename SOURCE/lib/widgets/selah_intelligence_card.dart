@@ -47,7 +47,7 @@ class SelahIntelligenceCard extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            it.label.toUpperCase(),
+            it.label.toUpperCase().replaceAll('SELAH', 'Selah'),
             style: SelahText.chapterLabel(color: const Color(0xCCD8BEEE)),
           ),
           const SizedBox(height: 8),
@@ -92,9 +92,9 @@ class SelahIntelligenceInvitation extends StatelessWidget {
   const SelahIntelligenceInvitation({super.key, required this.kind, this.onTap});
 
   String get _label => switch (kind) {
-    SelahIntelligenceKind.insight => 'SELAH Insight',
-    SelahIntelligenceKind.recommendation => 'SELAH Recommendation',
-    SelahIntelligenceKind.summary => 'SELAH Summary',
+    SelahIntelligenceKind.insight => 'Selah Insight',
+    SelahIntelligenceKind.recommendation => 'Selah Recommendation',
+    SelahIntelligenceKind.summary => 'Selah Summary',
   };
 
   @override
@@ -116,7 +116,7 @@ class SelahIntelligenceInvitation extends StatelessWidget {
             Icon(Icons.lock_rounded, size: 17, color: SelahColors.journeyGold),
             const SizedBox(width: 8),
             Text(
-              _label.toUpperCase(),
+              _label.toUpperCase().replaceAll('SELAH', 'Selah'),
               style: SelahText.chapterLabel(color: SelahColors.journeyGold),
             ),
           ],

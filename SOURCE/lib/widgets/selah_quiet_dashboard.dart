@@ -205,7 +205,7 @@ class _SelahQuietDashboardState extends State<SelahQuietDashboard> {
                 child: Align(
                   alignment: widget.titleAlignment,
                   child: Text(
-                    'My SELAH',
+                    'My Selah',
                     key: const ValueKey('my-selah-main-title'),
                     textAlign: widget.titleAlignment.x > 0
                         ? TextAlign.right
@@ -370,7 +370,7 @@ class _SelahQuietDashboardState extends State<SelahQuietDashboard> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               // Source attribution, not a category heading.
-              kit.label('SELAH'),
+              kit.label('Selah'),
               const SizedBox(height: 10),
               _items(data.editorial.map((c) => _disclosure(kit, c))),
             ],
@@ -571,21 +571,21 @@ class _SelahQuietDashboardState extends State<SelahQuietDashboard> {
         kit.heading(
           kit.data.allInsightsHidden
               ? 'These Insights are hidden in this preview'
-              : 'Insights will grow with your SELAH experience',
+              : 'Insights will grow with your Selah experience',
           size: 27,
         ),
         const SizedBox(height: 18),
         kit.body(
           kit.data.allInsightsHidden
               ? 'Your preview choices are not saved to your account.'
-              : 'SELAH will only show an Insight when reliable information genuinely supports it. We will not guess or fill this page with generic statistics.',
+              : 'Selah will only show an Insight when reliable information genuinely supports it. We will not guess or fill this page with generic statistics.',
         ),
       ],
     ),
   );
 
   Widget _navigation() => Semantics(
-    label: 'My SELAH section selector',
+    label: 'My Selah section selector',
     child: SelahSegmentedToggle(
       key: const ValueKey('my-selah-tab-slider'),
       labels: const ['Now', 'Insights'],

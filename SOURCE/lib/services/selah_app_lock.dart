@@ -157,7 +157,7 @@ class SelahAppLock extends ChangeNotifier {
     if (_disposed) return false;
     if (!_locked) return true;
     final generation = _generation;
-    final ok = await _authenticate('Unlock SELAH');
+    final ok = await _authenticate('Unlock Selah');
     if (!_isCurrent(generation)) return false;
     if (ok) {
       _locked = false;

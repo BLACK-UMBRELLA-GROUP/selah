@@ -1,0 +1,181 @@
+{
+  "queue_lines": [
+    22
+  ],
+  "status": "BUILT",
+  "action": "OA-SELAH-003",
+  "source_commit": "dbcb2a34d706cbcba4f26c0004e9e53bd343068e",
+  "flutter_version": "3.44.2",
+  "dart_version": "3.12.2",
+  "build_mode": "debug Flutter widget test; no native build/install",
+  "receipt_created_utc": "2026-11-06T19:31:02.526478+00:00",
+  "built_from": [
+    "APP/APPROVED/YOUR_VALUES/BRIEFS/BUILD_BRIEF_2026-11-06_LOCK18_V1.md"
+  ],
+  "viewport_logical": [
+    430,
+    932
+  ],
+  "pixel_ratio": 3,
+  "images": [
+    {
+      "file": "L17_values_overview__build.png",
+      "bytes": 202904,
+      "width": 1290,
+      "height": 2796,
+      "sha256": "28f5b7d3db06de327b8bb76dff2f06dd4d481ff8488e31c36d2b027e7c3a4e32",
+      "captured_file_mtime_utc": "2026-11-06T19:24:50.423943+00:00"
+    },
+    {
+      "file": "L17_values_overview__master_beside_build.png",
+      "bytes": 424192,
+      "width": 2580,
+      "height": 2796,
+      "sha256": "41480ff3daa8b6a913b75c0139a1d2025067cc52b3a3d4201fe298b6e18e6031",
+      "captured_file_mtime_utc": "2026-11-06T19:24:50.691366+00:00"
+    },
+    {
+      "file": "L17_values_overview__part_done__build.png",
+      "bytes": 207925,
+      "width": 1290,
+      "height": 2796,
+      "sha256": "f39be40a9b8ac615155371a8a70fcce58ceb88d4355817817df8c3ea39c5c730",
+      "captured_file_mtime_utc": "2026-11-06T19:24:51.141175+00:00"
+    },
+    {
+      "file": "L17_values_overview__part_done__master_beside_build.png",
+      "bytes": 434448,
+      "width": 2580,
+      "height": 2796,
+      "sha256": "631f7a23eab3bb4898913a1e4163aa50132c98c4a442be895ea278ad84251a5b",
+      "captured_file_mtime_utc": "2026-11-06T19:24:51.409354+00:00"
+    },
+    {
+      "file": "L18_dealbreakers__build.png",
+      "bytes": 214855,
+      "width": 1290,
+      "height": 2796,
+      "sha256": "f91235b4364178f4e0d5cb9578f71e4a926383f66a9b9cb2e40629fc5ea98050",
+      "captured_file_mtime_utc": "2026-11-06T19:24:42.402127+00:00"
+    },
+    {
+      "file": "L18_dealbreakers__chosen__build.png",
+      "bytes": 215642,
+      "width": 1290,
+      "height": 2796,
+      "sha256": "bf8764c16307b389f75940d56550ea1371ac27f55361cd118a3ecdd914293b7b",
+      "captured_file_mtime_utc": "2026-11-06T19:24:44.048319+00:00"
+    },
+    {
+      "file": "L18_dealbreakers__chosen__master_beside_build.png",
+      "bytes": 458920,
+      "width": 2580,
+      "height": 2796,
+      "sha256": "49faaa43f3b283f88fab1704c750c33847328eca6b9ff3299de6595b0e7afdc6",
+      "captured_file_mtime_utc": "2026-11-06T19:24:44.340168+00:00"
+    },
+    {
+      "file": "L18_dealbreakers__didnt_save__build.png",
+      "bytes": 241919,
+      "width": 1290,
+      "height": 2796,
+      "sha256": "dbea3441cc454795b01effc5be8efce297ecd0cdf01066474496a9a4b6e5b397",
+      "captured_file_mtime_utc": "2026-11-06T19:24:48.295965+00:00"
+    },
+    {
+      "file": "L18_dealbreakers__didnt_save__master_beside_build.png",
+      "bytes": 511495,
+      "width": 2580,
+      "height": 2796,
+      "sha256": "26b596b61533dc3be76b42066d380f91abeb1bcdac6d4d44d97c034382ec54d1",
+      "captured_file_mtime_utc": "2026-11-06T19:24:48.590306+00:00"
+    },
+    {
+      "file": "L18_dealbreakers__master_beside_build.png",
+      "bytes": 455995,
+      "width": 2580,
+      "height": 2796,
+      "sha256": "15cbb92384ac8383a9596ccb240fa34e131cead67bf51d3bdc71451bc75fb42c",
+      "captured_file_mtime_utc": "2026-11-06T19:24:42.722903+00:00"
+    },
+    {
+      "file": "L18_dealbreakers__none__build.png",
+      "bytes": 215556,
+      "width": 1290,
+      "height": 2796,
+      "sha256": "3c1d1ba154bee188e2e14daccf636ca9972fef3f1691dd3ffe4bc119c546f4ad",
+      "captured_file_mtime_utc": "2026-11-06T19:24:45.448658+00:00"
+    },
+    {
+      "file": "L18_dealbreakers__none__master_beside_build.png",
+      "bytes": 458899,
+      "width": 2580,
+      "height": 2796,
+      "sha256": "f184d6e83835c1675aad154fb0eee3c352698126b853fcf14a4fda86520bfaf3",
+      "captured_file_mtime_utc": "2026-11-06T19:24:45.736604+00:00"
+    },
+    {
+      "file": "L18_dealbreakers__saving__build.png",
+      "bytes": 216838,
+      "width": 1290,
+      "height": 2796,
+      "sha256": "8ec10100e2eb0fdfd3cacf11c8fa2047e857368d28ae1f4db55a2b0404090e96",
+      "captured_file_mtime_utc": "2026-11-06T19:27:28.560531+00:00"
+    },
+    {
+      "file": "L18_dealbreakers__saving__master_beside_build.png",
+      "bytes": 461057,
+      "width": 2580,
+      "height": 2796,
+      "sha256": "f7b444dfccc700a2482dd74f560f409c30635af8c9fb834e69c46d7321429aa9",
+      "captured_file_mtime_utc": "2026-11-06T19:27:28.859136+00:00"
+    },
+    {
+      "file": "L18_values_overview__all_done__build.png",
+      "bytes": 234482,
+      "width": 1290,
+      "height": 2796,
+      "sha256": "ad0300b08cca4ed7f372319391432bc54b5cf7ae89bd3ab43377c0d58e8ee1ba",
+      "captured_file_mtime_utc": "2026-11-06T19:24:49.741022+00:00"
+    },
+    {
+      "file": "L18_values_overview__all_done__master_beside_build.png",
+      "bytes": 489240,
+      "width": 2580,
+      "height": 2796,
+      "sha256": "6cbf0c1e86c4f18eb7fcc2ff67b5f8e441ffc226b95729b16c5ec9fc1b9485ae",
+      "captured_file_mtime_utc": "2026-11-06T19:24:50.016751+00:00"
+    }
+  ],
+  "image_bytes": 5444367,
+  "comparison": "As-built evidence with differences; not a pixel MATCH claim.",
+  "notes": "Five exact hard-rule mappings plus None, no partner-preference screens. All8Done reached through actual saves. Save(None) completion retained within same local owner; retained backend snapshot lacks empty-rule completion metadata, so reopening that separate retained route requires saving again. No backend field added. Saving button corrected to normal Save baseline.",
+  "checks": {
+    "pure_model_checks": 1170,
+    "functional_before_wording": {
+      "passed": 281,
+      "skipped": 1
+    },
+    "flutter_analyze": {
+      "errors": 0,
+      "warnings": 0,
+      "existing_infos": 10
+    },
+    "cached_analysis": {
+      "files": 390,
+      "errors": 0,
+      "warnings": 0,
+      "existing_infos": 1
+    },
+    "boundaries": {
+      "passed": 20565,
+      "findings": 0
+    }
+  },
+  "limits": [
+    "No backend/server, native installation, phone launch or Founder visual acceptance proof.",
+    "320x568 at200percent text remains an explicitly undecided Larger Text design (24pixel header overflow); no redesign/suppression."
+  ],
+  "founder_decisions": "Recorded LOCKs and file answers Q8–Q13 applied; no new Founder decision requested.",
+  "native_or_dependency_changes": false
+}

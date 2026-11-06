@@ -94,7 +94,7 @@ Future<void> _seedJourneys(WidgetTester tester, int count) async {
 }
 
 Future<void> _openReceived(WidgetTester tester) async {
-  await _tab(tester, 'My SELAH');
+  await _tab(tester, 'My Selah');
   await _tap(tester, find.text('View requests').first);
   await _tap(tester, _key('concept_request_draft-amira_header'));
   await _tap(tester, _key('draft_accept_draft-amira'));
@@ -287,7 +287,7 @@ void main() {
     expect(find.text('Journey with ${pause.name} has begun.'), findsOneWidget);
     await tester.binding.handlePopRoute();
     await tester.pumpAndSettle();
-    await _tab(tester, 'My SELAH');
+    await _tab(tester, 'My Selah');
     expect(
       find.text(
         'You ended your Journey with ${pause.endingName} and '

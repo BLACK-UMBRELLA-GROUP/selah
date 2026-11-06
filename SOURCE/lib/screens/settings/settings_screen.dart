@@ -629,7 +629,7 @@ class _VersionFooterState extends State<_VersionFooter> {
     mainAxisSize: MainAxisSize.min,
     children: [
       Text(
-        'SELAH',
+        'Selah',
         style: SelahText.wordmark(size: 11, color: SelahColors.ink(0.24)),
       ),
       if (_line != null) ...[

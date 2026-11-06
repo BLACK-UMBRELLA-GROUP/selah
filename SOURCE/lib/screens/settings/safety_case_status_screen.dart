@@ -102,7 +102,7 @@ class _SafetyReportExplanation extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => Text(
-    'Track safety reports you have sent to SELAH. You will see when each '
+    'Track safety reports you have sent to Selah. You will see when each '
     'report is received, under review or complete.',
     style: SelahText.subtext(size: 12.5, color: SelahColors.ink(0.54)),
   );

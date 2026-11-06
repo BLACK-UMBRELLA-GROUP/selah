@@ -93,7 +93,7 @@ class _KnownPersonIntro extends StatelessWidget {
       const SizedBox(height: 8),
       Text(
         detail ??
-            'Scan or enter their permanent SELAH Code. You can then Consider '
+            'Scan or enter their permanent Selah Code. You can then Consider '
                 'them through the normal matching process.',
         textAlign: TextAlign.center,
         style: SelahText.subtext(size: 12.5),

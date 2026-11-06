@@ -366,9 +366,9 @@ class _SelahCodeScreenState extends State<SelahCodeScreen> {
         text: _isFounderDemoPreview
             ? 'SELAH Developer Preview code:\n$code\n\n'
                   'This sample code cannot connect real accounts.'
-            : 'Use my SELAH Code to send me a Shepherd request:\n$code\n\n'
-                  'I will still need to approve the request in SELAH.',
-        subject: 'My SELAH Code',
+            : 'Use my Selah Code to send me a Shepherd request:\n$code\n\n'
+                  'I will still need to approve the request in Selah.',
+        subject: 'My Selah Code',
         sharePositionOrigin: origin,
       ),
     );
@@ -382,7 +382,7 @@ class _SelahCodeScreenState extends State<SelahCodeScreen> {
     final confirmed = await showSelahGlassChoice(
       context: context,
       icon: Icons.refresh_rounded,
-      title: 'Change your SELAH Code?',
+      title: 'Change your Selah Code?',
       body:
           'Your current code will stop working and will never be issued again. '
           'Requests already sent will stay visible.',
@@ -411,7 +411,7 @@ class _SelahCodeScreenState extends State<SelahCodeScreen> {
   void _enterCode([String? initialCode]) {
     if (widget.signupPreview) {
       _signupInformation(
-        'Preview only. In the app, enter the other person\'s SELAH Code, '
+        'Preview only. In the app, enter the other person\'s Selah Code, '
         'confirm who they are, then send a request. A link is created only '
         'after they accept. No code is checked or request sent here.',
       );
@@ -1054,7 +1054,7 @@ class _SelahCodeScreenState extends State<SelahCodeScreen> {
                               if (!_available) ...[
                                 SelahErrorBanner(
                                   message:
-                                      "Your SELAH Code couldn't be refreshed.",
+                                      "Your Selah Code couldn't be refreshed.",
                                   onRetry: _load,
                                 ),
                                 const SizedBox(height: 18),
@@ -1642,7 +1642,7 @@ class _ScanSelahCodeScreenState extends State<_ScanSelahCodeScreen> {
     return Scaffold(
       backgroundColor: Colors.black,
       appBar: AppBar(
-        title: Text('Scan SELAH Code', style: SelahText.heading(size: 17)),
+        title: Text('Scan Selah Code', style: SelahText.heading(size: 17)),
         backgroundColor: Colors.black,
       ),
       body: MobileScanner(
@@ -1681,7 +1681,7 @@ class _CodeCard extends StatelessWidget {
     mainAxisSize: MainAxisSize.min,
     children: [
       Text(
-        'YOUR SELAH CODE',
+        'YOUR Selah CODE',
         style: SelahText.chapterLabel(color: SelahColors.ink(0.58)),
       ),
       SizedBox(height: prominent ? 18 : 12),
@@ -1718,7 +1718,7 @@ class _CodeCard extends StatelessWidget {
     mainAxisSize: MainAxisSize.min,
     children: [
       Text(
-        'YOUR SELAH QR CODE',
+        'YOUR Selah QR CODE',
         style: SelahText.chapterLabel(color: SelahColors.ink(0.58)),
       ),
       const SizedBox(height: 14),

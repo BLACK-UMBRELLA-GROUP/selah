@@ -280,7 +280,7 @@ class _SeekerDashboardScreenState extends State<SeekerDashboardScreen> {
                   alignment: Alignment.centerRight,
                   child: TextButton(
                     onPressed: () => Navigator.of(dialogContext).pop(),
-                    child: const Text('Back to My SELAH'),
+                    child: const Text('Back to My Selah'),
                   ),
                 ),
               ],

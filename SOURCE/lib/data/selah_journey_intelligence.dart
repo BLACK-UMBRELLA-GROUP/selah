@@ -64,9 +64,9 @@ class SelahIntelligence {
 
   /// The ONLY user-facing name for this content.
   String get label => switch (kind) {
-    SelahIntelligenceKind.insight => 'SELAH Insight',
-    SelahIntelligenceKind.recommendation => 'SELAH Recommendation',
-    SelahIntelligenceKind.summary => 'SELAH Summary',
+    SelahIntelligenceKind.insight => 'Selah Insight',
+    SelahIntelligenceKind.recommendation => 'Selah Recommendation',
+    SelahIntelligenceKind.summary => 'Selah Summary',
   };
 }
 
@@ -177,7 +177,7 @@ class SelahJourneyIntelligence {
       return const SelahIntelligence(
         SelahIntelligenceKind.recommendation,
         'You have not marked any answers yet. Marking them privately is what '
-        'shapes what SELAH suggests next — and nobody else ever sees it.',
+        'shapes what Selah suggests next — and nobody else ever sees it.',
       );
     }
 

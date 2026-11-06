@@ -442,7 +442,7 @@ class _JourneyTimelineScreenState extends State<JourneyTimelineScreen> {
             const SelahMomentLine.body('From a match to a marriage.'),
             const SelahMomentLine.quiet(
               'Your whole story is kept — the road, the words, the '
-              'milestones. SELAH was honoured to walk it with you.',
+              'milestones. Selah was honoured to walk it with you.',
             ),
           ],
           ctaLabel: 'View your Timeline',

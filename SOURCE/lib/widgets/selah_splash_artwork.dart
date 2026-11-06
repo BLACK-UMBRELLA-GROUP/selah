@@ -138,7 +138,7 @@ class SelahSplashArtworkFrame extends StatelessWidget {
               child: Transform.translate(
                 offset: Offset(0, 10 * (1 - arrival)),
                 child: Text(
-                  'SELAH',
+                  'Selah',
                   key: const ValueKey('splash_study_wordmark'),
                   style: SelahText.wordmark(
                     size: wordmarkSize,
@@ -249,7 +249,7 @@ class _HuluLetterArrival extends StatelessWidget {
               child: Transform.translate(
                 offset: Offset(0, 12 * (1 - t)),
                 child: Text(
-                  'SELAH'[i],
+                  'Selah'[i],
                   style: SelahText.wordmark(
                     size: size,
                     color: SelahColors.splashWordmark,

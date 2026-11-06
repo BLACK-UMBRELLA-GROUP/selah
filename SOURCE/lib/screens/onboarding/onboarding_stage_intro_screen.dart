@@ -44,7 +44,7 @@ const seekerOnboardingStages = <OnboardingStageContent>[
     includes: 'Your photos, city, faith and background details.',
     visibility:
         'Each question tells you whether it is public, private or revealed after a mutual match.',
-    outcome: 'You will have a complete profile ready for SELAH introductions.',
+    outcome: 'You will have a complete profile ready for Selah introductions.',
     buttonLabel: 'Start with Your Profile',
   ),
   OnboardingStageContent(
@@ -66,12 +66,12 @@ const seekerOnboardingStages = <OnboardingStageContent>[
     title: 'Compatibility',
     heading: 'Let’s explore compatibility.',
     summary:
-        'First tell SELAH about yourself. Then set your partner preferences section by section.',
+        'First tell Selah about yourself. Then set your partner preferences section by section.',
     includes:
         'Private answers about yourself, followed by your partner preferences.',
     visibility: 'Private. Used to calculate your compatibility score.',
     outcome:
-        'SELAH can show where you align without revealing either person’s raw answers.',
+        'Selah can show where you align without revealing either person’s raw answers.',
     buttonLabel: 'Begin Compatibility',
   ),
   OnboardingStageContent(
@@ -98,7 +98,7 @@ const _accountEssentialsIntro = OnboardingStageContent(
   heading: 'First, your account.',
   summary:
       'Add your first and last name, gender, date of birth and one photo. Choose your membership, then verify your identity. '
-      'After that, you can enter My SELAH or continue building your profile.',
+      'After that, you can enter My Selah or continue building your profile.',
   includes: 'First and last name, gender, date of birth and your first photo.',
   visibility: 'Your date of birth stays private.',
   outcome: 'Choose your membership, then complete your identity check.',
@@ -580,7 +580,7 @@ class _WelcomePageState extends State<_WelcomePage>
                 : CrossAxisAlignment.center,
             children: [
               Text(
-                'SELAH',
+                'Selah',
                 style: SelahText.wordmark(
                   size: 17,
                   color: SelahColors.splashWordmark,
@@ -998,7 +998,7 @@ class _StagePage extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   Text(
-                    'SELAH',
+                    'Selah',
                     style: SelahText.wordmark(
                       size: 17,
                       color: SelahColors.splashWordmark,

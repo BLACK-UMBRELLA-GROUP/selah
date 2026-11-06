@@ -267,7 +267,7 @@ class _TrafficLightQuestionScreenState
             _hard.length == widget.options.length
                 ? 'You have ruled out every answer to this question, so nobody who '
                       'answers it can be introduced to you.'
-                : "You're not open to any answer here. SELAH can still introduce "
+                : "You're not open to any answer here. Selah can still introduce "
                       'people, but this question will count against every one of them.',
             style: SelahText.subtext(size: 11.5),
           ),
@@ -279,8 +279,8 @@ class _TrafficLightQuestionScreenState
           SizedBox(height: 6),
           Text(
             _hard.length == 1
-                ? 'SELAH will never introduce someone with that answer.'
-                : 'SELAH will never introduce someone with any of those ${_hard.length} answers.',
+                ? 'Selah will never introduce someone with that answer.'
+                : 'Selah will never introduce someone with any of those ${_hard.length} answers.',
             style: SelahText.subtext(size: 11.5),
           ),
         ],

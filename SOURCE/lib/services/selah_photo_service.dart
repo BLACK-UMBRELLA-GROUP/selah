@@ -66,7 +66,7 @@ extension SelahPhotoFailureCopy on SelahPhotoFailureKind {
     SelahPhotoFailureKind.authentication =>
       'Your session has ended. Sign in again, then retry.',
     SelahPhotoFailureKind.accessDenied =>
-      "Your account couldn't save photos. Please contact SELAH Support.",
+      "Your account couldn't save photos. Please contact Selah Support.",
     SelahPhotoFailureKind.connection =>
       'Check your connection, then try adding the photos again.',
     SelahPhotoFailureKind.processing =>

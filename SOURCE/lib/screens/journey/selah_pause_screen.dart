@@ -164,7 +164,7 @@ class _SelahPauseScreenState extends State<SelahPauseScreen>
                       onRetry: _confirm,
                     )
                   : null,
-              label: 'SELAH',
+              label: 'Selah',
               heading: pause.heading,
               body: pause.body,
               afterBody: [

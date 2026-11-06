@@ -111,7 +111,7 @@ class _ObscureVeil extends StatelessWidget {
     child: Container(
       decoration: BoxDecoration(gradient: SelahColors.brandGradient),
       alignment: Alignment.center,
-      child: Text('SELAH', style: SelahText.wordmark(size: 26)),
+      child: Text('Selah', style: SelahText.wordmark(size: 26)),
     ),
   );
 }
@@ -139,7 +139,7 @@ class _LockScreen extends StatelessWidget {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Text('SELAH', style: SelahText.wordmark(size: 30)),
+                  Text('Selah', style: SelahText.wordmark(size: 30)),
                   SizedBox(height: 10),
                   Text(
                     'Locked',

@@ -324,7 +324,7 @@ class _MentorNetworkScreenState extends State<MentorNetworkScreen> {
     final ctx = GNContext.instance;
     if (ctx.scene == GNScene.loading || ctx.choosing) {
       return Center(
-        child: SelahLoading(label: 'SELAH is choosing the next family…'),
+        child: SelahLoading(label: 'Selah is choosing the next family…'),
       );
     }
     if (ctx.scene == GNScene.error) {
@@ -364,7 +364,7 @@ class _MentorNetworkScreenState extends State<MentorNetworkScreen> {
             icon: Icons.person_search_outlined,
             title: 'No suitable families right now',
             message:
-                'Nothing currently fits this Seeker\'s requirements and availability. SELAH keeps looking without widening their choices.',
+                'Nothing currently fits this Seeker\'s requirements and availability. Selah keeps looking without widening their choices.',
           ),
         ),
       );

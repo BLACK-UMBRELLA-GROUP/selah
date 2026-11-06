@@ -165,7 +165,7 @@ class TransitionScreen extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.fromLTRB(24, 20, 24, 12),
               child: Text(
-                'SELAH',
+                'Selah',
                 style: SelahText.wordmark(
                   size: 17,
                   color: SelahColors.splashWordmark,

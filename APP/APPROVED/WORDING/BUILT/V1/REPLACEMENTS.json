@@ -1,0 +1,3172 @@
+{
+  "feature": "WORDING",
+  "lock": 11,
+  "spec": "APP/APPROVED/WORDING/RECORD/SELAH_WORDING_SPEC_CURRENT_VERSION_V1.md",
+  "brief": "APP/APPROVED/WORDING/BRIEFS/BUILD_BRIEF_2026-11-06_V1.md",
+  "base_commit": "dbcb2a34d706cbcba4f26c0004e9e53bd343068e",
+  "replacement_counts": {
+    "member_name": 190,
+    "request_profile_label": 5,
+    "total": 195,
+    "files": 77
+  },
+  "offset_units": "Unicode code points, end exclusive; exact before/after SHA256 attached",
+  "unchanged": "Exact inverse reconstruction proves no other source bytes changed, including comments, diagnostics, technical codes, private labels and identifiers. Current SelahWordmark/breath remains unchanged.",
+  "validation": {
+    "inverse_reconstruction": "PASS for all77 files",
+    "source_hash_validation": "PASS for all77 before writes"
+  },
+  "files": [
+    {
+      "file": "SOURCE/lib/data/help_content.dart",
+      "before_sha256": "f3c21044401a74e59d08c9bb3006881e7debdcf5bfab7ad80c0fdd3c9426a8fd",
+      "after_sha256": "19cc170a4008b905b7b63ea31186aa39360e4e16ddb1ffa77a3474c459787cce",
+      "replacement_count": 12,
+      "replacements": [
+        {
+          "classification": "member_change",
+          "before_line": 52,
+          "before_column": 28,
+          "before_start": 2125,
+          "before_end": 2130,
+          "after_start": 2125,
+          "after_end": 2130,
+          "before": "SELAH",
+          "after": "Selah",
+          "interpolated": false,
+          "nested_in_interpolation": false
+        },
+        {
+          "classification": "member_change",
+          "before_line": 54,
+          "before_column": 11,
+          "before_start": 2165,
+          "before_end": 2170,
+          "after_start": 2165,
+          "after_end": 2170,
+          "before": "SELAH",
+          "after": "Selah",
+          "interpolated": false,
+          "nested_in_interpolation": false
+        },
+        {
+          "classification": "member_change",
+          "before_line": 58,
+          "before_column": 32,
+          "before_start": 2405,
+          "before_end": 2410,
+          "after_start": 2405,
+          "after_end": 2410,
+          "before": "SELAH",
+          "after": "Selah",
+          "interpolated": false,
+          "nested_in_interpolation": false
+        },
+        {
+          "classification": "member_change",
+          "before_line": 69,
+          "before_column": 17,
+          "before_start": 3072,
+          "before_end": 3077,
+          "after_start": 3072,
+          "after_end": 3077,
+          "before": "SELAH",
+          "after": "Selah",
+          "interpolated": false,
+          "nested_in_interpolation": false
+        },
+        {
+          "classification": "member_change",
+          "before_line": 89,
+          "before_column": 50,
+          "before_start": 4316,
+          "before_end": 4321,
+          "after_start": 4316,
+          "after_end": 4321,
+          "before": "SELAH",
+          "after": "Selah",
+          "interpolated": false,
+          "nested_in_interpolation": false
+        },
+        {
+          "classification": "member_change",
+          "before_line": 119,
+          "before_column": 18,
+          "before_start": 5845,
+          "before_end": 5850,
+          "after_start": 5845,
+          "after_end": 5850,
+          "before": "SELAH",
+          "after": "Selah",
+          "interpolated": false,
+          "nested_in_interpolation": false
+        },
+        {
+          "classification": "member_change",
+          "before_line": 133,
+          "before_column": 29,
+          "before_start": 6754,
+          "before_end": 6759,
+          "after_start": 6754,
+          "after_end": 6759,
+          "before": "SELAH",
+          "after": "Selah",
+          "interpolated": false,
+          "nested_in_interpolation": false
+        },
+        {
+          "classification": "member_change",
+          "before_line": 175,
+          "before_column": 64,
+          "before_start": 8947,
+          "before_end": 8952,
+          "after_start": 8947,
+          "after_end": 8952,
+          "before": "SELAH",
+          "after": "Selah",
+          "interpolated": false,
+          "nested_in_interpolation": false
+        },
+        {
+          "classification": "member_change",
+          "before_line": 246,
+          "before_column": 12,
+          "before_start": 13070,
+          "before_end": 13075,
+          "after_start": 13070,
+          "after_end": 13075,
+          "before": "SELAH",
+          "after": "Selah",
+          "interpolated": false,
+          "nested_in_interpolation": false
+        },
+        {
+          "classification": "member_change",
+          "before_line": 248,
+          "before_column": 21,
+          "before_start": 13240,
+          "before_end": 13245,
+          "after_start": 13240,
+          "after_end": 13245,
+          "before": "SELAH",
+          "after": "Selah",
+          "interpolated": false,
+          "nested_in_interpolation": false
+        },
+        {
+          "classification": "member_change",
+          "before_line": 286,
+          "before_column": 12,
+          "before_start": 15406,
+          "before_end": 15411,
+          "after_start": 15406,
+          "after_end": 15411,
+          "before": "SELAH",
+          "after": "Selah",
+          "interpolated": false,
+          "nested_in_interpolation": false
+        },
+        {
+          "classification": "member_change",
+          "before_line": 356,
+          "before_column": 15,
+          "before_start": 19318,
+          "before_end": 19323,
+          "after_start": 19318,
+          "after_end": 19323,
+          "before": "SELAH",
+          "after": "Selah",
+          "interpolated": false,
+          "nested_in_interpolation": false
+        }
+      ]
+    },
+    {
+      "file": "SOURCE/lib/data/selah_journey_intelligence.dart",
+      "before_sha256": "fa0b9fa44fc2f9dc8b524972c18a05d40a8ea67b44d39dd415e371713bdf830c",
+      "after_sha256": "92235ebbd4efaa2648776f72e31f66987fda3198020446c4af50394a1f75b232",
+      "replacement_count": 4,
+      "replacements": [
+        {
+          "classification": "member_change",
+          "before_line": 67,
+          "before_column": 39,
+          "before_start": 3300,
+          "before_end": 3305,
+          "after_start": 3300,
+          "after_end": 3305,
+          "before": "SELAH",
+          "after": "Selah",
+          "interpolated": false,
+          "nested_in_interpolation": false
+        },
+        {
+          "classification": "member_change",
+          "before_line": 68,
+          "before_column": 46,
+          "before_start": 3361,
+          "before_end": 3366,
+          "after_start": 3361,
+          "after_end": 3366,
+          "before": "SELAH",
+          "after": "Selah",
+          "interpolated": false,
+          "nested_in_interpolation": false
+        },
+        {
+          "classification": "member_change",
+          "before_line": 69,
+          "before_column": 39,
+          "before_start": 3422,
+          "before_end": 3427,
+          "after_start": 3422,
+          "after_end": 3427,
+          "before": "SELAH",
+          "after": "Selah",
+          "interpolated": false,
+          "nested_in_interpolation": false
+        },
+        {
+          "classification": "member_change",
+          "before_line": 180,
+          "before_column": 22,
+          "before_start": 7365,
+          "before_end": 7370,
+          "after_start": 7365,
+          "after_end": 7370,
+          "before": "SELAH",
+          "after": "Selah",
+          "interpolated": false,
+          "nested_in_interpolation": false
+        }
+      ]
+    },
+    {
+      "file": "SOURCE/lib/data/selah_membership_catalog.dart",
+      "before_sha256": "aeb8b59b2e51ce4db1b16fb6e7dd4b08b0c621dca647001eda6b039586699ade",
+      "after_sha256": "4ec8c80c62dd2a88de4c496a2697cbfde75e64bf7f1b3cfb5d0113abe220dcae",
+      "replacement_count": 1,
+      "replacements": [
+        {
+          "classification": "member_change",
+          "before_line": 174,
+          "before_column": 48,
+          "before_start": 7420,
+          "before_end": 7425,
+          "after_start": 7420,
+          "after_end": 7425,
+          "before": "SELAH",
+          "after": "Selah",
+          "interpolated": false,
+          "nested_in_interpolation": false
+        }
+      ]
+    },
+    {
+      "file": "SOURCE/lib/dev/dev_onboarding_lab.dart",
+      "before_sha256": "e122e3d11c09515c9da0e12b4b91a89505e25e6078b36785c1ded81ce05b4aa6",
+      "after_sha256": "2c361cff1c03fc3609d4e0f1fa835c23003b1e0425799a1fc221f43fc16e0b68",
+      "replacement_count": 1,
+      "replacements": [
+        {
+          "classification": "member_change",
+          "before_line": 368,
+          "before_column": 16,
+          "before_start": 12504,
+          "before_end": 12509,
+          "after_start": 12504,
+          "after_end": 12509,
+          "before": "SELAH",
+          "after": "Selah",
+          "interpolated": false,
+          "nested_in_interpolation": false
+        }
+      ]
+    },
+    {
+      "file": "SOURCE/lib/dev/dev_onboarding_opening.dart",
+      "before_sha256": "f916fff351784d2674082cc5700fc2fa4ccd9cf3e7af228a76adae4b1d0c48f8",
+      "after_sha256": "fdc7b4349b9a380b9306af1c36bb83288ab631b2ac8931cce8ea416256a514cb",
+      "replacement_count": 1,
+      "replacements": [
+        {
+          "classification": "member_change",
+          "before_line": 143,
+          "before_column": 31,
+          "before_start": 4770,
+          "before_end": 4775,
+          "after_start": 4770,
+          "after_end": 4775,
+          "before": "SELAH",
+          "after": "Selah",
+          "interpolated": false,
+          "nested_in_interpolation": false
+        }
+      ]
+    },
+    {
+      "file": "SOURCE/lib/dev/selah_draft_browse_utility_presentation.dart",
+      "before_sha256": "48058a6ecd270d96fe08c1d4eb3851c5cfe7179e99079e5f828465c561a9e2f7",
+      "after_sha256": "e0e0406c7d585833b7e5a2dfdf4ff3810fb82d627429b1d9bb1cb92c245b9a63",
+      "replacement_count": 4,
+      "replacements": [
+        {
+          "classification": "member_change",
+          "before_line": 37,
+          "before_column": 49,
+          "before_start": 1450,
+          "before_end": 1455,
+          "after_start": 1450,
+          "after_end": 1455,
+          "before": "SELAH",
+          "after": "Selah",
+          "interpolated": false,
+          "nested_in_interpolation": false
+        },
+        {
+          "classification": "member_change",
+          "before_line": 46,
+          "before_column": 27,
+          "before_start": 1763,
+          "before_end": 1768,
+          "after_start": 1763,
+          "after_end": 1768,
+          "before": "SELAH",
+          "after": "Selah",
+          "interpolated": false,
+          "nested_in_interpolation": false
+        },
+        {
+          "classification": "member_change",
+          "before_line": 68,
+          "before_column": 32,
+          "before_start": 2877,
+          "before_end": 2882,
+          "after_start": 2877,
+          "after_end": 2882,
+          "before": "SELAH",
+          "after": "Selah",
+          "interpolated": false,
+          "nested_in_interpolation": false
+        },
+        {
+          "classification": "member_change",
+          "before_line": 86,
+          "before_column": 34,
+          "before_start": 3481,
+          "before_end": 3486,
+          "after_start": 3481,
+          "after_end": 3486,
+          "before": "SELAH",
+          "after": "Selah",
+          "interpolated": false,
+          "nested_in_interpolation": false
+        }
+      ]
+    },
+    {
+      "file": "SOURCE/lib/dev/selah_draft_code_entry.dart",
+      "before_sha256": "5d85cdb5dc58ce44f474c720c6b66e346c69d323a52c1a083de8e29d58988f9f",
+      "after_sha256": "cdccd6acd389f5489ba3e7b29084f387eeb2d1746af401efed67d3fdbd44642e",
+      "replacement_count": 1,
+      "replacements": [
+        {
+          "classification": "member_change",
+          "before_line": 339,
+          "before_column": 66,
+          "before_start": 10498,
+          "before_end": 10503,
+          "after_start": 10498,
+          "after_end": 10503,
+          "before": "SELAH",
+          "after": "Selah",
+          "interpolated": false,
+          "nested_in_interpolation": false
+        }
+      ]
+    },
+    {
+      "file": "SOURCE/lib/dev/selah_one_journey_account_presentation.dart",
+      "before_sha256": "e911ed6fbc73aed452070b27b2a69c2b25431ba1689ceac0e94142b90390195f",
+      "after_sha256": "5bf54791040c20a0dd2ab1974779fc5a3c01f1e6a8ff764320b00c005e9933fd",
+      "replacement_count": 1,
+      "replacements": [
+        {
+          "classification": "member_change",
+          "before_line": 365,
+          "before_column": 45,
+          "before_start": 14093,
+          "before_end": 14098,
+          "after_start": 14093,
+          "after_end": 14098,
+          "before": "SELAH",
+          "after": "Selah",
+          "interpolated": false,
+          "nested_in_interpolation": false
+        }
+      ]
+    },
+    {
+      "file": "SOURCE/lib/dev/selah_one_journey_concept_shell.dart",
+      "before_sha256": "97d399ca72e649f80d0b61adace792a6120e9276fa2e92632f0b6c7e6272c314",
+      "after_sha256": "bb5bdcdf3bdef405c5bd11b0b4236328af78831cf02f0fa5046f9524241a6eb8",
+      "replacement_count": 6,
+      "replacements": [
+        {
+          "classification": "member_change",
+          "before_line": 327,
+          "before_column": 24,
+          "before_start": 13017,
+          "before_end": 13022,
+          "after_start": 13017,
+          "after_end": 13022,
+          "before": "SELAH",
+          "after": "Selah",
+          "interpolated": false,
+          "nested_in_interpolation": false
+        },
+        {
+          "classification": "member_change",
+          "before_line": 331,
+          "before_column": 19,
+          "before_start": 13151,
+          "before_end": 13156,
+          "after_start": 13151,
+          "after_end": 13156,
+          "before": "SELAH",
+          "after": "Selah",
+          "interpolated": false,
+          "nested_in_interpolation": false
+        },
+        {
+          "classification": "member_change",
+          "before_line": 749,
+          "before_column": 37,
+          "before_start": 26628,
+          "before_end": 26633,
+          "after_start": 26628,
+          "after_end": 26633,
+          "before": "SELAH",
+          "after": "Selah",
+          "interpolated": false,
+          "nested_in_interpolation": false
+        },
+        {
+          "classification": "member_change",
+          "before_line": 4310,
+          "before_column": 22,
+          "before_start": 153039,
+          "before_end": 153044,
+          "after_start": 153039,
+          "after_end": 153044,
+          "before": "SELAH",
+          "after": "Selah",
+          "interpolated": false,
+          "nested_in_interpolation": false
+        },
+        {
+          "classification": "member_change",
+          "before_line": 4917,
+          "before_column": 64,
+          "before_start": 174247,
+          "before_end": 174252,
+          "after_start": 174247,
+          "after_end": 174252,
+          "before": "SELAH",
+          "after": "Selah",
+          "interpolated": false,
+          "nested_in_interpolation": false
+        },
+        {
+          "classification": "member_change",
+          "before_line": 5100,
+          "before_column": 58,
+          "before_start": 180874,
+          "before_end": 180879,
+          "after_start": 180874,
+          "after_end": 180879,
+          "before": "SELAH",
+          "after": "Selah",
+          "interpolated": false,
+          "nested_in_interpolation": false
+        }
+      ]
+    },
+    {
+      "file": "SOURCE/lib/dev/selah_one_journey_discovery_presentation.dart",
+      "before_sha256": "250e490effd2f07a8324e3804b9407c03fbd34f121c4fb5c43dcb911465ed12b",
+      "after_sha256": "65f125afa61e73825fd6f3da820beb9391c8b65747796cf616397fa506e4d066",
+      "replacement_count": 1,
+      "replacements": [
+        {
+          "classification": "request_change",
+          "before_line": 41,
+          "before_column": 26,
+          "before_start": 1678,
+          "before_end": 1693,
+          "after_start": 1678,
+          "after_end": 1695,
+          "before": "Request Journey",
+          "after": "Request a Journey",
+          "interpolated": false,
+          "nested_in_interpolation": false
+        }
+      ]
+    },
+    {
+      "file": "SOURCE/lib/dev/selah_one_journey_journey_presentation.dart",
+      "before_sha256": "10757593ebc4bc5ada30d77c699a89f15e5c0c0ab8cec3da3904decb56c45dd9",
+      "after_sha256": "3b84e8a5cc646d1232ff86c0b491c9696f87c4e7aff67c5457a83f7201fec097",
+      "replacement_count": 1,
+      "replacements": [
+        {
+          "classification": "member_change",
+          "before_line": 1207,
+          "before_column": 34,
+          "before_start": 42993,
+          "before_end": 42998,
+          "after_start": 42993,
+          "after_end": 42998,
+          "before": "SELAH",
+          "after": "Selah",
+          "interpolated": false,
+          "nested_in_interpolation": false
+        }
+      ]
+    },
+    {
+      "file": "SOURCE/lib/dev/selah_one_journey_shepherd_presentation.dart",
+      "before_sha256": "eb731ca1718fd32787b39cac979872c4cc74e96771f817bf1b3b1f4d057a700b",
+      "after_sha256": "d1ece1bb92c88b7887354607025fabe55677a72f4c67d441ea674b21a96641de",
+      "replacement_count": 2,
+      "replacements": [
+        {
+          "classification": "member_change",
+          "before_line": 84,
+          "before_column": 33,
+          "before_start": 3169,
+          "before_end": 3174,
+          "after_start": 3169,
+          "after_end": 3174,
+          "before": "SELAH",
+          "after": "Selah",
+          "interpolated": false,
+          "nested_in_interpolation": false
+        },
+        {
+          "classification": "member_change",
+          "before_line": 154,
+          "before_column": 32,
+          "before_start": 6141,
+          "before_end": 6146,
+          "after_start": 6141,
+          "after_end": 6146,
+          "before": "SELAH",
+          "after": "Selah",
+          "interpolated": false,
+          "nested_in_interpolation": false
+        }
+      ]
+    },
+    {
+      "file": "SOURCE/lib/dev/selah_request_help_content.dart",
+      "before_sha256": "99d97150fa268007a0b16baa622e9602810c59fa57053f42129ffe05836086aa",
+      "after_sha256": "0af066f9f6a932161f4693d62025868bf0d7cd30547a2ac597e6a719e2174c3d",
+      "replacement_count": 3,
+      "replacements": [
+        {
+          "classification": "member_change",
+          "before_line": 23,
+          "before_column": 16,
+          "before_start": 1113,
+          "before_end": 1118,
+          "after_start": 1113,
+          "after_end": 1118,
+          "before": "SELAH",
+          "after": "Selah",
+          "interpolated": false,
+          "nested_in_interpolation": false
+        },
+        {
+          "classification": "member_change",
+          "before_line": 27,
+          "before_column": 33,
+          "before_start": 1300,
+          "before_end": 1305,
+          "after_start": 1300,
+          "after_end": 1305,
+          "before": "SELAH",
+          "after": "Selah",
+          "interpolated": false,
+          "nested_in_interpolation": false
+        },
+        {
+          "classification": "member_change",
+          "before_line": 34,
+          "before_column": 34,
+          "before_start": 1638,
+          "before_end": 1643,
+          "after_start": 1638,
+          "after_end": 1643,
+          "before": "SELAH",
+          "after": "Selah",
+          "interpolated": false,
+          "nested_in_interpolation": false
+        }
+      ]
+    },
+    {
+      "file": "SOURCE/lib/dev/selah_supportive_dashboard_preview.dart",
+      "before_sha256": "bd9e6a22a883e3c6fb61fe9b869e996c8958b819f699200b2b30da224121ea44",
+      "after_sha256": "ae0ff005f3a3cbdf019f021ddb9165ce3cf74d5e0d85f6283f3f59c7dd1ef99d",
+      "replacement_count": 1,
+      "replacements": [
+        {
+          "classification": "member_change",
+          "before_line": 609,
+          "before_column": 63,
+          "before_start": 22400,
+          "before_end": 22405,
+          "after_start": 22400,
+          "after_end": 22405,
+          "before": "SELAH",
+          "after": "Selah",
+          "interpolated": false,
+          "nested_in_interpolation": false
+        }
+      ]
+    },
+    {
+      "file": "SOURCE/lib/models/selah_error_state.dart",
+      "before_sha256": "dd4a9a6d1323e7d741969c5273b6421be06759ced297edcc4aa8e2aadb0c75b2",
+      "after_sha256": "bca03d8f2cba7fc8fd7c12906db96e4a3181e62d9538935bee65a547235da6ad",
+      "replacement_count": 2,
+      "replacements": [
+        {
+          "classification": "member_change",
+          "before_line": 52,
+          "before_column": 38,
+          "before_start": 1529,
+          "before_end": 1534,
+          "after_start": 1529,
+          "after_end": 1534,
+          "before": "SELAH",
+          "after": "Selah",
+          "interpolated": false,
+          "nested_in_interpolation": false
+        },
+        {
+          "classification": "member_change",
+          "before_line": 58,
+          "before_column": 15,
+          "before_start": 1764,
+          "before_end": 1769,
+          "after_start": 1764,
+          "after_end": 1769,
+          "before": "SELAH",
+          "after": "Selah",
+          "interpolated": false,
+          "nested_in_interpolation": false
+        }
+      ]
+    },
+    {
+      "file": "SOURCE/lib/models/selah_supportive_dashboard.dart",
+      "before_sha256": "7ca9269c21f956bc7c0f027b8b20c7ebbfb34da741d9d030836bbd380d98adbb",
+      "after_sha256": "1915af39582282afda5e372919903ddb84acddcf504dc86f0ec3fd9207abebfa",
+      "replacement_count": 2,
+      "replacements": [
+        {
+          "classification": "member_change",
+          "before_line": 18,
+          "before_column": 24,
+          "before_start": 392,
+          "before_end": 397,
+          "after_start": 392,
+          "after_end": 397,
+          "before": "SELAH",
+          "after": "Selah",
+          "interpolated": false,
+          "nested_in_interpolation": false
+        },
+        {
+          "classification": "member_change",
+          "before_line": 132,
+          "before_column": 61,
+          "before_start": 3783,
+          "before_end": 3788,
+          "after_start": 3783,
+          "after_end": 3788,
+          "before": "SELAH",
+          "after": "Selah",
+          "interpolated": false,
+          "nested_in_interpolation": false
+        }
+      ]
+    },
+    {
+      "file": "SOURCE/lib/screens/auth/email_recovery_screen.dart",
+      "before_sha256": "37b5bce59f2b6882b2469fa35c92896a5ae96c97a0b50288656d9b25ee570dc6",
+      "after_sha256": "292f043ada53217e0cc10851e9075dc5bf5c0a19086a1d92b9374dc2fc749dff",
+      "replacement_count": 1,
+      "replacements": [
+        {
+          "classification": "member_change",
+          "before_line": 292,
+          "before_column": 52,
+          "before_start": 8827,
+          "before_end": 8832,
+          "after_start": 8827,
+          "after_end": 8832,
+          "before": "SELAH",
+          "after": "Selah",
+          "interpolated": true,
+          "nested_in_interpolation": false
+        }
+      ]
+    },
+    {
+      "file": "SOURCE/lib/screens/auth/role_selection_screen.dart",
+      "before_sha256": "f1586c6f56b8fdc0568d4772ddae68b473752a0d13c336992f0e325c05c0f4c1",
+      "after_sha256": "c67cb268e878642954018fee62243bfb86ada722bdbca5e2fb2c9f620e3cbed5",
+      "replacement_count": 3,
+      "replacements": [
+        {
+          "classification": "member_change",
+          "before_line": 386,
+          "before_column": 14,
+          "before_start": 13178,
+          "before_end": 13183,
+          "after_start": 13178,
+          "after_end": 13183,
+          "before": "SELAH",
+          "after": "Selah",
+          "interpolated": false,
+          "nested_in_interpolation": false
+        },
+        {
+          "classification": "member_change",
+          "before_line": 441,
+          "before_column": 31,
+          "before_start": 14978,
+          "before_end": 14983,
+          "after_start": 14978,
+          "after_end": 14983,
+          "before": "SELAH",
+          "after": "Selah",
+          "interpolated": false,
+          "nested_in_interpolation": false
+        },
+        {
+          "classification": "member_change",
+          "before_line": 448,
+          "before_column": 29,
+          "before_start": 15179,
+          "before_end": 15184,
+          "after_start": 15179,
+          "after_end": 15184,
+          "before": "SELAH",
+          "after": "Selah",
+          "interpolated": false,
+          "nested_in_interpolation": false
+        }
+      ]
+    },
+    {
+      "file": "SOURCE/lib/screens/browse/browse_screen.dart",
+      "before_sha256": "62043835f24bc01bb0dfdab5b32a1478234fc7d64b466b85520d9f92269db373",
+      "after_sha256": "c10df437d92487a165c0134764929725377b30b292edf08fee6d754f59a0bb6a",
+      "replacement_count": 1,
+      "replacements": [
+        {
+          "classification": "member_change",
+          "before_line": 2203,
+          "before_column": 31,
+          "before_start": 100370,
+          "before_end": 100375,
+          "after_start": 100370,
+          "after_end": 100375,
+          "before": "SELAH",
+          "after": "Selah",
+          "interpolated": false,
+          "nested_in_interpolation": false
+        }
+      ]
+    },
+    {
+      "file": "SOURCE/lib/screens/browse/find_by_selah_code_screen.dart",
+      "before_sha256": "f86309c8fd1d16076335f240b9afdb03a376c9037d252a04b998b3d6197bd790",
+      "after_sha256": "c25e375eaac95c626866d8ddb2b8e766c7d74b2cff99c5feaef83c802ec8a5eb",
+      "replacement_count": 3,
+      "replacements": [
+        {
+          "classification": "member_change",
+          "before_line": 194,
+          "before_column": 28,
+          "before_start": 5908,
+          "before_end": 5913,
+          "after_start": 5908,
+          "after_end": 5913,
+          "before": "SELAH",
+          "after": "Selah",
+          "interpolated": false,
+          "nested_in_interpolation": false
+        },
+        {
+          "classification": "member_change",
+          "before_line": 289,
+          "before_column": 20,
+          "before_start": 9064,
+          "before_end": 9069,
+          "after_start": 9064,
+          "after_end": 9069,
+          "before": "SELAH",
+          "after": "Selah",
+          "interpolated": false,
+          "nested_in_interpolation": false
+        },
+        {
+          "classification": "member_change",
+          "before_line": 322,
+          "before_column": 25,
+          "before_start": 9926,
+          "before_end": 9931,
+          "after_start": 9926,
+          "after_end": 9931,
+          "before": "SELAH",
+          "after": "Selah",
+          "interpolated": false,
+          "nested_in_interpolation": false
+        }
+      ]
+    },
+    {
+      "file": "SOURCE/lib/screens/home/home_shell.dart",
+      "before_sha256": "82af18534ff7e3e903d9574e8b4eccb3e493f74223a3f40c4033206dac45c3d5",
+      "after_sha256": "670a021729b33da3cce0d90021146f61ddc7003e11ae9d2a19bb5fa3830cfd48",
+      "replacement_count": 2,
+      "replacements": [
+        {
+          "classification": "member_change",
+          "before_line": 191,
+          "before_column": 15,
+          "before_start": 8757,
+          "before_end": 8762,
+          "after_start": 8757,
+          "after_end": 8762,
+          "before": "SELAH",
+          "after": "Selah",
+          "interpolated": false,
+          "nested_in_interpolation": false
+        },
+        {
+          "classification": "member_change",
+          "before_line": 644,
+          "before_column": 38,
+          "before_start": 27901,
+          "before_end": 27906,
+          "after_start": 27901,
+          "after_end": 27906,
+          "before": "SELAH",
+          "after": "Selah",
+          "interpolated": false,
+          "nested_in_interpolation": false
+        }
+      ]
+    },
+    {
+      "file": "SOURCE/lib/screens/home/seeker_dashboard_screen.dart",
+      "before_sha256": "3f5f06627d54e0633a8e8c93f8a67efac2553df7fc3571e1f951aed5d0744862",
+      "after_sha256": "b96f723663f108dc1ebf9732a5a8cc02a2d68c0460d6bbd384e9976d0c765be5",
+      "replacement_count": 1,
+      "replacements": [
+        {
+          "classification": "member_change",
+          "before_line": 283,
+          "before_column": 51,
+          "before_start": 10844,
+          "before_end": 10849,
+          "after_start": 10844,
+          "after_end": 10849,
+          "before": "SELAH",
+          "after": "Selah",
+          "interpolated": false,
+          "nested_in_interpolation": false
+        }
+      ]
+    },
+    {
+      "file": "SOURCE/lib/screens/journey/journey_flow_screen.dart",
+      "before_sha256": "ef345091e6a4135e0fcabc544acf44d31fd921e00915f79897869fb57776cd18",
+      "after_sha256": "d46535ed8e14a49854bc514d4bf94e96b2b916b04316e34426f805b736206bf9",
+      "replacement_count": 3,
+      "replacements": [
+        {
+          "classification": "member_change",
+          "before_line": 2695,
+          "before_column": 36,
+          "before_start": 103057,
+          "before_end": 103062,
+          "after_start": 103057,
+          "after_end": 103062,
+          "before": "SELAH",
+          "after": "Selah",
+          "interpolated": false,
+          "nested_in_interpolation": false
+        },
+        {
+          "classification": "member_change",
+          "before_line": 5825,
+          "before_column": 156,
+          "before_start": 217155,
+          "before_end": 217160,
+          "after_start": 217155,
+          "after_end": 217160,
+          "before": "SELAH",
+          "after": "Selah",
+          "interpolated": false,
+          "nested_in_interpolation": false
+        },
+        {
+          "classification": "member_change",
+          "before_line": 7945,
+          "before_column": 46,
+          "before_start": 291469,
+          "before_end": 291474,
+          "after_start": 291469,
+          "after_end": 291474,
+          "before": "SELAH",
+          "after": "Selah",
+          "interpolated": false,
+          "nested_in_interpolation": false
+        }
+      ]
+    },
+    {
+      "file": "SOURCE/lib/screens/journey/selah_pause_screen.dart",
+      "before_sha256": "31ad61142db03342c1f9e2efda31a35d0652eeaf66c900bdd3fe2542d6b1eaab",
+      "after_sha256": "55cd0a6ae0162b7ace5e13c60dddf9c00a5bbea3b2a7ef7707022e19c49e0e0c",
+      "replacement_count": 1,
+      "replacements": [
+        {
+          "classification": "member_change",
+          "before_line": 167,
+          "before_column": 23,
+          "before_start": 5417,
+          "before_end": 5422,
+          "after_start": 5417,
+          "after_end": 5422,
+          "before": "SELAH",
+          "after": "Selah",
+          "interpolated": false,
+          "nested_in_interpolation": false
+        }
+      ]
+    },
+    {
+      "file": "SOURCE/lib/screens/matches/journey_timeline_screen.dart",
+      "before_sha256": "4de91aef73e3c105bdd98c1a2d650311d8d2c62ff3b6eebd720aefe125d158c5",
+      "after_sha256": "4b37745a68f7cc6c1ab13250fc08a21d0858a70863abe53f7c0cb15de058db22",
+      "replacement_count": 1,
+      "replacements": [
+        {
+          "classification": "member_change",
+          "before_line": 445,
+          "before_column": 28,
+          "before_start": 16942,
+          "before_end": 16947,
+          "after_start": 16942,
+          "after_end": 16947,
+          "before": "SELAH",
+          "after": "Selah",
+          "interpolated": false,
+          "nested_in_interpolation": false
+        }
+      ]
+    },
+    {
+      "file": "SOURCE/lib/screens/mentor/mentor_dashboard_screen.dart",
+      "before_sha256": "1d3906eeb031effee4a64704c17ff09e8b3b3cf5bd669dc34d722ab4cc36e614",
+      "after_sha256": "84033b8d9c6d5929fea381a4f93bd624b74166ee9e6e8333d6c3a20a6f6be679",
+      "replacement_count": 2,
+      "replacements": [
+        {
+          "classification": "member_change",
+          "before_line": 501,
+          "before_column": 17,
+          "before_start": 18631,
+          "before_end": 18636,
+          "after_start": 18631,
+          "after_end": 18636,
+          "before": "SELAH",
+          "after": "Selah",
+          "interpolated": false,
+          "nested_in_interpolation": false
+        },
+        {
+          "classification": "member_change",
+          "before_line": 988,
+          "before_column": 16,
+          "before_start": 36901,
+          "before_end": 36906,
+          "after_start": 36901,
+          "after_end": 36906,
+          "before": "SELAH",
+          "after": "Selah",
+          "interpolated": false,
+          "nested_in_interpolation": false
+        }
+      ]
+    },
+    {
+      "file": "SOURCE/lib/screens/mentor/mentor_network_screen.dart",
+      "before_sha256": "c9849404986d5bff691e9ba47047b992d91e22e7346be4ce04881a5b73cf7241",
+      "after_sha256": "67578054412cb738ea927b3286fbbb3411fb6e09118e3df7cc8ff681e6708e2d",
+      "replacement_count": 2,
+      "replacements": [
+        {
+          "classification": "member_change",
+          "before_line": 327,
+          "before_column": 37,
+          "before_start": 13079,
+          "before_end": 13084,
+          "after_start": 13079,
+          "after_end": 13084,
+          "before": "SELAH",
+          "after": "Selah",
+          "interpolated": false,
+          "nested_in_interpolation": false
+        },
+        {
+          "classification": "member_change",
+          "before_line": 367,
+          "before_column": 87,
+          "before_start": 14409,
+          "before_end": 14414,
+          "after_start": 14409,
+          "after_end": 14414,
+          "before": "SELAH",
+          "after": "Selah",
+          "interpolated": false,
+          "nested_in_interpolation": false
+        }
+      ]
+    },
+    {
+      "file": "SOURCE/lib/screens/mentor/mentor_onboarding_flow.dart",
+      "before_sha256": "1e8f39f1bae32c69df2fa6c84c75fc8a7f8d8f503a0086c72db04b06f4518ece",
+      "after_sha256": "567109d809400212884f9ce725065b3c5d3693adfeccf0db6db3f9db7d5e4a45",
+      "replacement_count": 3,
+      "replacements": [
+        {
+          "classification": "member_change",
+          "before_line": 598,
+          "before_column": 20,
+          "before_start": 20570,
+          "before_end": 20575,
+          "after_start": 20570,
+          "after_end": 20575,
+          "before": "SELAH",
+          "after": "Selah",
+          "interpolated": false,
+          "nested_in_interpolation": false
+        },
+        {
+          "classification": "member_change",
+          "before_line": 602,
+          "before_column": 48,
+          "before_start": 20908,
+          "before_end": 20913,
+          "after_start": 20908,
+          "after_end": 20913,
+          "before": "SELAH",
+          "after": "Selah",
+          "interpolated": false,
+          "nested_in_interpolation": false
+        },
+        {
+          "classification": "member_change",
+          "before_line": 725,
+          "before_column": 66,
+          "before_start": 25168,
+          "before_end": 25173,
+          "after_start": 25168,
+          "after_end": 25173,
+          "before": "SELAH",
+          "after": "Selah",
+          "interpolated": false,
+          "nested_in_interpolation": false
+        }
+      ]
+    },
+    {
+      "file": "SOURCE/lib/screens/mentor/mentor_profile_screen.dart",
+      "before_sha256": "c96f83f49de084783549b4298b344728d916f45263cef1699779df3e99618139",
+      "after_sha256": "c737b49ad038d77944ca127684c4a46708e793b641988e6aceec14e95d26ccf9",
+      "replacement_count": 1,
+      "replacements": [
+        {
+          "classification": "member_change",
+          "before_line": 335,
+          "before_column": 43,
+          "before_start": 12609,
+          "before_end": 12614,
+          "after_start": 12609,
+          "after_end": 12614,
+          "before": "SELAH",
+          "after": "Selah",
+          "interpolated": false,
+          "nested_in_interpolation": false
+        }
+      ]
+    },
+    {
+      "file": "SOURCE/lib/screens/mentor/seeker_shepherd_designs.dart",
+      "before_sha256": "ba7d51664255b31f2079f6350aab9eafcebe922418702b96ac8fd0dee95c3dc8",
+      "after_sha256": "1ae4d51b52e9bfd53a89d7c5c0b4fba437f485895a85f37b05406a7958e0a8d2",
+      "replacement_count": 1,
+      "replacements": [
+        {
+          "classification": "member_change",
+          "before_line": 2574,
+          "before_column": 33,
+          "before_start": 82345,
+          "before_end": 82350,
+          "after_start": 82345,
+          "after_end": 82350,
+          "before": "SELAH",
+          "after": "Selah",
+          "interpolated": false,
+          "nested_in_interpolation": false
+        }
+      ]
+    },
+    {
+      "file": "SOURCE/lib/screens/mentor/selah_code_screen.dart",
+      "before_sha256": "b63b72cbb013dabb6d3f36ea94be87489aaf75706d66780afc5992ebf84131ad",
+      "after_sha256": "85e22d51ca68ee88e8669a8ca87bfa39749dc20727f9dc6c30e6096bc10b0819",
+      "replacement_count": 9,
+      "replacements": [
+        {
+          "classification": "member_change",
+          "before_line": 369,
+          "before_column": 23,
+          "before_start": 12564,
+          "before_end": 12569,
+          "after_start": 12564,
+          "after_end": 12569,
+          "before": "SELAH",
+          "after": "Selah",
+          "interpolated": true,
+          "nested_in_interpolation": false
+        },
+        {
+          "classification": "member_change",
+          "before_line": 370,
+          "before_column": 64,
+          "before_start": 12681,
+          "before_end": 12686,
+          "after_start": 12681,
+          "after_end": 12686,
+          "before": "SELAH",
+          "after": "Selah",
+          "interpolated": false,
+          "nested_in_interpolation": false
+        },
+        {
+          "classification": "member_change",
+          "before_line": 371,
+          "before_column": 22,
+          "before_start": 12711,
+          "before_end": 12716,
+          "after_start": 12711,
+          "after_end": 12716,
+          "before": "SELAH",
+          "after": "Selah",
+          "interpolated": false,
+          "nested_in_interpolation": false
+        },
+        {
+          "classification": "member_change",
+          "before_line": 385,
+          "before_column": 27,
+          "before_start": 13075,
+          "before_end": 13080,
+          "after_start": 13075,
+          "after_end": 13080,
+          "before": "SELAH",
+          "after": "Selah",
+          "interpolated": false,
+          "nested_in_interpolation": false
+        },
+        {
+          "classification": "member_change",
+          "before_line": 414,
+          "before_column": 62,
+          "before_start": 14019,
+          "before_end": 14024,
+          "after_start": 14019,
+          "after_end": 14024,
+          "before": "SELAH",
+          "after": "Selah",
+          "interpolated": false,
+          "nested_in_interpolation": false
+        },
+        {
+          "classification": "member_change",
+          "before_line": 1057,
+          "before_column": 45,
+          "before_start": 36093,
+          "before_end": 36098,
+          "after_start": 36093,
+          "after_end": 36098,
+          "before": "SELAH",
+          "after": "Selah",
+          "interpolated": false,
+          "nested_in_interpolation": false
+        },
+        {
+          "classification": "member_change",
+          "before_line": 1645,
+          "before_column": 27,
+          "before_start": 54970,
+          "before_end": 54975,
+          "after_start": 54970,
+          "after_end": 54975,
+          "before": "SELAH",
+          "after": "Selah",
+          "interpolated": false,
+          "nested_in_interpolation": false
+        },
+        {
+          "classification": "member_change",
+          "before_line": 1684,
+          "before_column": 15,
+          "before_start": 55986,
+          "before_end": 55991,
+          "after_start": 55986,
+          "after_end": 55991,
+          "before": "SELAH",
+          "after": "Selah",
+          "interpolated": false,
+          "nested_in_interpolation": false
+        },
+        {
+          "classification": "member_change",
+          "before_line": 1721,
+          "before_column": 15,
+          "before_start": 57137,
+          "before_end": 57142,
+          "after_start": 57137,
+          "after_end": 57142,
+          "before": "SELAH",
+          "after": "Selah",
+          "interpolated": false,
+          "nested_in_interpolation": false
+        }
+      ]
+    },
+    {
+      "file": "SOURCE/lib/screens/mentor/shepherd_detail_screen.dart",
+      "before_sha256": "fc371bd59e9d8e5e86fb36b2ee9b3307639a29ae9881be174a5ce86b87162e7d",
+      "after_sha256": "5957c74141393be9a8818d7266a987ff77dfc65229162466d76b76600b2f349e",
+      "replacement_count": 1,
+      "replacements": [
+        {
+          "classification": "member_change",
+          "before_line": 1020,
+          "before_column": 32,
+          "before_start": 41436,
+          "before_end": 41441,
+          "after_start": 41436,
+          "after_end": 41441,
+          "before": "SELAH",
+          "after": "Selah",
+          "interpolated": false,
+          "nested_in_interpolation": false
+        }
+      ]
+    },
+    {
+      "file": "SOURCE/lib/screens/onboarding/account_path_overview_screen.dart",
+      "before_sha256": "82e58d0e6731c720a1a23d801174e02b2576393c0c04aede12a1c62f299d9907",
+      "after_sha256": "26670f6fbfac3d46e3990e030cf79d0a93dd9bed235ed845c1ead3629f32139b",
+      "replacement_count": 9,
+      "replacements": [
+        {
+          "classification": "member_change",
+          "before_line": 170,
+          "before_column": 22,
+          "before_start": 5867,
+          "before_end": 5872,
+          "after_start": 5867,
+          "after_end": 5872,
+          "before": "SELAH",
+          "after": "Selah",
+          "interpolated": false,
+          "nested_in_interpolation": false
+        },
+        {
+          "classification": "member_change",
+          "before_line": 214,
+          "before_column": 44,
+          "before_start": 7929,
+          "before_end": 7934,
+          "after_start": 7929,
+          "after_end": 7934,
+          "before": "SELAH",
+          "after": "Selah",
+          "interpolated": false,
+          "nested_in_interpolation": false
+        },
+        {
+          "classification": "member_change",
+          "before_line": 260,
+          "before_column": 67,
+          "before_start": 10333,
+          "before_end": 10338,
+          "after_start": 10333,
+          "after_end": 10338,
+          "before": "SELAH",
+          "after": "Selah",
+          "interpolated": false,
+          "nested_in_interpolation": false
+        },
+        {
+          "classification": "member_change",
+          "before_line": 331,
+          "before_column": 33,
+          "before_start": 13642,
+          "before_end": 13647,
+          "after_start": 13642,
+          "after_end": 13647,
+          "before": "SELAH",
+          "after": "Selah",
+          "interpolated": false,
+          "nested_in_interpolation": false
+        },
+        {
+          "classification": "member_change",
+          "before_line": 584,
+          "before_column": 19,
+          "before_start": 21944,
+          "before_end": 21949,
+          "after_start": 21944,
+          "after_end": 21949,
+          "before": "SELAH",
+          "after": "Selah",
+          "interpolated": false,
+          "nested_in_interpolation": false
+        },
+        {
+          "classification": "member_change",
+          "before_line": 630,
+          "before_column": 26,
+          "before_start": 23627,
+          "before_end": 23632,
+          "after_start": 23627,
+          "after_end": 23632,
+          "before": "SELAH",
+          "after": "Selah",
+          "interpolated": false,
+          "nested_in_interpolation": false
+        },
+        {
+          "classification": "member_change",
+          "before_line": 813,
+          "before_column": 50,
+          "before_start": 30005,
+          "before_end": 30010,
+          "after_start": 30005,
+          "after_end": 30010,
+          "before": "SELAH",
+          "after": "Selah",
+          "interpolated": false,
+          "nested_in_interpolation": false
+        },
+        {
+          "classification": "member_change",
+          "before_line": 819,
+          "before_column": 66,
+          "before_start": 30224,
+          "before_end": 30229,
+          "after_start": 30224,
+          "after_end": 30229,
+          "before": "SELAH",
+          "after": "Selah",
+          "interpolated": false,
+          "nested_in_interpolation": false
+        },
+        {
+          "classification": "member_change",
+          "before_line": 903,
+          "before_column": 30,
+          "before_start": 33170,
+          "before_end": 33175,
+          "after_start": 33170,
+          "after_end": 33175,
+          "before": "SELAH",
+          "after": "Selah",
+          "interpolated": false,
+          "nested_in_interpolation": false
+        }
+      ]
+    },
+    {
+      "file": "SOURCE/lib/screens/onboarding/chapter2_flow.dart",
+      "before_sha256": "9c3f58d751aff80b392eba4d4dc2301309321dbac175acc89769d07428837129",
+      "after_sha256": "9c22647bc14fb0a4030dee374c2073cf61640a036dc1419b591c986c36aff3a1",
+      "replacement_count": 1,
+      "replacements": [
+        {
+          "classification": "member_change",
+          "before_line": 886,
+          "before_column": 37,
+          "before_start": 30002,
+          "before_end": 30007,
+          "after_start": 30002,
+          "after_end": 30007,
+          "before": "SELAH",
+          "after": "Selah",
+          "interpolated": false,
+          "nested_in_interpolation": false
+        }
+      ]
+    },
+    {
+      "file": "SOURCE/lib/screens/onboarding/identity_verification_screen.dart",
+      "before_sha256": "7a440da448b27b59fb6bce0ecaa9292fec54c7f9b3868ea4a32d04c002e8970a",
+      "after_sha256": "c60a806ca75f64f832b575114ee7088d29d69f8c3d005dfa8ede8514410e8ee2",
+      "replacement_count": 19,
+      "replacements": [
+        {
+          "classification": "member_change",
+          "before_line": 24,
+          "before_column": 6,
+          "before_start": 1101,
+          "before_end": 1106,
+          "after_start": 1101,
+          "after_end": 1106,
+          "before": "SELAH",
+          "after": "Selah",
+          "interpolated": false,
+          "nested_in_interpolation": false
+        },
+        {
+          "classification": "member_change",
+          "before_line": 28,
+          "before_column": 6,
+          "before_start": 1398,
+          "before_end": 1403,
+          "after_start": 1398,
+          "after_end": 1403,
+          "before": "SELAH",
+          "after": "Selah",
+          "interpolated": false,
+          "nested_in_interpolation": false
+        },
+        {
+          "classification": "member_change",
+          "before_line": 28,
+          "before_column": 22,
+          "before_start": 1414,
+          "before_end": 1419,
+          "after_start": 1414,
+          "after_end": 1419,
+          "before": "SELAH",
+          "after": "Selah",
+          "interpolated": false,
+          "nested_in_interpolation": false
+        },
+        {
+          "classification": "member_change",
+          "before_line": 91,
+          "before_column": 60,
+          "before_start": 3691,
+          "before_end": 3696,
+          "after_start": 3691,
+          "after_end": 3696,
+          "before": "SELAH",
+          "after": "Selah",
+          "interpolated": false,
+          "nested_in_interpolation": false
+        },
+        {
+          "classification": "member_change",
+          "before_line": 453,
+          "before_column": 14,
+          "before_start": 14808,
+          "before_end": 14813,
+          "after_start": 14808,
+          "after_end": 14813,
+          "before": "SELAH",
+          "after": "Selah",
+          "interpolated": false,
+          "nested_in_interpolation": false
+        },
+        {
+          "classification": "member_change",
+          "before_line": 466,
+          "before_column": 29,
+          "before_start": 15235,
+          "before_end": 15240,
+          "after_start": 15235,
+          "after_end": 15240,
+          "before": "SELAH",
+          "after": "Selah",
+          "interpolated": false,
+          "nested_in_interpolation": false
+        },
+        {
+          "classification": "member_change",
+          "before_line": 483,
+          "before_column": 16,
+          "before_start": 15725,
+          "before_end": 15730,
+          "after_start": 15725,
+          "after_end": 15730,
+          "before": "SELAH",
+          "after": "Selah",
+          "interpolated": false,
+          "nested_in_interpolation": false
+        },
+        {
+          "classification": "member_change",
+          "before_line": 590,
+          "before_column": 16,
+          "before_start": 19368,
+          "before_end": 19373,
+          "after_start": 19368,
+          "after_end": 19373,
+          "before": "SELAH",
+          "after": "Selah",
+          "interpolated": false,
+          "nested_in_interpolation": false
+        },
+        {
+          "classification": "member_change",
+          "before_line": 630,
+          "before_column": 38,
+          "before_start": 20885,
+          "before_end": 20890,
+          "after_start": 20885,
+          "after_end": 20890,
+          "before": "SELAH",
+          "after": "Selah",
+          "interpolated": false,
+          "nested_in_interpolation": false
+        },
+        {
+          "classification": "member_change",
+          "before_line": 638,
+          "before_column": 36,
+          "before_start": 21167,
+          "before_end": 21172,
+          "after_start": 21167,
+          "after_end": 21172,
+          "before": "SELAH",
+          "after": "Selah",
+          "interpolated": false,
+          "nested_in_interpolation": false
+        },
+        {
+          "classification": "member_change",
+          "before_line": 692,
+          "before_column": 14,
+          "before_start": 23095,
+          "before_end": 23100,
+          "after_start": 23095,
+          "after_end": 23100,
+          "before": "SELAH",
+          "after": "Selah",
+          "interpolated": false,
+          "nested_in_interpolation": false
+        },
+        {
+          "classification": "member_change",
+          "before_line": 705,
+          "before_column": 45,
+          "before_start": 23538,
+          "before_end": 23543,
+          "after_start": 23538,
+          "after_end": 23543,
+          "before": "SELAH",
+          "after": "Selah",
+          "interpolated": false,
+          "nested_in_interpolation": false
+        },
+        {
+          "classification": "member_change",
+          "before_line": 793,
+          "before_column": 31,
+          "before_start": 26751,
+          "before_end": 26756,
+          "after_start": 26751,
+          "after_end": 26756,
+          "before": "SELAH",
+          "after": "Selah",
+          "interpolated": false,
+          "nested_in_interpolation": false
+        },
+        {
+          "classification": "member_change",
+          "before_line": 802,
+          "before_column": 25,
+          "before_start": 27098,
+          "before_end": 27103,
+          "after_start": 27098,
+          "after_end": 27103,
+          "before": "SELAH",
+          "after": "Selah",
+          "interpolated": false,
+          "nested_in_interpolation": false
+        },
+        {
+          "classification": "member_change",
+          "before_line": 812,
+          "before_column": 32,
+          "before_start": 27436,
+          "before_end": 27441,
+          "after_start": 27436,
+          "after_end": 27441,
+          "before": "SELAH",
+          "after": "Selah",
+          "interpolated": false,
+          "nested_in_interpolation": false
+        },
+        {
+          "classification": "member_change",
+          "before_line": 821,
+          "before_column": 55,
+          "before_start": 27778,
+          "before_end": 27783,
+          "after_start": 27778,
+          "after_end": 27783,
+          "before": "SELAH",
+          "after": "Selah",
+          "interpolated": false,
+          "nested_in_interpolation": false
+        },
+        {
+          "classification": "member_change",
+          "before_line": 828,
+          "before_column": 57,
+          "before_start": 28047,
+          "before_end": 28052,
+          "after_start": 28047,
+          "after_end": 28052,
+          "before": "SELAH",
+          "after": "Selah",
+          "interpolated": false,
+          "nested_in_interpolation": false
+        },
+        {
+          "classification": "member_change",
+          "before_line": 844,
+          "before_column": 49,
+          "before_start": 28748,
+          "before_end": 28753,
+          "after_start": 28748,
+          "after_end": 28753,
+          "before": "SELAH",
+          "after": "Selah",
+          "interpolated": false,
+          "nested_in_interpolation": false
+        },
+        {
+          "classification": "member_change",
+          "before_line": 1039,
+          "before_column": 33,
+          "before_start": 34945,
+          "before_end": 34950,
+          "after_start": 34945,
+          "after_end": 34950,
+          "before": "SELAH",
+          "after": "Selah",
+          "interpolated": false,
+          "nested_in_interpolation": false
+        }
+      ]
+    },
+    {
+      "file": "SOURCE/lib/screens/onboarding/onboarding_flow.dart",
+      "before_sha256": "81ba16224477f6849456ac46a03c5ef11c1c5bd01ebeea27a1ced56169b0028e",
+      "after_sha256": "0f69aa99bfa6d026ae09bb57465d0f4b580892f0941e5efbc7f7480203dbf43c",
+      "replacement_count": 1,
+      "replacements": [
+        {
+          "classification": "member_change",
+          "before_line": 803,
+          "before_column": 66,
+          "before_start": 27585,
+          "before_end": 27590,
+          "after_start": 27585,
+          "after_end": 27590,
+          "before": "SELAH",
+          "after": "Selah",
+          "interpolated": false,
+          "nested_in_interpolation": false
+        }
+      ]
+    },
+    {
+      "file": "SOURCE/lib/screens/onboarding/onboarding_stage_intro_screen.dart",
+      "before_sha256": "2980652f0a0ada0d6d4221982bd5b5cdde1d212e64784d5002bc80ce3c661e94",
+      "after_sha256": "3102a2403fb440b86c783baab35f91ef9e910674bd9f58b4c12b936af020ec85",
+      "replacement_count": 6,
+      "replacements": [
+        {
+          "classification": "member_change",
+          "before_line": 47,
+          "before_column": 58,
+          "before_start": 1593,
+          "before_end": 1598,
+          "after_start": 1593,
+          "after_end": 1598,
+          "before": "SELAH",
+          "after": "Selah",
+          "interpolated": false,
+          "nested_in_interpolation": false
+        },
+        {
+          "classification": "member_change",
+          "before_line": 69,
+          "before_column": 21,
+          "before_start": 2393,
+          "before_end": 2398,
+          "after_start": 2393,
+          "after_end": 2398,
+          "before": "SELAH",
+          "after": "Selah",
+          "interpolated": false,
+          "nested_in_interpolation": false
+        },
+        {
+          "classification": "member_change",
+          "before_line": 74,
+          "before_column": 10,
+          "before_start": 2660,
+          "before_end": 2665,
+          "after_start": 2660,
+          "after_end": 2665,
+          "before": "SELAH",
+          "after": "Selah",
+          "interpolated": false,
+          "nested_in_interpolation": false
+        },
+        {
+          "classification": "member_change",
+          "before_line": 101,
+          "before_column": 37,
+          "before_start": 3883,
+          "before_end": 3888,
+          "after_start": 3883,
+          "after_end": 3888,
+          "before": "SELAH",
+          "after": "Selah",
+          "interpolated": false,
+          "nested_in_interpolation": false
+        },
+        {
+          "classification": "member_change",
+          "before_line": 583,
+          "before_column": 18,
+          "before_start": 19500,
+          "before_end": 19505,
+          "after_start": 19500,
+          "after_end": 19505,
+          "before": "SELAH",
+          "after": "Selah",
+          "interpolated": false,
+          "nested_in_interpolation": false
+        },
+        {
+          "classification": "member_change",
+          "before_line": 1001,
+          "before_column": 22,
+          "before_start": 34093,
+          "before_end": 34098,
+          "after_start": 34093,
+          "after_end": 34098,
+          "before": "SELAH",
+          "after": "Selah",
+          "interpolated": false,
+          "nested_in_interpolation": false
+        }
+      ]
+    },
+    {
+      "file": "SOURCE/lib/screens/onboarding/profile_ready_screen.dart",
+      "before_sha256": "725abfb9a0979ef258fe353182afdc0e427c9aa7c566a349bfe0849c8dcf6d2e",
+      "after_sha256": "9e7bb7a715a7336395c893096b5a6707b997276f1c5c071727ddcf9f3685451f",
+      "replacement_count": 5,
+      "replacements": [
+        {
+          "classification": "member_change",
+          "before_line": 347,
+          "before_column": 26,
+          "before_start": 11259,
+          "before_end": 11264,
+          "after_start": 11259,
+          "after_end": 11264,
+          "before": "SELAH",
+          "after": "Selah",
+          "interpolated": false,
+          "nested_in_interpolation": false
+        },
+        {
+          "classification": "member_change",
+          "before_line": 404,
+          "before_column": 24,
+          "before_start": 13235,
+          "before_end": 13240,
+          "after_start": 13235,
+          "after_end": 13240,
+          "before": "SELAH",
+          "after": "Selah",
+          "interpolated": false,
+          "nested_in_interpolation": false
+        },
+        {
+          "classification": "member_change",
+          "before_line": 433,
+          "before_column": 64,
+          "before_start": 14331,
+          "before_end": 14336,
+          "after_start": 14331,
+          "after_end": 14336,
+          "before": "SELAH",
+          "after": "Selah",
+          "interpolated": false,
+          "nested_in_interpolation": false
+        },
+        {
+          "classification": "member_change",
+          "before_line": 542,
+          "before_column": 22,
+          "before_start": 18613,
+          "before_end": 18618,
+          "after_start": 18613,
+          "after_end": 18618,
+          "before": "SELAH",
+          "after": "Selah",
+          "interpolated": false,
+          "nested_in_interpolation": false
+        },
+        {
+          "classification": "member_change",
+          "before_line": 596,
+          "before_column": 27,
+          "before_start": 20591,
+          "before_end": 20596,
+          "after_start": 20591,
+          "after_end": 20596,
+          "before": "SELAH",
+          "after": "Selah",
+          "interpolated": false,
+          "nested_in_interpolation": false
+        }
+      ]
+    },
+    {
+      "file": "SOURCE/lib/screens/onboarding/signup_membership_choice_screen.dart",
+      "before_sha256": "dbce37ed317351e2ec98be125ec0bd1a14d6a42d9503496d049eba9dc34bd91a",
+      "after_sha256": "3725c76cebb3de3cd217655e71bc12b26b4a995592459b7bb5d34578dd98c270",
+      "replacement_count": 1,
+      "replacements": [
+        {
+          "classification": "member_change",
+          "before_line": 161,
+          "before_column": 21,
+          "before_start": 6737,
+          "before_end": 6742,
+          "after_start": 6737,
+          "after_end": 6742,
+          "before": "SELAH",
+          "after": "Selah",
+          "interpolated": false,
+          "nested_in_interpolation": false
+        }
+      ]
+    },
+    {
+      "file": "SOURCE/lib/screens/onboarding/traffic_light_question_screen.dart",
+      "before_sha256": "88f09fe64aae4c729296979f14ca5aae98d8ebcdcf3e6ed3c387ad1a3772a33b",
+      "after_sha256": "40e370c53a98fb5a63f44c059283e08c4b1769e8c132d49b996d2d66b7c329ca",
+      "replacement_count": 3,
+      "replacements": [
+        {
+          "classification": "member_change",
+          "before_line": 270,
+          "before_column": 56,
+          "before_start": 11022,
+          "before_end": 11027,
+          "after_start": 11022,
+          "after_end": 11027,
+          "before": "SELAH",
+          "after": "Selah",
+          "interpolated": false,
+          "nested_in_interpolation": false
+        },
+        {
+          "classification": "member_change",
+          "before_line": 282,
+          "before_column": 20,
+          "before_start": 11468,
+          "before_end": 11473,
+          "after_start": 11468,
+          "after_end": 11473,
+          "before": "SELAH",
+          "after": "Selah",
+          "interpolated": false,
+          "nested_in_interpolation": false
+        },
+        {
+          "classification": "member_change",
+          "before_line": 283,
+          "before_column": 20,
+          "before_start": 11541,
+          "before_end": 11546,
+          "after_start": 11541,
+          "after_end": 11546,
+          "before": "SELAH",
+          "after": "Selah",
+          "interpolated": true,
+          "nested_in_interpolation": false
+        }
+      ]
+    },
+    {
+      "file": "SOURCE/lib/screens/onboarding/transition_screen.dart",
+      "before_sha256": "498e4f0c5b1a112af48bd2e9524c2639b174e3861e8097b031e14db6b75abf33",
+      "after_sha256": "4fe8518db571f580de6420374ea0ba28640a179b4e74af79bb1a12cc2b11a6a8",
+      "replacement_count": 1,
+      "replacements": [
+        {
+          "classification": "member_change",
+          "before_line": 168,
+          "before_column": 18,
+          "before_start": 6513,
+          "before_end": 6518,
+          "after_start": 6513,
+          "after_end": 6518,
+          "before": "SELAH",
+          "after": "Selah",
+          "interpolated": false,
+          "nested_in_interpolation": false
+        }
+      ]
+    },
+    {
+      "file": "SOURCE/lib/screens/profile/edit_profile_screen.dart",
+      "before_sha256": "1ab98a79912a0d9547121486165bfcc6663a8080f5731d332c81ef838d1b6863",
+      "after_sha256": "cd3b90d265c6655dc0d66d8cd4c9056b5d5d8d97219c1c0914703be1d3824dec",
+      "replacement_count": 1,
+      "replacements": [
+        {
+          "classification": "member_change",
+          "before_line": 445,
+          "before_column": 37,
+          "before_start": 14593,
+          "before_end": 14598,
+          "after_start": 14593,
+          "after_end": 14598,
+          "before": "SELAH",
+          "after": "Selah",
+          "interpolated": false,
+          "nested_in_interpolation": false
+        }
+      ]
+    },
+    {
+      "file": "SOURCE/lib/screens/profile/profile_screen.dart",
+      "before_sha256": "cf9d8f41914235673c13f9df9bbf5b11137ffb82acc11eb8b88f072da44c83fa",
+      "after_sha256": "f88009c2190c54fac2f85044569dcc2769a57112b93999e176b68f5f0568e934",
+      "replacement_count": 1,
+      "replacements": [
+        {
+          "classification": "member_change",
+          "before_line": 460,
+          "before_column": 43,
+          "before_start": 18562,
+          "before_end": 18567,
+          "after_start": 18562,
+          "after_end": 18567,
+          "before": "SELAH",
+          "after": "Selah",
+          "interpolated": false,
+          "nested_in_interpolation": false
+        }
+      ]
+    },
+    {
+      "file": "SOURCE/lib/screens/settings/app_lock_screen.dart",
+      "before_sha256": "3ecb60d244d3edf21f9153778855e9695e7a02bcd8dd40be4d785935c210cba3",
+      "after_sha256": "30c529cc4ae9cfd2526f056f1d500d925d4d74530e42c33571a2779d99e175d3",
+      "replacement_count": 5,
+      "replacements": [
+        {
+          "classification": "member_change",
+          "before_line": 131,
+          "before_column": 61,
+          "before_start": 4976,
+          "before_end": 4981,
+          "after_start": 4976,
+          "after_end": 4981,
+          "before": "SELAH",
+          "after": "Selah",
+          "interpolated": false,
+          "nested_in_interpolation": false
+        },
+        {
+          "classification": "member_change",
+          "before_line": 138,
+          "before_column": 20,
+          "before_start": 5221,
+          "before_end": 5226,
+          "after_start": 5221,
+          "after_end": 5226,
+          "before": "SELAH",
+          "after": "Selah",
+          "interpolated": false,
+          "nested_in_interpolation": false
+        },
+        {
+          "classification": "member_change",
+          "before_line": 144,
+          "before_column": 20,
+          "before_start": 5512,
+          "before_end": 5517,
+          "after_start": 5512,
+          "after_end": 5517,
+          "before": "SELAH",
+          "after": "Selah",
+          "interpolated": false,
+          "nested_in_interpolation": false
+        },
+        {
+          "classification": "member_change",
+          "before_line": 145,
+          "before_column": 20,
+          "before_start": 5592,
+          "before_end": 5597,
+          "after_start": 5592,
+          "after_end": 5597,
+          "before": "SELAH",
+          "after": "Selah",
+          "interpolated": false,
+          "nested_in_interpolation": false
+        },
+        {
+          "classification": "member_change",
+          "before_line": 150,
+          "before_column": 31,
+          "before_start": 5809,
+          "before_end": 5814,
+          "after_start": 5809,
+          "after_end": 5814,
+          "before": "SELAH",
+          "after": "Selah",
+          "interpolated": false,
+          "nested_in_interpolation": false
+        }
+      ]
+    },
+    {
+      "file": "SOURCE/lib/screens/settings/feedback_screen.dart",
+      "before_sha256": "61410ae40b1d747b8ca6dfdd2089276608037a26400e23b8108561e3e3e1a1af",
+      "after_sha256": "27ab5e5a843aa0585d3b3d3464011770c678a7a349cc3045d7dec65ec35588f0",
+      "replacement_count": 2,
+      "replacements": [
+        {
+          "classification": "member_change",
+          "before_line": 146,
+          "before_column": 34,
+          "before_start": 4991,
+          "before_end": 4996,
+          "after_start": 4991,
+          "after_end": 4996,
+          "before": "SELAH",
+          "after": "Selah",
+          "interpolated": false,
+          "nested_in_interpolation": false
+        },
+        {
+          "classification": "member_change",
+          "before_line": 218,
+          "before_column": 66,
+          "before_start": 7643,
+          "before_end": 7648,
+          "after_start": 7643,
+          "after_end": 7648,
+          "before": "SELAH",
+          "after": "Selah",
+          "interpolated": false,
+          "nested_in_interpolation": false
+        }
+      ]
+    },
+    {
+      "file": "SOURCE/lib/screens/settings/hidden_profiles_screen.dart",
+      "before_sha256": "73885b2d60f7709203fbe4082ba54fc397cf8584ae7f0c02fd72d41ee81542c1",
+      "after_sha256": "c9b989ccd40290acf4a167e8c2adaed0931551ee551530034fb460abd6480e56",
+      "replacement_count": 1,
+      "replacements": [
+        {
+          "classification": "member_change",
+          "before_line": 193,
+          "before_column": 12,
+          "before_start": 6042,
+          "before_end": 6047,
+          "after_start": 6042,
+          "after_end": 6047,
+          "before": "SELAH",
+          "after": "Selah",
+          "interpolated": false,
+          "nested_in_interpolation": false
+        }
+      ]
+    },
+    {
+      "file": "SOURCE/lib/screens/settings/notification_settings_screen.dart",
+      "before_sha256": "5ea13cd766ddf527d9f70c897cd05c30af451627322c3cb304a5cd9a049ce3e3",
+      "after_sha256": "90b0dc1fe297fa1eac9558a9b238a8b240f449f0017da6572160beed295fe88a",
+      "replacement_count": 4,
+      "replacements": [
+        {
+          "classification": "member_change",
+          "before_line": 341,
+          "before_column": 89,
+          "before_start": 11814,
+          "before_end": 11819,
+          "after_start": 11814,
+          "after_end": 11819,
+          "before": "SELAH",
+          "after": "Selah",
+          "interpolated": false,
+          "nested_in_interpolation": false
+        },
+        {
+          "classification": "member_change",
+          "before_line": 343,
+          "before_column": 26,
+          "before_start": 11890,
+          "before_end": 11895,
+          "after_start": 11890,
+          "after_end": 11895,
+          "before": "SELAH",
+          "after": "Selah",
+          "interpolated": false,
+          "nested_in_interpolation": false
+        },
+        {
+          "classification": "member_change",
+          "before_line": 344,
+          "before_column": 63,
+          "before_start": 12044,
+          "before_end": 12049,
+          "after_start": 12044,
+          "after_end": 12049,
+          "before": "SELAH",
+          "after": "Selah",
+          "interpolated": false,
+          "nested_in_interpolation": false
+        },
+        {
+          "classification": "member_change",
+          "before_line": 385,
+          "before_column": 81,
+          "before_start": 13327,
+          "before_end": 13332,
+          "after_start": 13327,
+          "after_end": 13332,
+          "before": "SELAH",
+          "after": "Selah",
+          "interpolated": false,
+          "nested_in_interpolation": false
+        }
+      ]
+    },
+    {
+      "file": "SOURCE/lib/screens/settings/privacy_and_data_screen.dart",
+      "before_sha256": "0b3c86be21386b2b104dd42ec54eff614241a5368b37012c518b316d4c2676e9",
+      "after_sha256": "e34c7bbc218d56683801b55fd28e4458abad9f89ee58eb9ebb996e3c51abeeef",
+      "replacement_count": 3,
+      "replacements": [
+        {
+          "classification": "member_change",
+          "before_line": 64,
+          "before_column": 18,
+          "before_start": 2622,
+          "before_end": 2627,
+          "after_start": 2622,
+          "after_end": 2627,
+          "before": "SELAH",
+          "after": "Selah",
+          "interpolated": false,
+          "nested_in_interpolation": false
+        },
+        {
+          "classification": "member_change",
+          "before_line": 72,
+          "before_column": 26,
+          "before_start": 2912,
+          "before_end": 2917,
+          "after_start": 2912,
+          "after_end": 2917,
+          "before": "SELAH",
+          "after": "Selah",
+          "interpolated": false,
+          "nested_in_interpolation": false
+        },
+        {
+          "classification": "member_change",
+          "before_line": 83,
+          "before_column": 47,
+          "before_start": 3446,
+          "before_end": 3451,
+          "after_start": 3446,
+          "after_end": 3451,
+          "before": "SELAH",
+          "after": "Selah",
+          "interpolated": false,
+          "nested_in_interpolation": false
+        }
+      ]
+    },
+    {
+      "file": "SOURCE/lib/screens/settings/safety_case_status_screen.dart",
+      "before_sha256": "d8d5692de41931d923373f98d606657f563ae0574cc9e77221997478d596ada0",
+      "after_sha256": "4c6b607a6c72aa4416be83ffbd0dfc0c7e3f005898c9093c91836eeaa1cde0cd",
+      "replacement_count": 1,
+      "replacements": [
+        {
+          "classification": "member_change",
+          "before_line": 105,
+          "before_column": 44,
+          "before_start": 3164,
+          "before_end": 3169,
+          "after_start": 3164,
+          "after_end": 3169,
+          "before": "SELAH",
+          "after": "Selah",
+          "interpolated": false,
+          "nested_in_interpolation": false
+        }
+      ]
+    },
+    {
+      "file": "SOURCE/lib/screens/settings/settings_screen.dart",
+      "before_sha256": "180ae1bb93ca720e0fb7d5196280c310e5dd867d3ab87d4c97f354d18e34d91b",
+      "after_sha256": "6a4157fda3856c993b381d6a61fc07c4a2dd1a2a944b5a693b15df61f9fe02de",
+      "replacement_count": 1,
+      "replacements": [
+        {
+          "classification": "member_change",
+          "before_line": 632,
+          "before_column": 10,
+          "before_start": 23717,
+          "before_end": 23722,
+          "after_start": 23717,
+          "after_end": 23722,
+          "before": "SELAH",
+          "after": "Selah",
+          "interpolated": false,
+          "nested_in_interpolation": false
+        }
+      ]
+    },
+    {
+      "file": "SOURCE/lib/screens/settings/sign_in_security_screen.dart",
+      "before_sha256": "24ae53dde95834c0bb6a39990df0e0848330796fafd5948e546b96dfdc4dda39",
+      "after_sha256": "e519dad531100c2360d470837f556d45c8ba93d54cb86c7b13aedd38ee1b0440",
+      "replacement_count": 3,
+      "replacements": [
+        {
+          "classification": "member_change",
+          "before_line": 81,
+          "before_column": 76,
+          "before_start": 2792,
+          "before_end": 2797,
+          "after_start": 2792,
+          "after_end": 2797,
+          "before": "SELAH",
+          "after": "Selah",
+          "interpolated": false,
+          "nested_in_interpolation": false
+        },
+        {
+          "classification": "member_change",
+          "before_line": 122,
+          "before_column": 24,
+          "before_start": 4348,
+          "before_end": 4353,
+          "after_start": 4348,
+          "after_end": 4353,
+          "before": "SELAH",
+          "after": "Selah",
+          "interpolated": false,
+          "nested_in_interpolation": false
+        },
+        {
+          "classification": "member_change",
+          "before_line": 342,
+          "before_column": 83,
+          "before_start": 11230,
+          "before_end": 11235,
+          "after_start": 11230,
+          "after_end": 11235,
+          "before": "SELAH",
+          "after": "Selah",
+          "interpolated": false,
+          "nested_in_interpolation": false
+        }
+      ]
+    },
+    {
+      "file": "SOURCE/lib/screens/subscription/membership_required_screen.dart",
+      "before_sha256": "1da043215e2779388409857f07bda61008a91b562a3d772fc9a398df5429f3e4",
+      "after_sha256": "e6e8509b44efbf5bf1c54aa606ba257a7e188abb16b47feb77ca7f87e9ea2f19",
+      "replacement_count": 2,
+      "replacements": [
+        {
+          "classification": "member_change",
+          "before_line": 41,
+          "before_column": 21,
+          "before_start": 1584,
+          "before_end": 1589,
+          "after_start": 1584,
+          "after_end": 1589,
+          "before": "SELAH",
+          "after": "Selah",
+          "interpolated": false,
+          "nested_in_interpolation": false
+        },
+        {
+          "classification": "member_change",
+          "before_line": 57,
+          "before_column": 67,
+          "before_start": 2246,
+          "before_end": 2251,
+          "after_start": 2246,
+          "after_end": 2251,
+          "before": "SELAH",
+          "after": "Selah",
+          "interpolated": false,
+          "nested_in_interpolation": false
+        }
+      ]
+    },
+    {
+      "file": "SOURCE/lib/screens/subscription/profile_unlock_screen.dart",
+      "before_sha256": "be269e736e53d1168041e9e89dec946501178ca1eeaa10570785b5a97f39a957",
+      "after_sha256": "79eda132be1de2da3548252203db5e20fde7da1b506c5557d4e32f115a27626d",
+      "replacement_count": 1,
+      "replacements": [
+        {
+          "classification": "member_change",
+          "before_line": 614,
+          "before_column": 64,
+          "before_start": 23366,
+          "before_end": 23371,
+          "after_start": 23366,
+          "after_end": 23371,
+          "before": "SELAH",
+          "after": "Selah",
+          "interpolated": false,
+          "nested_in_interpolation": false
+        }
+      ]
+    },
+    {
+      "file": "SOURCE/lib/screens/subscription/upgrade_screen.dart",
+      "before_sha256": "3bd8b18603a721666b7b6e328aba2bea327d17a255458c9848cd35d032179814",
+      "after_sha256": "7c058363c48f851fe1ef811528bd9d9e185e08c9d6cdcc49b34e270196cc0b11",
+      "replacement_count": 2,
+      "replacements": [
+        {
+          "classification": "member_change",
+          "before_line": 207,
+          "before_column": 12,
+          "before_start": 7420,
+          "before_end": 7425,
+          "after_start": 7420,
+          "after_end": 7425,
+          "before": "SELAH",
+          "after": "Selah",
+          "interpolated": true,
+          "nested_in_interpolation": false
+        },
+        {
+          "classification": "member_change",
+          "before_line": 327,
+          "before_column": 140,
+          "before_start": 11718,
+          "before_end": 11723,
+          "after_start": 11718,
+          "after_end": 11723,
+          "before": "SELAH",
+          "after": "Selah",
+          "interpolated": true,
+          "nested_in_interpolation": false
+        }
+      ]
+    },
+    {
+      "file": "SOURCE/lib/screens/welcome_screen.dart",
+      "before_sha256": "ece02da3b29b96ee7e075b314b2b82ba192ad48f422d92d488432befb7cbf46a",
+      "after_sha256": "fec7c73ba485d8e4894a7479ad13620f3549edf336b3c604bc26f6c6511a4180",
+      "replacement_count": 1,
+      "replacements": [
+        {
+          "classification": "member_change",
+          "before_line": 212,
+          "before_column": 26,
+          "before_start": 7940,
+          "before_end": 7945,
+          "after_start": 7940,
+          "after_end": 7945,
+          "before": "SELAH",
+          "after": "Selah",
+          "interpolated": false,
+          "nested_in_interpolation": false
+        }
+      ]
+    },
+    {
+      "file": "SOURCE/lib/services/selah_app_invite.dart",
+      "before_sha256": "884d637290f6f5d1f1a3b60b00441f6891dba0507077068177aaa5c58943c284",
+      "after_sha256": "a0d01e751c24aa7760aeb60b2d883f5111eb7d3c226d212ca1c8432db8da8fcc",
+      "replacement_count": 2,
+      "replacements": [
+        {
+          "classification": "member_change",
+          "before_line": 23,
+          "before_column": 28,
+          "before_start": 790,
+          "before_end": 795,
+          "after_start": 790,
+          "after_end": 795,
+          "before": "SELAH",
+          "after": "Selah",
+          "interpolated": false,
+          "nested_in_interpolation": false
+        },
+        {
+          "classification": "member_change",
+          "before_line": 25,
+          "before_column": 23,
+          "before_start": 834,
+          "before_end": 839,
+          "after_start": 834,
+          "after_end": 839,
+          "before": "SELAH",
+          "after": "Selah",
+          "interpolated": false,
+          "nested_in_interpolation": false
+        }
+      ]
+    },
+    {
+      "file": "SOURCE/lib/services/selah_app_lock.dart",
+      "before_sha256": "0325ca138ae359ab77a9d1aa46f337ec369ee1d400299488b8506d76fa98984c",
+      "after_sha256": "f4c33bbc4efe4223849e42e68cdda13f14176d5a64edbaf2a2cea1a2844b6d36",
+      "replacement_count": 1,
+      "replacements": [
+        {
+          "classification": "member_change",
+          "before_line": 160,
+          "before_column": 44,
+          "before_start": 6884,
+          "before_end": 6889,
+          "after_start": 6884,
+          "after_end": 6889,
+          "before": "SELAH",
+          "after": "Selah",
+          "interpolated": false,
+          "nested_in_interpolation": false
+        }
+      ]
+    },
+    {
+      "file": "SOURCE/lib/services/selah_auth.dart",
+      "before_sha256": "e46569bb373a0e017ba6bc9d037dfbb2e226aa672b4fef8334d6e29b7643ffda",
+      "after_sha256": "124ec879f4c59eb8019306bc5d65ee82b35a6d2348bedeece443916282edd34f",
+      "replacement_count": 2,
+      "replacements": [
+        {
+          "classification": "member_change",
+          "before_line": 701,
+          "before_column": 54,
+          "before_start": 27711,
+          "before_end": 27716,
+          "after_start": 27711,
+          "after_end": 27716,
+          "before": "SELAH",
+          "after": "Selah",
+          "interpolated": false,
+          "nested_in_interpolation": false
+        },
+        {
+          "classification": "member_change",
+          "before_line": 719,
+          "before_column": 58,
+          "before_start": 28385,
+          "before_end": 28390,
+          "after_start": 28385,
+          "after_end": 28390,
+          "before": "SELAH",
+          "after": "Selah",
+          "interpolated": false,
+          "nested_in_interpolation": false
+        }
+      ]
+    },
+    {
+      "file": "SOURCE/lib/services/selah_dashboard_updates_service.dart",
+      "before_sha256": "0bd63ede4bd74a8f837f37eafb30ec6bae0db0609162cffb020833a365c53d9a",
+      "after_sha256": "e36b74d1a53d6f64b6c2ae016a6321ad58f1ebcf0b26569ae424f1f2f465eeeb",
+      "replacement_count": 1,
+      "replacements": [
+        {
+          "classification": "member_change",
+          "before_line": 234,
+          "before_column": 23,
+          "before_start": 9566,
+          "before_end": 9571,
+          "after_start": 9566,
+          "after_end": 9571,
+          "before": "SELAH",
+          "after": "Selah",
+          "interpolated": false,
+          "nested_in_interpolation": false
+        }
+      ]
+    },
+    {
+      "file": "SOURCE/lib/services/selah_notification_prefs_service.dart",
+      "before_sha256": "ec54ab43ca84b2110a913a90650ef6d7be4de421b237fb32076661a563b913b0",
+      "after_sha256": "8f42d9024299cb74834efa6b298f1eb87203dd8074fdbebc97fc7cbdfb96f187",
+      "replacement_count": 1,
+      "replacements": [
+        {
+          "classification": "member_change",
+          "before_line": 50,
+          "before_column": 27,
+          "before_start": 2011,
+          "before_end": 2016,
+          "after_start": 2011,
+          "after_end": 2016,
+          "before": "SELAH",
+          "after": "Selah",
+          "interpolated": false,
+          "nested_in_interpolation": false
+        }
+      ]
+    },
+    {
+      "file": "SOURCE/lib/services/selah_photo_service.dart",
+      "before_sha256": "164dbbf06f8ebada0d5d8607a2bf2cb0cf9c94913241bf0191a4e7ab18ed0989",
+      "after_sha256": "898543ab3fb63fdfced27746f0970098b98a55c31a243be637fbfc10b2b7a13e",
+      "replacement_count": 1,
+      "replacements": [
+        {
+          "classification": "member_change",
+          "before_line": 69,
+          "before_column": 58,
+          "before_start": 3030,
+          "before_end": 3035,
+          "after_start": 3030,
+          "after_end": 3035,
+          "before": "SELAH",
+          "after": "Selah",
+          "interpolated": false,
+          "nested_in_interpolation": false
+        }
+      ]
+    },
+    {
+      "file": "SOURCE/lib/services/selah_promotion_engine.dart",
+      "before_sha256": "52a28d755c42d48c7c088bf33fe839ca7fb19083287c4996d5c886a74e7dda01",
+      "after_sha256": "ada2eb943e90ca6b64f997a46addae310ab057b99bf9a77af8b817b0ebe24d6c",
+      "replacement_count": 1,
+      "replacements": [
+        {
+          "classification": "member_change",
+          "before_line": 138,
+          "before_column": 79,
+          "before_start": 3869,
+          "before_end": 3874,
+          "after_start": 3869,
+          "after_end": 3874,
+          "before": "SELAH",
+          "after": "Selah",
+          "interpolated": false,
+          "nested_in_interpolation": false
+        }
+      ]
+    },
+    {
+      "file": "SOURCE/lib/widgets/onboarding_top_bar.dart",
+      "before_sha256": "0c7df6714a8abf08b2efaeab07b4255cf258b9b101acaa09af6094df4ec192da",
+      "after_sha256": "83dfa1a4553eff3b35f03156958e55e5b0ca736d988e3350d1955fc60d35f9bb",
+      "replacement_count": 1,
+      "replacements": [
+        {
+          "classification": "member_change",
+          "before_line": 43,
+          "before_column": 20,
+          "before_start": 1354,
+          "before_end": 1359,
+          "after_start": 1354,
+          "after_end": 1359,
+          "before": "SELAH",
+          "after": "Selah",
+          "interpolated": false,
+          "nested_in_interpolation": false
+        }
+      ]
+    },
+    {
+      "file": "SOURCE/lib/widgets/privacy_indicator.dart",
+      "before_sha256": "7bce2c72128101b5234df041fa9eb35455a7e37242212b1fd85340a26be252c8",
+      "after_sha256": "bb22c9fc1f66d710020aa71f71e391ff9765f53d204eabd5b4c76b9d40a282d9",
+      "replacement_count": 1,
+      "replacements": [
+        {
+          "classification": "member_change",
+          "before_line": 36,
+          "before_column": 40,
+          "before_start": 1186,
+          "before_end": 1191,
+          "after_start": 1186,
+          "after_end": 1191,
+          "before": "SELAH",
+          "after": "Selah",
+          "interpolated": false,
+          "nested_in_interpolation": false
+        }
+      ]
+    },
+    {
+      "file": "SOURCE/lib/widgets/selah_app_lock_gate.dart",
+      "before_sha256": "465f475983ff90a876f589c7ad455a0fdd266cc2bf5d141e20843390389b5086",
+      "after_sha256": "ed13f22fccf4f6798f3d7bafeceb72efa10e2080a96f97263337877d517a2331",
+      "replacement_count": 2,
+      "replacements": [
+        {
+          "classification": "member_change",
+          "before_line": 114,
+          "before_column": 20,
+          "before_start": 3849,
+          "before_end": 3854,
+          "after_start": 3849,
+          "after_end": 3854,
+          "before": "SELAH",
+          "after": "Selah",
+          "interpolated": false,
+          "nested_in_interpolation": false
+        },
+        {
+          "classification": "member_change",
+          "before_line": 142,
+          "before_column": 25,
+          "before_start": 4898,
+          "before_end": 4903,
+          "after_start": 4898,
+          "after_end": 4903,
+          "before": "SELAH",
+          "after": "Selah",
+          "interpolated": false,
+          "nested_in_interpolation": false
+        }
+      ]
+    },
+    {
+      "file": "SOURCE/lib/widgets/selah_browse_designs.dart",
+      "before_sha256": "eb626affc8396712d9d5b57e84b1a4d6a5bfde01527f73cefad723284605d1b9",
+      "after_sha256": "12efeafd51b448ecd4603b807cb62c145a75c94d296c214a0e6b20f47cad2af0",
+      "replacement_count": 4,
+      "replacements": [
+        {
+          "classification": "request_change",
+          "before_line": 471,
+          "before_column": 26,
+          "before_start": 16129,
+          "before_end": 16144,
+          "after_start": 16129,
+          "after_end": 16146,
+          "before": "Request Journey",
+          "after": "Request a Journey",
+          "interpolated": false,
+          "nested_in_interpolation": false
+        },
+        {
+          "classification": "request_change",
+          "before_line": 472,
+          "before_column": 64,
+          "before_start": 16209,
+          "before_end": 16224,
+          "after_start": 16211,
+          "after_end": 16228,
+          "before": "Request Journey",
+          "after": "Request a Journey",
+          "interpolated": false,
+          "nested_in_interpolation": false
+        },
+        {
+          "classification": "request_change",
+          "before_line": 537,
+          "before_column": 14,
+          "before_start": 18395,
+          "before_end": 18410,
+          "after_start": 18399,
+          "after_end": 18416,
+          "before": "Request Journey",
+          "after": "Request a Journey",
+          "interpolated": false,
+          "nested_in_interpolation": false
+        },
+        {
+          "classification": "request_change",
+          "before_line": 538,
+          "before_column": 52,
+          "before_start": 18463,
+          "before_end": 18478,
+          "after_start": 18469,
+          "after_end": 18486,
+          "before": "Request Journey",
+          "after": "Request a Journey",
+          "interpolated": false,
+          "nested_in_interpolation": false
+        }
+      ]
+    },
+    {
+      "file": "SOURCE/lib/widgets/selah_family_pricing_card.dart",
+      "before_sha256": "8d57505a9406de3e91d55dcb4367af06521e0dc3b08ccb01bfeeffc9df249dce",
+      "after_sha256": "d65a3ff70affe2ee356feb697337957dbbc6437d114944fb591ddaf74f01c8e1",
+      "replacement_count": 1,
+      "replacements": [
+        {
+          "classification": "member_change",
+          "before_line": 53,
+          "before_column": 17,
+          "before_start": 1606,
+          "before_end": 1611,
+          "after_start": 1606,
+          "after_end": 1611,
+          "before": "SELAH",
+          "after": "Selah",
+          "interpolated": false,
+          "nested_in_interpolation": false
+        }
+      ]
+    },
+    {
+      "file": "SOURCE/lib/widgets/selah_full_screen_error.dart",
+      "before_sha256": "bb0fba10ca5ec9231df9559d3c367ee22bac5a0b9b760772344ca4a6fd7bb89c",
+      "after_sha256": "4931535c184004bfde010a2afe6edab9afac84173154ed272e884fe7cc8e6383",
+      "replacement_count": 1,
+      "replacements": [
+        {
+          "classification": "member_change",
+          "before_line": 51,
+          "before_column": 31,
+          "before_start": 1805,
+          "before_end": 1810,
+          "after_start": 1805,
+          "after_end": 1810,
+          "before": "SELAH",
+          "after": "Selah",
+          "interpolated": false,
+          "nested_in_interpolation": false
+        }
+      ]
+    },
+    {
+      "file": "SOURCE/lib/widgets/selah_intelligence_card.dart",
+      "before_sha256": "a7b4e9048146d21e42d237be6ab1444ad296e3c7c8bd60dde603c9b2240fe665",
+      "after_sha256": "76acdfdf9f56d0a9856168ffb1270a45631d52476bf570d864de0d1218d41fe1",
+      "replacement_count": 3,
+      "replacements": [
+        {
+          "classification": "member_change",
+          "before_line": 95,
+          "before_column": 39,
+          "before_start": 3534,
+          "before_end": 3539,
+          "after_start": 3534,
+          "after_end": 3539,
+          "before": "SELAH",
+          "after": "Selah",
+          "interpolated": false,
+          "nested_in_interpolation": false
+        },
+        {
+          "classification": "member_change",
+          "before_line": 96,
+          "before_column": 46,
+          "before_start": 3595,
+          "before_end": 3600,
+          "after_start": 3595,
+          "after_end": 3600,
+          "before": "SELAH",
+          "after": "Selah",
+          "interpolated": false,
+          "nested_in_interpolation": false
+        },
+        {
+          "classification": "member_change",
+          "before_line": 97,
+          "before_column": 39,
+          "before_start": 3656,
+          "before_end": 3661,
+          "after_start": 3656,
+          "after_end": 3661,
+          "before": "SELAH",
+          "after": "Selah",
+          "interpolated": false,
+          "nested_in_interpolation": false
+        }
+      ]
+    },
+    {
+      "file": "SOURCE/lib/widgets/selah_known_person_code_content.dart",
+      "before_sha256": "9bacf403e38dd3a2793b554093084d36bc0c14f17841e150157a7a6fb47959a1",
+      "after_sha256": "d3c91d13a3581de830f30362b10283d630c085a6494d04b311d4a17d9b5b5539",
+      "replacement_count": 1,
+      "replacements": [
+        {
+          "classification": "member_change",
+          "before_line": 96,
+          "before_column": 44,
+          "before_start": 2791,
+          "before_end": 2796,
+          "after_start": 2791,
+          "after_end": 2796,
+          "before": "SELAH",
+          "after": "Selah",
+          "interpolated": false,
+          "nested_in_interpolation": false
+        }
+      ]
+    },
+    {
+      "file": "SOURCE/lib/widgets/selah_my_selah_design_kit.dart",
+      "before_sha256": "22e74539f699ee0356bed7d6f9820ddd0c77817bd8ec4628190968408e4510a0",
+      "after_sha256": "95bebc461314b070c95b099a627f166afd65a96c728a2f8ef7b6ae8f167cbe8f",
+      "replacement_count": 2,
+      "replacements": [
+        {
+          "classification": "member_change",
+          "before_line": 265,
+          "before_column": 51,
+          "before_start": 9131,
+          "before_end": 9136,
+          "after_start": 9131,
+          "after_end": 9136,
+          "before": "SELAH",
+          "after": "Selah",
+          "interpolated": false,
+          "nested_in_interpolation": false
+        },
+        {
+          "classification": "member_change",
+          "before_line": 272,
+          "before_column": 22,
+          "before_start": 9379,
+          "before_end": 9384,
+          "after_start": 9379,
+          "after_end": 9384,
+          "before": "SELAH",
+          "after": "Selah",
+          "interpolated": false,
+          "nested_in_interpolation": false
+        }
+      ]
+    },
+    {
+      "file": "SOURCE/lib/widgets/selah_onboarding_account_exit.dart",
+      "before_sha256": "c87c9e8f9fa2b1ef073b0f805671e758e2857eee0bd48222a3a79597172eb1a4",
+      "after_sha256": "1fab9fa537796f73b8bfc6d27b1e81e93cf057dc660f2a953ebeff74c0b9d864",
+      "replacement_count": 2,
+      "replacements": [
+        {
+          "classification": "member_change",
+          "before_line": 33,
+          "before_column": 58,
+          "before_start": 1137,
+          "before_end": 1142,
+          "after_start": 1137,
+          "after_end": 1142,
+          "before": "SELAH",
+          "after": "Selah",
+          "interpolated": false,
+          "nested_in_interpolation": false
+        },
+        {
+          "classification": "member_change",
+          "before_line": 65,
+          "before_column": 73,
+          "before_start": 2185,
+          "before_end": 2190,
+          "after_start": 2185,
+          "after_end": 2190,
+          "before": "SELAH",
+          "after": "Selah",
+          "interpolated": false,
+          "nested_in_interpolation": false
+        }
+      ]
+    },
+    {
+      "file": "SOURCE/lib/widgets/selah_onboarding_study.dart",
+      "before_sha256": "e4326e5aa50e6db667a4949283f330503019268691617f293e55cd49e0e342f8",
+      "after_sha256": "4bad501348abe166a9740f1f6ff7f6adff9ccc57b437860cf09c7e98168fd674",
+      "replacement_count": 7,
+      "replacements": [
+        {
+          "classification": "member_change",
+          "before_line": 37,
+          "before_column": 4,
+          "before_start": 1123,
+          "before_end": 1128,
+          "after_start": 1123,
+          "after_end": 1128,
+          "before": "SELAH",
+          "after": "Selah",
+          "interpolated": false,
+          "nested_in_interpolation": false
+        },
+        {
+          "classification": "member_change",
+          "before_line": 38,
+          "before_column": 4,
+          "before_start": 1300,
+          "before_end": 1305,
+          "after_start": 1300,
+          "after_end": 1305,
+          "before": "SELAH",
+          "after": "Selah",
+          "interpolated": false,
+          "nested_in_interpolation": false
+        },
+        {
+          "classification": "member_change",
+          "before_line": 61,
+          "before_column": 64,
+          "before_start": 2514,
+          "before_end": 2519,
+          "after_start": 2514,
+          "after_end": 2519,
+          "before": "SELAH",
+          "after": "Selah",
+          "interpolated": false,
+          "nested_in_interpolation": false
+        },
+        {
+          "classification": "member_change",
+          "before_line": 240,
+          "before_column": 26,
+          "before_start": 8782,
+          "before_end": 8787,
+          "after_start": 8782,
+          "after_end": 8787,
+          "before": "SELAH",
+          "after": "Selah",
+          "interpolated": false,
+          "nested_in_interpolation": false
+        },
+        {
+          "classification": "member_change",
+          "before_line": 565,
+          "before_column": 39,
+          "before_start": 21551,
+          "before_end": 21556,
+          "after_start": 21551,
+          "after_end": 21556,
+          "before": "SELAH",
+          "after": "Selah",
+          "interpolated": false,
+          "nested_in_interpolation": false
+        },
+        {
+          "classification": "member_change",
+          "before_line": 927,
+          "before_column": 26,
+          "before_start": 32894,
+          "before_end": 32899,
+          "after_start": 32894,
+          "after_end": 32899,
+          "before": "SELAH",
+          "after": "Selah",
+          "interpolated": false,
+          "nested_in_interpolation": false
+        },
+        {
+          "classification": "member_change",
+          "before_line": 1098,
+          "before_column": 18,
+          "before_start": 37228,
+          "before_end": 37233,
+          "after_start": 37228,
+          "after_end": 37233,
+          "before": "SELAH",
+          "after": "Selah",
+          "interpolated": false,
+          "nested_in_interpolation": false
+        }
+      ]
+    },
+    {
+      "file": "SOURCE/lib/widgets/selah_personalisation_content.dart",
+      "before_sha256": "73fb898021854f140870ca7cd921151bde84eab49514966bab4ca3914760a850",
+      "after_sha256": "b60295d5b765422802dc69053ee86616cd2430b653f8f623dcd0fa701523bb35",
+      "replacement_count": 1,
+      "replacements": [
+        {
+          "classification": "member_change",
+          "before_line": 55,
+          "before_column": 21,
+          "before_start": 1688,
+          "before_end": 1693,
+          "after_start": 1688,
+          "after_end": 1693,
+          "before": "SELAH",
+          "after": "Selah",
+          "interpolated": false,
+          "nested_in_interpolation": false
+        }
+      ]
+    },
+    {
+      "file": "SOURCE/lib/widgets/selah_quiet_dashboard.dart",
+      "before_sha256": "79acce9e5a519d1ec4b59b82f88f26d08920ca2b240f03ffc1a3d9dee4a45572",
+      "after_sha256": "96c2e85f2496a78546e0e8a2f7baa6f0ee4a81c34be35108979816228d01a47e",
+      "replacement_count": 5,
+      "replacements": [
+        {
+          "classification": "member_change",
+          "before_line": 208,
+          "before_column": 25,
+          "before_start": 6735,
+          "before_end": 6740,
+          "after_start": 6735,
+          "after_end": 6740,
+          "before": "SELAH",
+          "after": "Selah",
+          "interpolated": false,
+          "nested_in_interpolation": false
+        },
+        {
+          "classification": "member_change",
+          "before_line": 373,
+          "before_column": 26,
+          "before_start": 12240,
+          "before_end": 12245,
+          "after_start": 12240,
+          "after_end": 12245,
+          "before": "SELAH",
+          "after": "Selah",
+          "interpolated": false,
+          "nested_in_interpolation": false
+        },
+        {
+          "classification": "member_change",
+          "before_line": 574,
+          "before_column": 47,
+          "before_start": 19173,
+          "before_end": 19178,
+          "after_start": 19173,
+          "after_end": 19178,
+          "before": "SELAH",
+          "after": "Selah",
+          "interpolated": false,
+          "nested_in_interpolation": false
+        },
+        {
+          "classification": "member_change",
+          "before_line": 581,
+          "before_column": 18,
+          "before_start": 19401,
+          "before_end": 19406,
+          "after_start": 19401,
+          "after_end": 19406,
+          "before": "SELAH",
+          "after": "Selah",
+          "interpolated": false,
+          "nested_in_interpolation": false
+        },
+        {
+          "classification": "member_change",
+          "before_line": 588,
+          "before_column": 16,
+          "before_start": 19630,
+          "before_end": 19635,
+          "after_start": 19630,
+          "after_end": 19635,
+          "before": "SELAH",
+          "after": "Selah",
+          "interpolated": false,
+          "nested_in_interpolation": false
+        }
+      ]
+    },
+    {
+      "file": "SOURCE/lib/widgets/selah_splash_artwork.dart",
+      "before_sha256": "05cfff804b8c945579f85bdc6cd2d601d96e926ca63077903787ca1dab8a8459",
+      "after_sha256": "7ac696c4fa9b5df0eaa71e3f5e527698d806b72fa6d94c05ccd766bc6a519038",
+      "replacement_count": 2,
+      "replacements": [
+        {
+          "classification": "member_change",
+          "before_line": 141,
+          "before_column": 20,
+          "before_start": 4865,
+          "before_end": 4870,
+          "after_start": 4865,
+          "after_end": 4870,
+          "before": "SELAH",
+          "after": "Selah",
+          "interpolated": false,
+          "nested_in_interpolation": false
+        },
+        {
+          "classification": "member_change",
+          "before_line": 252,
+          "before_column": 20,
+          "before_start": 8654,
+          "before_end": 8659,
+          "after_start": 8654,
+          "after_end": 8659,
+          "before": "SELAH",
+          "after": "Selah",
+          "interpolated": false,
+          "nested_in_interpolation": false
+        }
+      ]
+    },
+    {
+      "file": "SOURCE/lib/widgets/selah_splash_motion.dart",
+      "before_sha256": "0fd8034167b2500a299817dca489ca6bfe86e0a35bd4f951c4164435c8859453",
+      "after_sha256": "9e6afaeeec97a6bec19cffb77306c1d8b5dca5a01887cf69fb807a893514f5cf",
+      "replacement_count": 1,
+      "replacements": [
+        {
+          "classification": "member_change",
+          "before_line": 164,
+          "before_column": 47,
+          "before_start": 5439,
+          "before_end": 5444,
+          "after_start": 5439,
+          "after_end": 5444,
+          "before": "SELAH",
+          "after": "Selah",
+          "interpolated": false,
+          "nested_in_interpolation": false
+        }
+      ]
+    }
+  ]
+}

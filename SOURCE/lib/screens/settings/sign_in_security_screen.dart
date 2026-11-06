@@ -78,7 +78,7 @@ class _SignInSecurityScreenState extends State<SignInSecurityScreen> {
               Text('How you sign in', style: SelahText.heading(size: 24)),
               SizedBox(height: 8),
               Text(
-                'These are the sign-in methods currently connected to your SELAH account.',
+                'These are the sign-in methods currently connected to your Selah account.',
                 style: SelahText.body(size: 13.5),
               ),
               SizedBox(height: 22),
@@ -119,7 +119,7 @@ class _SignInSecurityScreenState extends State<SignInSecurityScreen> {
                   SizedBox(width: 9),
                   Expanded(
                     child: Text(
-                      'SELAH never creates or stores a password. Recovery uses a one-time code sent only to a verified address.',
+                      'Selah never creates or stores a password. Recovery uses a one-time code sent only to a verified address.',
                       style: SelahText.subtext(size: 12),
                     ),
                   ),
@@ -339,7 +339,7 @@ class _RecoveryEmailSetupScreenState extends State<RecoveryEmailSetupScreen> {
                 Text('A safe way back in.', style: SelahText.heading(size: 27)),
                 SizedBox(height: 9),
                 Text(
-                  'Use any email you control. If you lose Apple or Google access, SELAH can send a one-time sign-in code here.',
+                  'Use any email you control. If you lose Apple or Google access, Selah can send a one-time sign-in code here.',
                   style: SelahText.body(size: 13.5),
                 ),
                 SizedBox(height: 25),

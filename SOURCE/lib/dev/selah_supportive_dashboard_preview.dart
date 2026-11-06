@@ -606,7 +606,7 @@ class SupportiveDashboardFixtures {
         'A calmer home for your Journey',
       SupportiveEditorialExample.feature =>
         'A little more support, in one place',
-      SupportiveEditorialExample.newsletter => 'A letter from SELAH',
+      SupportiveEditorialExample.newsletter => 'A letter from Selah',
       SupportiveEditorialExample.journeyGuide =>
         'Starting the family conversation',
       SupportiveEditorialExample.preparation =>

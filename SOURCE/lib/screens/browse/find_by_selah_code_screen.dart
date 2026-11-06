@@ -191,7 +191,7 @@ class _FindBySelahCodeScreenState extends State<FindBySelahCodeScreen> {
     appBar: AppBar(
       backgroundColor: Colors.transparent,
       elevation: 0,
-      title: Text('Find by SELAH Code', style: SelahText.heading(size: 17)),
+      title: Text('Find by Selah Code', style: SelahText.heading(size: 17)),
       iconTheme: IconThemeData(color: SelahColors.ink(0.70)),
     ),
     body: Container(
@@ -286,7 +286,7 @@ class _KnownPersonSuccess extends StatelessWidget {
         matched
             ? '$firstName is now in your Potential Journeys.'
             : '$firstName will only be notified according to the normal '
-                  'SELAH matching rules.',
+                  'Selah matching rules.',
         textAlign: TextAlign.center,
         style: SelahText.subtext(size: 12.5),
       ),
@@ -319,7 +319,7 @@ class _KnownPersonCodeScannerState extends State<_KnownPersonCodeScanner> {
   Widget build(BuildContext context) => Scaffold(
     backgroundColor: Colors.black,
     appBar: AppBar(
-      title: Text('Scan SELAH Code', style: SelahText.heading(size: 17)),
+      title: Text('Scan Selah Code', style: SelahText.heading(size: 17)),
       backgroundColor: Colors.black,
     ),
     body: SelahCodeCapture(

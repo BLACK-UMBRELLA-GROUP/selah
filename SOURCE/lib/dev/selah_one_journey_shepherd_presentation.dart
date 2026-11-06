@@ -81,7 +81,7 @@ class SelahOneJourneyShepherdDashboardPresentation extends StatelessWidget {
                   const SizedBox(height: 4),
                   Text(
                     shepherdName.trim().isEmpty
-                        ? 'Your SELAH, in one place.'
+                        ? 'Your Selah, in one place.'
                         : 'Hello, $shepherdName.',
                     style: SelahText.subtext(size: 13.5),
                   ),
@@ -151,7 +151,7 @@ class SelahOneJourneyShepherdDashboardPresentation extends StatelessWidget {
                               '${person.firstName.toUpperCase()} · INSIGHTS',
                           title: 'No Shepherd insights available yet',
                           detail:
-                              'SELAH will only show a Shepherd insight when real, governed family-process evidence supports it.',
+                              'Selah will only show a Shepherd insight when real, governed family-process evidence supports it.',
                         )
                       : _DashboardStatusCard(
                           icon: Icons.lock_rounded,

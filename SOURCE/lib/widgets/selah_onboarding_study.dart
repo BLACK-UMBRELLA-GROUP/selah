@@ -34,8 +34,8 @@ enum SelahOnboardingDirection {
 const selahDefaultDevOnboardingDirection = SelahOnboardingDirection.luma;
 
 const _storyBodies = [
-  'SELAH introduces you through photos first, so you can see who you’re drawn to. When you both choose to connect, you can get to know the person beyond the first impression.',
-  'SELAH shows where your values and expectations align, where they differ and what may need a conversation.',
+  'Selah introduces you through photos first, so you can see who you’re drawn to. When you both choose to connect, you can get to know the person beyond the first impression.',
+  'Selah shows where your values and expectations align, where they differ and what may need a conversation.',
   'You can invite more than one Shepherd to support you. Once your Journey begins, they can share each stage, offer guidance and help you decide what comes next.',
 ];
 
@@ -58,7 +58,7 @@ const _selahIntentExcerpt =
     'and intentions help you understand whether to walk towards marriage together.';
 const _selahIntentAttribution =
     'The Selah approach: attraction, shared faith and intentional conversation.';
-const _selahIntentExplanation = 'A principle that helped shape SELAH.';
+const _selahIntentExplanation = 'A principle that helped shape Selah.';
 
 /// Ten different compositions using the existing SELAH palette and type APIs.
 /// No photographed members, borrowed logos, inputs, timers, storage or APIs.
@@ -237,7 +237,7 @@ class SelahOnboardingStudy extends StatelessWidget {
             _storyText(
               0,
               sectionLead && contentPage == 0
-                  ? 'HOW SELAH WORKS'
+                  ? 'HOW Selah WORKS'
                   : _storyEyebrows[contentPage],
               SelahText.chapterLabel(color: SelahColors.journeyGold),
             ),
@@ -562,7 +562,7 @@ class _QuotePage extends StatelessWidget {
               _reveal(
                 0,
                 Text(
-                  'A PRINCIPLE BEHIND SELAH',
+                  'A PRINCIPLE BEHIND Selah',
                   textAlign: alignment,
                   style: SelahText.chapterLabel(color: SelahColors.journeyGold),
                 ),
@@ -924,7 +924,7 @@ class _OnboardingStudyPainter extends CustomPainter {
     final p = TextPainter(
       text: TextSpan(
         text: value,
-        style: value == 'SELAH'
+        style: value == 'Selah'
             ? SelahText.wordmark(size: size).copyWith(color: color ?? ink)
             : SelahText.body(size: size, color: color ?? ink),
       ),
@@ -1095,7 +1095,7 @@ class _OnboardingStudyPainter extends CustomPainter {
           ..color = gold.withValues(alpha: .20 + i * .09)
           ..style = PaintingStyle.stroke,
       );
-      _label(c, 'SELAH', Offset(76, r.top + 19), size: 17, color: gold);
+      _label(c, 'Selah', Offset(76, r.top + 19), size: 17, color: gold);
       _icon(
         c,
         [

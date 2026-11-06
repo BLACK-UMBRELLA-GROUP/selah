@@ -71,7 +71,7 @@ void main() {
 
   test('core routes and Christian identity remain available', () {
     final shell = source('lib/dev/selah_one_journey_concept_shell.dart');
-    for (final route in ['Browse', 'Journey', 'My SELAH', 'Shepherd', 'Profile', 'Compatibility', 'Journey requests']) {
+    for (final route in ['Browse', 'Journey', 'My Selah', 'Shepherd', 'Profile', 'Compatibility', 'Journey requests']) {
       expect(shell, contains(route));
     }
     expect(

@@ -30,7 +30,7 @@ class _SelahOnboardingAccountExitState extends State<SelahOnboardingAccountExit>
     if (mounted) {
       setState(() {
         _busy = false;
-        _error = 'Your account changed. Close and reopen SELAH.';
+        _error = 'Your account changed. Close and reopen Selah.';
       });
     }
     return false;
@@ -62,7 +62,7 @@ class _SelahOnboardingAccountExitState extends State<SelahOnboardingAccountExit>
       if (SelahAuth.currentUser != null) {
         setState(() {
           _error =
-              'Your account changed while signing out. Close and reopen SELAH.';
+              'Your account changed while signing out. Close and reopen Selah.';
         });
         return;
       }

@@ -140,7 +140,7 @@ class _DevOnboardingOpeningState extends State<DevOnboardingOpening> {
                         ),
                     ],
                   ),
-                  label: 'HOW SELAH WORKS',
+                  label: 'HOW Selah WORKS',
                   heading: _headings[page],
                   body: _bodies[page],
                   headingKey: ValueKey('first_pages_heading_${page + 1}'),

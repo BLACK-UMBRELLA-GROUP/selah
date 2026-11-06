@@ -468,8 +468,8 @@ class _SelahBrowseDesignsState extends State<SelahBrowseDesigns> {
                 child: _compactPill(
                   key: ValueKey('draft_profile_${profile?.id ?? 'empty'}'),
                   label: profile == null
-                      ? 'Request Journey'
-                      : widget.requestLabel?.call(profile) ?? 'Request Journey',
+                      ? 'Request a Journey'
+                      : widget.requestLabel?.call(profile) ?? 'Request a Journey',
                   primary: true,
                   invitationSent: profile == null
                       ? null
@@ -534,8 +534,8 @@ class _SelahBrowseDesignsState extends State<SelahBrowseDesigns> {
   double _requestPillHeight(SeekerProfile? profile, double footerWidth) {
     final labels = [
       profile == null
-          ? 'Request Journey'
-          : widget.requestLabel?.call(profile) ?? 'Request Journey',
+          ? 'Request a Journey'
+          : widget.requestLabel?.call(profile) ?? 'Request a Journey',
       if (profile != null && widget.invitationSent != null) ...[
         'Request a Journey',
         'Journey invitation sent',

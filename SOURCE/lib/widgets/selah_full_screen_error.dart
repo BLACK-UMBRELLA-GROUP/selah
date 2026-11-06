@@ -48,7 +48,7 @@ class SelahFullScreenError extends StatelessWidget {
                   child: IntrinsicHeight(
                     child: Column(
                       children: [
-                        Text('SELAH', style: SelahText.wordmark(size: 29)),
+                        Text('Selah', style: SelahText.wordmark(size: 29)),
                         Expanded(
                           child: Semantics(
                             liveRegion: true,

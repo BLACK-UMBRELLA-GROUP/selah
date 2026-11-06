@@ -209,7 +209,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                     FittedBox(
                       fit: BoxFit.scaleDown,
                       child: Text(
-                        'SELAH',
+                        'Selah',
                         maxLines: 1,
                         style: SelahText.wordmark(
                           size: 66,

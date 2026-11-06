@@ -47,7 +47,7 @@ enum SelahNotifyCategory {
   marketingEmails(
     'marketing_emails',
     'Marketing Emails',
-    'Offers and news from SELAH. Off unless you turn it on',
+    'Offers and news from Selah. Off unless you turn it on',
   ),
   productUpdates(
     'product_updates',

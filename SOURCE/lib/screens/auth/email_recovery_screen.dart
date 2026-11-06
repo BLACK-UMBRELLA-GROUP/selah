@@ -289,7 +289,7 @@ class _EmailRecoveryScreenState extends State<EmailRecoveryScreen> {
                 SizedBox(height: 10),
                 Text(
                   _codeSent
-                      ? 'If $_email is linked to a SELAH account, a six-digit code is on its way.'
+                      ? 'If $_email is linked to a Selah account, a six-digit code is on its way.'
                       : 'Enter the verified recovery address you added in Settings. No password is needed.',
                   textAlign: TextAlign.center,
                   style: SelahText.body(size: 13.5),

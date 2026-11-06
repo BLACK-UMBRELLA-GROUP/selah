@@ -33,7 +33,7 @@ class PrivacyIndicator extends StatelessWidget {
       case PrivacyLevel.private:
         dot = SelahColors.privateDot;
         textColor = SelahColors.privateText;
-        label = 'Private. Used only by SELAH.';
+        label = 'Private. Used only by Selah.';
         break;
     }
     return Padding(

@@ -38,7 +38,7 @@ class MembershipRequiredScreen extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              Text('SELAH', style: SelahText.wordmark(size: 24)),
+              Text('Selah', style: SelahText.wordmark(size: 24)),
               const Spacer(),
               Icon(
                 Icons.lock_outline_rounded,
@@ -54,7 +54,7 @@ class MembershipRequiredScreen extends StatelessWidget {
               const SizedBox(height: 10),
               Text(
                 'Your account and saved information are still here. Restore '
-                'or choose a monthly membership to continue using SELAH.',
+                'or choose a monthly membership to continue using Selah.',
                 textAlign: TextAlign.center,
                 style: SelahText.subtext(size: 13.25),
               ),

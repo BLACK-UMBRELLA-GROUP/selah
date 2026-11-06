@@ -1,0 +1,45 @@
+{
+  "feature": "WORDING",
+  "lock": 11,
+  "separate_from_literal_replacements": 195,
+  "formatting_expression_fixes": 3,
+  "new_technical_comparison_literals": [
+    "SELAH",
+    "SELAH",
+    "SELAH"
+  ],
+  "files": [
+    {
+      "file": "SOURCE/lib/widgets/selah_intelligence_card.dart",
+      "before_sha256": "76acdfdf9f56d0a9856168ffb1270a45631d52476bf570d864de0d1218d41fe1",
+      "after_sha256": "9cd1ee973368e41a63121f97eb44ce9afe8f16baa3b0317ed1a5435940472288",
+      "changes": [
+        {
+          "before": "it.label.toUpperCase()",
+          "after": "it.label.toUpperCase().replaceAll('SELAH', 'Selah')",
+          "before_line": 50,
+          "reason": "LOCK11 brand case while preserving uppercase suffix styling"
+        },
+        {
+          "before": "_label.toUpperCase()",
+          "after": "_label.toUpperCase().replaceAll('SELAH', 'Selah')",
+          "before_line": 119,
+          "reason": "LOCK11 brand case while preserving uppercase suffix styling"
+        }
+      ]
+    },
+    {
+      "file": "SOURCE/lib/screens/settings/help_support_screen.dart",
+      "before_sha256": "3c7ceca46168179089be6cc98adc45fab72918ebb91a5471a74d42afd7954d71",
+      "after_sha256": "be39018c28e5d92a88497a777ebe304fa2701140de7ab1c4e1c2db054e056dce",
+      "changes": [
+        {
+          "before": "category.title.toUpperCase()",
+          "after": "category.title.toUpperCase().replaceAll('SELAH', 'Selah')",
+          "before_line": 172,
+          "reason": "LOCK11 category title receives About Selah from existing help content; preserve uppercase nonbrand words"
+        }
+      ]
+    }
+  ]
+}

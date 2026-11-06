@@ -21,11 +21,11 @@ import '../welcome_screen.dart';
 
 const String kIdentityVerificationConsentTitle = 'Verify your identity';
 const String kIdentityVerificationConsentBody =
-    'SELAH checks that every member is a real, unique person. You\'ll '
+    'Selah checks that every member is a real, unique person. You\'ll '
     'photograph your ID document and take a short selfie. Our verification '
     'partner (Sumsub) processes your document and face data on its own '
     'systems to confirm your identity and that you don\'t already have a '
-    'SELAH account — SELAH never stores your document, your selfie, or your '
+    'Selah account — Selah never stores your document, your selfie, or your '
     'face data; we only receive the result. This uses biometric data, and '
     'we need your explicit consent.';
 
@@ -88,7 +88,7 @@ class _InitialIdentityCheckScreenState
     if (_hasOriginalPrincipal) return true;
     setState(() {
       _busy = false;
-      _error = 'Your sign-in has changed. Close and reopen SELAH to continue.';
+      _error = 'Your sign-in has changed. Close and reopen Selah to continue.';
     });
     return false;
   }
@@ -450,7 +450,7 @@ class _InitialIdentityCheckScreenState
       children: [
         Center(
           child: Text(
-            'SELAH',
+            'Selah',
             style: SelahText.wordmark(
               size: 20,
               color: SelahColors.splashWordmark,
@@ -463,7 +463,7 @@ class _InitialIdentityCheckScreenState
         Text('Your sign-in has changed.', style: SelahText.heading(size: 28)),
         const SizedBox(height: 12),
         Text(
-          'Close and reopen SELAH to continue with your current account. '
+          'Close and reopen Selah to continue with your current account. '
           'No verification access has been granted from this page.',
           style: SelahText.body(size: 14.2).copyWith(height: 1.5),
         ),
@@ -480,7 +480,7 @@ class _InitialIdentityCheckScreenState
         Row(
           children: [
             Text(
-              'SELAH',
+              'Selah',
               style: SelahText.wordmark(
                 size: 20,
                 color: SelahColors.splashWordmark,
@@ -587,7 +587,7 @@ class _InitialIdentityCheckScreenState
         children: [
           Center(
             child: Text(
-              'SELAH',
+              'Selah',
               style: SelahText.wordmark(
                 size: 20,
                 color: SelahColors.splashWordmark,
@@ -627,7 +627,7 @@ class _InitialIdentityCheckScreenState
                   onPressed: _continue,
                   semanticLabel: widget.requireDuplicateResolution
                       ? 'Return to Journey'
-                      : 'Continue to SELAH',
+                      : 'Continue to Selah',
                 ),
               )
             else
@@ -635,7 +635,7 @@ class _InitialIdentityCheckScreenState
                 key: const ValueKey('identity-continue'),
                 label: widget.requireDuplicateResolution
                     ? 'Return to Journey'
-                    : 'Continue to SELAH',
+                    : 'Continue to Selah',
                 busy: _busy,
                 onPressed: _continue,
               )
@@ -689,7 +689,7 @@ class _InitialIdentityCheckScreenState
       children: [
         Center(
           child: Text(
-            'SELAH',
+            'Selah',
             style: SelahText.wordmark(
               size: 20,
               color: SelahColors.splashWordmark,
@@ -702,7 +702,7 @@ class _InitialIdentityCheckScreenState
         Text('Verification is required.', style: SelahText.heading(size: 28)),
         const SizedBox(height: 12),
         Text(
-          'Without identity verification, a SELAH account cannot be created '
+          'Without identity verification, a Selah account cannot be created '
           'and the app cannot open. You can return and consent, or delete '
           'this verification attempt.',
           style: SelahText.body(size: 14.2).copyWith(height: 1.5),
@@ -790,7 +790,7 @@ class _InitialIdentityCheckScreenState
       title: 'Verification is unavailable.',
       body:
           'The identity check cannot open right now. Your identity has not '
-          'been verified, and SELAH remains locked. Please try again later.',
+          'been verified, and Selah remains locked. Please try again later.',
       icon: Icons.shield_outlined,
     );
   }
@@ -799,7 +799,7 @@ class _InitialIdentityCheckScreenState
       title: "The identity check couldn't open.",
       body:
           'Your identity has not been verified. Please try opening the '
-          'check again. SELAH remains locked.',
+          'check again. Selah remains locked.',
       icon: Icons.refresh_rounded,
     );
   }
@@ -809,7 +809,7 @@ class _InitialIdentityCheckScreenState
       title: 'The identity check was closed.',
       body:
           'Your identity has not been verified. You can reopen the check '
-          'when you are ready. SELAH remains locked.',
+          'when you are ready. Selah remains locked.',
       icon: Icons.refresh_rounded,
     );
   }
@@ -818,14 +818,14 @@ class _InitialIdentityCheckScreenState
       title: "Your identity isn't verified yet.",
       body:
           'Complete the identity check to continue. If you have already '
-          'submitted it, check for the latest result. SELAH stays locked '
+          'submitted it, check for the latest result. Selah stays locked '
           'until verification is confirmed.',
       icon: Icons.verified_user_outlined,
     ),
     SelahIdentityVerificationResult.verified => (
       title: 'Identity verified.',
       body:
-          'Your verification result has been confirmed. SELAH stores only '
+          'Your verification result has been confirmed. Selah stores only '
           'this result and the minimal provider reference — never your ID '
           'document, selfie or face data.',
       icon: Icons.verified_outlined,
@@ -841,7 +841,7 @@ class _InitialIdentityCheckScreenState
       title: 'A manual review is needed.',
       body:
           'A trained reviewer will check the verification. This does not '
-          'automatically reject or ban you, and SELAH will not reveal any '
+          'automatically reject or ban you, and Selah will not reveal any '
           'other account.',
       icon: Icons.manage_search_outlined,
     ),
@@ -1036,7 +1036,7 @@ class IdentityVerificationPrivacyScreen extends StatelessWidget {
                 Text(
                   'The full Privacy Policy is being prepared. In this flow, '
                   'Sumsub processes the ID document, selfie and face data on '
-                  'its systems. SELAH is designed to retain only the consent '
+                  'its systems. Selah is designed to retain only the consent '
                   'record, provider reference, coarse result, duplicate-review '
                   'flag and timestamps.',
                   style: SelahText.body(size: 14).copyWith(height: 1.5),

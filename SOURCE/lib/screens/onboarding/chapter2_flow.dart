@@ -883,7 +883,7 @@ class _Chapter2FlowState extends State<Chapter2Flow> {
       // the question now sets a location scope, not a radius.
       case 3:
         question =
-            'Would you be happy for SELAH to introduce people outside your preferred area if they appear to be a strong match?';
+            'Would you be happy for Selah to introduce people outside your preferred area if they appear to be a strong match?';
         content = FlexibilityChoice(
           greenText: "Yes, I'd be happy to consider them.",
           yellowText: 'Maybe, depending on the person.',

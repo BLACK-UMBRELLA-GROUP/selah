@@ -61,7 +61,7 @@ class PrivacyAndDataScreen extends StatelessWidget {
             padding: const EdgeInsets.fromLTRB(24, 8, 24, 40),
             children: [
               const _Lead(
-                'SELAH collects what it needs to introduce you properly, and '
+                'Selah collects what it needs to introduce you properly, and '
                 'nothing for advertising.',
               ),
               const SizedBox(height: 26),
@@ -69,7 +69,7 @@ class PrivacyAndDataScreen extends StatelessWidget {
               const _Block(
                 heading: 'Cookies and tracking',
                 body:
-                    'The SELAH app uses no cookies, no analytics and no '
+                    'The Selah app uses no cookies, no analytics and no '
                     'advertising or attribution services. Nothing you do in '
                     'the app is measured by a third party, so there is '
                     'nothing here to switch off.\n\n'
@@ -80,7 +80,7 @@ class PrivacyAndDataScreen extends StatelessWidget {
               const _Block(
                 heading: 'How you sign in',
                 body:
-                    'Through Apple or Google. SELAH never sees or stores a '
+                    'Through Apple or Google. Selah never sees or stores a '
                     'password, and does not ask for your phone number.',
               ),
 

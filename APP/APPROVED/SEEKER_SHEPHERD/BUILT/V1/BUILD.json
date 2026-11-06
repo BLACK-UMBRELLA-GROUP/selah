@@ -1,0 +1,149 @@
+{
+  "queue_lines": [
+    13
+  ],
+  "status": "BUILT",
+  "action": "OA-SELAH-003",
+  "source_commit": "dbcb2a34d706cbcba4f26c0004e9e53bd343068e",
+  "flutter_version": "3.44.2",
+  "dart_version": "3.12.2",
+  "build_mode": "debug Flutter widget test; no native build/install",
+  "receipt_created_utc": "2026-11-06T19:31:02.505127+00:00",
+  "built_from": [
+    "APP/APPROVED/SEEKER_SHEPHERD/BRIEFS/BUILD_BRIEF_2026-11-06_V1.md"
+  ],
+  "viewport_logical": [
+    430,
+    932
+  ],
+  "pixel_ratio": 3,
+  "images": [
+    {
+      "file": "L12_seeker_shepherd_tab__access_didnt_load__build.png",
+      "bytes": 224748,
+      "width": 1290,
+      "height": 2796,
+      "sha256": "f79a4508b381c11a8e75b94f41117af310cc0e750f88fa3fe25e2e62320ce63a",
+      "captured_file_mtime_utc": "2026-11-06T19:16:57.884861+00:00"
+    },
+    {
+      "file": "L12_seeker_shepherd_tab__access_didnt_load__master_beside_build.png",
+      "bytes": 476528,
+      "width": 2580,
+      "height": 2796,
+      "sha256": "10fa343909f5431bed0f051a80414c88d20133bb85c390e6f1235a39ed528ee8",
+      "captured_file_mtime_utc": "2026-11-06T19:16:58.231130+00:00"
+    },
+    {
+      "file": "L12_seeker_shepherd_tab__access_loading__build.png",
+      "bytes": 228017,
+      "width": 1290,
+      "height": 2796,
+      "sha256": "91048063de3e73e9281f374efe7f1abe08b3cf8430433533fbc2bdd74f5257ad",
+      "captured_file_mtime_utc": "2026-11-06T19:16:56.849030+00:00"
+    },
+    {
+      "file": "L12_seeker_shepherd_tab__access_loading__master_beside_build.png",
+      "bytes": 488607,
+      "width": 2580,
+      "height": 2796,
+      "sha256": "2741b9543f1f66531c1448c4764c4e631d2a23969a75286a24b7cf9922105c34",
+      "captured_file_mtime_utc": "2026-11-06T19:16:57.193970+00:00"
+    },
+    {
+      "file": "L12_seeker_shepherd_tab__bottom__build.png",
+      "bytes": 239999,
+      "width": 1290,
+      "height": 2796,
+      "sha256": "729b31bbd92ca0ec352d548bfffd2796ca3a699f568b74aecc5527561c3ea157",
+      "captured_file_mtime_utc": "2026-11-06T19:16:54.914895+00:00"
+    },
+    {
+      "file": "L12_seeker_shepherd_tab__bottom__master_beside_build.png",
+      "bytes": 495351,
+      "width": 2580,
+      "height": 2796,
+      "sha256": "2e7d353510d5cd19a516c0c46c3ad62ec2dfa4aa6d8f3dc3765f6eff94a2c93b",
+      "captured_file_mtime_utc": "2026-11-06T19:16:55.235319+00:00"
+    },
+    {
+      "file": "L12_seeker_shepherd_tab__no_active_journeys__build.png",
+      "bytes": 237562,
+      "width": 1290,
+      "height": 2796,
+      "sha256": "6ba4b4a6e09456e220b5a71752c4c188c1036589c334231d71ba2aa99f4deecc",
+      "captured_file_mtime_utc": "2026-11-06T19:16:58.806492+00:00"
+    },
+    {
+      "file": "L12_seeker_shepherd_tab__no_active_journeys__master_beside_build.png",
+      "bytes": 501629,
+      "width": 2580,
+      "height": 2796,
+      "sha256": "cdb40a1939d09fd46a4b925d57fc85e5445e4bda63ab3cdf719e47ddab51cec2",
+      "captured_file_mtime_utc": "2026-11-06T19:16:59.147794+00:00"
+    },
+    {
+      "file": "L12_seeker_shepherd_tab__nothing_yet__build.png",
+      "bytes": 332451,
+      "width": 1290,
+      "height": 2796,
+      "sha256": "1040aedd94fb9f7f751ead8bca5def41bd40c8dada07f0a4dceac480629d998a",
+      "captured_file_mtime_utc": "2026-11-06T19:16:55.898700+00:00"
+    },
+    {
+      "file": "L12_seeker_shepherd_tab__nothing_yet__master_beside_build.png",
+      "bytes": 662190,
+      "width": 2580,
+      "height": 2796,
+      "sha256": "a1458acc4781f9460f2ddf587e697855fab63d7b2059665627edd4aacc57140d",
+      "captured_file_mtime_utc": "2026-11-06T19:16:56.263783+00:00"
+    },
+    {
+      "file": "L12_seeker_shepherd_tab__top__build.png",
+      "bytes": 319896,
+      "width": 1290,
+      "height": 2796,
+      "sha256": "a888da84c6b8d4dc30418751ef3102856c6c33ec11471b8bd748ced66e918afc",
+      "captured_file_mtime_utc": "2026-11-06T19:16:54.056664+00:00"
+    },
+    {
+      "file": "L12_seeker_shepherd_tab__top__master_beside_build.png",
+      "bytes": 633833,
+      "width": 2580,
+      "height": 2796,
+      "sha256": "d53883e40b62e05a5731cf6867500cf0012d5525d76329627bb0cbc819de86a6",
+      "captured_file_mtime_utc": "2026-11-06T19:16:54.408672+00:00"
+    }
+  ],
+  "image_bytes": 4840811,
+  "comparison": "As-built evidence with differences; not a pixel MATCH claim.",
+  "notes": "Actual September link date, real prayer dates and12Oct Circle body; no fabricated Yesterday/example message. Existing photo crop, private rail, current badge and minor text/scroll offsets differ. Recent golden dates are calendar-dependent; same-day replay verified.",
+  "checks": {
+    "pure_model_checks": 1170,
+    "functional_before_wording": {
+      "passed": 281,
+      "skipped": 1
+    },
+    "flutter_analyze": {
+      "errors": 0,
+      "warnings": 0,
+      "existing_infos": 10
+    },
+    "cached_analysis": {
+      "files": 390,
+      "errors": 0,
+      "warnings": 0,
+      "existing_infos": 1
+    },
+    "boundaries": {
+      "passed": 20565,
+      "findings": 0
+    }
+  },
+  "limits": [
+    "No backend/server, native installation, phone launch or Founder visual acceptance proof.",
+    "320x568 at200percent text remains an explicitly undecided Larger Text design (24pixel header overflow); no redesign/suppression."
+  ],
+  "founder_decisions": "Recorded LOCKs and file answers Q8–Q13 applied; no new Founder decision requested.",
+  "native_or_dependency_changes": false
+}

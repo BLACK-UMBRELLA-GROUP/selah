@@ -40,7 +40,7 @@ class OnboardingTopBar extends StatelessWidget {
             if (previewStyle != null) ...[
               Center(
                 child: Text(
-                  'SELAH',
+                  'Selah',
                   style: SelahText.wordmark(
                     size: 17,
                     color: SelahColors.splashWordmark,

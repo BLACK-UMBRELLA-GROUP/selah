@@ -402,7 +402,7 @@ void main() {
       expect(deck.invitationSent!(person), isFalse);
       expect(invite.pending, isTrue);
 
-      await _tab(tester, 'My SELAH');
+      await _tab(tester, 'My Selah');
       await _tap(tester, find.text('View requests').first);
       await _tap(tester, _key('concept_request_draft-amira_header'));
       await _tap(tester, _key('draft_accept_draft-amira'));
@@ -437,7 +437,7 @@ void main() {
       await _tab(tester, 'Shepherd');
       expect(_key('invite_pending_card'), findsNothing);
       expect(find.textContaining('David', findRichText: true), findsWidgets);
-      await _tab(tester, 'My SELAH');
+      await _tab(tester, 'My Selah');
       expect(
         find.text('David Okafor accepted. Your Shepherd walks with you now.'),
         findsOneWidget,

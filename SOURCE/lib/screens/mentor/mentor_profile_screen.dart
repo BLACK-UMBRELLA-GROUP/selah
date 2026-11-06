@@ -332,7 +332,7 @@ class _MentorProfileScreenState extends State<MentorProfileScreen> {
             ),
             Builder(
               builder: (inviteContext) => _SettingsRow(
-                label: 'Invite someone to SELAH',
+                label: 'Invite someone to Selah',
                 onTap: () => SelahAppInvite.share(inviteContext),
               ),
             ),

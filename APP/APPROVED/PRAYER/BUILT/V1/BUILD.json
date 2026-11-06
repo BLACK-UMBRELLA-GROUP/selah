@@ -1,0 +1,165 @@
+{
+  "queue_lines": [
+    11
+  ],
+  "status": "BUILT",
+  "action": "OA-SELAH-003",
+  "source_commit": "dbcb2a34d706cbcba4f26c0004e9e53bd343068e",
+  "flutter_version": "3.44.2",
+  "dart_version": "3.12.2",
+  "build_mode": "debug Flutter widget test; no native build/install",
+  "receipt_created_utc": "2026-11-06T19:31:02.501896+00:00",
+  "built_from": [
+    "APP/APPROVED/PRAYER/BRIEFS/BUILD_BRIEF_2026-11-06_V1.md"
+  ],
+  "viewport_logical": [
+    430,
+    932
+  ],
+  "pixel_ratio": 3,
+  "images": [
+    {
+      "file": "L10_seeker_ask_for_prayer__build.png",
+      "bytes": 142544,
+      "width": 1290,
+      "height": 2796,
+      "sha256": "76dc54d7d911c12702424140a68614f0cfb516d9d3bde9ae73cacd84e9fb2c10",
+      "captured_file_mtime_utc": "2026-11-06T18:56:51.662636+00:00"
+    },
+    {
+      "file": "L10_seeker_ask_for_prayer__didnt_send__build.png",
+      "bytes": 170843,
+      "width": 1290,
+      "height": 2796,
+      "sha256": "197c6625cd1c33839e3d3a84223740919139cb0fc08bba8499b096fe77489ef8",
+      "captured_file_mtime_utc": "2026-11-06T18:56:53.046559+00:00"
+    },
+    {
+      "file": "L10_seeker_ask_for_prayer__didnt_send__master_beside_build.png",
+      "bytes": 357815,
+      "width": 2580,
+      "height": 2796,
+      "sha256": "0d686590046cbb2f0aca1228b19860c3cfa7c33f1415050c43a69bd78f274019",
+      "captured_file_mtime_utc": "2026-11-06T18:56:53.323431+00:00"
+    },
+    {
+      "file": "L10_seeker_ask_for_prayer__master_beside_build.png",
+      "bytes": 301394,
+      "width": 2580,
+      "height": 2796,
+      "sha256": "e77dfa46d3dec6b8d3f5823bf75f2fdbfc5d06a36427ad5f05086e2b98f6b79b",
+      "captured_file_mtime_utc": "2026-11-06T18:56:51.972671+00:00"
+    },
+    {
+      "file": "L10_seeker_ask_for_prayer__sending__build.png",
+      "bytes": 141189,
+      "width": 1290,
+      "height": 2796,
+      "sha256": "2ff495ba51bb135764bb24f0685206ea0f72469895df7f95a212de7889615b3b",
+      "captured_file_mtime_utc": "2026-11-06T18:56:52.389347+00:00"
+    },
+    {
+      "file": "L10_seeker_ask_for_prayer__sending__master_beside_build.png",
+      "bytes": 292954,
+      "width": 2580,
+      "height": 2796,
+      "sha256": "e83337d493e94a593ba3820e801c1d7e4a0f2283b3f8dba51d35fcae2b386be9",
+      "captured_file_mtime_utc": "2026-11-06T18:56:52.662036+00:00"
+    },
+    {
+      "file": "L10_seeker_my_selah__prayed_update__build.png",
+      "bytes": 169668,
+      "width": 1290,
+      "height": 2796,
+      "sha256": "b481d59af961dfeb933e585e296fac174a9f30127c9332f43291fc8a687b1211",
+      "captured_file_mtime_utc": "2026-11-06T18:56:55.824207+00:00"
+    },
+    {
+      "file": "L10_seeker_my_selah__prayed_update__master_beside_build.png",
+      "bytes": 392805,
+      "width": 2580,
+      "height": 2796,
+      "sha256": "60bdc8d7e819a6ddc300d7bb888572089cd341eef27fc8177e8e1bc5cf8e7991",
+      "captured_file_mtime_utc": "2026-11-06T18:56:56.117560+00:00"
+    },
+    {
+      "file": "L10_shepherd_dashboard__no_requests__build.png",
+      "bytes": 294515,
+      "width": 1290,
+      "height": 2796,
+      "sha256": "95f9ea39600492dca7cce06bd8b83e72419387c639af07e29d04a6701a544b7d",
+      "captured_file_mtime_utc": "2026-11-06T18:56:55.100352+00:00"
+    },
+    {
+      "file": "L10_shepherd_dashboard__no_requests__master_beside_build.png",
+      "bytes": 506547,
+      "width": 2580,
+      "height": 2796,
+      "sha256": "eef24aad981102e669350ae5f0bebffbd35179e06472541dba2206360c1e412d",
+      "captured_file_mtime_utc": "2026-11-06T18:56:55.416685+00:00"
+    },
+    {
+      "file": "L10_shepherd_dashboard__prayed__build.png",
+      "bytes": 286529,
+      "width": 1290,
+      "height": 2796,
+      "sha256": "ed5055b9ec522a5d84e315f2271f18319caf521d1ad80c1f300f009258446f35",
+      "captured_file_mtime_utc": "2026-11-06T18:56:54.413029+00:00"
+    },
+    {
+      "file": "L10_shepherd_dashboard__prayed__master_beside_build.png",
+      "bytes": 543593,
+      "width": 2580,
+      "height": 2796,
+      "sha256": "fa2940d56f77afe8bffbc2d09d73d2f4f3db6232710708407aad7d731ceb7d7c",
+      "captured_file_mtime_utc": "2026-11-06T18:56:54.733618+00:00"
+    },
+    {
+      "file": "L10_shepherd_dashboard__requests__build.png",
+      "bytes": 285878,
+      "width": 1290,
+      "height": 2796,
+      "sha256": "2412d64260f5220b1a87f7b47f514a0cf357f5584e06a88ae9f17f7210b68dd4",
+      "captured_file_mtime_utc": "2026-11-06T18:56:53.684174+00:00"
+    },
+    {
+      "file": "L10_shepherd_dashboard__requests__master_beside_build.png",
+      "bytes": 543040,
+      "width": 2580,
+      "height": 2796,
+      "sha256": "b8f90861a212d56f811009e9dd305962ad2e799088eff2f3f9ae04d34c1c94e0",
+      "captured_file_mtime_utc": "2026-11-06T18:56:54.011840+00:00"
+    }
+  ],
+  "image_bytes": 4429314,
+  "comparison": "As-built evidence with differences; not a pixel MATCH claim.",
+  "notes": "Four locked seeded requests; real current Main Shepherd names. Composer header/field baseline about17logical lower and Send about9logical higher than master; Dashboard protected header/selector and scrolled My Selah retained.",
+  "checks": {
+    "pure_model_checks": 1170,
+    "functional_before_wording": {
+      "passed": 281,
+      "skipped": 1
+    },
+    "flutter_analyze": {
+      "errors": 0,
+      "warnings": 0,
+      "existing_infos": 10
+    },
+    "cached_analysis": {
+      "files": 390,
+      "errors": 0,
+      "warnings": 0,
+      "existing_infos": 1
+    },
+    "boundaries": {
+      "passed": 20565,
+      "findings": 0
+    }
+  },
+  "limits": [
+    "No backend/server, native installation, phone launch or Founder visual acceptance proof.",
+    "320x568 at200percent text remains an explicitly undecided Larger Text design (24pixel header overflow); no redesign/suppression."
+  ],
+  "founder_decisions": "Recorded LOCKs and file answers Q8–Q13 applied; no new Founder decision requested.",
+  "native_or_dependency_changes": false
+}

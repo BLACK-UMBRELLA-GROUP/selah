@@ -190,7 +190,7 @@ class _HiddenProfilesScreenState extends State<HiddenProfilesScreen> {
       title: 'Unhide ${profile.firstName}?',
       body:
           'You may see each other in Browse again. Any report stays with '
-          'SELAH, and any Journey ended by the hide will not be restored.',
+          'Selah, and any Journey ended by the hide will not be restored.',
       primaryLabel: 'Unhide',
       secondaryLabel: 'Cancel',
     );

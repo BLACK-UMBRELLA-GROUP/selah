@@ -167,7 +167,7 @@ class _SeekerPostIdentityChoiceScreenState
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
                   Text(
-                    'SELAH',
+                    'Selah',
                     textAlign: TextAlign.center,
                     style: SelahText.wordmark(
                       size: 20,
@@ -211,7 +211,7 @@ class _SeekerPostIdentityChoiceScreenState
                           const SizedBox(height: 14),
                           Text(
                             'Would you like to keep building your profile now, '
-                            'or explore My SELAH and finish later?',
+                            'or explore My Selah and finish later?',
                             textAlign: previewStyle?.centered == true
                                 ? TextAlign.center
                                 : TextAlign.left,
@@ -257,7 +257,7 @@ class _SeekerPostIdentityChoiceScreenState
                                 ),
                                 const SizedBox(height: 10),
                                 Text(
-                                  'Your progress is waiting in My SELAH. Your '
+                                  'Your progress is waiting in My Selah. Your '
                                   'profile stays hidden and Discovery and '
                                   'Journeys remain locked until your setup is '
                                   'complete.',
@@ -328,7 +328,7 @@ class _SeekerPostIdentityChoiceScreenState
                       textStyle: SelahText.button(size: 13),
                     ),
                     child: const Text(
-                      'Go to My SELAH · finish later',
+                      'Go to My Selah · finish later',
                       textAlign: TextAlign.center,
                     ),
                   ),
@@ -581,7 +581,7 @@ class _SeekerOnboardingOverviewScreenState
         eyebrow: 'COMPLETE YOUR PROFILE',
         title: 'Continue when it suits you.',
         description:
-            'Your SELAH account is ready. Finish the profile journey in your '
+            'Your Selah account is ready. Finish the profile journey in your '
             'own time; your saved progress will be waiting here.',
         items: [
           _OverviewItem(
@@ -627,7 +627,7 @@ class _SeekerOnboardingOverviewScreenState
           ),
         ],
         note:
-            'You can use SELAH now. Discovery and Journeys unlock only after '
+            'You can use Selah now. Discovery and Journeys unlock only after '
             'your profile journey is complete.',
         buttonLabel: 'Seeker Setup Ready',
         onContinue: () {
@@ -810,13 +810,13 @@ class _ShepherdOnboardingOverviewScreenState
           const _OverviewItem(
             number: '',
             title: 'Choose your membership',
-            description: 'Basic, Shepherd One or SELAH Family',
+            description: 'Basic, Shepherd One or Selah Family',
             state: 'Your choice',
           ),
         const _OverviewItem(
           number: '',
           title: 'Verify your identity',
-          description: 'A private identity check before entering SELAH',
+          description: 'A private identity check before entering Selah',
           state: 'Required',
         ),
         const _OverviewItem(
@@ -900,7 +900,7 @@ class _AccountPathOverview extends StatelessWidget {
                           ),
                           const Spacer(),
                           Text(
-                            'SELAH',
+                            'Selah',
                             style: SelahText.wordmark(
                               size: 18,
                               color: SelahColors.splashWordmark,

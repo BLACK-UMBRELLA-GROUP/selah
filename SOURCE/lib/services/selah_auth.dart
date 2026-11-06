@@ -698,7 +698,7 @@ class SelahAuth {
       return 'Backup sign-in is not enabled on this build yet.';
     }
     if (message.contains('already') || message.contains('identity')) {
-      return 'That sign-in is already connected to a SELAH account.';
+      return 'That sign-in is already connected to a Selah account.';
     }
     return _mapError(error);
   }
@@ -716,7 +716,7 @@ class SelahAuth {
     if (message.contains('already') ||
         message.contains('exists') ||
         message.contains('registered')) {
-      return 'That email is already connected to another SELAH account.';
+      return 'That email is already connected to another Selah account.';
     }
     return _mapError(error);
   }

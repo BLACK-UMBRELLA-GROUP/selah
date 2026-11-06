@@ -158,7 +158,7 @@ class SignupMembershipChoiceScreen extends StatelessWidget {
           _ChoiceCard(
             key: const ValueKey('signup_membership_family'),
             icon: Icons.groups_outlined,
-            title: 'SELAH Family',
+            title: 'Selah Family',
             price: _familyIntroOfferPreview
                 ? '${SelahMembershipCatalog.pounds(SelahMembershipCatalog.familyIntroMonthPerPlacePence)} per person for the first month'
                 : 'Monthly places for Seekers and Shepherds',

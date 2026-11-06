@@ -20,18 +20,18 @@ final List<SelahHelpCategory> selahRequestHelpCategories = List.unmodifiable([
     ),
     SelahHelpEntry(
       'Where can I find my invitations?',
-      'Open My SELAH, then Journey requests. Received and Sent keep the '
+      'Open My Selah, then Journey requests. Received and Sent keep the '
           'two directions separate; Introductions has its own tab.',
     ),
     SelahHelpEntry(
-      'How do I find someone by SELAH Code?',
+      'How do I find someone by Selah Code?',
       'Open the three dots in Browse, then Scan. Scan their code or enter '
           'it and choose Check code. Confirm the person, then choose View '
           'profile. Finding a profile does not send an invitation.',
     ),
     SelahHelpEntry(
       'What happens when a Journey ends?',
-      'Ended Journeys live in My SELAH as history, not as invitations to '
+      'Ended Journeys live in My Selah as history, not as invitations to '
           'restart. They do not reserve an active Journey place. A blocked '
           'person appears as User not found instead of revealing their '
           'profile or conversation.',

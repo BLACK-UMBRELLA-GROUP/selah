@@ -262,14 +262,14 @@ class MySelahDesignKit {
             heading(
               data.allInsightsHidden
                   ? 'These Insights are hidden in this preview'
-                  : 'Insights will grow with your SELAH experience',
+                  : 'Insights will grow with your Selah experience',
               size: 28,
             ),
             const SizedBox(height: 18),
             body(
               data.allInsightsHidden
                   ? 'Your preview choices are not saved to your account.'
-                  : 'SELAH will only show an Insight when reliable information genuinely supports it. We will not guess or fill this page with generic statistics.',
+                  : 'Selah will only show an Insight when reliable information genuinely supports it. We will not guess or fill this page with generic statistics.',
             ),
           ],
         ),

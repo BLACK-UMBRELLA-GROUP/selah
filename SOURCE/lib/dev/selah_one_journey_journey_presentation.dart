@@ -1204,7 +1204,7 @@ class SelahConceptJourneyDecisionPresentation extends StatelessWidget {
                         Text(
                           completionConfirmed
                               ? stage.completionLine
-                              : 'SELAH will first confirm that both Main Shepherds are present.',
+                              : 'Selah will first confirm that both Main Shepherds are present.',
                           style: SelahText.subtext(size: 13.5),
                         ),
                       ],

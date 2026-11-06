@@ -344,7 +344,7 @@ class _ProfileReadyScreenState extends State<ProfileReadyScreen> {
                   child: Column(
                     children: [
                       Text(
-                        'SELAH',
+                        'Selah',
                         style: SelahText.wordmark(
                           size: 20,
                           color: SelahColors.splashWordmark,
@@ -401,7 +401,7 @@ class _ProfileReadyScreenState extends State<ProfileReadyScreen> {
           Text('Your sign-in has changed.', style: SelahText.heading(size: 28)),
           const SizedBox(height: 16),
           Text(
-            'Return to SELAH to continue with the current account.',
+            'Return to Selah to continue with the current account.',
             style: SelahText.body(size: 15),
             textAlign: TextAlign.center,
           ),
@@ -430,7 +430,7 @@ class _ProfileReadyScreenState extends State<ProfileReadyScreen> {
               ? 'This is a local preview. No answers, verification result or '
                     'publication are saved to your account.'
               : live
-              ? 'Your setup is confirmed. You can return to My SELAH.'
+              ? 'Your setup is confirmed. You can return to My Selah.'
               : 'Check your profile and choices before you go live. You can '
                     'also leave your profile hidden and return later.',
           textAlign: align,
@@ -539,7 +539,7 @@ class _ProfileReadyScreenState extends State<ProfileReadyScreen> {
         ),
         style: style?.primaryButtonStyle,
         child: Text(
-          'Return to SELAH',
+          'Return to Selah',
           style: SelahText.button(color: SelahColors.luxuryDarkPurple),
         ),
       );
@@ -593,7 +593,7 @@ class _ProfileReadyScreenState extends State<ProfileReadyScreen> {
           key: const ValueKey('profile_review_my_selah'),
           onPressed: _busy ? null : _openHome,
           child: Text(
-            'Return to My SELAH',
+            'Return to My Selah',
             style: SelahText.button(size: 14, color: SelahColors.journeyGold),
           ),
         ),

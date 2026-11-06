@@ -383,7 +383,7 @@ class _RoleSelectionScreenState extends State<RoleSelectionScreen>
       Row(
         children: [
           Text(
-            'SELAH',
+            'Selah',
             style: SelahText.wordmark(
               size: 20,
               color: SelahColors.splashWordmark,
@@ -438,14 +438,14 @@ class _RoleSelectionScreenState extends State<RoleSelectionScreen>
         SizedBox(
           width: double.infinity,
           child: Text(
-            'How will you use SELAH first?',
+            'How will you use Selah first?',
             textAlign: TextAlign.center,
             style: SelahText.heading(size: previewStyle!.titleSize),
           ),
         )
       else
         Text(
-          'How will you use SELAH first?',
+          'How will you use Selah first?',
           style: SelahText.heading(size: previewStyle?.titleSize ?? 28),
         ),
       SizedBox(height: 10),

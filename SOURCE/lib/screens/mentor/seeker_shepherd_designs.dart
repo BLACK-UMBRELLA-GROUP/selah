@@ -2571,7 +2571,7 @@ class _ShepherdHistoryConsentControlState
           ),
         ),
         if (_busy)
-          Text('Confirming with SELAH…', style: SelahText.subtext(size: 11)),
+          Text('Confirming with Selah…', style: SelahText.subtext(size: 11)),
         if (!_available) ...[
           const SizedBox(height: 8),
           SelahErrorBanner(

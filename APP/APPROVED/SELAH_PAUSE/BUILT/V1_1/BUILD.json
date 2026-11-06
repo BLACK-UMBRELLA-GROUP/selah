@@ -1,0 +1,101 @@
+{
+  "queue_lines": [
+    8
+  ],
+  "status": "BUILT",
+  "action": "OA-SELAH-003",
+  "source_commit": "dbcb2a34d706cbcba4f26c0004e9e53bd343068e",
+  "flutter_version": "3.44.2",
+  "dart_version": "3.12.2",
+  "build_mode": "debug Flutter widget test; no native build/install",
+  "receipt_created_utc": "2026-11-06T19:31:02.496253+00:00",
+  "built_from": [
+    "APP/APPROVED/SELAH_PAUSE/BRIEFS/BUILD_BRIEF_2026-11-06_V1.md"
+  ],
+  "viewport_logical": [
+    430,
+    932
+  ],
+  "pixel_ratio": 3,
+  "images": [
+    {
+      "file": "L07_pause_replace__build.png",
+      "bytes": 146033,
+      "width": 1290,
+      "height": 2796,
+      "sha256": "ae0ad5eb02ae44c63230c0a02a85db84e1590761e413ed23e16ff76cad0264f2",
+      "captured_file_mtime_utc": "2026-11-06T18:36:57.854973+00:00"
+    },
+    {
+      "file": "L07_pause_replace__didnt_go_through__build.png",
+      "bytes": 178059,
+      "width": 1290,
+      "height": 2796,
+      "sha256": "9eb49ce9c777aaf271255d5f9da9a6334998236fe891c9430bdb535061c2791f",
+      "captured_file_mtime_utc": "2026-11-06T18:36:59.387862+00:00"
+    },
+    {
+      "file": "L07_pause_replace__didnt_go_through__master_beside_build.png",
+      "bytes": 370134,
+      "width": 2580,
+      "height": 2796,
+      "sha256": "3d63918d52d1b987f3121a11303487e4ca6fcb96e4d699eb350af6b88d145bbd",
+      "captured_file_mtime_utc": "2026-11-06T18:36:59.697696+00:00"
+    },
+    {
+      "file": "L07_pause_replace__ending__build.png",
+      "bytes": 142347,
+      "width": 1290,
+      "height": 2796,
+      "sha256": "d414e97fd0c798b2037d08200055077c4d00a0c9a2a4f0ed0cadf60321c558f8",
+      "captured_file_mtime_utc": "2026-11-06T18:36:58.641599+00:00"
+    },
+    {
+      "file": "L07_pause_replace__ending__master_beside_build.png",
+      "bytes": 296040,
+      "width": 2580,
+      "height": 2796,
+      "sha256": "fa46d459ea5295573b7c89a35f620fdfa3d845129c09186beb714e8fbfb907b0",
+      "captured_file_mtime_utc": "2026-11-06T18:36:58.918366+00:00"
+    },
+    {
+      "file": "L07_pause_replace__master_beside_build.png",
+      "bytes": 303894,
+      "width": 2580,
+      "height": 2796,
+      "sha256": "b513ea1904f5f2e45c3768c892a5c44af28e76661608b8b6b51bde0e69297fd0",
+      "captured_file_mtime_utc": "2026-11-06T18:36:58.155638+00:00"
+    }
+  ],
+  "image_bytes": 1436507,
+  "comparison": "As-built evidence with differences; not a pixel MATCH claim.",
+  "notes": "V4/Q10: atomic local replacement; retained service paths unchanged. Three updated Replace pairs; seven earlier applicable pairs remain in V1.",
+  "checks": {
+    "pure_model_checks": 1170,
+    "functional_before_wording": {
+      "passed": 281,
+      "skipped": 1
+    },
+    "flutter_analyze": {
+      "errors": 0,
+      "warnings": 0,
+      "existing_infos": 10
+    },
+    "cached_analysis": {
+      "files": 390,
+      "errors": 0,
+      "warnings": 0,
+      "existing_infos": 1
+    },
+    "boundaries": {
+      "passed": 20565,
+      "findings": 0
+    }
+  },
+  "limits": [
+    "No backend/server, native installation, phone launch or Founder visual acceptance proof.",
+    "320x568 at200percent text remains an explicitly undecided Larger Text design (24pixel header overflow); no redesign/suppression."
+  ],
+  "founder_decisions": "Recorded LOCKs and file answers Q8–Q13 applied; no new Founder decision requested.",
+  "native_or_dependency_changes": false
+}

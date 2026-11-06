@@ -20,9 +20,9 @@ class SelahAppInvite {
     await SelahInteractionStyle.emitSelectionHaptic();
     await SharePlus.instance.share(
       ShareParams(
-        subject: 'Discover SELAH',
+        subject: 'Discover Selah',
         text:
-            'Discover SELAH — a marriage Journey built for Seekers and '
+            'Discover Selah — a marriage Journey built for Seekers and '
             'Shepherds.\n\n$website',
         sharePositionOrigin: origin,
       ),

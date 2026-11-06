@@ -49,13 +49,13 @@ extension SelahErrorKindContent on SelahErrorKind {
       secondaryLabel: 'Return home',
     ),
     SelahErrorKind.offline => const SelahErrorContent(
-      title: 'We couldn’t connect to SELAH.',
+      title: 'We couldn’t connect to Selah.',
       message: 'Check your connection, or try again shortly.',
       primaryLabel: 'Try again',
       secondaryLabel: 'Return to welcome',
     ),
     SelahErrorKind.serviceUnavailable => const SelahErrorContent(
-      title: 'SELAH is taking a moment.',
+      title: 'Selah is taking a moment.',
       message: 'We’re temporarily unavailable. Please try again shortly.',
       primaryLabel: 'Try again',
       secondaryLabel: 'Return home',

@@ -1,0 +1,181 @@
+{
+  "queue_lines": [
+    20
+  ],
+  "status": "BUILT",
+  "action": "OA-SELAH-003",
+  "source_commit": "dbcb2a34d706cbcba4f26c0004e9e53bd343068e",
+  "flutter_version": "3.44.2",
+  "dart_version": "3.12.2",
+  "build_mode": "debug Flutter widget test; no native build/install",
+  "receipt_created_utc": "2026-11-06T19:31:02.522770+00:00",
+  "built_from": [
+    "APP/APPROVED/YOUR_VALUES/BRIEFS/BUILD_BRIEF_2026-11-06_V1.md"
+  ],
+  "viewport_logical": [
+    430,
+    932
+  ],
+  "pixel_ratio": 3,
+  "images": [
+    {
+      "file": "L17_values_overview__build.png",
+      "bytes": 202904,
+      "width": 1290,
+      "height": 2796,
+      "sha256": "28f5b7d3db06de327b8bb76dff2f06dd4d481ff8488e31c36d2b027e7c3a4e32",
+      "captured_file_mtime_utc": "2026-11-06T19:24:40.873157+00:00"
+    },
+    {
+      "file": "L17_values_overview__master_beside_build.png",
+      "bytes": 424192,
+      "width": 2580,
+      "height": 2796,
+      "sha256": "41480ff3daa8b6a913b75c0139a1d2025067cc52b3a3d4201fe298b6e18e6031",
+      "captured_file_mtime_utc": "2026-11-06T19:24:41.185362+00:00"
+    },
+    {
+      "file": "L17_values_overview__part_done__build.png",
+      "bytes": 207925,
+      "width": 1290,
+      "height": 2796,
+      "sha256": "f39be40a9b8ac615155371a8a70fcce58ceb88d4355817817df8c3ea39c5c730",
+      "captured_file_mtime_utc": "2026-11-06T19:24:42.424978+00:00"
+    },
+    {
+      "file": "L17_values_overview__part_done__master_beside_build.png",
+      "bytes": 434448,
+      "width": 2580,
+      "height": 2796,
+      "sha256": "631f7a23eab3bb4898913a1e4163aa50132c98c4a442be895ea278ad84251a5b",
+      "captured_file_mtime_utc": "2026-11-06T19:24:42.717869+00:00"
+    },
+    {
+      "file": "L17_values_part__didnt_save__build.png",
+      "bytes": 201767,
+      "width": 1290,
+      "height": 2796,
+      "sha256": "956e37cc8093ce92dd320d1394fb784fd0485fece7a584e065c027d52f915445",
+      "captured_file_mtime_utc": "2026-11-06T19:24:48.222087+00:00"
+    },
+    {
+      "file": "L17_values_part__didnt_save__master_beside_build.png",
+      "bytes": 422170,
+      "width": 2580,
+      "height": 2796,
+      "sha256": "0c27e2dde255e398f48d961d6aa62902b08dd5248b86f0644b0b56feba57ff94",
+      "captured_file_mtime_utc": "2026-11-06T19:24:48.503018+00:00"
+    },
+    {
+      "file": "L17_values_part__saving__build.png",
+      "bytes": 173918,
+      "width": 1290,
+      "height": 2796,
+      "sha256": "f4b5cf6b1756bbe05d3858cade7ea96152c732232575feb203c731d84d39aa04",
+      "captured_file_mtime_utc": "2026-11-06T19:24:47.104191+00:00"
+    },
+    {
+      "file": "L17_values_part__saving__master_beside_build.png",
+      "bytes": 363359,
+      "width": 2580,
+      "height": 2796,
+      "sha256": "8fb6a1de20199c98d5066961118f5f9452c4ef70680a17ab40fdb07c5d0cc9c4",
+      "captured_file_mtime_utc": "2026-11-06T19:24:47.391826+00:00"
+    },
+    {
+      "file": "L17_values_question__build.png",
+      "bytes": 132447,
+      "width": 1290,
+      "height": 2796,
+      "sha256": "0ce85f1d6c09396c0eedf4301650c1df575a1e7a3fa3f0766cea3a963d42e762",
+      "captured_file_mtime_utc": "2026-11-06T19:24:43.415886+00:00"
+    },
+    {
+      "file": "L17_values_question__chosen__build.png",
+      "bytes": 133090,
+      "width": 1290,
+      "height": 2796,
+      "sha256": "ebc862d2fe02f9513e433e4df52f281702dbac0442ced6819cbfa827e828f754",
+      "captured_file_mtime_utc": "2026-11-06T19:24:44.357842+00:00"
+    },
+    {
+      "file": "L17_values_question__chosen__master_beside_build.png",
+      "bytes": 278026,
+      "width": 2580,
+      "height": 2796,
+      "sha256": "15e4fba108dc7b7e370a23113a2ccc676c22c1ef3fc2a822cf26f3a28e5643c2",
+      "captured_file_mtime_utc": "2026-11-06T19:24:44.633359+00:00"
+    },
+    {
+      "file": "L17_values_question__master_beside_build.png",
+      "bytes": 275208,
+      "width": 2580,
+      "height": 2796,
+      "sha256": "a6bd966cb5ea345f6ed1df07074611a59411af55ea76158ca961fc8e7e93fe32",
+      "captured_file_mtime_utc": "2026-11-06T19:24:43.701770+00:00"
+    },
+    {
+      "file": "L17_values_question__no_answer__build.png",
+      "bytes": 142682,
+      "width": 1290,
+      "height": 2796,
+      "sha256": "921f1597c0be5d1ddd6b8c3d523061e26883152365d148b638d79954e74e9cc8",
+      "captured_file_mtime_utc": "2026-11-06T19:24:46.173223+00:00"
+    },
+    {
+      "file": "L17_values_question__no_answer__master_beside_build.png",
+      "bytes": 296545,
+      "width": 2580,
+      "height": 2796,
+      "sha256": "8e6919a5f4395ebc02dc8a4f0d121f2b8c76cba74ee8426ee51421f0264597bd",
+      "captured_file_mtime_utc": "2026-11-06T19:24:46.454904+00:00"
+    },
+    {
+      "file": "L17_values_question__optional__build.png",
+      "bytes": 135936,
+      "width": 1290,
+      "height": 2796,
+      "sha256": "3f2fd6a6b7bc9c7ce66fc639e0035c2242b9d09cde6bfda8190bb2acd3662450",
+      "captured_file_mtime_utc": "2026-11-06T19:24:45.308892+00:00"
+    },
+    {
+      "file": "L17_values_question__optional__master_beside_build.png",
+      "bytes": 284732,
+      "width": 2580,
+      "height": 2796,
+      "sha256": "fc2b5ec92c203515f9d66afcf2d69345ddbc4653d9a112f80d023bdf487ed2a3",
+      "captured_file_mtime_utc": "2026-11-06T19:24:45.586297+00:00"
+    }
+  ],
+  "image_bytes": 4109349,
+  "comparison": "As-built evidence with differences; not a pixel MATCH claim.",
+  "notes": "27 questions in seven parts; q44/q51 optional, q24 canonical MarriageQ3 condition. Exactly36 scoring qids/37 definitions including q26 variants; other definitions removed, raw stored values preserved. Exact copy; small safe-top/font/row offsets and error-wrap difference remain.",
+  "checks": {
+    "pure_model_checks": 1170,
+    "functional_before_wording": {
+      "passed": 281,
+      "skipped": 1
+    },
+    "flutter_analyze": {
+      "errors": 0,
+      "warnings": 0,
+      "existing_infos": 10
+    },
+    "cached_analysis": {
+      "files": 390,
+      "errors": 0,
+      "warnings": 0,
+      "existing_infos": 1
+    },
+    "boundaries": {
+      "passed": 20565,
+      "findings": 0
+    }
+  },
+  "limits": [
+    "No backend/server, native installation, phone launch or Founder visual acceptance proof.",
+    "320x568 at200percent text remains an explicitly undecided Larger Text design (24pixel header overflow); no redesign/suppression."
+  ],
+  "founder_decisions": "Recorded LOCKs and file answers Q8–Q13 applied; no new Founder decision requested.",
+  "native_or_dependency_changes": false
+}

@@ -336,7 +336,7 @@ class _SelahDraftCodeEntryState extends State<SelahDraftCodeEntry>
                                 'draft_known_person_view',
                               ),
                               introDetail:
-                                  'Scan or enter their permanent SELAH Code '
+                                  'Scan or enter their permanent Selah Code '
                                   'to find their profile.',
                               resultDetail:
                                   'Check that this is the right person, '

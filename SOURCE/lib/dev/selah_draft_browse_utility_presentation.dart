@@ -34,7 +34,7 @@ class SelahDraftScanPresentation extends StatelessWidget {
                 const _UtilityTitle('Scan', id: 'draft_scan_title'),
                 const SizedBox(height: 14),
                 Text(
-                  'Find a profile from a shared SELAH Code.',
+                  'Find a profile from a shared Selah Code.',
                   style: SelahText.body(size: 16).copyWith(height: 1.4),
                 ),
               ],
@@ -43,7 +43,7 @@ class SelahDraftScanPresentation extends StatelessWidget {
               padding: const EdgeInsets.symmetric(vertical: 24),
               child: Center(
                 child: Semantics(
-                  label: 'SELAH Code scan illustration. Camera is not active.',
+                  label: 'Selah Code scan illustration. Camera is not active.',
                   excludeSemantics: true,
                   child: SizedBox.square(
                     key: const ValueKey('draft_scan_frame'),
@@ -65,7 +65,7 @@ class SelahDraftScanPresentation extends StatelessWidget {
                             ),
                             const SizedBox(height: 12),
                             Text(
-                              'SELAH CODE',
+                              'Selah CODE',
                               style: SelahText.chapterLabel(
                                 color: SelahColors.journeyGold,
                               ),
@@ -83,7 +83,7 @@ class SelahDraftScanPresentation extends StatelessWidget {
               children: [
                 const _UnavailableAction(
                   id: 'draft_scan_action',
-                  label: 'Scan a SELAH Code',
+                  label: 'Scan a Selah Code',
                   icon: Icons.qr_code_scanner_rounded,
                 ),
                 const SizedBox(height: 12),

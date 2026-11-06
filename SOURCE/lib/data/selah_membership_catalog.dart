@@ -171,7 +171,7 @@ class SelahMembershipCatalog {
       'Seeker One includes one 14-day trial per verified person for life, '
       'then continues as a paid monthly subscription unless cancelled. The '
       'trial starts only after identity verification and App Store payment '
-      'authorisation succeed. Shepherd One and SELAH Family do not include a '
+      'authorisation succeed. Shepherd One and Selah Family do not include a '
       'trial. The store will show eligibility, renewal price and cancellation '
       'terms before subscription.';
 }

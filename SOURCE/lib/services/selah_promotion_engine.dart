@@ -135,7 +135,7 @@ class SelahPromotionOffer {
   String get message => switch (product) {
     SelahPromotionProduct.notifications =>
       dependency != SelahPromotionDependency.ready
-          ? 'Device alerts are not connected in this build yet. Updates in My SELAH still work.'
+          ? 'Device alerts are not connected in this build yet. Updates in My Selah still work.'
           : role == SelahPromotionRole.seeker
           ? 'Turn on notifications for replies and decisions that need you. You can change this any time.'
           : 'Turn on notifications for requests and Journey decisions that need you. You can change this any time.',

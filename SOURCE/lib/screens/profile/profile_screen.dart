@@ -457,7 +457,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
             ),
             Builder(
               builder: (inviteContext) => _SettingsRow(
-                label: 'Invite someone to SELAH',
+                label: 'Invite someone to Selah',
                 onTap: () => SelahAppInvite.share(inviteContext),
               ),
             ),

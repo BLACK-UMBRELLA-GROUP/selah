@@ -1,0 +1,39 @@
+{
+  "feature": "WORDING",
+  "lock": 11,
+  "base_commit": "dbcb2a34d706cbcba4f26c0004e9e53bd343068e",
+  "checks": {
+    "scoped_dart_analyze_77_literal_product_files": "PASS: No issues found",
+    "scoped_dart_analyze_dynamic_formatting_files": "PASS: No issues found",
+    "mandatory_pure_models": "PASS:1170",
+    "literal_member_name_candidates_after": 0,
+    "literal_request_label_mismatches_after": 0,
+    "exact_final_diff_reconstruction": "PASS:195 literal replacements +3 authorized formatting expressions; no other product bytes changed",
+    "final_affected_product_files": 78,
+    "diagnostic_occurrences_unchanged": 251,
+    "preexisting_technical_occurrences_unchanged": 21,
+    "added_technical_brand_case_patterns": 3,
+    "private_developer_occurrences_unchanged": 27,
+    "annotation_occurrences_unchanged": 1,
+    "comment_occurrences_unchanged": 163,
+    "after_source_hashes": "PASS all78 final files"
+  },
+  "tests_updated": {
+    "visible_text_finders": 10,
+    "files": 5
+  },
+  "runtime_case_audit": {
+    "brand_inputs_fixed": [
+      "SelahIntelligenceCard intelligence.label",
+      "SelahIntelligenceInvitation kind label",
+      "HelpSupport category.title from About Selah"
+    ],
+    "other_generic_headings": "Traced current stage/chapter, Connections sections, Shepherd access/recent, Journey snapshot/timeline inputs: no app-name input. Person initials/names and technical codes retain existing behavior. MySelahDesignKit uses uppercase only as a comparison, not rendered conversion.",
+    "scope": "Current source inputs, no invented future/server text"
+  },
+  "pending_root": [
+    "Whole Flutter suite",
+    "All existing master suites with new WORDING_V1 evidence paths"
+  ],
+  "compiled_apps_copied": false
+}

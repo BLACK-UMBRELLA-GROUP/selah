@@ -128,26 +128,26 @@ class _AppLockScreenState extends State<AppLockScreen> {
               if (supported == false)
                 _Note(
                   'This device has no Face ID, Touch ID, fingerprint or '
-                  'passcode set up, so there is nothing for SELAH to check. '
+                  'passcode set up, so there is nothing for Selah to check. '
                   'Add a passcode in your device settings and this will '
                   'become available.',
                   warn: true,
                 )
               else ...[
                 _Note(
-                  'SELAH will ask to confirm it is you each time you open the '
+                  'Selah will ask to confirm it is you each time you open the '
                   'app — even when your phone is already unlocked. Useful if '
                   'your phone gets passed around.',
                 ),
                 SizedBox(height: 14),
                 _Note(
-                  'SELAH never sees your face or fingerprint, and there is no '
-                  'SELAH passcode to forget. Your phone does the checking and '
+                  'Selah never sees your face or fingerprint, and there is no '
+                  'Selah passcode to forget. Your phone does the checking and '
                   'only tells us yes or no.',
                 ),
                 SizedBox(height: 14),
                 _Note(
-                  'This hides SELAH from someone holding your phone. It is '
+                  'This hides Selah from someone holding your phone. It is '
                   'not what keeps your account secure — that is your Apple '
                   'or Google sign-in. If Face ID ever stops working you can '
                   'sign out from the lock screen and sign back in.',

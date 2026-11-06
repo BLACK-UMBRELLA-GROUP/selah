@@ -611,7 +611,7 @@ class _ProfileUnlockScreenState extends State<ProfileUnlockScreen> {
                   _isDeveloperPreview
                       ? 'Try Compatibility with a sample profile. Demo results '
                             'are not calculated from anyone’s answers.'
-                      : 'Built from what you both already told SELAH. Neither of you '
+                      : 'Built from what you both already told Selah. Neither of you '
                             'sees the other’s answers.',
                   style: SelahText.subtext(size: 12.5),
                 ),

@@ -49,13 +49,13 @@ const List<SelahHelpCategory> selahHelpCategories = [
   // existing at all", this is the objection that decides whether someone
   // stays — and V1 never addressed it. ChatGPT's steer that the answer
   // must explain WHY rather than just say "no" is followed.
-  SelahHelpCategory('About SELAH', [
+  SelahHelpCategory('About Selah', [
     SelahHelpEntry(
-      'Is SELAH a dating app?',
+      'Is Selah a dating app?',
       'No — and the difference is built into how it works, not just how we '
           'describe it.\n\n'
           'Dating apps are designed to keep you browsing. The longer you stay, '
-          'the better they do. SELAH is designed for you to leave — married. '
+          'the better they do. Selah is designed for you to leave — married. '
           'That single difference explains most of what follows.\n\n'
           'You follow structured Journeys, not endless conversations. A Journey '
           'moves through stages, with questions that surface what actually '
@@ -66,7 +66,7 @@ const List<SelahHelpCategory> selahHelpCategories = [
           'You can browse thoughtfully here. You cannot browse forever.',
     ),
     SelahHelpEntry(
-      'How does SELAH work?',
+      'How does Selah work?',
       'You browse, and when two people are both open to each other, that '
           'becomes a Potential Journey, within your membership allowance. '
           'When you choose to begin with one person, it becomes your '
@@ -86,7 +86,7 @@ const List<SelahHelpCategory> selahHelpCategories = [
           'Anyone signed in with a live profile can appear in Browse, and that '
           'includes people you know. You can hide your profile completely at '
           'any time from Privacy settings, and blocking someone makes you both '
-          'invisible to each other everywhere in SELAH, immediately.\n\n'
+          'invisible to each other everywhere in Selah, immediately.\n\n'
           'What we do not have yet: a way to automatically hide you from your '
           'phone contacts, or to stop someone screenshotting your photos. Both '
           'matter and both are on our list. Until they exist, hiding and '
@@ -116,7 +116,7 @@ const List<SelahHelpCategory> selahHelpCategories = [
     // promotions deliberately not listed — they change, and this file
     // cannot be corrected without a release until it moves to Supabase.
     SelahHelpEntry(
-      'What does SELAH cost?',
+      'What does Selah cost?',
       '${SelahMembershipCatalog.basicTerms}\n\nSeeker One is '
           '£29.99 a month and Shepherd One is £19.99 a month in the UK. '
           'Country-specific launch prices use local purchasing power and the '
@@ -130,7 +130,7 @@ const List<SelahHelpCategory> selahHelpCategories = [
           '${SelahMembershipCatalog.compatibilityAvailability}\n\n'
           'Seeker One has one planned 14-day trial per verified person for '
           'life, starting only after verification and payment authorisation. '
-          'Shepherd One and SELAH Family do not have a trial. '
+          'Shepherd One and Selah Family do not have a trial. '
           'Payments and paid access activation are not available in this '
           'build; no trial starts just by opening a page.\n\n'
           'When One access ends, it does not automatically become Basic: '
@@ -172,7 +172,7 @@ const List<SelahHelpCategory> selahHelpCategories = [
     SelahHelpEntry(
       'How does compatibility work?',
       'From the values questions you answered during onboarding. You told us '
-          'what matters to you and where you are flexible, and SELAH quietly '
+          'what matters to you and where you are flexible, and Selah quietly '
           'orders the people you see by how well that lines up. Anyone who '
           'fails a Hard Requirement — something you marked as non-negotiable — '
           'is not shown to you at all.\n\n'
@@ -243,9 +243,9 @@ const List<SelahHelpCategory> selahHelpCategories = [
           'conversation between you and your match only when Chat access is '
           'also on and their Shepherd membership includes Chat.\n\n'
           'That last part is deliberate, and we tell you before you begin. '
-          'SELAH is built for a marriage process with family present, not for '
+          'Selah is built for a marriage process with family present, not for '
           'private one-to-one messaging. If you want conversations nobody else '
-          'can see, SELAH is honestly not the right app for you.\n\n'
+          'can see, Selah is honestly not the right app for you.\n\n'
           'What your Shepherd can never see: your values answers, your '
           'compatibility settings, or who you browse, save or pass on. Those '
           'stay yours.',
@@ -283,7 +283,7 @@ const List<SelahHelpCategory> selahHelpCategories = [
       'Why am I seeing fewer people than expected?',
       'Most often your age filter, which is the one you can set today — '
           'widening it usually helps. More filters are on the way.\n\n'
-          'SELAH also only ever shows you people whose profile is live, who you '
+          'Selah also only ever shows you people whose profile is live, who you '
           'have not already decided on, and who you have not blocked.',
     ),
   ]),
@@ -353,7 +353,7 @@ const List<SelahHelpCategory> selahHelpCategories = [
           'and daily Considers, and up to 10 linked Shepherds including Main. '
           'Initiate returns from the five most recent Paused and five most '
           'recent Ended Journeys, and revisit 10 declined profiles. '
-          'My SELAH Insights is coming soon. '
+          'My Selah Insights is coming soon. '
           'Shepherd One provides paid Shepherd access. Main Shepherds have '
           'View and Chat across Active Journeys; Additional Shepherds begin '
           'with both enabled per Journey and the Seeker may change them.\n\n'

@@ -800,7 +800,7 @@ class _OnboardingFlowState extends State<OnboardingFlow> {
           chapterProgress: 3 / _totalQuestions,
           progressLabel: 'QUESTION 3 OF $_totalQuestions',
           question: 'When were you born?',
-          subtext: _saveError ?? 'You must be 18 or older to use SELAH.',
+          subtext: _saveError ?? 'You must be 18 or older to use Selah.',
           privacy: PrivacyLevel.private,
           fabActive: _fabActive,
           onContinue: _next,

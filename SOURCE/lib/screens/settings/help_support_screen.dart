@@ -169,7 +169,7 @@ class _HelpSupportScreenState extends State<HelpSupportScreen> {
     else
       for (final category in results) ...[
         Text(
-          category.title.toUpperCase(),
+          category.title.toUpperCase().replaceAll('SELAH', 'Selah'),
           style: SelahText.chapterLabel(color: SelahColors.ink(0.54)),
         ),
         SizedBox(height: 8),

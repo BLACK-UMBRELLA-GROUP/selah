@@ -338,10 +338,10 @@ class _DeviceNotificationStatus extends StatelessWidget {
                 SizedBox(height: 4),
                 Text(
                   unavailable
-                      ? 'Device alerts are not connected in this preview. Updates in My SELAH still work.'
+                      ? 'Device alerts are not connected in this preview. Updates in My Selah still work.'
                       : enabled
-                      ? 'SELAH can alert you outside the app. Category choices below still decide what you receive.'
-                      : 'Device alerts are off. Updates in My SELAH still work.',
+                      ? 'Selah can alert you outside the app. Category choices below still decide what you receive.'
+                      : 'Device alerts are off. Updates in My Selah still work.',
                   style: SelahText.subtext(
                     size: 11.5,
                     color: SelahColors.ink(0.54),
@@ -382,7 +382,7 @@ class _EssentialNotificationRow extends StatelessWidget {
               ),
               SizedBox(height: 3),
               Text(
-                'Security, account and safety notices have no marketing switch. SELAH keeps an in-app route even if device alerts are off.',
+                'Security, account and safety notices have no marketing switch. Selah keeps an in-app route even if device alerts are off.',
                 style: SelahText.subtext(
                   size: 11.5,
                   color: SelahColors.ink(0.54),

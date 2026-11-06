@@ -157,7 +157,7 @@ Future<void> _activeJourney(WidgetTester tester) async {
 }
 
 Future<void> _preparingJourney(WidgetTester tester) async {
-  await _tab(tester, 'My SELAH');
+  await _tab(tester, 'My Selah');
   await _tap(tester, find.text('View requests').first);
   await _tap(tester, _key('concept_request_draft-amira_header'));
   await _tap(tester, _key('draft_accept_draft-amira'));
@@ -292,7 +292,7 @@ void main() {
   testWidgets('My SELAH: fresh received request', (tester) async {
     final screen = await _mount(tester);
     await _waitForPhotos(tester);
-    await _tab(tester, 'My SELAH');
+    await _tab(tester, 'My Selah');
     expect(find.text('Journey request from Grace'), findsWidgets);
     await _capture(tester, screen, 'L01_seeker_my_selah__request');
   });

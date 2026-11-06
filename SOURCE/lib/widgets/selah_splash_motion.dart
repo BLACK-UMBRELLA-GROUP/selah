@@ -161,7 +161,7 @@ class SelahSplashDrawRule extends StatelessWidget {
     final glowWidth = width * (0.34 + 0.66 * frame.lineProgress);
 
     return Semantics(
-      label: 'Soft gold light opening beneath SELAH',
+      label: 'Soft gold light opening beneath Selah',
       child: RepaintBoundary(
         child: SizedBox(
           key: ValueKey('splash_motion_${motion.name}'),

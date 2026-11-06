@@ -324,11 +324,11 @@ class _SelahOneJourneyConceptShellState
     'ended' || 'past_journeys' => 'Ended Journeys',
     _ =>
       _shepherdRole
-          ? const ['My SELAH', 'Network', 'Seekers', 'Profile'][_tab]
+          ? const ['My Selah', 'Network', 'Seekers', 'Profile'][_tab]
           : const [
               'Browse',
               'Journey',
-              'My SELAH',
+              'My Selah',
               'Shepherd',
               'Profile',
             ][_tab],
@@ -746,7 +746,7 @@ class _SelahOneJourneyConceptShellState
     final railFresh = _accountFreshGuard();
     final names = _shepherdRole
         ? ['Dashboard', 'Network', 'Seekers', 'Profile']
-        : ['Browse', 'Journey', 'My SELAH', 'Shepherd', 'Profile'];
+        : ['Browse', 'Journey', 'My Selah', 'Shepherd', 'Profile'];
     final icons = _shepherdRole
         ? [
             Icons.dashboard_outlined,
@@ -4307,7 +4307,7 @@ class _SelahOneJourneyConceptShellState
                 eyebrow: 'SHEPHERD INSIGHTS',
                 title: 'No Shepherd insights available yet',
                 detail:
-                    'SELAH will only show a Shepherd insight when real, governed family-process evidence supports it.',
+                    'Selah will only show a Shepherd insight when real, governed family-process evidence supports it.',
               ),
             ],
           ),
@@ -4914,7 +4914,7 @@ class _SelahOneJourneyConceptShellState
         SelahConceptAccountAction.compatibilityStore => 'Compatibility Unlocks',
         SelahConceptAccountAction.pastJourneys => 'Past Journeys',
         SelahConceptAccountAction.safetyAdvice => 'Safety & advice',
-        SelahConceptAccountAction.invite => 'Invite someone to SELAH',
+        SelahConceptAccountAction.invite => 'Invite someone to Selah',
         SelahConceptAccountAction.personalisation => 'Personalisation',
         SelahConceptAccountAction.settings => 'Settings',
         SelahConceptAccountAction.signOut => 'Sign out',
@@ -5097,7 +5097,7 @@ class _SelahOneJourneyConceptShellState
           ? '${_currentJourneys.length} Journeys are in progress. Open Journey to choose one.'
           : _focus == null
           ? _visibleRequests(DraftJourneyState.received).isNotEmpty
-                ? 'A Journey invitation is waiting in My SELAH.'
+                ? 'A Journey invitation is waiting in My Selah.'
                 : 'No Journey requests need your attention right now.'
           : _model.isBlocked(_focus!.id)
           ? 'This Journey is unavailable. Its place is retained until you end it.'

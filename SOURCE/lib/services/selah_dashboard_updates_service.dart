@@ -231,7 +231,7 @@ final class SelahDashboardUpdateTemplates {
     if (title == null || detail == null || target == null) {
       return const SelahDashboardUpdateTemplate(
         title: 'Update available',
-        detail: 'Open SELAH to review it.',
+        detail: 'Open Selah to review it.',
         target: SelahDashboardTarget.none,
         actionLabel: null,
         isGeneric: true,

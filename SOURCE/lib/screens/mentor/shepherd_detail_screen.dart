@@ -1017,7 +1017,7 @@ class _ShepherdHistoryConsentCardState
           if (widget.busy) ...[
             const SizedBox(height: 10),
             Text(
-              'Confirming with SELAH…',
+              'Confirming with Selah…',
               style: SelahText.subtext(size: 11.5),
             ),
           ],

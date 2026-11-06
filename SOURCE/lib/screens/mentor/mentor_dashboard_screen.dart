@@ -498,7 +498,7 @@ class _MentorDashboardScreenState extends State<MentorDashboardScreen> {
         AppState.instance.mentorName?.trim() ?? AppState.instance.name?.trim();
 
     final greeting = firstName == null || firstName.isEmpty
-        ? 'Your SELAH, in one place.'
+        ? 'Your Selah, in one place.'
         : 'Hello, $firstName.';
     return Container(
       decoration: SelahAppGoldDecoration(
@@ -985,7 +985,7 @@ class _MentorDashboardScreenState extends State<MentorDashboardScreen> {
           eyebrow: insightOwner,
           title: 'No Shepherd insights available yet',
           detail:
-              'SELAH will only show a Shepherd insight when real, governed family-process evidence supports it.',
+              'Selah will only show a Shepherd insight when real, governed family-process evidence supports it.',
         ),
       ];
     }

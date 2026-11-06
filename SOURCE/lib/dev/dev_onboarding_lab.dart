@@ -365,7 +365,7 @@ class _OnboardingWalkthroughState extends State<_OnboardingWalkthrough> {
           Padding(
             padding: const EdgeInsets.symmetric(vertical: 9),
             child: Text(
-              'SELAH',
+              'Selah',
               style: SelahText.wordmark(
                 size: 18,
                 color: SelahColors.splashWordmark,

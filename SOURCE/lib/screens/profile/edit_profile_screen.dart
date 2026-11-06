@@ -442,7 +442,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
     padding: EdgeInsets.fromLTRB(20, 12, 20, _explicitPreview ? 24 : 90),
     children: [
       Text(
-        'Your answers stay private. SELAH uses them to calculate '
+        'Your answers stay private. Selah uses them to calculate '
         'compatibility and honour your requirements.',
         style: SelahText.subtext(size: 12.5, color: SelahColors.ink(0.54)),
       ),

@@ -2200,7 +2200,7 @@ class _BrowseScreenState extends State<BrowseScreen> {
                       hide: () => unawaited(_hideProfile(profile)),
                       hideWarning:
                           "You and ${profile.firstName} won't see each other "
-                          'in SELAH. Any live Journey together will end. '
+                          'in Selah. Any live Journey together will end. '
                           'Nothing is reported and nobody is told. You can '
                           'unhide them later in Settings, but an ended '
                           'Journey will not be restored.',

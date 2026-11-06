@@ -595,11 +595,11 @@ class _MentorOnboardingFlowState extends State<MentorOnboardingFlow> {
                   : SelahBackgroundVariant.male,
               title: 'Support and guidance',
               body:
-                  'SELAH treats you as a full part of this journey — not as an observer. '
+                  'Selah treats you as a full part of this journey — not as an observer. '
                   "You'll see your linked Seeker's progress, and you can read the "
                   'conversation once a Journey becomes active. Both Seekers are told '
                   'this before they begin.\n\n'
-                  'That openness is the point: SELAH is built for a marriage process '
+                  'That openness is the point: Selah is built for a marriage process '
                   'with trusted support. It is a trust placed in you — guidance, not '
                   'surveillance.',
               buttonLabel: 'Continue',
@@ -722,7 +722,7 @@ class _MentorOnboardingFlowState extends State<MentorOnboardingFlow> {
         return _MentorQuestionScaffold(
           questionNumber: 2,
           question: 'When were you born?',
-          subtext: _saveError ?? 'You must be 18 or older to use SELAH.',
+          subtext: _saveError ?? 'You must be 18 or older to use Selah.',
           fabActive: _fabActive,
           onContinue: _next,
           devPreview: _devPreview,

@@ -1,0 +1,77 @@
+{
+  "changed_finders": 10,
+  "files": 5,
+  "preserved": "Test names, technical environment flags, feature identifiers and log/debug text unchanged. No capture harness or PNG edits.",
+  "changes": [
+    {
+      "file": "SOURCE/test/masters/prayer_masters_test.dart",
+      "line": 223,
+      "before": "_tab(tester, 'My SELAH')",
+      "after": "_tab(tester, 'My Selah')",
+      "kind": "visible text finder"
+    },
+    {
+      "file": "SOURCE/test/masters/prayer_masters_test.dart",
+      "line": 255,
+      "before": "_tab(tester, 'My SELAH')",
+      "after": "_tab(tester, 'My Selah')",
+      "kind": "visible text finder"
+    },
+    {
+      "file": "SOURCE/test/masters/prayer_masters_test.dart",
+      "line": 270,
+      "before": "_tab(tester, 'My SELAH')",
+      "after": "_tab(tester, 'My Selah')",
+      "kind": "visible text finder"
+    },
+    {
+      "file": "SOURCE/test/masters/shepherd_invite_masters_test.dart",
+      "line": 405,
+      "before": "_tab(tester, 'My SELAH')",
+      "after": "_tab(tester, 'My Selah')",
+      "kind": "visible text finder"
+    },
+    {
+      "file": "SOURCE/test/masters/shepherd_invite_masters_test.dart",
+      "line": 440,
+      "before": "_tab(tester, 'My SELAH')",
+      "after": "_tab(tester, 'My Selah')",
+      "kind": "visible text finder"
+    },
+    {
+      "file": "SOURCE/test/masters/look_masters_test.dart",
+      "line": 160,
+      "before": "_tab(tester, 'My SELAH')",
+      "after": "_tab(tester, 'My Selah')",
+      "kind": "visible text finder"
+    },
+    {
+      "file": "SOURCE/test/masters/look_masters_test.dart",
+      "line": 295,
+      "before": "_tab(tester, 'My SELAH')",
+      "after": "_tab(tester, 'My Selah')",
+      "kind": "visible text finder"
+    },
+    {
+      "file": "SOURCE/test/masters/selah_pause_masters_test.dart",
+      "line": 97,
+      "before": "_tab(tester, 'My SELAH')",
+      "after": "_tab(tester, 'My Selah')",
+      "kind": "visible text finder"
+    },
+    {
+      "file": "SOURCE/test/masters/selah_pause_masters_test.dart",
+      "line": 290,
+      "before": "_tab(tester, 'My SELAH')",
+      "after": "_tab(tester, 'My Selah')",
+      "kind": "visible text finder"
+    },
+    {
+      "file": "SOURCE/test/selah_draft_boundary_test.dart",
+      "line": 74,
+      "before": "My SELAH",
+      "after": "My Selah",
+      "kind": "visible route label finder"
+    }
+  ]
+}

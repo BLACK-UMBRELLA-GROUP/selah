@@ -2692,7 +2692,7 @@ class _JourneyStageDecisionPage extends StatelessWidget {
                           Text(
                             completionConfirmed
                                 ? stage.completionLine
-                                : 'SELAH will first confirm that both Main Shepherds are present.',
+                                : 'Selah will first confirm that both Main Shepherds are present.',
                             style: SelahText.subtext(size: 13.5),
                           ),
                         ],
@@ -5822,7 +5822,7 @@ class _FamilyReviewViewState extends State<_FamilyReviewView> {
             SizedBox(height: 8),
             Text(
               paused
-                  ? "A Shepherd has asked for more time before this Journey continues. This isn't a rejection — it means the family needs a little longer. SELAH support is available to help if needed."
+                  ? "A Shepherd has asked for more time before this Journey continues. This isn't a rejection — it means the family needs a little longer. Selah support is available to help if needed."
                   : 'This pause is deliberate — it is your families\' time. '
                         'Both families have this stage to review, and unless a '
                         'Shepherd raises a concern you continue together in '
@@ -7942,7 +7942,7 @@ class _MentorGateViewState extends State<_MentorGateView> {
               Text(
                 'Your Shepherd is with you. Waiting for '
                 '${widget.otherFirstName} to '
-                'bring theirs — a Journey in SELAH is walked with both '
+                'bring theirs — a Journey in Selah is walked with both '
                 'families present.',
                 style: SelahText.subtext(),
                 textAlign: TextAlign.center,

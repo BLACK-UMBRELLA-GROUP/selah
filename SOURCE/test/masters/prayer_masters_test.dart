@@ -220,7 +220,7 @@ void main() {
     await _role(tester, true);
     await _tap(tester, _key('prayer_pray_prayer-seed-1'));
     await _role(tester, false);
-    await _tab(tester, 'My SELAH');
+    await _tab(tester, 'My Selah');
     expect(
       find.text('David prayed for your Journey with Esther.'),
       findsOneWidget,
@@ -252,7 +252,7 @@ void main() {
     expect(_key('prayer_page'), findsNothing);
     expect(find.text('Sent. David will pray for you.'), findsOneWidget);
     expect(composer.controller.send(), isFalse);
-    await _tab(tester, 'My SELAH');
+    await _tab(tester, 'My Selah');
     expect(find.text('You asked David for prayer.'), findsOneWidget);
     await _role(tester, true);
     final rows = _requests(tester).requests;
@@ -267,7 +267,7 @@ void main() {
     await tester.pumpAndSettle();
     expect(_requests(tester).requests.first.prayedCount, 1);
     await _role(tester, false);
-    await _tab(tester, 'My SELAH');
+    await _tab(tester, 'My Selah');
     expect(find.text('David prayed for you.'), findsOneWidget);
   });
 

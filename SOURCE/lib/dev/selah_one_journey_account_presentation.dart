@@ -362,7 +362,7 @@ class SelahConceptProfilePresentation extends StatelessWidget {
                 ),
                 _ProfileSettingsRow(
                   key: const ValueKey('concept_invite'),
-                  label: 'Invite someone to SELAH',
+                  label: 'Invite someone to Selah',
                   onTap: () => onAction(SelahConceptAccountAction.invite),
                 ),
                 const SizedBox(height: 24),

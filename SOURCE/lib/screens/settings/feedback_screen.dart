@@ -143,7 +143,7 @@ class _FeedbackScreenState extends State<FeedbackScreen> {
     padding: const EdgeInsets.fromLTRB(20, 12, 20, 40),
     children: [
       Text(
-        'Tell us what would make SELAH better. Small things count — the '
+        'Tell us what would make Selah better. Small things count — the '
         'wording that confused you is as useful as the feature you want.',
         style: SelahText.subtext(size: 12.5, color: SelahColors.ink(0.54)),
       ),
@@ -215,7 +215,7 @@ class _FeedbackScreenState extends State<FeedbackScreen> {
               color: SelahColors.ink(0.24),
             ),
             hintText: switch (_category) {
-              SelahFeedbackCategory.idea => 'What would you like SELAH to do?',
+              SelahFeedbackCategory.idea => 'What would you like Selah to do?',
               SelahFeedbackCategory.problem =>
                 'What happened, and what did you expect instead?',
               SelahFeedbackCategory.other => 'Tell us anything.',

@@ -38,7 +38,7 @@ class SelahOneJourneyBrowsePresentation extends StatefulWidget {
     this.onNextProfile,
     this.onRequest,
     this.onSave,
-    this.requestLabel = 'Request Journey',
+    this.requestLabel = 'Request a Journey',
     this.invitationSent,
     this.saved = false,
     this.imageBuilder = _profileImage,

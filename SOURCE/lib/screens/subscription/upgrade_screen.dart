@@ -204,7 +204,7 @@ class _UpgradeScreenState extends State<UpgradeScreen> {
       (_, SelahSignupMembershipKind.family) => null,
     };
     final description = product == null
-        ? 'SELAH Family · ${choice.seekers} Seeker and ${choice.shepherds} Shepherd places\n'
+        ? 'Selah Family · ${choice.seekers} Seeker and ${choice.shepherds} Shepherd places\n'
               '${SelahMembershipCatalog.pounds(SelahMembershipCatalog.familyQuote(choice.seekers, choice.shepherds).formulaMonthlyPence)} / month estimated'
         : '${SelahMembershipCatalog.title(product)} · ${SelahMembershipCatalog.price(product)}';
     return Container(
@@ -324,7 +324,7 @@ class _UpgradeScreenState extends State<UpgradeScreen> {
               Text('Cancel membership', style: SelahText.heading(size: 20)),
               const SizedBox(height: 10),
               Text(
-                '$_storeName securely manages this change. It will show the effective date and ask you to confirm before anything changes. SELAH never removes your saved account data or Shepherd links because a membership changes.',
+                '$_storeName securely manages this change. It will show the effective date and ask you to confirm before anything changes. Selah never removes your saved account data or Shepherd links because a membership changes.',
                 style: SelahText.subtext(size: 12.5),
               ),
               const SizedBox(height: 18),

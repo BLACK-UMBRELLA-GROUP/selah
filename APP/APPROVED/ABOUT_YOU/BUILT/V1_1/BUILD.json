@@ -1,0 +1,158 @@
+{
+  "queue_lines": [
+    21
+  ],
+  "status": "BUILT",
+  "action": "OA-SELAH-003",
+  "source_commit": "dbcb2a34d706cbcba4f26c0004e9e53bd343068e",
+  "flutter_version": "3.44.2",
+  "dart_version": "3.12.2",
+  "build_mode": "debug Flutter widget test; no native build/install",
+  "receipt_created_utc": "2026-11-06T19:31:02.498702+00:00",
+  "built_from": [
+    "APP/APPROVED/ABOUT_YOU/BRIEFS/BUILD_BRIEF_2026-11-06_V1.md",
+    "APP/APPROVED/REPAIRS/BRIEFS/FIX_BRIEF_2026-11-06_LANGUAGES_LIST_V1.md"
+  ],
+  "viewport_logical": [
+    430,
+    932
+  ],
+  "pixel_ratio": 3,
+  "images": [
+    {
+      "file": "L14_languages__chosen__build.png",
+      "bytes": 160163,
+      "width": 1290,
+      "height": 2796,
+      "sha256": "3db3b81619c7421fcf79b93bbafd63e3ebdfc74c1ef50dd47f598351f866890c",
+      "captured_file_mtime_utc": "2026-11-06T18:45:46.478984+00:00"
+    },
+    {
+      "file": "L14_languages__chosen__master_beside_build.png",
+      "bytes": 337895,
+      "width": 2580,
+      "height": 2796,
+      "sha256": "e72665ec4a6efc8f0bf0b7852ead78b64c6fd144e97bcfdd4189d55eb17754c4",
+      "captured_file_mtime_utc": "2026-11-06T18:45:46.749742+00:00"
+    },
+    {
+      "file": "L14_languages__didnt_save__build.png",
+      "bytes": 183989,
+      "width": 1290,
+      "height": 2796,
+      "sha256": "36e87b0c1127254c734b923eaa11e4fdb0951c9765bd5933774505cf84d2c953",
+      "captured_file_mtime_utc": "2026-11-06T18:45:48.777718+00:00"
+    },
+    {
+      "file": "L14_languages__didnt_save__master_beside_build.png",
+      "bytes": 390140,
+      "width": 2580,
+      "height": 2796,
+      "sha256": "c07c6d03bbcd8521f56df746025f2087b087b5e554e0300ca1eed7bca2e3aadc",
+      "captured_file_mtime_utc": "2026-11-06T18:45:49.054198+00:00"
+    },
+    {
+      "file": "L14_languages__empty__build.png",
+      "bytes": 158706,
+      "width": 1290,
+      "height": 2796,
+      "sha256": "688cc26e872ff6a01c9da02afd629d60bf8d3e746184f31dfb2573ab1f7167a6",
+      "captured_file_mtime_utc": "2026-11-06T18:45:45.604464+00:00"
+    },
+    {
+      "file": "L14_languages__empty__master_beside_build.png",
+      "bytes": 331795,
+      "width": 2580,
+      "height": 2796,
+      "sha256": "2680a729aee18fa40fee55ed0e6961f4f20cb76cabc72312c7e3db196d0f7029",
+      "captured_file_mtime_utc": "2026-11-06T18:45:45.906507+00:00"
+    },
+    {
+      "file": "L14_languages__no_answer__build.png",
+      "bytes": 172599,
+      "width": 1290,
+      "height": 2796,
+      "sha256": "06959f94736c8327add737dc6709f84b0191dc4c617dd0b8f858604f9f7b8841",
+      "captured_file_mtime_utc": "2026-11-06T18:45:47.218117+00:00"
+    },
+    {
+      "file": "L14_languages__no_answer__master_beside_build.png",
+      "bytes": 360659,
+      "width": 2580,
+      "height": 2796,
+      "sha256": "5484853bddceb8d997d3f7a76b5c348cd58dfd39fc54205f2bca25c7b1641719",
+      "captured_file_mtime_utc": "2026-11-06T18:45:47.498082+00:00"
+    },
+    {
+      "file": "L14_languages__saving__build.png",
+      "bytes": 156442,
+      "width": 1290,
+      "height": 2796,
+      "sha256": "8aba6ec5e0586adc31bf9ac2b5105b1348316695ccac0411d1b1ace2f573c6d4",
+      "captured_file_mtime_utc": "2026-11-06T18:45:48.020534+00:00"
+    },
+    {
+      "file": "L14_languages__saving__master_beside_build.png",
+      "bytes": 330067,
+      "width": 2580,
+      "height": 2796,
+      "sha256": "9fd5f935ec852da09fb7df24948800804e90b5c9190f8d09657f9f4a140e9df8",
+      "captured_file_mtime_utc": "2026-11-06T18:45:48.287806+00:00"
+    },
+    {
+      "file": "L14_languages__search_open__build.png",
+      "bytes": 122790,
+      "width": 1290,
+      "height": 2796,
+      "sha256": "61f280a45c3b31dc04678fbbcb5b6a74810c4c87c3721754cc43bf7d25417918",
+      "captured_file_mtime_utc": "2026-11-06T18:45:50.475404+00:00"
+    },
+    {
+      "file": "L14_profile_about_you__build.png",
+      "bytes": 204312,
+      "width": 1290,
+      "height": 2796,
+      "sha256": "bbf70ca135a957149e7aa7eb88bbec9428b749438a9a8d9ad41dabba0ff7d801",
+      "captured_file_mtime_utc": "2026-11-06T18:45:49.698579+00:00"
+    },
+    {
+      "file": "L14_profile_about_you__master_beside_build.png",
+      "bytes": 497208,
+      "width": 2580,
+      "height": 2796,
+      "sha256": "e94518bec1b38d443338cc49a57255b4e1f5173e52493d2a1bca6fa819c9ef11",
+      "captured_file_mtime_utc": "2026-11-06T18:45:49.993445+00:00"
+    }
+  ],
+  "image_bytes": 3406765,
+  "comparison": "As-built evidence with differences; not a pixel MATCH claim.",
+  "notes": "Exact ten-language shortlist plus Another/search; existing catalogue unchanged. Failure-state Another lower border needs scroll under the existing footer. Existing malformed catalogue label preserved under presentation-only scope.",
+  "checks": {
+    "pure_model_checks": 1170,
+    "functional_before_wording": {
+      "passed": 281,
+      "skipped": 1
+    },
+    "flutter_analyze": {
+      "errors": 0,
+      "warnings": 0,
+      "existing_infos": 10
+    },
+    "cached_analysis": {
+      "files": 390,
+      "errors": 0,
+      "warnings": 0,
+      "existing_infos": 1
+    },
+    "boundaries": {
+      "passed": 20565,
+      "findings": 0
+    }
+  },
+  "limits": [
+    "No backend/server, native installation, phone launch or Founder visual acceptance proof.",
+    "320x568 at200percent text remains an explicitly undecided Larger Text design (24pixel header overflow); no redesign/suppression."
+  ],
+  "founder_decisions": "Recorded LOCKs and file answers Q8–Q13 applied; no new Founder decision requested.",
+  "native_or_dependency_changes": false
+}

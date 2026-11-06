@@ -52,7 +52,7 @@ class SelahPersonalisationContent extends StatelessWidget {
       ),
       const SizedBox(height: 8),
       Text(
-        'Choose how SELAH looks and responds.',
+        'Choose how Selah looks and responds.',
         style: SelahText.heading(size: 23),
       ),
       const SizedBox(height: 7),

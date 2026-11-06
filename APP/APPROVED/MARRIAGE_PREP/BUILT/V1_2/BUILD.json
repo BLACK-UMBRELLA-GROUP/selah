@@ -1,0 +1,117 @@
+{
+  "queue_lines": [
+    16
+  ],
+  "status": "BUILT",
+  "action": "OA-SELAH-003",
+  "source_commit": "dbcb2a34d706cbcba4f26c0004e9e53bd343068e",
+  "flutter_version": "3.44.2",
+  "dart_version": "3.12.2",
+  "build_mode": "debug Flutter widget test; no native build/install",
+  "receipt_created_utc": "2026-11-06T19:31:02.528513+00:00",
+  "built_from": [
+    "APP/APPROVED/REPAIRS/BRIEFS/CLEANUP_BRIEF_2026-11-06_TEST_CONTROLS_V1.md"
+  ],
+  "viewport_logical": [
+    430,
+    932
+  ],
+  "pixel_ratio": 3,
+  "images": [
+    {
+      "file": "L09_marriage_prep__all_done__build.png",
+      "bytes": 224541,
+      "width": 1290,
+      "height": 2796,
+      "sha256": "50f1f2885003495b66f4b8f2ae4e90db17d6bf57e9f4dcf892272cb8bab7f8a1",
+      "captured_file_mtime_utc": "2026-11-06T19:17:06.044480+00:00"
+    },
+    {
+      "file": "L09_marriage_prep__all_done__master_beside_build.png",
+      "bytes": 548105,
+      "width": 2580,
+      "height": 2796,
+      "sha256": "d67e3e4664c13a5f1901e565e19c81799e14bdc84a56237a0481b61de2bede89",
+      "captured_file_mtime_utc": "2026-11-06T19:17:06.373631+00:00"
+    },
+    {
+      "file": "L09_marriage_prep__didnt_save__build.png",
+      "bytes": 233853,
+      "width": 1290,
+      "height": 2796,
+      "sha256": "278c99e4e691a1d139663496d646c34e251f75d0bd3579dfd82cdab39aab7456",
+      "captured_file_mtime_utc": "2026-11-06T19:17:07.372861+00:00"
+    },
+    {
+      "file": "L09_marriage_prep__didnt_save__master_beside_build.png",
+      "bytes": 557184,
+      "width": 2580,
+      "height": 2796,
+      "sha256": "24099473feb5bedf39f61bd8229a61f5a70fb38ee4a7aa15a96b57d3fdd86e65",
+      "captured_file_mtime_utc": "2026-11-06T19:17:07.673293+00:00"
+    },
+    {
+      "file": "L09_marriage_prep__not_started__build.png",
+      "bytes": 227683,
+      "width": 1290,
+      "height": 2796,
+      "sha256": "14fcc1a8196be7fc1401099439873effd8490ebc6f3247409b37aa377bb35fa5",
+      "captured_file_mtime_utc": "2026-11-06T19:17:02.045942+00:00"
+    },
+    {
+      "file": "L09_marriage_prep__not_started__master_beside_build.png",
+      "bytes": 552716,
+      "width": 2580,
+      "height": 2796,
+      "sha256": "87b944ad7591fa942790c189b8c4cdad4ea5547590859c5d261725422087afe7",
+      "captured_file_mtime_utc": "2026-11-06T19:17:02.399384+00:00"
+    },
+    {
+      "file": "L09_marriage_prep__one_done__build.png",
+      "bytes": 226743,
+      "width": 1290,
+      "height": 2796,
+      "sha256": "bd9f997c69c471c7efae0c9acf59bc673f2cb03b0438e8dd64319a9238e09a8e",
+      "captured_file_mtime_utc": "2026-11-06T19:17:04.000926+00:00"
+    },
+    {
+      "file": "L09_marriage_prep__one_done__master_beside_build.png",
+      "bytes": 551480,
+      "width": 2580,
+      "height": 2796,
+      "sha256": "b8d9c58534122e59825b686560a70840c6ee94ec797674311c024016d9693f0d",
+      "captured_file_mtime_utc": "2026-11-06T19:17:04.329661+00:00"
+    }
+  ],
+  "image_bytes": 3122305,
+  "comparison": "As-built evidence with differences; not a pixel MATCH claim.",
+  "notes": "Recaptured real Open Conversation after relocating simulation controls. Member actions and preparation state preserved; actual Journey header/content/private rail differ from master.",
+  "checks": {
+    "pure_model_checks": 1170,
+    "functional_before_wording": {
+      "passed": 281,
+      "skipped": 1
+    },
+    "flutter_analyze": {
+      "errors": 0,
+      "warnings": 0,
+      "existing_infos": 10
+    },
+    "cached_analysis": {
+      "files": 390,
+      "errors": 0,
+      "warnings": 0,
+      "existing_infos": 1
+    },
+    "boundaries": {
+      "passed": 20565,
+      "findings": 0
+    }
+  },
+  "limits": [
+    "No backend/server, native installation, phone launch or Founder visual acceptance proof.",
+    "320x568 at200percent text remains an explicitly undecided Larger Text design (24pixel header overflow); no redesign/suppression."
+  ],
+  "founder_decisions": "Recorded LOCKs and file answers Q8–Q13 applied; no new Founder decision requested.",
+  "native_or_dependency_changes": false
+}

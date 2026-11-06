@@ -188,7 +188,7 @@ class _HomeShellState extends State<HomeShell> {
     ),
     (
       icon: Icons.qr_code_scanner_rounded,
-      label: 'SELAH Code',
+      label: 'Selah Code',
       act: _CardAct.findByCode,
     ),
     (icon: Icons.visibility_off_outlined, label: 'Hide', act: _CardAct.hide),
@@ -641,7 +641,7 @@ class _HomeShellState extends State<HomeShell> {
                         ),
                         FloatingNavItem(
                           icon: Icons.dashboard_outlined,
-                          label: 'My SELAH',
+                          label: 'My Selah',
                           badge: _unread,
                         ),
                         // 2026-07-26: swapped from verified_user_outlined —

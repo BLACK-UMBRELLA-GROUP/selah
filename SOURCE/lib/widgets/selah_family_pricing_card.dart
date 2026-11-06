@@ -50,7 +50,7 @@ class _SelahFamilyPricingCardState extends State<SelahFamilyPricingCard> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text('SELAH Family', style: SelahText.heading(size: 18)),
+          Text('Selah Family', style: SelahText.heading(size: 18)),
           const SizedBox(height: 7),
           Text(
             'Choose the paid places your family needs.',
