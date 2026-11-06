@@ -1,0 +1,95 @@
+{
+  "feature": "SHEPHERD_DASHBOARD",
+  "lock": 20,
+  "version": "V1",
+  "recorded_at_utc": "2026-11-06T22:33:13.008055+00:00",
+  "pairs": 5,
+  "png_count": 10,
+  "png_bytes": 3658841,
+  "checks": {
+    "capture": "13 passed",
+    "plain_replay": "13 passed"
+  },
+  "files": [
+    {
+      "path": "APP/APPROVED/SHEPHERD_DASHBOARD/BUILT/V1/L10_shepherd_dashboard__no_requests__build.png",
+      "bytes": 212712,
+      "sha256": "f3e706708438d54ebdc06db7a080fa0d04626a3a2b3e159a15bed8cbc22c90ae",
+      "width": 1290,
+      "height": 2796,
+      "route": "actual root"
+    },
+    {
+      "path": "APP/APPROVED/SHEPHERD_DASHBOARD/BUILT/V1/L10_shepherd_dashboard__no_requests__master_beside_build.png",
+      "bytes": 492369,
+      "sha256": "c77fbaddd0a2c26890472fdfe25bbd9cbcabb42e370fc2e34739db80b50a37b2",
+      "width": 2580,
+      "height": 2796,
+      "route": "actual root"
+    },
+    {
+      "path": "APP/APPROVED/SHEPHERD_DASHBOARD/BUILT/V1/L10_shepherd_dashboard__prayed__build.png",
+      "bytes": 230141,
+      "sha256": "c449a218af7e32655e33fb3fd8703d336f3948bb165427450e9d5367dbdc360f",
+      "width": 1290,
+      "height": 2796,
+      "route": "actual root"
+    },
+    {
+      "path": "APP/APPROVED/SHEPHERD_DASHBOARD/BUILT/V1/L10_shepherd_dashboard__prayed__master_beside_build.png",
+      "bytes": 488944,
+      "sha256": "74c9e8c7ec5f249b94f8d2f1503bfd1a17f9056f41c9bce37bd17b33a322d0b3",
+      "width": 2580,
+      "height": 2796,
+      "route": "actual root"
+    },
+    {
+      "path": "APP/APPROVED/SHEPHERD_DASHBOARD/BUILT/V1/L10_shepherd_dashboard__requests__build.png",
+      "bytes": 229416,
+      "sha256": "466e7acc3122514441bc8e4fa0e6ab890d8b86275f60702cd5d14250eeb74e05",
+      "width": 1290,
+      "height": 2796,
+      "route": "actual root"
+    },
+    {
+      "path": "APP/APPROVED/SHEPHERD_DASHBOARD/BUILT/V1/L10_shepherd_dashboard__requests__master_beside_build.png",
+      "bytes": 488547,
+      "sha256": "b624c7190735b26657aae71b7540afab5f2c5f766b802b475b15596d5736d7ae",
+      "width": 2580,
+      "height": 2796,
+      "route": "actual root"
+    },
+    {
+      "path": "APP/APPROVED/SHEPHERD_DASHBOARD/BUILT/V1/L20_dashboard__check_in__build.png",
+      "bytes": 257196,
+      "sha256": "a14d161099851f4053299a59f59aa990b1e0dd74abd95b8fc8a443b9a0c346ec",
+      "width": 1290,
+      "height": 2796,
+      "route": "recorded-window component"
+    },
+    {
+      "path": "APP/APPROVED/SHEPHERD_DASHBOARD/BUILT/V1/L20_dashboard__check_in__master_beside_build.png",
+      "bytes": 534214,
+      "sha256": "fb9a9914b53da89add6cb5b048131904194201b3082798d0314f2eabde778bd0",
+      "width": 2580,
+      "height": 2796,
+      "route": "recorded-window component"
+    },
+    {
+      "path": "APP/APPROVED/SHEPHERD_DASHBOARD/BUILT/V1/L20_dashboard__nothing_needs_you__build.png",
+      "bytes": 228732,
+      "sha256": "204a78afb7b750177c89ad9fdfb35b41f97b226d0f1c64c3938e07b2e38681cf",
+      "width": 1290,
+      "height": 2796,
+      "route": "recorded-window component"
+    },
+    {
+      "path": "APP/APPROVED/SHEPHERD_DASHBOARD/BUILT/V1/L20_dashboard__nothing_needs_you__master_beside_build.png",
+      "bytes": 496570,
+      "sha256": "b6a129c785526a6c1c7d1def51d1a8b4211d7863cef0ce2fe2a87caf7167d2f7",
+      "width": 2580,
+      "height": 2796,
+      "route": "recorded-window component"
+    }
+  ]
+}

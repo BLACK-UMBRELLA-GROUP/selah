@@ -207,12 +207,17 @@ class SelahPrayerRequestsBlock extends StatelessWidget {
     required this.shepherdId,
     required this.onPray,
     required this.linkedSeekerNames,
+    this.showFooter = true,
   });
 
   final List<SelahPrayerRequest> requests;
   final String shepherdId;
   final ValueChanged<String> onPray;
   final List<String> linkedSeekerNames;
+
+  /// A composing Dashboard places the same note once after its Updates.
+  /// Standalone callers retain the complete LOCK 10 block by default.
+  final bool showFooter;
 
   String get _names => linkedSeekerNames.join(' or ');
 
@@ -249,11 +254,13 @@ class SelahPrayerRequestsBlock extends StatelessWidget {
                 ],
               ),
       ),
-      const SizedBox(height: 14),
-      Text(
-        'Seekers you walk with can ask you for prayer. They see when you have prayed.',
-        style: SelahText.body(size: 13.5, color: SelahColors.muted),
-      ),
+      if (showFooter) ...[
+        const SizedBox(height: 14),
+        Text(
+          'Seekers you walk with can ask you for prayer. They see when you have prayed.',
+          style: SelahText.body(size: 13.5, color: SelahColors.muted),
+        ),
+      ],
     ],
   );
 

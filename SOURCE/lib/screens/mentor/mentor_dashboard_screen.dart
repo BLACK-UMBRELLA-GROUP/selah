@@ -46,7 +46,6 @@ import '../../widgets/floating_nav_bar.dart';
 import '../../widgets/selah_fade_edges.dart';
 import '../../widgets/selah_segmented_toggle.dart';
 import '../../widgets/selah_scrollable_seeker_selector.dart';
-import '../../widgets/selah_shepherd_dashboard_profile_card.dart';
 import 'mentor_journey_detail_screen.dart';
 import '../../widgets/selah_loading.dart';
 import '../subscription/upgrade_screen.dart';
@@ -113,6 +112,8 @@ class _MentorDashboardScreenState extends State<MentorDashboardScreen> {
   int _loadRevision = 0;
   late final String? _ownerUserId;
   late final int _ownerGeneration;
+  // Retained preparation for source-only profile routing; Dashboard no longer renders the snapshot.
+  // ignore: unused_field
   bool _profilesLoading = true;
 
   bool get _currentAccount =>
@@ -213,7 +214,10 @@ class _MentorDashboardScreenState extends State<MentorDashboardScreen> {
   List<MentorJourneyView> get _visibleJourneys {
     if (widget.initialOnboardingPreview) return const [];
     if (!SelahDeveloperAccess.canUseDeveloperTools) return _journeys;
-    return SelahDevScenario.composeMentorJourneys(wards: _wards, real: _journeys);
+    return SelahDevScenario.composeMentorJourneys(
+      wards: _wards,
+      real: _journeys,
+    );
   }
 
   Future<void> _loadProfiles({bool force = false}) async {
@@ -281,6 +285,8 @@ class _MentorDashboardScreenState extends State<MentorDashboardScreen> {
     );
   }
 
+  // Profile inspection remains owned by Seekers; keep this legacy adapter source-only.
+  // ignore: unused_element
   void _openProfile(MentorLinkedPerson person) {
     // Re-check current roster/model at tap time, after carousel or roster moves.
     if (!_wards.any((linked) => linked.id == person.id)) return;
@@ -295,7 +301,9 @@ class _MentorDashboardScreenState extends State<MentorDashboardScreen> {
           showCloseButtonWhenSwipeDismiss: true,
           emptyPhoto: profile.photos.isEmpty
               ? DecoratedBox(
-                  decoration: BoxDecoration(gradient: SelahColors.brandGradient),
+                  decoration: BoxDecoration(
+                    gradient: SelahColors.brandGradient,
+                  ),
                   child: Center(
                     child: Icon(
                       Icons.person_outline,
@@ -664,41 +672,21 @@ class _MentorDashboardScreenState extends State<MentorDashboardScreen> {
     final showNow =
         widget.initialOnboardingPreview ||
         !SelahDeveloperAccess.canUseDeveloperTools ||
-        dev?.dashboardShepherdOptionSelected(SelahDashboardTab.now) == true;
-    final showInsights =
-        !widget.initialOnboardingPreview &&
-        (!SelahDeveloperAccess.canUseDeveloperTools ||
-            dev?.dashboardShepherdOptionSelected(SelahDashboardTab.insights) ==
-                true);
-    if (SelahDeveloperAccess.canUseDeveloperTools && !showNow && !showInsights) {
-      return const [];
-    }
-    final profileHeader = <Widget>[
-      if (person != null) ...[
-        ShepherdDashboardProfileCard(
-          person: person,
-          profile: _profileFor(person),
-          detailsLoading: _profilesLoading && _profileFor(person) == null,
-          onViewProfile: () => _openProfile(person),
-        ),
-        const SizedBox(height: 20),
-      ],
-    ];
+        dev?.dashboardShepherdOptionSelected(SelahDashboardTab.now) == true ||
+        dev?.dashboardShepherdOptionSelected(SelahDashboardTab.insights) ==
+            true;
+    if (!showNow) return const [];
     if (showNow &&
         _dashboardLabActive &&
         dev?.dashboardShepherdTodayState ==
             SelahShepherdDashboardTodayState.loading) {
-      return [
-        ...profileHeader,
-        const SizedBox(height: 210, child: SelahLoading()),
-      ];
+      return [const SizedBox(height: 210, child: SelahLoading())];
     }
     if (showNow &&
         _dashboardLabActive &&
         dev?.dashboardShepherdTodayState ==
             SelahShepherdDashboardTodayState.fullFailure) {
       return [
-        ...profileHeader,
         SizedBox(
           height: 300,
           child: SelahEmptyState(
@@ -712,25 +700,14 @@ class _MentorDashboardScreenState extends State<MentorDashboardScreen> {
       ];
     }
     if (showNow && (_loading || (_reviewsLoading && !_hasReviewTruth))) {
-      return [
-        ...profileHeader,
-        const SizedBox(height: 210, child: SelahLoading()),
-      ];
+      return [const SizedBox(height: 210, child: SelahLoading())];
     }
     return [
-      ...profileHeader,
       if (showNow) ...[
         ..._shepherdToday(resolution, attention, dev, person),
         const SizedBox(height: 22),
         ..._shepherdUpdates(dev, person),
       ],
-      if (showNow && showInsights) const SizedBox(height: 22),
-      if (showInsights)
-        _shepherdSection(
-          key: ValueKey('shepherd-dashboard-insights-${person?.id ?? 'empty'}'),
-          label: 'INSIGHTS',
-          children: _shepherdInsights(dev, person),
-        ),
     ];
   }
 
@@ -761,7 +738,7 @@ class _MentorDashboardScreenState extends State<MentorDashboardScreen> {
         ),
         _shepherdSection(
           key: const ValueKey('shepherd-dashboard-right-now'),
-          label: 'RIGHT NOW',
+          label: 'NEEDS YOU',
           children: const [
             _ShepherdStatusCard(
               key: ValueKey('shepherd-dashboard-journey-unavailable'),
@@ -772,10 +749,6 @@ class _MentorDashboardScreenState extends State<MentorDashboardScreen> {
             ),
           ],
         ),
-        if (person == null) ...[
-          const SizedBox(height: 22),
-          _familySnapshot(resolution, journeyStatusAvailable: false),
-        ],
       ];
     }
     return [
@@ -791,40 +764,34 @@ class _MentorDashboardScreenState extends State<MentorDashboardScreen> {
         _ErrorBanner(onRetry: _retry),
       _shepherdSection(
         key: const ValueKey('shepherd-dashboard-right-now'),
-        label: 'RIGHT NOW',
+        label: 'NEEDS YOU',
         children: attention.isEmpty
             ? const [
                 _ShepherdStatusCard(
                   icon: Icons.check_circle_outline_rounded,
                   eyebrow: 'ALL SETTLED',
-                  title: 'Nothing needs you right now',
+                  title: 'Nothing needs you right now.',
                   detail: 'Your current Shepherd responsibilities are clear.',
                 ),
               ]
             : [attention.first],
       ),
-      if (person == null) ...[
-        const SizedBox(height: 22),
-        _familySnapshot(resolution),
-      ],
     ];
   }
 
   List<Widget> _emptyShepherdToday(ShepherdDashboardResolution resolution) => [
     _shepherdSection(
       key: const ValueKey('shepherd-dashboard-right-now'),
-      label: 'RIGHT NOW',
+      label: 'NEEDS YOU',
       children: const [
         _ShepherdStatusCard(
           icon: Icons.check_circle_outline_rounded,
           eyebrow: 'ALL SETTLED',
-          title: 'Everything is settled right now',
+          title: 'Nothing needs you right now.',
           detail: 'There are no linked Seeker responsibilities to review.',
         ),
       ],
     ),
-    const SizedBox(height: 22),
-    _familySnapshot(resolution),
   ];
 
   List<Widget> _shepherdUpdates(
@@ -915,7 +882,8 @@ class _MentorDashboardScreenState extends State<MentorDashboardScreen> {
     }
     final actionable = state == SelahDashboardUpdatesState.oneActionable;
     final count = switch (state) {
-      SelahDashboardUpdatesState.several || SelahDashboardUpdatesState.mixed => 3,
+      SelahDashboardUpdatesState.several ||
+      SelahDashboardUpdatesState.mixed => 3,
       _ => 1,
     };
     final person = selectedName?.trim().isNotEmpty == true
@@ -942,6 +910,8 @@ class _MentorDashboardScreenState extends State<MentorDashboardScreen> {
     ];
   }
 
+  // Retained source-only insight rendering; LOCK20 removes its Dashboard entry.
+  // ignore: unused_element
   List<Widget> _shepherdInsights(
     SelahDevScenario? dev,
     MentorLinkedPerson? person,
@@ -1050,6 +1020,8 @@ class _MentorDashboardScreenState extends State<MentorDashboardScreen> {
     ],
   );
 
+  // Retained source-only aggregate; no active Dashboard entry after LOCK20.
+  // ignore: unused_element
   Widget _familySnapshot(
     ShepherdDashboardResolution resolution, {
     bool journeyStatusAvailable = true,

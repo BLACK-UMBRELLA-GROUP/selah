@@ -3,6 +3,7 @@ import 'dart:collection';
 import '../data/selah_journey_stages.dart';
 import '../data/selah_reference_data.dart' show selahRelationshipLabel;
 import '../models/selah_marriage_values.dart';
+import '../models/selah_journey_stage_change.dart';
 
 /// Disposable request/transition UI, not a new canonical server lifecycle.
 /// This model has no account, storage, entitlement or backend dependency.
@@ -279,6 +280,7 @@ class _DraftJourneyProgress {
   bool stageContinue = false;
   bool peerStageContinue = false;
   final Set<int> marriagePrepCompleted = <int>{};
+  final List<DraftJourneyStageChange> stageChanges = [];
 }
 
 /// Shared fictional state for all five alternative app destinations.
@@ -297,13 +299,20 @@ class _DraftJourneyProgress {
 /// Stage labels come from the existing pure canonical source; walkthrough
 /// advancement is not real answers, Family Review time or server enforcement.
 class ViewRequestDraftModel {
-  ViewRequestDraftModel({int capacity = 1}) : this._(capacity, true);
+  ViewRequestDraftModel({int capacity = 1, DateTime Function()? clock})
+    : this._(capacity, true, clock ?? DateTime.now);
 
   /// LOCK 19's new Seeker starts without another Seeker's private scenario.
-  ViewRequestDraftModel.freshSeeker({int capacity = 1})
-    : this._(capacity, false);
+  ViewRequestDraftModel.freshSeeker({
+    int capacity = 1,
+    DateTime Function()? clock,
+  }) : this._(capacity, false, clock ?? DateTime.now);
 
-  ViewRequestDraftModel._(this._capacity, this._seedDefaultScenario) {
+  ViewRequestDraftModel._(
+    this._capacity,
+    this._seedDefaultScenario,
+    this._clock,
+  ) {
     if (_capacity < 1 || _capacity > 3) {
       throw RangeError.range(_capacity, 1, 3, 'capacity');
     }
@@ -316,6 +325,7 @@ class ViewRequestDraftModel {
 
   int _capacity;
   final bool _seedDefaultScenario;
+  final DateTime Function() _clock;
   final Map<String, DraftJourneyState> _states = {};
   final Set<String> _saved = {};
   final Set<String> _busyPeers = {};
@@ -368,6 +378,12 @@ class ViewRequestDraftModel {
   /// keeps its current one-place presentation. Visibility to others is still
   /// [discoverable], not permission to inspect public profiles.
   bool get canBrowse => hasCapacity || capacity == 3;
+
+  /// Actual local transitions only. Reading never creates historical facts,
+  /// and an earlier snapshot cannot acquire facts from a later transition.
+  List<DraftJourneyStageChange> stageChangesFor(String id) => List.unmodifiable(
+    _progress[id]?.stageChanges ?? const <DraftJourneyStageChange>[],
+  );
 
   /// Ended peers can be viewed again without resurrecting the old attempt.
   /// A fresh request to the same peer remains held until distinct attempt
@@ -762,10 +778,32 @@ class ViewRequestDraftModel {
   bool advanceStage(String id) {
     if (!canAdvanceStage(id)) return false;
     final progress = _progress[id]!;
+    final index = progress.stageIndex;
+    final from = SelahJourneyStages.all[index];
+    final to = SelahJourneyStages.all[index + 1];
+    final DateTime occurredAt;
+    try {
+      occurredAt = _clock();
+    } catch (_) {
+      return false;
+    }
+    if (!identical(_progress[id], progress) ||
+        progress.stageIndex != index ||
+        !canAdvanceStage(id)) {
+      return false;
+    }
     progress
       ..stageIndex += 1
       ..stageContinue = false
       ..peerStageContinue = false;
+    progress.stageChanges.add(
+      DraftJourneyStageChange(
+        journeyId: id,
+        fromStage: from.value,
+        toStage: to.value,
+        occurredAt: occurredAt,
+      ),
+    );
     return true;
   }
 

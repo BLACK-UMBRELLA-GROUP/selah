@@ -17,6 +17,8 @@ import '../models/selah_prayer.dart';
 import '../models/selah_prayer_controller.dart';
 import '../models/selah_shepherd_recent.dart';
 import '../models/selah_shepherd_suggestion.dart';
+import '../models/selah_shepherd_dashboard.dart';
+import '../widgets/selah_shepherd_dashboard_views.dart';
 import '../widgets/selah_shepherd_introduce_views.dart';
 import '../widgets/selah_prayer_views.dart';
 import '../services/selah_developer_access.dart';
@@ -329,7 +331,7 @@ class _SelahOneJourneyConceptShellState
     'ended' || 'past_journeys' => 'Ended Journeys',
     _ =>
       _shepherdRole
-          ? const ['My Selah', 'Introduce', 'Seekers', 'Profile'][_tab]
+          ? const ['Dashboard', 'Introduce', 'Seekers', 'Profile'][_tab]
           : const [
               'Browse',
               'Journey',
@@ -3280,14 +3282,17 @@ class _SelahOneJourneyConceptShellState
     controller.dispose();
   }
 
-  Widget _prayerRequestsBlock() {
+  Widget _prayerRequestsBlock({bool showFooter = true}) {
     final current = _accountFreshGuard();
     return SelahPrayerRequestsBlock(
-      requests: _prayerEmptyView
+      requests: _prayerEmptyView || !_conceptHassanLinked
           ? const []
           : _prayerStore.requestsFor(draftShepherds.first.id),
       shepherdId: draftShepherds.first.id,
-      linkedSeekerNames: const ['James', 'Joel'],
+      showFooter: showFooter,
+      linkedSeekerNames: _conceptHassanLinked
+          ? const ['James', 'Joel']
+          : const [],
       onPray: (id) {
         if (current()) _prayForRequest(id);
       },
@@ -4256,138 +4261,6 @@ class _SelahOneJourneyConceptShellState
     ),
   );
 
-  // Current empty Shepherd Dashboard hierarchy/copy, without a surviving
-  // linked-person selector, portrait or permitted Journey after unlinking.
-  Widget _conceptUnlinkedShepherdDashboard() => SafeArea(
-    bottom: false,
-    child: Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Padding(
-          padding: const EdgeInsets.fromLTRB(20, 16, 20, 8),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              _mainHeading('Shepherd Dashboard'),
-              const SizedBox(height: 4),
-              Text('Hello, David.', style: SelahText.subtext(size: 13.5)),
-            ],
-          ),
-        ),
-        Expanded(
-          child: ListView(
-            key: const PageStorageKey('concept_shepherd_dashboard_empty'),
-            physics: const BouncingScrollPhysics(),
-            padding: const EdgeInsets.fromLTRB(20, 12, 20, 108),
-            children: [
-              _conceptEmptyShepherdStatus(
-                section: 'RIGHT NOW',
-                icon: Icons.check_circle_outline_rounded,
-                eyebrow: 'ALL SETTLED',
-                title: 'Everything is settled right now',
-                detail:
-                    'There are no linked Seeker responsibilities to review.',
-              ),
-              const SizedBox(height: 22),
-              _conceptEmptyShepherdStatus(
-                section: 'FAMILY SNAPSHOT',
-                icon: Icons.people_outline_rounded,
-                eyebrow: 'YOUR FAMILY',
-                title: '0 linked Seekers · Nothing needs you',
-                detail:
-                    'Open Seekers for relationships, roles and authorised context.',
-                actionLabel: 'View Seekers',
-                onAction: _bound(() => _tabTo(2)),
-              ),
-              const SizedBox(height: 22),
-              _conceptEmptyShepherdStatus(
-                section: 'UPDATES',
-                icon: Icons.notifications_none_rounded,
-                eyebrow: 'ALL CAUGHT UP',
-                title: 'No Shepherd updates yet',
-                detail:
-                    'Meaningful Journey and Family Review movement will appear here.',
-              ),
-              const SizedBox(height: 22),
-              _conceptEmptyShepherdStatus(
-                section: 'INSIGHTS',
-                icon: Icons.insights_outlined,
-                eyebrow: 'SHEPHERD INSIGHTS',
-                title: 'No Shepherd insights available yet',
-                detail:
-                    'Selah will only show a Shepherd insight when real, governed family-process evidence supports it.',
-              ),
-            ],
-          ),
-        ),
-      ],
-    ),
-  );
-
-  Widget _conceptEmptyShepherdStatus({
-    required String section,
-    required IconData icon,
-    required String eyebrow,
-    required String title,
-    required String detail,
-    String? actionLabel,
-    VoidCallback? onAction,
-  }) => Column(
-    crossAxisAlignment: CrossAxisAlignment.start,
-    children: [
-      Padding(
-        padding: const EdgeInsets.only(left: 2, bottom: 10),
-        child: Text(
-          section,
-          style: SelahText.chapterLabel(color: SelahColors.ink(.54)),
-        ),
-      ),
-      Container(
-        width: double.infinity,
-        padding: const EdgeInsets.all(15),
-        decoration: BoxDecoration(
-          color: SelahColors.surfaceFill,
-          borderRadius: BorderRadius.circular(16),
-          border: Border.all(color: SelahColors.surfaceBorder, width: .5),
-        ),
-        child: Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Icon(icon, size: 21, color: SelahColors.ink(.72)),
-            const SizedBox(width: 11),
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    eyebrow,
-                    style: SelahText.chapterLabel(color: SelahColors.ink(.50)),
-                  ),
-                  const SizedBox(height: 4),
-                  Text(title, style: SelahText.body(size: 14.2)),
-                  const SizedBox(height: 4),
-                  Text(detail, style: SelahText.subtext(size: 11.7)),
-                  if (actionLabel != null && onAction != null) ...[
-                    const SizedBox(height: 8),
-                    TextButton(
-                      onPressed: onAction,
-                      style: TextButton.styleFrom(
-                        padding: EdgeInsets.zero,
-                        minimumSize: const Size(0, 32),
-                        tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                      ),
-                      child: Text(actionLabel),
-                    ),
-                  ],
-                ],
-              ),
-            ),
-          ],
-        ),
-      ),
-    ],
-  );
-
   Widget _shepherdJourneySelector() {
     final people = _permittedShepherdJourneys;
     final selected = people.indexWhere((p) => p.id == _shepherdFocus?.id);
@@ -4446,23 +4319,73 @@ class _SelahOneJourneyConceptShellState
           ),
         );
 
-  Widget _shepherdDashboard() => !_conceptHassanLinked
-      ? _conceptUnlinkedShepherdDashboard()
-      : _withShepherdJourneySelector(
-          'Shepherd Dashboard',
-          SelahOneJourneyShepherdDashboardPresentation(
-            showHeader: _permittedShepherdJourneys.length <= 1,
-            profile: _conceptLinkedSeekerProfile,
-            person: _conceptLinkedSeeker,
-            shepherdName: 'David',
-            prayerRequests: _prayerRequestsBlock(),
-            hasShepherdOne: _shepherdMembership == 'Shepherd One',
-            currentJourney: _conceptShepherdJourney,
-            onProfile: _bound(() => _open('shepherd_linked_profile')),
-            onJourney: _bound(() => _open('shepherd')),
-            onMembership: _bound(() => _open('membership')),
-          ),
-        );
+  List<SelahShepherdDashboardNeed> get _shepherdDashboardNeeds => [
+    if (_conceptHassanLinked && _conceptLinkedSeeker.isMain)
+      for (final request in _visibleRequests(DraftJourneyState.received))
+        SelahShepherdDashboardNeed(
+          id: 'request-${request.id}',
+          seekerId: _conceptLinkedSeeker.id,
+          title:
+              '${request.firstName} asked ${_conceptLinkedSeeker.firstName} to begin',
+          detail: 'He hasn’t answered yet. A word from you may help.',
+          actionLabel: 'Encourage',
+        ),
+  ];
+
+  List<SelahShepherdCheckIn> get _shepherdDashboardCheckIns {
+    final admitted = <String, SelahShepherdCheckInIdentity>{
+      for (final journey in _permittedShepherdJourneys)
+        journey.id: SelahShepherdCheckInIdentity(
+          seekerId: _conceptLinkedSeeker.id,
+          seekerFirstName: _conceptLinkedSeeker.firstName,
+          counterpartFirstName: journey.firstName,
+        ),
+    };
+    return selahShepherdCheckIns(
+      events: [
+        for (final journeyId in admitted.keys)
+          ..._model.stageChangesFor(journeyId),
+      ],
+      admittedJourneys: admitted,
+      now: DateTime.now(),
+    );
+  }
+
+  Widget _shepherdDashboard() {
+    final revision = _uiRevision;
+    final owner = _accountSession;
+    bool current() =>
+        _allowed &&
+        owner.current &&
+        identical(owner, _accountSession) &&
+        revision == _uiRevision &&
+        _shepherdRole &&
+        _tab == 0 &&
+        _page == null &&
+        _conceptHassanLinked;
+    return SelahShepherdDashboardView(
+      prayerRequests: _prayerRequestsBlock(showFooter: false),
+      needs: _shepherdDashboardNeeds,
+      checkIns: _shepherdDashboardCheckIns,
+      updates: selahDraftShepherdUpdates(),
+      onNeed: (need) {
+        if (!current() ||
+            need.seekerId != _conceptLinkedSeeker.id ||
+            !_shepherdDashboardNeeds.any((row) => row.id == need.id)) {
+          return;
+        }
+        _open('shepherd_circle');
+      },
+      onMessage: (checkIn) {
+        if (!current() ||
+            checkIn.identity.seekerId != _conceptLinkedSeeker.id ||
+            !_shepherdDashboardCheckIns.any((row) => row.key == checkIn.key)) {
+          return;
+        }
+        _open('shepherd_circle');
+      },
+    );
+  }
 
   Widget _shepherdSeekers() => !_conceptHassanLinked
       ? ShepherdSeekerRosterView(

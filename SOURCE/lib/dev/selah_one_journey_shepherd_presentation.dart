@@ -25,6 +25,14 @@ import '../widgets/selah_scrollable_seeker_selector.dart';
 import '../widgets/selah_segmented_toggle.dart';
 import '../widgets/selah_state_widgets.dart';
 
+/// Existing draft Updates state, reused without inventing event history.
+Widget selahDraftShepherdUpdates() => const _DashboardStatusCard(
+  icon: Icons.notifications_none_rounded,
+  eyebrow: 'ALL CAUGHT UP',
+  title: 'No Shepherd updates yet',
+  detail: 'Meaningful Journey and Family Review movement will appear here.',
+);
+
 class SelahOneJourneyShepherdDashboardPresentation extends StatelessWidget {
   const SelahOneJourneyShepherdDashboardPresentation({
     super.key,
