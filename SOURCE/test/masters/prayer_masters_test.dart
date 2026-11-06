@@ -19,7 +19,11 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'master_capture.dart';
 import 'your_values_driver.dart';
 
-final _capture = MasterCaptureHarness(feature: 'PRAYER');
+final _capture = MasterCaptureHarness(
+  feature: 'PRAYER',
+  version: 'V1_FIX_LABELS',
+  wordingRevision: false,
+);
 const _masters = {
   'L10_seeker_ask_for_prayer',
   'L10_seeker_ask_for_prayer__sending',
@@ -222,12 +226,12 @@ void main() {
     await _role(tester, false);
     await _tab(tester, 'My Selah');
     expect(
-      find.text('David prayed for your Journey with Esther.'),
+      find.text('Pastor David prayed for your Journey with Esther.'),
       findsOneWidget,
     );
     await _expireNotice(tester);
     await tester.ensureVisible(
-      find.text('David prayed for your Journey with Esther.'),
+      find.text('Pastor David prayed for your Journey with Esther.'),
     );
     await tester.pumpAndSettle();
     await _capture.capture(
@@ -250,10 +254,10 @@ void main() {
     await tester.enterText(_key('prayer_words'), 'Please pray for my family.');
     await _tap(tester, _key('prayer_send'));
     expect(_key('prayer_page'), findsNothing);
-    expect(find.text('Sent. David will pray for you.'), findsOneWidget);
+    expect(find.text('Sent. Pastor David will pray for you.'), findsOneWidget);
     expect(composer.controller.send(), isFalse);
     await _tab(tester, 'My Selah');
-    expect(find.text('You asked David for prayer.'), findsOneWidget);
+    expect(find.text('You asked Pastor David for prayer.'), findsOneWidget);
     await _role(tester, true);
     final rows = _requests(tester).requests;
     expect(rows, hasLength(5));
@@ -268,7 +272,7 @@ void main() {
     expect(_requests(tester).requests.first.prayedCount, 1);
     await _role(tester, false);
     await _tab(tester, 'My Selah');
-    expect(find.text('David prayed for you.'), findsOneWidget);
+    expect(find.text('Pastor David prayed for you.'), findsOneWidget);
   });
 
   testWidgets('Prayer empty preset preserves requests and prayed-once state', (

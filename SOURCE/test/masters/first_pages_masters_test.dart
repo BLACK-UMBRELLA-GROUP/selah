@@ -19,7 +19,11 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import 'master_capture.dart';
 
-final _capture = MasterCaptureHarness(feature: 'FIRST_PAGES');
+final _capture = MasterCaptureHarness(
+  feature: 'FIRST_PAGES',
+  version: 'V1_FIX_LABELS',
+  wordingRevision: false,
+);
 const _headings = [
   'A pause before every step.',
   'You won’t walk alone.',

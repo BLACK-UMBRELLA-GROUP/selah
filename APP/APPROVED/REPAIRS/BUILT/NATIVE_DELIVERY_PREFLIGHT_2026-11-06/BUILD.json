@@ -1,0 +1,163 @@
+{
+  "schema_version": 1,
+  "evidence_kind": "sanitized_native_delivery_preflight",
+  "status": "BLOCKED_BEFORE_BUILD_OR_INSTALL",
+  "timestamp_utc": "2026-11-06T21:32:41Z",
+  "source_commit": "acef0bf53ef87a85c0665b42ae7e3743ccdc3480",
+  "flutter_version": "3.44.2",
+  "dart_version": "3.12.2",
+  "build_mode": "not_built; intended existing route is profile-draft",
+  "tracking": {
+    "action": "OA-SELAH-007",
+    "question": 14,
+    "question_file": "APP/APPROVED/QUESTIONS.md:33",
+    "affected_queue_line": 28,
+    "queue_state": "QUESTION",
+    "requested_outcome": "Update the existing private phone app with the latest approved source and LOCK23 icon/splash, after a reviewed delivery-repair brief resolves the current route blockers."
+  },
+  "execution": {
+    "native_build_attempted": false,
+    "phone_install_attempted": false,
+    "phone_install_failed": false,
+    "phone_launch_attempted": false,
+    "latest_phone_app_updated": false,
+    "result_note": "This is a blocked preflight, not a failed installation. The existing installed phone app was preserved. No delivery script, build, install or launch command was run for this receipt."
+  },
+  "phone_readiness": {
+    "evidence_source": "Root agent's authorized metadata check after the Founder connected the intended phone; device identity omitted.",
+    "lock_state_query_result": "success",
+    "passcodeRequired": false,
+    "unlockedSinceBoot": true,
+    "scope_note": "These readiness fields do not establish build compatibility, signing availability, installation, launch or first-frame acceptance."
+  },
+  "caller_environment": {
+    "scope": "Presence only in the agent process environment; no credential or signing-identity search.",
+    "SELAH_TEAM_ID": "UNSET",
+    "SELAH_SIGN_ID": "UNSET",
+    "SELAH_DEVICE": "UNSET",
+    "guards": ["SOURCE/run.sh:48-59"],
+    "values_recorded": false
+  },
+  "available_apple_metadata": {
+    "query_mode": "Read-only xcrun SDK metadata and simctl runtime inventory; no simulator device creation, boot, install or download.",
+    "active_device_sdk": {
+      "version": "27.2",
+      "path": "/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS27.2.sdk"
+    },
+    "active_simulator_sdk": {
+      "version": "27.2",
+      "path": "/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator27.2.sdk"
+    },
+    "installed_sdk_platforms": {
+      "driverkit": "27.2",
+      "iphoneos": "27.2",
+      "iphonesimulator": "27.2",
+      "macosx": "27.2",
+      "appletvos": "27.2",
+      "appletvsimulator": "27.2",
+      "xros": "27.2",
+      "xrsimulator": "27.2",
+      "watchos": "27.2",
+      "watchsimulator": "27.2"
+    },
+    "available_ios_simulator_runtimes": [
+      {"version": "27.0", "build_version": "24A434", "is_available": true},
+      {"version": "27.2", "build_version": "24B91016s", "is_available": true},
+      {"version": "27.2", "build_version": "24B8117", "is_available": true}
+    ],
+    "runtime_sdk_distinction": "An available iOS27.0 simulator runtime does not provide the exact physical-device iPhoneOS27.0.sdk required by the retained-shell route."
+  },
+  "blockers": [
+    {
+      "kind": "missing_retained_native_shell",
+      "required_path": "SOURCE/build/ios/iphoneos/Runner.app",
+      "exists": false,
+      "required_app_framework_exists": false,
+      "guards": ["SOURCE/tooling/dart_layer_delivery.sh:18", "SOURCE/tooling/dart_layer_delivery.sh:43-44"]
+    },
+    {
+      "kind": "missing_prepared_swift_packages",
+      "required_path": "SOURCE/build/ios/SourcePackages/checkouts",
+      "exists": false,
+      "note": "The existing route requires prepared local checkouts at the exact resolved revisions and refuses to fetch them silently.",
+      "guards": ["SOURCE/tooling/delivery_preflight.dart:97-103", "SOURCE/tooling/delivery_preflight.dart:117-151", "SOURCE/run.sh:69-71"]
+    },
+    {
+      "kind": "missing_pinned_device_sdk",
+      "required_path": "/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS27.0.sdk",
+      "exists": false,
+      "active_sdk_version": "27.2",
+      "guards": ["SOURCE/tooling/dart_layer_delivery.sh:220-223"]
+    },
+    {
+      "kind": "project_inputs_drifted_from_retained_shell_pins",
+      "pin_status": {
+        "SOURCE/pubspec.yaml": "DIFFERS",
+        "SOURCE/pubspec.lock": "MATCHES",
+        "SOURCE/.dart_tool/package_config.json": "MATCHES_BYTES_BUT_OLDER_THAN_PUBSPEC",
+        "SOURCE/.flutter-plugins-dependencies": "MATCHES",
+        "SOURCE/ios/Flutter/ephemeral/Packages/FlutterGeneratedPluginSwiftPackage/Package.swift": "DIFFERS",
+        "SOURCE/ios/Runner.xcworkspace/xcshareddata/swiftpm/Package.resolved": "MATCHES"
+      },
+      "guards": ["SOURCE/tooling/delivery_preflight.dart:47-55", "SOURCE/tooling/dart_layer_delivery.sh:177-184"],
+      "note": "No dependency regeneration, download, upgrade or pin update was performed. Matching cached package bytes do not bypass the freshness guard or establish retained native-shell compatibility."
+    },
+    {
+      "kind": "old_reviewed_dart_binary_only",
+      "note": "The route requires the exact prior reviewed startup-fix App.framework compiled content, including a 16498872-byte signature-normalized Mach-O and an exact compiled-content hash. It is not a generic delivery route for the latest changed Dart source. No new compilation was attempted to bypass or refresh that guard.",
+      "guards": ["SOURCE/tooling/dart_layer_delivery.sh:98-112", "SOURCE/tooling/dart_layer_delivery.sh:300-305", "SOURCE/tooling/dart_layer_delivery.sh:359-361"]
+    },
+    {
+      "kind": "locked_native_icon_and_splash_conflict",
+      "lock": 23,
+      "brief": "APP/APPROVED/APP_ICON/BRIEFS/BUILD_BRIEF_2026-11-06_V1.md",
+      "current_native_source_pin_status": {
+        "SOURCE/ios/Runner/Base.lproj/LaunchScreen.storyboard": "MATCHES_OLD_PIN",
+        "SOURCE/ios/Runner/Assets.xcassets/AppIcon.appiconset/Contents.json": "MATCHES_OLD_PIN",
+        "SOURCE/ios/Runner/Assets.xcassets/AppIcon.appiconset/Selah-1024.png": "MATCHES_OLD_PIN"
+      },
+      "note": "LOCK23 requires changed native icon and launch-screen resources. The retained-shell route clones the old native bundle, replaces only App.framework and requires unchanged native resources/payload. Changing Dart assets alone cannot deliver the locked native icon/storyboard. A reviewed resource/native delivery repair is required; no icon/storyboard/payload pin was changed.",
+      "guards": ["SOURCE/tooling/dart_layer_delivery.sh:193-195", "SOURCE/tooling/dart_layer_delivery.sh:325-335", "SOURCE/tooling/dart_layer_delivery.sh:357-358"]
+    }
+  ],
+  "available_pinned_tool_hashes": {
+    "all_six_files_exist_and_match_existing_pins": true,
+    "pin_guard": "SOURCE/tooling/dart_layer_delivery.sh:170-175",
+    "files": [
+      {"path": "FLUTTER_ROOT/bin/cache/dart-sdk/bin/dart", "sha256": "3760a76d390be872c4b4a44a5d045f06183bc21b191b98c8f1e26bc9b1d65d20", "matches_pin": true},
+      {"path": "FLUTTER_ROOT/bin/cache/flutter_tools.snapshot", "sha256": "13abc665bbccfaf78f1357ada1818adf27ed05663a1d3c4519da5b89e3ea0f1a", "matches_pin": true},
+      {"path": "SOURCE/tooling/no_git/xcrun", "sha256": "f492d28a78b16a73978f334d8b8677161d1565e1a3d6943a4a5b300dab86206d", "matches_pin": true},
+      {"path": "FLUTTER_ROOT/bin/cache/artifacts/engine/ios-profile/gen_snapshot_arm64", "sha256": "94e8eb91c6f0ac4ca9612e6298fd8fb08d445afee53b24155b60a18555b4f54d", "matches_pin": true},
+      {"path": "FLUTTER_ROOT/bin/cache/artifacts/engine/darwin-x64/frontend_server_aot.dart.snapshot", "sha256": "d560d64f6c5484b234e34aaa5c91d16ef3c028b768f591ae27d33ea98c69f9c3", "matches_pin": true},
+      {"path": "FLUTTER_ROOT/bin/cache/artifacts/engine/darwin-x64/font-subset", "sha256": "1b56f94b39506146474a18372137bc948eb8a5cb7fd19a643ea7d0765e0ed386", "matches_pin": true}
+    ],
+    "flutter_root": "/opt/homebrew/Caskroom/flutter/3.44.2/flutter",
+    "native_delivery_helpers_identical_to_source_commit": true,
+    "helper_comparison": "Read-only git diff against acef0bf for run.sh, flutter_env.sh, delivery_preflight.dart, dart_layer_delivery.sh and tooling/no_git/xcrun returned no differences.",
+    "compatibility_limit": "Available matching Flutter/Dart tools do not resolve missing native inputs, SDK mismatch or old binary/native-resource pins."
+  },
+  "required_existing_route_checks_preserved": {
+    "no_paste_entrypoint": "SOURCE/run.sh",
+    "dependency_and_source_fingerprints": ["SOURCE/run.sh:73-104", "SOURCE/run.sh:143"],
+    "strict_signature_and_profile_checks": ["SOURCE/run.sh:148-205"],
+    "unlock_before_install": ["SOURCE/run.sh:229-232"],
+    "install_and_exact_launch_receipts": ["SOURCE/run.sh:234-246"],
+    "installed_app_identity_version_container_query": ["SOURCE/run.sh:248-258"],
+    "same_process_then_22_second_requery": ["SOURCE/run.sh:260-274"],
+    "first_frame_limit": "Even a future 22-second same-process pass would require separate physical first-frame and unplugged-launch acceptance. None was claimed here.",
+    "network_git_and_xcode_project_build_denial": ["SOURCE/tooling/dart_layer_delivery.sh:229-240"]
+  },
+  "policy_and_resolution": {
+    "same_installed_sdk_and_toolchain_preserved": true,
+    "downloads_performed": false,
+    "mac_software_installs_or_upgrades_performed": false,
+    "dependency_pin_changes_performed": false,
+    "native_pin_changes_performed": false,
+    "signing_or_provisioning_changes_performed": false,
+    "keys_accessed": false,
+    "compiled_app_or_source_copies_created": false,
+    "signing_device_identifiers_or_credentials_recorded": false,
+    "scope": "No downloads, Mac software installs/upgrades, SDK changes, new native build route, pin refresh or bypass are authorized by this preflight. F33 remains in force. Q14 requires a reviewed delivery-repair brief before native build/install; any required Mac installation needs separate Founder approval.",
+    "disposition": "Keep queue28 QUESTION and preserve the existing installed phone app until Q14 is answered."
+  }
+}

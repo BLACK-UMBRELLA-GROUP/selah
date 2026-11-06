@@ -20,10 +20,15 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import 'master_capture.dart';
 
-final _capture = MasterCaptureHarness(feature: 'SELAH_PAUSE');
+final _capture = MasterCaptureHarness(
+  feature: 'SELAH_PAUSE',
+  version: 'V1_FIX_LABELS',
+  wordingRevision: false,
+);
 final _replaceCapture = MasterCaptureHarness(
   feature: 'SELAH_PAUSE',
-  version: 'V1_1',
+  version: 'V1_FIX_LABELS',
+  wordingRevision: false,
 );
 MasterCaptureHarness _captureFor(String master) =>
     master.startsWith('L07_pause_replace') ? _replaceCapture : _capture;

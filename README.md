@@ -12,7 +12,7 @@ The draft has no configured member backend. Account and service integrations are
 
 Sample profile pictures are free stock photos, not real members.
 
-The LOCKed Still Water look uses a light mist canvas, lake accents, bundled Figtree and Cormorant Garamond, and a docked tab bar. Existing loading and failure states use the same theme; no live services are enabled. Member text uses “Selah”; profile actions read “Request a Journey”, or “Request later” while waiting for the Shepherd.
+The LOCKed Still Water look uses a light mist canvas, lake accents, bundled Figtree and Cormorant Garamond, and a docked tab bar. Existing loading and failure states use the same theme; no live services are enabled. Member text uses “Selah”; profile actions read “Request a Journey”, or “Request later” while waiting for the Shepherd. The shared quiet-page labels render in capitals; Pause and Prayer use the same recorded short Shepherd display name as the Shepherd tab.
 
 Private Home → Explore as a Seeker opens the locked Shepherd invite: choose a trusted supporter, enter their name and send locally. Name validation appears after an empty send attempt and hides when a name is typed. After the invite, the locked consent screen leads to seven faith questions or skips them. Seven marriage questions and a languages question follow. Languages uses the locked ten-choice shortlist and the existing searchable catalogue for Another language. Your values then asks the locked 27 questions in seven parts, followed by one optional Deal-breakers screen. These answers save through the existing local profile and compatibility owners. The Faith Profile, Marriage Values and About You cards read those answers. Compatibility reads the sign-up answers through the approved mapping; Your Values no longer repeats those questions. While waiting, Browse remains available; Request and Accept show the waiting message. The private Shepherd acceptance control restores those actions. Explore as a Shepherd can review the pending local request. No message, share sheet, clipboard link or account link is created.
 
@@ -55,7 +55,7 @@ Approved comparisons use real Flutter widgets at 430 × 932 and pixel ratio 3. I
 
 ## Private delivery route
 
-`SOURCE/run.sh` is a specialized private iPhone delivery route. It depends on a prepared local environment, a retained signed native base and matching local signing/provisioning material. It is not a fresh-clone setup script.
+`SOURCE/run.sh` is a specialized private iPhone delivery route. It depends on a prepared local environment, a retained signed native base and matching local signing/provisioning material. It is not a fresh-clone setup script. The 6 November phone preflight found its prepared native app, Swift checkouts and pinned physical-device SDK unavailable; its old binary/resource pins also exclude the latest source and locked icon. Delivery is held on Question 14 pending a reviewed repair. The phone connection and unlocked state were verified; no new app was installed.
 
 The source tooling pins cached Flutter **3.44.2** and Dart **3.12.2**; `SOURCE/pubspec.yaml` declares the Dart constraint `^3.12.2`. Review the project-local integration before changing those versions. The launcher checks its required local artifacts and stops when prerequisites do not match.
 

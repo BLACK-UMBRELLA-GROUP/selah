@@ -13,3 +13,4 @@ owner: SELAH chat
 | # | Date / time (UK) | Founder's words (exact) | What it locks |
 |---|---|---|---|
 | 9 | 2026-11-06 14:50 | Clickable answer: "B · Card after Open Conversation — LOCK it (Recommended)" (prototype V19, opened on Esther's Journey at Open Conversation) | `RECORD/SELAH_MARRIAGE_PREP_SPEC_CURRENT_VERSION_V1.md`; 4 masters `MASTERS/L09_*.png`; prototype V20; queue line 10 |
+| 9 (change) | 2026-11-06 | From LOCK 21 | 4 L09 masters re-rendered: stage list without "Shepherd support" (old in ARCHIVE/MASTERS_LOCK21). Card unchanged |

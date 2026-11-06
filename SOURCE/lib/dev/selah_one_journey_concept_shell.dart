@@ -1154,7 +1154,7 @@ class _SelahOneJourneyConceptShellState
     final person =
         people.where((person) => person.isMain).firstOrNull ??
         people.firstOrNull;
-    final name = person?.firstName.trim();
+    final name = person == null ? null : selahShepherdShortDisplayName(person);
     return name == null || name.isEmpty ? null : name;
   }
 
@@ -3121,6 +3121,9 @@ class _SelahOneJourneyConceptShellState
   SelahPrayerContext _prayerContext({required bool composer}) {
     final profile = _accountSession.ownProfile(_shepherdRole);
     final main = _prayerMainShepherd;
+    final actorShepherd = _conceptShepherdPeople
+        .where((person) => person.id == draftShepherds.first.id)
+        .firstOrNull;
     final journey = _currentJourneys
         .where(
           (person) =>
@@ -3134,7 +3137,13 @@ class _SelahOneJourneyConceptShellState
       actorId: _shepherdRole ? draftShepherds.first.id : profile.id,
       actorFirstName: profile.firstName,
       shepherdId: _shepherdRole ? draftShepherds.first.id : main?.id,
-      shepherdName: _shepherdRole ? profile.firstName : main?.firstName,
+      shepherdName: _shepherdRole
+          ? actorShepherd == null
+                ? profile.firstName
+                : selahShepherdShortDisplayName(actorShepherd)
+          : main == null
+          ? null
+          : selahShepherdShortDisplayName(main),
       journeyName: _shepherdRole ? null : journey?.firstName,
       linkedShepherdIds: _shepherdRole
           ? const []
@@ -3186,7 +3195,7 @@ class _SelahOneJourneyConceptShellState
           final prayed = _prayerStore.pray(
             requestId: requestId,
             shepherdId: actor.actorId,
-            shepherdName: actor.actorFirstName,
+            shepherdName: actor.shepherdName ?? actor.actorFirstName,
           );
           if (prayed) {
             _act(

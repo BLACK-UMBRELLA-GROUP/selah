@@ -51,7 +51,10 @@ class SelahQuietPagePresentation extends StatelessWidget {
               ).copyWith(height: .6),
             ),
             const Spacer(),
-            Text(label, style: SelahText.chapterLabel().copyWith(height: 1)),
+            Text(
+              label.toUpperCase(),
+              style: SelahText.chapterLabel().copyWith(height: 1),
+            ),
             const SizedBox(height: 14),
             Text(
               heading,

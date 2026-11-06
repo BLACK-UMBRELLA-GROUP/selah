@@ -49,9 +49,12 @@ class MasterCaptureHarness {
   // LOCK 11 recaptures every feature without overwriting earlier evidence.
   // The suffix records the app-wide member wording revision independently
   // of the feature's own design/build version.
-  MasterCaptureHarness({required String feature, String version = 'V1'})
-    : version = '${version}_WORDING_V1',
-      featureRoot = Directory('../APP/APPROVED/$feature').absolute;
+  MasterCaptureHarness({
+    required String feature,
+    String version = 'V1',
+    bool wordingRevision = true,
+  }) : version = wordingRevision ? '${version}_WORDING_V1' : version,
+       featureRoot = Directory('../APP/APPROVED/$feature').absolute;
 
   final Directory featureRoot;
   final String version;

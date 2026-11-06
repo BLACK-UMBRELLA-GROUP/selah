@@ -19,3 +19,5 @@ owner: SELAH chat
 |---|---|---|
 | 2026-11-06 | LOCK 12 (`SEEKER_SHEPHERD`) now decides the rest of the Seeker's Shepherd tab around the Ask for prayer button. This spec is unchanged; line 11 builds as written, line 13 follows | Founder LOCK 12 |
 | 10 (change) | 2026-11-06 | Codex QUESTIONS row 8 (no Founder decision needed - masters he locked win) | Spec V2: four demo requests; update wording with Journey form |
+| 10 (change) | 2026-11-06 | From LOCK 19 | 3 Dashboard masters re-rendered: tab "Introduce" (old in ARCHIVE/MASTERS_LOCK19) |
+| 10 (change) | 2026-11-06 | From LOCK 20 | 3 Dashboard masters re-rendered with Needs you / check-in sections below prayer requests (old in ARCHIVE/MASTERS_LOCK20). Spec unchanged |

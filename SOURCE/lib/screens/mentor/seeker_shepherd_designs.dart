@@ -11,6 +11,11 @@ import '../../widgets/selah_shepherd_invitation_dashboard.dart';
 import '../../widgets/selah_shepherd_preview_lifetime.dart';
 import '../../widgets/floating_nav_bar.dart';
 
+/// The existing short display name used beside the Shepherd's activity.
+String selahShepherdShortDisplayName(MentorLinkedPerson person) =>
+    '${person.relationship == 'pastor' ? 'Pastor ' : ''}${person.firstName}'
+        .trim();
+
 // The roster may rebuild one frame after revocation. Its retained child
 // callbacks must independently deny stale preview and asynchronous results.
 mixin _ShepherdControlLifetime<T extends StatefulWidget> on State<T> {
@@ -558,9 +563,7 @@ class SeekerShepherdPage extends StatelessWidget {
     final main = ordered.where((person) => person.isMain).firstOrNull;
     final additional = ordered.where((person) => !person.isMain).toList();
     final now = comparisonNow ?? DateTime.now();
-    final shortName = main == null
-        ? ''
-        : '${main.relationship == 'pastor' ? 'Pastor ' : ''}${main.firstName}';
+    final shortName = main == null ? '' : selahShepherdShortDisplayName(main);
     final reserve =
         math.max(
           MediaQuery.paddingOf(context).bottom,
