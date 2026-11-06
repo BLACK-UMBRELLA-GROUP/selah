@@ -8,7 +8,7 @@ links: [OA-SELAH-003, AD-AIOS-123, DOC-SELAH-0017, DOC-SELAH-0009]
 owner: SELAH chat
 ---
 
-# SELAH BROWSE CARD — SPEC — CURRENT VERSION V3 (LOCK 8, updated by LOCK 11)
+# SELAH BROWSE CARD — SPEC — CURRENT VERSION V4 (LOCK 8, updated by LOCK 11)
 
 Founder, 6 Nov 2026: "A · Faith chips only — LOCK it" (prototype V17, cleaned as V18). Look: LOOK spec V2. Faith answers:
 FAITH_PROFILE spec. ROADMAP rows: **SELAH's own identity and private delivery acceptance** and **Christian content and production experience**.
@@ -22,7 +22,7 @@ FAITH_PROFILE spec. ROADMAP rows: **SELAH's own identity and private delivery ac
 | 3 | Baptised | Yes → "Baptised" · Not yet → "Not yet baptised" · I'd rather not say → no chip |
 
 **Removed from the card:** nationality and ethnicity chips (they stay on the full profile where the member chose to show them).
-Under the chips (LOCK 16): one muted 13 px line from the marriage answers - married before · children · would like children, joined by " · ": No → "Never married", Yes, divorced → "Divorced", Yes, widowed → "Widowed", Yes, annulled → "Annulled", I’d rather share later → left out; children No → "No children", either Yes → "Has children"; would like children Yes → "Would like children", Open to it → "Open to children", No → "Doesn’t want children", Not sure yet → "Not sure about children". Unanswered parts are left out; nothing answered → no line (MARRIAGE_VALUES spec V6, masters L08_* re-rendered, L16_browse_card__share_later).
+Under the chips (LOCK 16): one muted 13 px line from the marriage answers - married before · children · would like children, joined by " · ": No → "Never married", Yes, divorced → "Divorced", Yes, widowed → "Widowed", Yes, annulled → "Annulled", I’d rather share later → left out; children No → "No children", either Yes → "Has children"; would like children Yes → "Would like children", Open to it → "Open to children", No → "Doesn’t want children", Not sure yet → "Not sure about children". Unanswered parts are left out; nothing answered → no line (MARRIAGE_VALUES spec V7, masters L08_* re-rendered, L16_browse_card__share_later).
 
 A member who skipped the faith questions (consent) shows no chips. The quote under the chips is "Your faith, in your own
 words" (FAITH_PROFILE q7); none given → no quote. Everything else on the card (photo, name block, Shepherd line, buttons)
@@ -33,7 +33,6 @@ stays as built; the main button reads **Request a Journey** (WORDING spec V1). M
 | State | Master |
 |---|---|
 | Cards | L08_browse_card__grace / __esther / __naomi / __abigail |
-| Already in a Journey with this person | L08_browse_card__in_a_journey (primary greyed: "In a Journey") |
 | No one new | L08_browse__no_one_new - breath mark ’; "You’ve seen everyone for now"; "New people join every week. Check back soon, or widen who you’d like to meet."; button "Change who you’d like to meet" (opens the existing filters) |
 | Loading / didn't load | LOOK spec V2 §5 (already locked) |
 
@@ -61,3 +60,4 @@ Filters screen design · full profile page layout.
 | 2026-11-06 | V1 | LOCK 8 - Founder: "A · Faith chips only — LOCK it" |
 | 2026-11-06 | V2 | LOCK 11: masters re-rendered with "Request a Journey". V1 archived |
 | 2026-11-06 | V3 | LOCK 16 (Founder: "A · Upfront — LOCK it"): marriage line under the chips; 5 card masters re-rendered (old in ARCHIVE/MASTERS_V2). V2 archived |
+| 2026-11-06 | V4 | Answers Codex QUESTIONS row 9: the app keeps leaving out anyone you already have a Journey or request with (peerOccupied) - the better rule; the "In a Journey" state is retired, master moved to ARCHIVE/MASTERS_V3. V3 archived |

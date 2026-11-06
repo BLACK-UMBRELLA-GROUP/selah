@@ -12,7 +12,6 @@ import '../../theme/selah_colors.dart';
 import '../../theme/selah_text.dart';
 import '../../widgets/selah_pull_down_back_scope.dart';
 import '../onboarding/generic_select_question_screen.dart';
-import '../onboarding/traffic_light_question_screen.dart';
 
 enum CompatibilityEditorKind {
   aboutYou,
@@ -53,19 +52,13 @@ extension CompatibilityEditorKindUi on CompatibilityEditorKind {
   };
 
   List<String> get categoryIds => switch (this) {
-    CompatibilityEditorKind.aboutYou => const [
-      'faith_practice',
-      'personality_connection',
-    ],
+    CompatibilityEditorKind.aboutYou => const ['faith_practice'],
     CompatibilityEditorKind.lifestyle => const [
       'finances_provision',
-      'education_career',
       'lifestyle_wellbeing',
-      'digital_boundaries',
     ],
     CompatibilityEditorKind.marriagePreferences => const [
       'marriage_intentions',
-      'children_parenting',
       'family_in_laws',
       'home_roles',
       'communication_conflict',
@@ -89,39 +82,43 @@ class SelahCompatibilityDraft {
     SelahOnboardingAnswersSnapshot? snapshot,
     SelahSignUpPreferencesReader? readSignUpPreferences,
   }) {
-    final answers = <String, dynamic>{};
-    final preferences = <String, Map<String, TrafficLight>>{};
-    final hard = <String, Set<String>>{};
-    final rawAnswers = <String, dynamic>{
+    final answers = <String, dynamic>{
       ...?snapshot?.journeyBio.toOnboardingAnswers(),
-      ...?snapshot?.ch3Answers,
+      for (final entry
+          in snapshot?.ch3Answers.entries ?? <MapEntry<String, dynamic>>[])
+        entry.key: _copyAnswerValue(entry.value),
     };
-
-    for (final entry in rawAnswers.entries) {
-      if (entry.key.startsWith('bio_')) {
-        answers[entry.key] = _copyAnswerValue(entry.value);
-      }
-    }
+    final preferences = <String, Map<String, TrafficLight>>{
+      for (final entry
+          in snapshot?.ch4Preferences.entries ??
+              <MapEntry<String, Map<String, TrafficLight>>>[])
+        entry.key: Map.of(entry.value),
+    };
+    final hard = <String, Set<String>>{
+      for (final entry
+          in snapshot?.ch4HardRequirements.entries ??
+              <MapEntry<String, Set<String>>>[])
+        entry.key: Set.of(entry.value),
+    };
+    // The one gender-specific qid keeps its established in-memory response
+    // key; every unasked/hidden raw value remains detached and untouched.
     for (final category in chapter3CompatibilityCategories) {
       for (final question in category.questions) {
-        if (!question.visibleFor(gender)) continue;
-        final persisted = SelahOnboardingAnswersService.persistedQuestionId(
-          question.responseKey,
-        );
-        if (rawAnswers.containsKey(persisted)) {
+        if (!question.visibleFor(gender) ||
+            question.responseKey == question.id) {
+          continue;
+        }
+        final persisted = question.id;
+        if (answers.containsKey(persisted)) {
           answers[question.responseKey] = _copyAnswerValue(
-            rawAnswers[persisted],
+            answers.remove(persisted),
           );
         }
-        final savedPreferences = snapshot?.ch4Preferences[persisted];
-        if (savedPreferences != null) {
-          preferences[question.responseKey] = Map<String, TrafficLight>.from(
-            savedPreferences,
-          );
+        if (preferences.containsKey(persisted)) {
+          preferences[question.responseKey] = preferences.remove(persisted)!;
         }
-        final savedHard = snapshot?.ch4HardRequirements[persisted];
-        if (savedHard != null) {
-          hard[question.responseKey] = Set<String>.from(savedHard);
+        if (hard.containsKey(persisted)) {
+          hard[question.responseKey] = hard.remove(persisted)!;
         }
       }
     }
@@ -233,29 +230,9 @@ class SelahCompatibilityDraft {
     pruneHiddenAnswers();
   }
 
-  void pruneHiddenAnswers() {
-    final visibleKeys = <String>{
-      for (final category in chapter3Categories)
-        for (final question in visibleQuestions(category)) question.responseKey,
-    };
-    answers.removeWhere(
-      (key, _) =>
-          !key.startsWith('bio_') &&
-          !selahSignUpQuestionIds.contains(key) &&
-          !visibleKeys.contains(key),
-    );
-    final preferenceKeys = <String>{
-      for (final category in chapter4Categories)
-        for (final question in preferenceQuestions(category))
-          question.responseKey,
-    };
-    preferences.removeWhere(
-      (key, _) => key != 'ch3_q1' && !preferenceKeys.contains(key),
-    );
-    hardRequirements.removeWhere(
-      (key, _) => key != 'ch3_q1' && !preferenceKeys.contains(key),
-    );
-  }
+  // LOCK 17/18: hiding or retiring a question changes only its effective
+  // read projection. Raw saved data must survive every unrelated round-trip.
+  void pruneHiddenAnswers() {}
 
   int answeredIn(Iterable<OnboardingCategory> categories) => categories
       .expand(visibleQuestions)
@@ -374,8 +351,13 @@ class _CompatibilityEditorScreenState extends State<CompatibilityEditorScreen> {
       : null;
   bool _saving = false;
   int _saveEpoch = 0;
+  bool get _retiredPartnerEditor =>
+      widget.kind == CompatibilityEditorKind.trafficLights ||
+      widget.kind == CompatibilityEditorKind.hardRequirements;
   bool get _current =>
-      mounted && _editorCurrent(context, _owner, editing: false);
+      mounted &&
+      !_retiredPartnerEditor &&
+      _editorCurrent(context, _owner, editing: false);
 
   @override
   void didUpdateWidget(covariant CompatibilityEditorScreen oldWidget) {
@@ -446,6 +428,11 @@ class _CompatibilityEditorScreenState extends State<CompatibilityEditorScreen> {
 
   @override
   Widget build(BuildContext context) {
+    if (_retiredPartnerEditor) {
+      return const SizedBox.shrink(
+        key: ValueKey('compatibility_partner_editor_retired'),
+      );
+    }
     if (_previewMode && !_owner!.alive) {
       return const SizedBox.shrink(
         key: ValueKey('compatibility_editor_preview_denied'),
@@ -491,25 +478,9 @@ class _CompatibilityEditorScreenState extends State<CompatibilityEditorScreen> {
                   }
                 },
               ),
-              CompatibilityEditorKind.trafficLights => _PreferenceGroups(
-                draft: _draft,
-                owner: _owner,
-                onChanged: () {
-                  if (mounted && _editorCurrent(context, _owner)) {
-                    setState(() {});
-                  }
-                },
-              ),
+              CompatibilityEditorKind.trafficLights ||
               CompatibilityEditorKind.hardRequirements =>
-                _HardRequirementsEditor(
-                  draft: _draft,
-                  owner: _owner,
-                  onChanged: () {
-                    if (mounted && _editorCurrent(context, _owner)) {
-                      setState(() {});
-                    }
-                  },
-                ),
+                const SizedBox.shrink(),
             },
           ),
         ),
@@ -717,419 +688,6 @@ class _AnswerQuestionEditorState extends State<_AnswerQuestionEditor> {
         ),
       ],
     ),
-  );
-}
-
-class _PreferenceGroups extends StatelessWidget {
-  const _PreferenceGroups({
-    required this.draft,
-    required this.onChanged,
-    this.owner,
-  });
-
-  final SelahCompatibilityDraft draft;
-  final VoidCallback onChanged;
-  final _CompatibilityPreviewOwner? owner;
-
-  @override
-  Widget build(BuildContext context) => ListView(
-    physics: const BouncingScrollPhysics(),
-    padding: const EdgeInsets.fromLTRB(20, 4, 20, 24),
-    children: [
-      _MeaningCard(),
-      const SizedBox(height: 14),
-      for (final category in chapter4Categories)
-        if (draft.preferenceQuestions(category).isNotEmpty)
-          _CategoryDoor(
-            key: ValueKey('edit-preferences-${category.id}'),
-            label: category.name,
-            status: _preferenceCategoryStatus(draft, category),
-            onTap: () async {
-              if (!_editorCurrent(context, owner)) return;
-              await Navigator.of(context).push<void>(
-                MaterialPageRoute(
-                  builder: (_) => _PreferenceCategoryEditor(
-                    category: category,
-                    draft: draft,
-                    owner: owner,
-                  ),
-                ),
-              );
-              if (context.mounted && _editorCurrent(context, owner)) {
-                onChanged();
-              }
-            },
-          ),
-    ],
-  );
-}
-
-class _PreferenceCategoryEditor extends StatefulWidget {
-  const _PreferenceCategoryEditor({
-    required this.category,
-    required this.draft,
-    this.owner,
-  });
-
-  final OnboardingCategory category;
-  final SelahCompatibilityDraft draft;
-  final _CompatibilityPreviewOwner? owner;
-
-  @override
-  State<_PreferenceCategoryEditor> createState() =>
-      _PreferenceCategoryEditorState();
-}
-
-class _PreferenceCategoryEditorState extends State<_PreferenceCategoryEditor> {
-  @override
-  Widget build(BuildContext context) {
-    final questions = widget.draft.preferenceQuestions(widget.category);
-    return _EditorScaffold(
-      title: widget.category.name,
-      owner: widget.owner,
-      child: ListView.builder(
-        physics: const BouncingScrollPhysics(),
-        padding: const EdgeInsets.fromLTRB(20, 12, 20, 90),
-        itemCount: questions.length,
-        itemBuilder: (context, index) {
-          final question = questions[index];
-          final values = widget.draft.preferences[question.responseKey];
-          return _QuestionDoor(
-            key: ValueKey('edit-lights-${question.responseKey}'),
-            question: question.prompt,
-            value: values == null
-                ? 'Not set'
-                : '${values.length} of ${question.options.length} set',
-            onTap: () async {
-              if (!_editorCurrent(context, widget.owner)) return;
-              final result = await Navigator.of(context)
-                  .push<_PreferenceEditResult>(
-                    MaterialPageRoute(
-                      builder: (_) => _PreferenceQuestionEditor(
-                        question: question,
-                        yourAnswers: _asStringSet(
-                          widget.draft.compatibilityAnswers[question
-                              .responseKey],
-                        ),
-                        initialValues: values ?? const {},
-                        initialHard:
-                            widget.draft.hardRequirements[question
-                                .responseKey] ??
-                            const {},
-                        owner: widget.owner,
-                      ),
-                    ),
-                  );
-              if (result == null ||
-                  !mounted ||
-                  !context.mounted ||
-                  !_editorCurrent(context, widget.owner)) {
-                return;
-              }
-              setState(() {
-                widget.draft.preferences[question.responseKey] = result.values;
-                if (result.hard.isEmpty) {
-                  widget.draft.hardRequirements.remove(question.responseKey);
-                } else {
-                  widget.draft.hardRequirements[question.responseKey] =
-                      result.hard;
-                }
-              });
-            },
-          );
-        },
-      ),
-    );
-  }
-}
-
-class _PreferenceEditResult {
-  const _PreferenceEditResult(this.values, this.hard);
-
-  final Map<String, TrafficLight> values;
-  final Set<String> hard;
-}
-
-class _PreferenceQuestionEditor extends StatefulWidget {
-  const _PreferenceQuestionEditor({
-    required this.question,
-    required this.yourAnswers,
-    required this.initialValues,
-    required this.initialHard,
-    this.owner,
-  });
-
-  final OnboardingQuestion question;
-  final Set<String> yourAnswers;
-  final Map<String, TrafficLight> initialValues;
-  final Set<String> initialHard;
-  final _CompatibilityPreviewOwner? owner;
-
-  @override
-  State<_PreferenceQuestionEditor> createState() =>
-      _PreferenceQuestionEditorState();
-}
-
-class _PreferenceQuestionEditorState extends State<_PreferenceQuestionEditor> {
-  late Map<String, TrafficLight> _values = Map.from(widget.initialValues);
-  late Set<String> _hard = Set.from(widget.initialHard);
-
-  bool get _complete => widget.question.options.every(_values.containsKey);
-
-  @override
-  Widget build(BuildContext context) => _EditorScaffold(
-    title: 'Partner preference',
-    owner: widget.owner,
-    bottom: _BottomSave(
-      enabled: _complete,
-      onPressed: () {
-        if (_editorCurrent(context, widget.owner)) {
-          Navigator.of(
-            context,
-          ).pop(_PreferenceEditResult(Map.from(_values), Set.from(_hard)));
-        }
-      },
-    ),
-    child: ListView(
-      physics: const BouncingScrollPhysics(),
-      padding: const EdgeInsets.fromLTRB(20, 16, 20, 110),
-      children: [
-        Text(widget.question.prompt, style: SelahText.heading(size: 21)),
-        const SizedBox(height: 20),
-        TrafficLightQuestionScreen(
-          key: ValueKey('edit-preference-${widget.question.responseKey}'),
-          yourAnswer: '',
-          yourAnswers: widget.yourAnswers,
-          options: widget.question.options,
-          hardRequirementSupported: widget.question.hardRequirementSupported,
-          initialValues: widget.initialValues,
-          initialHardRequirement: widget.initialHard,
-          onChanged: (values) {
-            if (mounted && _editorCurrent(context, widget.owner)) {
-              setState(() => _values = Map.from(values));
-            }
-          },
-          onHardRequirementChanged: (values) {
-            if (mounted && _editorCurrent(context, widget.owner)) {
-              setState(() => _hard = Set.from(values));
-            }
-          },
-        ),
-      ],
-    ),
-  );
-}
-
-class _HardRequirementsEditor extends StatelessWidget {
-  const _HardRequirementsEditor({
-    required this.draft,
-    required this.onChanged,
-    this.owner,
-  });
-
-  final SelahCompatibilityDraft draft;
-  final VoidCallback onChanged;
-  final _CompatibilityPreviewOwner? owner;
-
-  @override
-  Widget build(BuildContext context) {
-    final eligible = <(OnboardingCategory, OnboardingQuestion, List<String>)>[];
-    for (final category in chapter4Categories) {
-      for (final question in draft.preferenceQuestions(category)) {
-        if (!question.hardRequirementSupported) continue;
-        final reds = question.options
-            .where(
-              (option) =>
-                  draft.preferences[question.responseKey]?[option] ==
-                  TrafficLight.red,
-            )
-            .toList(growable: false);
-        if (reds.isNotEmpty) eligible.add((category, question, reds));
-      }
-    }
-
-    if (eligible.isEmpty) {
-      return Center(
-        child: Padding(
-          padding: const EdgeInsets.all(34),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Icon(
-                Icons.gpp_good_outlined,
-                size: 30,
-                color: SelahColors.ink(0.42),
-              ),
-              const SizedBox(height: 14),
-              Text('No hard requirements', style: SelahText.heading(size: 18)),
-              const SizedBox(height: 8),
-              Text(
-                'First mark an answer red in Green / Yellow / Red. You can then decide here whether it must block an introduction.',
-                textAlign: TextAlign.center,
-                style: SelahText.subtext(size: 12.5),
-              ),
-            ],
-          ),
-        ),
-      );
-    }
-
-    final children = <Widget>[];
-    String? previousCategory;
-    for (final item in eligible) {
-      if (previousCategory != item.$1.id) {
-        if (previousCategory != null) children.add(const SizedBox(height: 18));
-        children
-          ..add(
-            Text(
-              item.$1.name.toUpperCase(),
-              style: SelahText.chapterLabel(color: SelahColors.ink(0.54)),
-            ),
-          )
-          ..add(const SizedBox(height: 10));
-        previousCategory = item.$1.id;
-      }
-      final question = item.$2;
-      final selected =
-          draft.hardRequirements[question.responseKey] ?? const <String>{};
-      children
-        ..add(
-          _HardQuestionCard(
-            question: question,
-            redOptions: item.$3,
-            selected: selected,
-            onToggle: (option) {
-              if (!_editorCurrent(context, owner)) return;
-              final next = Set<String>.from(selected);
-              if (!next.remove(option)) next.add(option);
-              if (next.isEmpty) {
-                draft.hardRequirements.remove(question.responseKey);
-              } else {
-                draft.hardRequirements[question.responseKey] = next;
-              }
-              onChanged();
-            },
-          ),
-        )
-        ..add(const SizedBox(height: 12));
-    }
-    return ListView(
-      physics: const BouncingScrollPhysics(),
-      padding: const EdgeInsets.fromLTRB(20, 4, 20, 24),
-      children: children,
-    );
-  }
-}
-
-class _HardQuestionCard extends StatelessWidget {
-  const _HardQuestionCard({
-    required this.question,
-    required this.redOptions,
-    required this.selected,
-    required this.onToggle,
-  });
-
-  final OnboardingQuestion question;
-  final List<String> redOptions;
-  final Set<String> selected;
-  final ValueChanged<String> onToggle;
-
-  @override
-  Widget build(BuildContext context) => Container(
-    padding: const EdgeInsets.all(15),
-    decoration: BoxDecoration(
-      color: SelahColors.surfaceFill,
-      borderRadius: BorderRadius.circular(16),
-      border: Border.all(color: SelahColors.surfaceBorder),
-    ),
-    child: Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(question.prompt, style: SelahText.body(size: 13.5)),
-        const SizedBox(height: 12),
-        for (final option in redOptions)
-          InkWell(
-            key: ValueKey('hard-option-${question.responseKey}-$option'),
-            onTap: () => onToggle(option),
-            borderRadius: BorderRadius.circular(12),
-            child: Padding(
-              padding: const EdgeInsets.symmetric(vertical: 9),
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Icon(
-                    selected.contains(option)
-                        ? Icons.check_box_rounded
-                        : Icons.check_box_outline_blank_rounded,
-                    size: 19,
-                    color: selected.contains(option)
-                        ? SelahColors.negativeRed
-                        : SelahColors.ink(0.50),
-                  ),
-                  const SizedBox(width: 10),
-                  Expanded(
-                    child: Text(option, style: SelahText.subtext(size: 12.5)),
-                  ),
-                ],
-              ),
-            ),
-          ),
-      ],
-    ),
-  );
-}
-
-class _MeaningCard extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) => Container(
-    padding: const EdgeInsets.all(15),
-    decoration: BoxDecoration(
-      color: SelahColors.surfaceFill,
-      borderRadius: BorderRadius.circular(16),
-      border: Border.all(color: SelahColors.surfaceBorder),
-    ),
-    child: const Row(
-      children: [
-        Expanded(
-          child: _LightMeaning(
-            color: SelahColors.positiveGreen,
-            label: 'Prefer',
-          ),
-        ),
-        Expanded(
-          child: _LightMeaning(
-            color: SelahColors.journeyGold,
-            label: 'Neutral',
-          ),
-        ),
-        Expanded(
-          child: _LightMeaning(
-            color: SelahColors.negativeRed,
-            label: 'Not for me',
-          ),
-        ),
-      ],
-    ),
-  );
-}
-
-class _LightMeaning extends StatelessWidget {
-  const _LightMeaning({required this.color, required this.label});
-
-  final Color color;
-  final String label;
-
-  @override
-  Widget build(BuildContext context) => Column(
-    children: [
-      Container(
-        width: 9,
-        height: 9,
-        decoration: BoxDecoration(color: color, shape: BoxShape.circle),
-      ),
-      const SizedBox(height: 6),
-      Text(label, style: SelahText.subtext(size: 10.5)),
-    ],
   );
 }
 
@@ -1359,27 +917,4 @@ String _answerLabel(dynamic value) {
   if (value is List) return value.isEmpty ? 'Not answered' : value.join(', ');
   if (value == null || value.toString().trim().isEmpty) return 'Not answered';
   return value.toString();
-}
-
-Set<String> _asStringSet(dynamic value) {
-  if (value is List) return value.map((item) => item.toString()).toSet();
-  if (value == null) return const {};
-  return {value.toString()};
-}
-
-String _preferenceCategoryStatus(
-  SelahCompatibilityDraft draft,
-  OnboardingCategory category,
-) {
-  final questions = draft.preferenceQuestions(category);
-  final total = questions.fold<int>(
-    0,
-    (count, question) => count + question.options.length,
-  );
-  final answered = questions.fold<int>(
-    0,
-    (count, question) =>
-        count + (draft.preferences[question.responseKey]?.length ?? 0),
-  );
-  return '$answered of $total preferences set';
 }

@@ -398,6 +398,7 @@ class SelahConceptJourneyPresentation extends StatefulWidget {
     required this.onTimeline,
     this.showBackButton = true,
     this.onBio,
+    this.onProfile,
     this.options,
     this.decisionBody,
     this.historyBodies = const {},
@@ -413,6 +414,7 @@ class SelahConceptJourneyPresentation extends StatefulWidget {
   final bool showBackButton;
   final VoidCallback onTimeline;
   final VoidCallback? onBio;
+  final VoidCallback? onProfile;
   final Widget? options;
   final Widget? decisionBody;
   final Map<String, Widget> historyBodies;
@@ -468,10 +470,14 @@ class _SelahConceptJourneyPresentationState
                             ),
                           ),
                         Expanded(
-                          child: Text(
-                            'Journey with ${widget.firstName}',
-                            style: SelahText.heading(size: 16),
-                            textAlign: TextAlign.center,
+                          child: InkWell(
+                            key: const ValueKey('concept_journey_profile_name'),
+                            onTap: widget.onProfile,
+                            child: Text(
+                              'Journey with ${widget.firstName}',
+                              style: SelahText.heading(size: 16),
+                              textAlign: TextAlign.center,
+                            ),
                           ),
                         ),
                         widget.options ?? const SizedBox(width: 48),

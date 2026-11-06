@@ -8,9 +8,13 @@ import 'package:selah/models/seeker_profile_completion.dart';
 import 'package:selah/models/selah_faith_profile.dart';
 import 'package:selah/data/selah_christian_traditions.dart';
 import 'package:selah/data/compatibility_categories.dart';
-import 'package:selah/models/selah_sign_up_compatibility.dart';
+import 'package:selah/models/selah_your_values.dart';
 import 'test_ask_once.dart' show runAskOnceChecks;
 import 'test_marriage_values.dart' show runMarriageValuesChecks;
+import 'test_prayer_models.dart' show runPrayerModelChecks;
+import 'test_shepherd_recent.dart' show runShepherdRecentChecks;
+import 'test_your_values.dart' show runYourValuesChecks;
+import 'test_marriage_upfront.dart' show runMarriageUpfrontChecks;
 
 void main() {
   var checks = 0;
@@ -21,6 +25,10 @@ void main() {
 
   runAskOnceChecks(check);
   runMarriageValuesChecks(check);
+  runPrayerModelChecks(check);
+  runShepherdRecentChecks(check);
+  runYourValuesChecks(check);
+  runMarriageUpfrontChecks(check);
 
   final pending = draftProfiles[4].id;
   final model = ViewRequestDraftModel(capacity: 3);
@@ -120,14 +128,11 @@ void main() {
 
   final questions = chapter3Categories.expand((c) => c.questions).toList();
   final ids = questions.map((q) => q.id).toSet();
-  check(
-    ids.length == 95,
-    'nine sign-up duplicates leave the active Your Values bank',
-  );
+  check(ids.length == 27, 'LOCK17 asks exactly27 questions');
   for (var i = 1; i <= 104; i++)
     check(
-      ids.contains('ch3_q$i') == !selahSignUpQuestionIds.contains('ch3_q$i'),
-      'question $i follows the explicit ask-once retirement set',
+      ids.contains('ch3_q$i') == selahYourValuesQuestionIds.contains('ch3_q$i'),
+      'question $i follows the explicit LOCK17 keep set',
     );
   final church = chapter3CompatibilityCategories
       .expand((category) => category.questions)
@@ -146,8 +151,8 @@ void main() {
     'Christian question bank is substantive',
   );
   check(
-    compatibilityCategories.length == 12,
-    'compatibility keeps twelve categories',
+    compatibilityCategories.length == 8,
+    'LOCK17 has seven parts plus Location & Language',
   );
   final profileCompatibility = compatibilityCategories.singleWhere(
     (category) => category.id == 'culture_location',

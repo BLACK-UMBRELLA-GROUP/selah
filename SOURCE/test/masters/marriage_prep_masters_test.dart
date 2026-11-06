@@ -31,7 +31,7 @@ const _masters = {
 };
 final _capture = MasterCaptureHarness(
   feature: 'MARRIAGE_PREP',
-  version: 'V1_1',
+  version: 'V1_2',
 );
 
 Finder _key(String value) => find.byKey(ValueKey<String>(value));
@@ -48,6 +48,20 @@ Future<void> _tap(WidgetTester tester, Finder target) async {
 }
 
 Future<void> _local(WidgetTester tester, String key) async {
+  if ([
+    'draft_peer_ready_',
+    'draft_agree_resume_',
+    'draft_agree_pause_',
+    'draft_continue_',
+    'draft_peer_greeting_',
+    'draft_peer_reveal_',
+    'draft_stage_peer_ready_',
+  ].any(key.startsWith)) {
+    await _tap(tester, _key('draft_back'));
+    await _tap(tester, _key(key));
+    return;
+  }
+
   // The actual Journey uses lazy vertical arrival/action pages. Follow its
   // existing scroll path if an action page has not yet been built.
   for (

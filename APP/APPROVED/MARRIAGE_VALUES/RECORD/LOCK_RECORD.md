@@ -18,3 +18,4 @@ owner: SELAH chat
 | 5 (change) | 2026-11-06 | Clickable "A · Ask once, in sign-up (Recommended)" | Spec V4: compatibility reads Q1, Q2, Q3, Q6, Q7; bank repeats removed (line 17) |
 | 5 (change) | 2026-11-06 | Codex QUESTIONS row 6 (no Founder decision needed - follows "A · Ask once, in sign-up") | Spec V5: own fields; Q4/Q5 feed compatibility via line 17 rows 9-10 |
 | 16 | 2026-11-06 | Clickable answer: "A · Upfront — LOCK it" (prototype V34, opened on Browse with A, B and C in the Deciding-now bar) | Spec V6 §6; 2 new masters `L16_*`; L05 profile master re-rendered; BROWSE_CARD → V3 (5 card masters); LOOK L01 browse, SHEPHERD_INVITE L03 waiting, ABOUT_YOU L14 masters re-rendered; prototype V35; queue line 19 |
+| 16 (change) | 2026-11-06 | Codex QUESTIONS row 13 (no Founder decision needed - follows "Your Shepherds can see them") | Spec V7: card under the Shepherd's existing linked-Seeker view |

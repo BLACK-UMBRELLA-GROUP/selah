@@ -49,7 +49,7 @@ production experience** (questions) and **SELAH's own identity and private deliv
 | Too long | L04_faith_7_own_words__too_long | Counter turns dawn while over 150; on Save: "Keep it under 150 characters." above the buttons |
 | Saving | L04_faith_7__saving | Primary reads "Saving…", 75%, not tappable |
 | Didn't save | L04_faith_7__didnt_save | Error bar (LOOK §5) at top: "Your faith profile didn’t save. Try again." + **Try again** |
-| Saved | L05_faith_7__continues_to_marriage (MARRIAGE_VALUES) | Goes to marriage question 1 (MARRIAGE_VALUES spec V6, LOCK 5); toast "Faith profile saved." Browse comes after the marriage questions |
+| Saved | L05_faith_7__continues_to_marriage (MARRIAGE_VALUES) | Goes to marriage question 1 (MARRIAGE_VALUES spec V7, LOCK 5); toast "Faith profile saved." Browse comes after the marriage questions |
 
 ## 4. Where the answers show
 
@@ -57,7 +57,7 @@ production experience** (questions) and **SELAH's own identity and private deliv
 |---|---|---|
 | Profile → FAITH PROFILE card | L04_profile_faith__answered | Rows: Church tradition · Church · Baptised · Christian for · Serving (joined by ", ") · Open to other traditions; own words as a quote under the card |
 | – not answered | L04_profile_faith__not_answered | Value "Not answered" in muted |
-| Browse card | BROWSE_CARD masters | Chips and quote exactly as BROWSE_CARD spec V3 §1 (LOCK 8) |
+| Browse card | BROWSE_CARD masters | Chips and quote exactly as BROWSE_CARD spec V4 §1 (LOCK 8) |
 
 ## Compatibility (Founder 6 Nov: "A · Ask once, in sign-up")
 These answers are asked only here. The Your Values bank no longer repeats them; compatibility reads them through the mapping in `REPAIRS/BRIEFS/REPAIR_BRIEF_2026-11-06_ASK_ONCE_V1.md` (queue line 17).

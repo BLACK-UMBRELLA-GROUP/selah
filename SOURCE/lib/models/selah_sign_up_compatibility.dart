@@ -1,6 +1,7 @@
 import 'onboarding_question.dart';
 import 'selah_faith_profile.dart';
 import 'selah_marriage_values.dart';
+import 'selah_your_values.dart';
 
 /// Retained definitions remain available for compatibility and old storage.
 /// These nine self-answers are now asked only in the sign-up profile.
@@ -114,7 +115,8 @@ class SelahSignUpCompatibility {
 
   Map<String, dynamic> answersOver(Map<String, dynamic> raw) => {
     for (final entry in raw.entries)
-      if (!selahSignUpQuestionIds.contains(entry.key)) entry.key: entry.value,
+      if (selahYourValuesQuestionIds.contains(entry.key.split('::').first))
+        entry.key: entry.value,
     ...bankAnswers,
   };
 
@@ -123,8 +125,6 @@ class SelahSignUpCompatibility {
   Map<String, Map<String, TrafficLight>> preferencesOver(
     Map<String, Map<String, TrafficLight>> raw,
   ) => {
-    for (final entry in raw.entries)
-      if (entry.key != 'ch3_q1') entry.key: Map.of(entry.value),
     if (divorcedPreference case final TrafficLight value)
       'ch3_q1': {'Divorced': value},
   };
@@ -132,6 +132,7 @@ class SelahSignUpCompatibility {
   Map<String, Set<String>> hardRequirementsOver(Map<String, Set<String>> raw) =>
       {
         for (final entry in raw.entries)
-          if (entry.key != 'ch3_q1') entry.key: Set.of(entry.value),
+          if (selahDealbreakerRequirements[entry.key] case final allowed?)
+            if (entry.value.containsAll(allowed)) entry.key: Set.of(allowed),
       };
 }

@@ -1,11 +1,7 @@
 import '../models/onboarding_question.dart';
 import 'chapter3_categories.dart';
 
-/// The twelve categories the compatibility reveal will eventually calculate.
-///
-/// Eleven come from the private Values/Preferences bank. Culture, Language &
-/// Location comes from Chapter 2's structured profile preferences, so those
-/// questions are not duplicated in Your Values merely to create another bar.
+/// LOCK 17: the seven Your values parts and Location & Language.
 class CompatibilityCategoryDefinition {
   final String id;
   final String name;
@@ -27,19 +23,15 @@ CompatibilityCategoryDefinition _fromValues(OnboardingCategory category) =>
       id: category.id,
       name: category.name,
       questionIds: Set<String>.unmodifiable(
-        category.questions
-            .where((question) => question.ch4Status != Ch4Status.none)
-            .map((question) => question.id),
+        category.questions.map((question) => question.id),
       ).toList(growable: false),
     );
 
 final List<CompatibilityCategoryDefinition> compatibilityCategories = [
-  for (final category in chapter3CompatibilityCategories.take(10))
-    _fromValues(category),
+  for (final category in chapter3CompatibilityCategories) _fromValues(category),
   const CompatibilityCategoryDefinition(
     id: 'culture_location',
     name: 'Location & Language',
     chapter2Keys: ['location', 'languages'],
   ),
-  _fromValues(chapter3CompatibilityCategories.last),
 ];

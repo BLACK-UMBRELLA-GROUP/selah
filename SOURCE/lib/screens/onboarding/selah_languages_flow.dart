@@ -6,6 +6,7 @@ import '../../theme/selah_text.dart';
 import '../../widgets/selah_profile_questions.dart';
 import '../../widgets/selah_shepherd_invite_views.dart';
 import '../../widgets/selah_state_widgets.dart';
+import '../../widgets/searchable_list_picker.dart';
 
 class SelahLanguagesFlow extends StatefulWidget {
   const SelahLanguagesFlow({
@@ -22,6 +23,34 @@ class SelahLanguagesFlow extends StatefulWidget {
 }
 
 class _SelahLanguagesFlowState extends State<SelahLanguagesFlow> {
+  bool _openingSearch = false;
+
+  Future<void> _anotherLanguage() async {
+    final owner = widget.controller;
+    if (_openingSearch ||
+        !owner.current ||
+        owner.saveState == SelahLanguagesSaveState.saving) {
+      return;
+    }
+    _openingSearch = true;
+    try {
+      final language = await showSingleSearchPicker(
+        context,
+        selahLanguageNames,
+        searchHint: 'Search languages',
+      );
+      if (!mounted ||
+          !identical(owner, widget.controller) ||
+          !owner.current ||
+          language == null) {
+        return;
+      }
+      if (!owner.languages.contains(language)) owner.toggle(language);
+    } finally {
+      _openingSearch = false;
+    }
+  }
+
   Future<void> _save() async {
     final owner = widget.controller;
     final saved = await owner.save();
@@ -38,6 +67,7 @@ class _SelahLanguagesFlowState extends State<SelahLanguagesFlow> {
     builder: (context, _) {
       final controller = widget.controller;
       final saving = controller.saveState == SelahLanguagesSaveState.saving;
+      final choices = controller.displayChoices;
       return Scaffold(
         key: const ValueKey('languages_screen'),
         backgroundColor: SelahColors.mist,
@@ -98,18 +128,26 @@ class _SelahLanguagesFlowState extends State<SelahLanguagesFlow> {
                           style: SelahText.body(color: SelahColors.muted),
                         ),
                         const SizedBox(height: 14),
-                        for (var i = 0; i < selahLanguageNames.length; i++) ...[
+                        for (var i = 0; i < choices.length; i++) ...[
                           if (i > 0) const SizedBox(height: 8),
                           SelahProfileQuestionChoice(
-                            key: ValueKey('language_choice_$i'),
-                            label: selahLanguageNames[i],
-                            selected: controller.languages.contains(
-                              selahLanguageNames[i],
+                            key: ValueKey(
+                              i < SelahLanguagesController.primaryChoices.length
+                                  ? 'language_choice_$i'
+                                  : 'language_extra_${choices[i]}',
                             ),
-                            onTap: () =>
-                                controller.toggle(selahLanguageNames[i]),
+                            label: choices[i],
+                            selected: controller.languages.contains(choices[i]),
+                            onTap: () => controller.toggle(choices[i]),
                           ),
                         ],
+                        const SizedBox(height: 8),
+                        SelahProfileQuestionChoice(
+                          key: const ValueKey('languages_another'),
+                          label: 'Another language',
+                          selected: false,
+                          onTap: _anotherLanguage,
+                        ),
                         const SizedBox(height: 14),
                       ],
                     ),
@@ -137,6 +175,7 @@ class _SelahLanguagesFlowState extends State<SelahLanguagesFlow> {
                         onPressed: saving ? null : _save,
                       ),
                     ),
+                    if (saving) const SizedBox(height: 42),
                   ],
                 ),
               ),

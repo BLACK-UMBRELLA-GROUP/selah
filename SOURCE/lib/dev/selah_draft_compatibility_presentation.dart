@@ -114,9 +114,8 @@ class _SelahDraftCompatibilityPresentationState
               '${(widget.overallScore * progress).round()}%',
               key: const ValueKey('draft_compatibility_overall_score'),
               semanticsLabel:
-                  'Developer demo overall compatibility: '
-                  '${widget.overallScore} percent aligned; fictional results, '
-                  'not calculated from private answers. No real credits are used.',
+                  'Overall compatibility: '
+                  '${widget.overallScore} percent aligned.',
               style: SelahText.heading(size: 44).copyWith(height: 1.15),
             ),
             Text('aligned', style: SelahText.subtext(size: 13)),
@@ -301,26 +300,6 @@ class _SelahDraftCompatibilityPresentationState
             double.infinity,
           )
           .toDouble();
-      final shepherdHeight = [
-        _textSize(
-          context,
-          'SHEPHERD EXAMPLE',
-          SelahText.chapterLabel().copyWith(height: 1.2),
-          constraints.maxWidth - 24,
-        ).height,
-        _textSize(
-          context,
-          'Demo Shepherd · Father',
-          SelahText.body(size: 13).copyWith(height: 1.2),
-          constraints.maxWidth - 24,
-        ).height,
-        _textSize(
-          context,
-          'Main Shepherd · Fictional example',
-          SelahText.subtext(size: 11.5).copyWith(height: 1.2),
-          constraints.maxWidth - 24,
-        ).height,
-      ].fold<double>(4, (total, value) => total + value);
       final sectionWidth = (constraints.maxWidth - 26)
           .clamp(1, double.infinity)
           .toDouble();
@@ -344,8 +323,7 @@ class _SelahDraftCompatibilityPresentationState
           overallSlotHeight +
           2 +
           tableHeaderHeight +
-          36 * 6 +
-          shepherdHeight;
+          36 * 6;
       final footer = _DraftFooterMetrics.measure(
         context,
         width: constraints.maxWidth,
@@ -422,7 +400,7 @@ class _SelahDraftCompatibilityPresentationState
                                 child: Text(
                                   'Your overall compatibility with ${widget.personName}.',
                                   semanticsLabel:
-                                      'Your overall compatibility with ${widget.personName}. Fictional developer preview; no private answers or real credits.',
+                                      'Your overall compatibility with ${widget.personName}.',
                                   style: SelahText.body(
                                     size: 14,
                                   ).copyWith(height: 1.2),
@@ -465,20 +443,6 @@ class _SelahDraftCompatibilityPresentationState
                               rowHeight: compact ? 32 : 36,
                               fontSize: fillViewport ? 12.5 : 11.5,
                               fillRows: fillViewport,
-                            ),
-                          ),
-                          SizedBox(height: gap),
-                          Divider(
-                            color: Colors.white.withValues(alpha: .10),
-                            height: 1,
-                          ),
-                          SizedBox(height: gap),
-                          SizedBox(
-                            key: const ValueKey('draft_compatibility_shepherd'),
-                            height: shepherdHeight,
-                            child: _DraftShepherd(
-                              revealed: widget.revealed,
-                              animation: _plusMotion,
                             ),
                           ),
                         ],
@@ -701,72 +665,6 @@ double _lineProgress(double elapsed, int index) {
   return Curves.easeOutCubic.transform(fraction);
 }
 
-class _DraftShepherd extends StatelessWidget {
-  const _DraftShepherd({required this.revealed, required this.animation});
-  final bool revealed;
-  final Animation<double> animation;
-
-  @override
-  Widget build(BuildContext context) => AnimatedBuilder(
-    animation: animation,
-    builder: (context, _) {
-      final progress = revealed ? _lineProgress(animation.value, 6) : 0.0;
-      final started = revealed && animation.value * 1850 > 1200;
-      return Stack(
-        children: [
-          if (!started)
-            Row(
-              children: [
-                Expanded(
-                  child: Text(
-                    'SHEPHERD',
-                    style: SelahText.chapterLabel(
-                      color: Colors.white54,
-                    ).copyWith(height: 1.2),
-                  ),
-                ),
-                Icon(
-                  Icons.lock_outline,
-                  size: 14,
-                  color: Colors.white.withValues(alpha: .45),
-                ),
-              ],
-            ),
-          _DraftReveal(
-            id: 'draft_compatibility_shepherd_result',
-            progress: progress,
-            child: started
-                ? Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        'SHEPHERD EXAMPLE',
-                        style: SelahText.chapterLabel(
-                          color: Colors.white54,
-                        ).copyWith(height: 1.2),
-                      ),
-                      const SizedBox(height: 2),
-                      Text(
-                        'Demo Shepherd · Father',
-                        style: SelahText.body(size: 13).copyWith(height: 1.2),
-                      ),
-                      const SizedBox(height: 2),
-                      Text(
-                        'Main Shepherd · Fictional example',
-                        style: SelahText.subtext(
-                          size: 11.5,
-                        ).copyWith(height: 1.2),
-                      ),
-                    ],
-                  )
-                : const SizedBox.shrink(),
-          ),
-        ],
-      );
-    },
-  );
-}
-
 class _DraftBreakdown extends StatelessWidget {
   const _DraftBreakdown({
     required this.revealed,
@@ -871,7 +769,9 @@ class _DraftBreakdown extends StatelessWidget {
                                         Expanded(
                                           child: Text(
                                             _labels[index],
-                                            style: SelahText.subtext(size: 11.5),
+                                            style: SelahText.subtext(
+                                              size: 11.5,
+                                            ),
                                           ),
                                         ),
                                         const SizedBox(width: 8),
@@ -884,8 +784,8 @@ class _DraftBreakdown extends StatelessWidget {
                     );
                     return Semantics(
                       label: started
-                          ? '${category.name}, developer demo: ${category.aligned}% aligned, ${category.discuss}% discuss, ${category.opposed}% opposed'
-                          : '${category.name}, fictional sample breakdown locked',
+                          ? '${category.name}: ${category.aligned}% aligned, ${category.discuss}% discuss, ${category.opposed}% opposed'
+                          : '${category.name}, breakdown locked',
                       excludeSemantics: true,
                       child: Container(
                         key: ValueKey(

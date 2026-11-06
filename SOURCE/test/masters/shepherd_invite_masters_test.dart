@@ -22,6 +22,7 @@ import 'package:selah/widgets/selah_shell_navigation.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'master_capture.dart';
+import 'your_values_driver.dart';
 
 const _name = 'David Okafor';
 const _masters = <String>{
@@ -140,6 +141,9 @@ Future<MasterScreen> _pendingRoot(WidgetTester tester) async {
   await tester.pumpAndSettle();
   await _tap(tester, _key('language_choice_0'));
   await _tap(tester, _key('languages_save'));
+  if (_key('values_overview').evaluate().isNotEmpty) {
+    await finishYourValuesFromOverview(tester);
+  }
   await _waitForBrowse(tester);
   // The newly completed faith step shows its real save result before Browse.
   // Let it expire naturally so it neither covers the dock nor enters a master

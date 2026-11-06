@@ -79,6 +79,9 @@ class OnboardingQuestion {
   final GenderVisibility genderVisibility;
   final bool hardRequirementSupported;
 
+  /// LOCK 17 self-answer optionality, independent of partner metadata.
+  final bool selfAnswerOptional;
+
   /// Null means always shown. See [ShowIf] — and read its doc before adding
   /// one, because a wrong rule removes compatibility signal silently.
   final ShowIf? showIf;
@@ -91,6 +94,7 @@ class OnboardingQuestion {
     this.ch4Status = Ch4Status.none,
     this.genderVisibility = GenderVisibility.all,
     this.hardRequirementSupported = true,
+    this.selfAnswerOptional = false,
     this.showIf,
   });
 

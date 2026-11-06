@@ -1,4 +1,4 @@
-// LOCK 6 comparisons through the actual admitted draft sign-up route.
+// LOCK 14 / queue21 comparisons through the actual admitted draft sign-up route.
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -13,11 +13,13 @@ import 'package:selah/theme/selah_text.dart';
 import 'package:selah/widgets/selah_shell_navigation.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'master_capture.dart';
+import 'your_values_driver.dart';
 import 'package:selah/widgets/selah_profile_questions.dart';
 import 'package:selah/screens/onboarding/selah_languages_flow.dart';
-import 'package:selah/data/selah_reference_data.dart';
+import 'package:selah/models/selah_languages_controller.dart';
+import 'package:selah/dev/selah_one_journey_concept_shell.dart';
 
-final _capture = MasterCaptureHarness(feature: 'ABOUT_YOU');
+final _capture = MasterCaptureHarness(feature: 'ABOUT_YOU', version: 'V1_1');
 Finder _key(String value) => find.byKey(ValueKey<String>(value));
 Future<void> _tap(WidgetTester tester, Finder target) async {
   expect(target, findsOneWidget);
@@ -89,6 +91,19 @@ Future<void> _captureState(
   await _capture.capture(tester, screen, master);
 }
 
+Future<void> _pickExtra(WidgetTester tester, String language) async {
+  await _tap(tester, _key('languages_another'));
+  final search = find.byWidgetPredicate(
+    (widget) =>
+        widget is TextField &&
+        widget.decoration?.hintText == 'Search languages',
+  );
+  expect(search, findsOneWidget);
+  await tester.enterText(search, language);
+  await tester.pumpAndSettle();
+  await _tap(tester, find.widgetWithText(ListTile, language));
+}
+
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
   HttpOverrides? oldHttp;
@@ -123,16 +138,23 @@ void main() {
     GoogleFonts.config.allowRuntimeFetching = oldFonts!;
     HttpOverrides.global = oldHttp;
   });
-  testWidgets('languages empty preserves existing ordered list', (
-    tester,
-  ) async {
+  testWidgets('languages empty shows the eleven locked rows', (tester) async {
     final screen = await _languages(tester);
+    expect(
+      tester
+          .widgetList<SelahProfileQuestionChoice>(
+            find.byType(SelahProfileQuestionChoice),
+          )
+          .map((row) => row.label),
+      [...SelahLanguagesController.primaryChoices, 'Another language'],
+    );
+    expect(find.text('Abkhazian'), findsNothing);
     await _captureState(tester, screen, 'L14_languages__empty');
   });
   testWidgets('languages multi-select and Back retain answers', (tester) async {
     final screen = await _languages(tester);
     await _tap(tester, _key('language_choice_0'));
-    await _tap(tester, _key('language_choice_1'));
+    await _tap(tester, _key('language_choice_5'));
     await _captureState(tester, screen, 'L14_languages__chosen');
     await _tap(tester, _key('languages_back'));
     expect(_key('marriage_question_7'), findsOneWidget);
@@ -148,7 +170,7 @@ void main() {
     );
     expect(
       tester
-          .widget<SelahProfileQuestionChoice>(_key('language_choice_1'))
+          .widget<SelahProfileQuestionChoice>(_key('language_choice_5'))
           .selected,
       isTrue,
     );
@@ -156,6 +178,9 @@ void main() {
   testWidgets('languages requires at least one', (tester) async {
     final screen = await _languages(tester);
     await _tap(tester, _key('languages_save'));
+    if (_key('values_overview').evaluate().isNotEmpty) {
+      await finishYourValuesFromOverview(tester);
+    }
     expect(_key('languages_required_error'), findsOneWidget);
     await _captureState(tester, screen, 'L14_languages__no_answer');
   });
@@ -163,6 +188,7 @@ void main() {
     testWidgets('languages private $state state', (tester) async {
       final screen = await _languages(tester);
       await _tap(tester, _key('language_choice_0'));
+      await _tap(tester, _key('language_choice_5'));
       await _tap(tester, _key('dev_rail_actions'));
       await _tap(tester, _key('languages_$state'));
       await _captureState(
@@ -177,8 +203,11 @@ void main() {
   ) async {
     final screen = await _languages(tester);
     await _tap(tester, _key('language_choice_0'));
-    await _tap(tester, _key('language_choice_1'));
+    await _tap(tester, _key('language_choice_5'));
     await _tap(tester, _key('languages_save'));
+    if (_key('values_overview').evaluate().isNotEmpty) {
+      await finishYourValuesFromOverview(tester);
+    }
     await _browse(tester);
     await tester.pump(const Duration(seconds: 5));
     await tester.pumpAndSettle();
@@ -213,8 +242,91 @@ void main() {
       tester
           .widget<SelahAboutYouCard>(find.byType(SelahAboutYouCard))
           .languages,
-      selahLanguageNames.take(2).toList(),
+      ['English', 'Yoruba'],
     );
     await _captureState(tester, screen, 'L14_profile_about_you');
+  });
+
+  testWidgets('Another language opens the existing searchable catalogue', (
+    tester,
+  ) async {
+    final screen = await _languages(tester);
+    await _tap(tester, _key('languages_another'));
+    expect(find.byType(BottomSheet), findsOneWidget);
+    expect(
+      find.byWidgetPredicate(
+        (widget) =>
+            widget is TextField &&
+            widget.decoration?.hintText == 'Search languages',
+      ),
+      findsOneWidget,
+    );
+    expect(find.widgetWithText(ListTile, 'Abkhazian'), findsOneWidget);
+    // The brief asks for this extra evidence without supplying a master.
+    await _capture.captureBuild(tester, screen, 'L14_languages__search_open');
+  });
+
+  testWidgets(
+    'searched picks add once, untick, and save through the actual owner',
+    (tester) async {
+      await _languages(tester);
+      await _tap(tester, _key('language_choice_0'));
+      await _pickExtra(tester, 'Hindi');
+      final extra = _key('language_extra_Hindi');
+      expect(extra, findsOneWidget);
+      expect(
+        tester.getRect(extra).top,
+        lessThan(tester.getRect(_key('languages_another')).top),
+      );
+      await _tap(tester, extra);
+      expect(extra, findsNothing);
+      await _pickExtra(tester, 'Hindi');
+      await _pickExtra(tester, 'Hindi');
+      final controller = tester
+          .widget<SelahLanguagesFlow>(find.byType(SelahLanguagesFlow))
+          .controller;
+      expect(controller.languages, ['English', 'Hindi']);
+      expect(extra, findsOneWidget);
+      expect(controller.languages, isNot(contains('Another language')));
+      await _tap(tester, _key('languages_save'));
+      if (_key('values_overview').evaluate().isNotEmpty) {
+        await finishYourValuesFromOverview(tester);
+      }
+      await _browse(tester);
+      final owner = tester
+          .widget<SelahOneJourneyConceptShell>(
+            find.byType(SelahOneJourneyConceptShell),
+          )
+          .accountSession!;
+      expect(owner.details.languages, ['English', 'Hindi']);
+    },
+  );
+
+  testWidgets('a late search pick cannot restore a revoked owner', (
+    tester,
+  ) async {
+    await _languages(tester);
+    final controller = tester
+        .widget<SelahLanguagesFlow>(find.byType(SelahLanguagesFlow))
+        .controller;
+    await _tap(tester, _key('languages_another'));
+    final search = find.byWidgetPredicate(
+      (widget) =>
+          widget is TextField &&
+          widget.decoration?.hintText == 'Search languages',
+    );
+    await tester.enterText(search, 'Hindi');
+    await tester.pumpAndSettle();
+    SelahDraftRuntime.stop();
+    await _tap(tester, find.widgetWithText(ListTile, 'Hindi'));
+    expect(controller.current, isFalse);
+    expect(
+      SelahDraftRuntime.activate(
+        bundleId: SelahNativeIdentityPolicy.productionBundleId,
+      ),
+      isTrue,
+    );
+    expect(controller.current, isFalse);
+    expect(controller.languages, isEmpty);
   });
 }

@@ -13,6 +13,7 @@ import 'package:selah/theme/selah_text.dart';
 import 'package:selah/widgets/selah_shell_navigation.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'master_capture.dart';
+import 'your_values_driver.dart';
 import 'package:selah/screens/onboarding/selah_faith_profile_flow.dart';
 import 'package:selah/dev/selah_one_journey_concept_shell.dart';
 import 'package:selah/models/selah_sign_up_compatibility.dart';
@@ -155,6 +156,9 @@ void main() {
     await tester.pumpAndSettle();
     await _tap(tester, _key('language_choice_0'));
     await _tap(tester, _key('languages_save'));
+    if (_key('values_overview').evaluate().isNotEmpty) {
+      await finishYourValuesFromOverview(tester);
+    }
     await _browse(tester);
     await tester.pump(const Duration(seconds: 5));
     await tester.pumpAndSettle();
@@ -239,6 +243,9 @@ void main() {
     await tester.pumpAndSettle();
     await _tap(tester, _key('language_choice_0'));
     await _tap(tester, _key('languages_save'));
+    if (_key('values_overview').evaluate().isNotEmpty) {
+      await finishYourValuesFromOverview(tester);
+    }
     await _browse(tester);
     final owner = tester
         .widget<SelahOneJourneyConceptShell>(

@@ -37,6 +37,7 @@ class SelahOneJourneyShepherdDashboardPresentation extends StatelessWidget {
     this.hasShepherdOne = true,
     this.onMembership,
     this.showHeader = true,
+    this.prayerRequests,
   });
 
   final SeekerProfile profile;
@@ -50,6 +51,7 @@ class SelahOneJourneyShepherdDashboardPresentation extends StatelessWidget {
 
   /// A parent may own the same main heading above a multi-Journey selector.
   final bool showHeader;
+  final Widget? prayerRequests;
 
   @override
   Widget build(BuildContext context) {
@@ -101,6 +103,10 @@ class SelahOneJourneyShepherdDashboardPresentation extends StatelessWidget {
               physics: const BouncingScrollPhysics(),
               padding: const EdgeInsets.fromLTRB(20, 12, 20, 108),
               children: [
+                if (prayerRequests != null) ...[
+                  prayerRequests!,
+                  const SizedBox(height: 20),
+                ],
                 ShepherdDashboardProfileCard(
                   person: person,
                   profile: profile,

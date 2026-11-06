@@ -11,6 +11,8 @@ import '../models/selah_faith_profile_details.dart';
 import '../models/selah_marriage_values.dart';
 import '../models/selah_marriage_values_details.dart';
 import '../models/selah_sign_up_compatibility.dart';
+import '../models/selah_your_values.dart';
+import '../data/chapter3_categories.dart';
 import '../screens/profile/compatibility_editors.dart';
 import '../screens/profile/edit_profile_screen.dart';
 import '../services/selah_onboarding_answers_service.dart'
@@ -255,6 +257,7 @@ class SelahRequestAccountSession extends ChangeNotifier {
     gender: 'male',
     photos: photos(shepherd),
     faithProfile: shepherd ? null : faithAnswers,
+    marriageValues: shepherd ? null : marriageAnswers,
     faithDenominationText: shepherd ? null : details.christianDenomination,
   );
 
@@ -292,6 +295,7 @@ class SelahRequestCompatibilityRepository
   final SelahSignUpPreferencesReader? _readSignUpPreferences;
   bool _closed = false;
   SelahCompatibilityDraft? _draft;
+  bool _dealbreakersSaved = false;
   static const _owner = 'draft-self';
 
   bool get _current {
@@ -318,6 +322,78 @@ class SelahRequestCompatibilityRepository
 
   @override
   int get accountGeneration => 0;
+
+  /// Detached reads of this same local compatibility owner, never a second
+  /// persisted Values store. Retired keys remain present in these raw reads.
+  Map<String, dynamic> get rawAnswers => _current
+      ? Map.unmodifiable(_draft?.copy().answers ?? const <String, dynamic>{})
+      : const {};
+  Map<String, Set<String>> get rawHardRequirements => _current
+      ? Map.unmodifiable({
+          for (final entry
+              in _draft?.hardRequirements.entries ??
+                  <MapEntry<String, Set<String>>>[])
+            entry.key: Set<String>.unmodifiable(entry.value),
+        })
+      : const {};
+
+  /// Completion of an actual successful save, including None. This belongs
+  /// to the same local owner lifetime; raw legacy rules never imply it.
+  bool get dealbreakersSaved => _current && _dealbreakersSaved;
+
+  Future<bool> saveYourValuesPart(
+    String partId,
+    Map<String, dynamic> answers,
+  ) async {
+    if (!_current) return false;
+    final previous =
+        _draft?.copy() ??
+        SelahCompatibilityDraft.fromSnapshot(
+          gender: 'male',
+          readSignUpPreferences: () => signUpPreferences,
+        );
+    final merged = selahMergeYourValuesPart(
+      existing: previous.answers,
+      gender: 'male',
+      partId: partId,
+      answers: answers,
+      signUpPreferences: signUpPreferences,
+    );
+    if (merged == null || !_current) return false;
+    previous.answers
+      ..clear()
+      ..addAll(merged);
+    return save(_owner, previous);
+  }
+
+  Future<bool> saveDealbreakers(Map<String, Set<String>> requirements) async {
+    if (!_current) return false;
+    final previous = _draft?.copy();
+    if (previous == null ||
+        !chapter3Categories.every(
+          (part) => selahYourValuesPartComplete(
+            part,
+            'male',
+            previous.answers,
+            signUpPreferences,
+          ),
+        )) {
+      return false;
+    }
+    final merged = selahMergeDealbreakers(
+      existing: previous.hardRequirements,
+      requirements: requirements,
+    );
+    if (merged == null || !_current) return false;
+    previous.hardRequirements
+      ..clear()
+      ..addAll(merged);
+    final saved = await save(_owner, previous);
+    if (!saved || !_current) return false;
+    _dealbreakersSaved = true;
+    return true;
+  }
+
   @override
   bool isCurrentOwner(String userId, int generation) =>
       userId == _owner && generation == 0 && _current;
@@ -340,5 +416,6 @@ class SelahRequestCompatibilityRepository
   void close() {
     _closed = true;
     _draft = null;
+    _dealbreakersSaved = false;
   }
 }

@@ -6,6 +6,13 @@
 /// onboarding.
 class JourneyBio {
   static const int characterLimit = 400;
+  // LOCK 16 retires these prompts, never their existing stored answers.
+  static const retiredFieldIds = {
+    'marriage_status',
+    'children',
+    'future_children',
+    'relocation',
+  };
 
   final String aboutMe;
   final Map<String, String> fieldValues;
@@ -25,12 +32,19 @@ class JourneyBio {
 
   bool get isEmpty =>
       aboutMe.trim().isEmpty &&
-      fieldValues.values.every((value) => value.trim().isEmpty);
+      fieldValues.entries.every(
+        (entry) =>
+            retiredFieldIds.contains(entry.key) || entry.value.trim().isEmpty,
+      );
 
   int get sharedItemCount =>
       (showAboutMe && aboutMe.trim().isNotEmpty ? 1 : 0) +
       visibleFieldIds
-          .where((id) => (fieldValues[id] ?? '').trim().isNotEmpty)
+          .where(
+            (id) =>
+                !retiredFieldIds.contains(id) &&
+                (fieldValues[id] ?? '').trim().isNotEmpty,
+          )
           .length;
 
   JourneyBio copyWith({
@@ -169,47 +183,7 @@ const List<JourneyBioFieldDefinition> journeyBioFieldDefinitions = [
       'Prefer not to say',
     ],
   ),
-  JourneyBioFieldDefinition(
-    id: 'marriage_status',
-    section: 'Family & marriage',
-    label: 'Marriage status',
-    prompt: 'Which marriage-history detail would you like to share?',
-    options: [
-      'Never married',
-      'Separated',
-      'Divorced',
-      'Annulled',
-      'Widowed',
-      'Currently married',
-      'Prefer not to say',
-    ],
-  ),
-  JourneyBioFieldDefinition(
-    id: 'children',
-    section: 'Family & marriage',
-    label: 'Children',
-    prompt: 'What would you like to share about children you have?',
-    options: [
-      'No children',
-      'Children living with me',
-      'Shared custody',
-      'Children living elsewhere',
-      'Prefer to discuss later',
-    ],
-  ),
-  JourneyBioFieldDefinition(
-    id: 'future_children',
-    section: 'Family & marriage',
-    label: 'Future children',
-    prompt: 'What would you like to share about future children?',
-    options: [
-      'Yes',
-      'No',
-      'If God wills',
-      'Unsure',
-      'Prefer to discuss later',
-    ],
-  ),
+
   JourneyBioFieldDefinition(
     id: 'responsibilities',
     section: 'Family & marriage',
@@ -255,20 +229,6 @@ const List<JourneyBioFieldDefinition> journeyBioFieldDefinitions = [
       'Shared accommodation',
       'Other arrangement',
       'Prefer not to say',
-    ],
-  ),
-  JourneyBioFieldDefinition(
-    id: 'relocation',
-    section: 'Practical life',
-    label: 'Relocation',
-    prompt: 'What would you like to share about relocation?',
-    options: [
-      'Open to relocating anywhere',
-      'Open within my country',
-      'Open internationally',
-      'Open for the right person',
-      'Prefer not to relocate',
-      'Prefer to discuss later',
     ],
   ),
 ];

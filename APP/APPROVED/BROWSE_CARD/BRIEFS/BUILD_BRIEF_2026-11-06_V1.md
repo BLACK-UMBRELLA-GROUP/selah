@@ -16,7 +16,7 @@ Queue line 9. Build after: lines 3 (faith answers) and 7 (clean-up touches the d
 
 | # | Step | Detail |
 |---|---|---|
-| 1 | Read | `SELAH/AGENTS.md`, `MAP.md` to "Route paths", `BROWSE_CARD/RECORD/SELAH_BROWSE_CARD_SPEC_CURRENT_VERSION_V3.md`, its LOCK_RECORD, the 6 masters, FAITH_PROFILE spec V5. |
+| 1 | Read | `SELAH/AGENTS.md`, `MAP.md` to "Route paths", `BROWSE_CARD/RECORD/SELAH_BROWSE_CARD_SPEC_CURRENT_VERSION_V4.md`, its LOCK_RECORD, the 6 masters, FAITH_PROFILE spec V5. |
 | 2 | Chips | On the Browse card, replace the nationality/ethnicity chips with spec §1 faith chips (exact texts and order). Do not remove nationality/ethnicity from the full profile or the model. |
 | 3 | No one new | Add spec §2 state where Browse runs out of people; its button opens the existing filters. |
 | 4 | Demo cast | In the draft's demo data (`lib/dev/selah_dev_scenario.dart`, `lib/dev/selah_one_journey_concept_shell.dart` and any other fixture file), replace every demo person and Shepherd with spec §3: names, relations that match, traditions, UK towns, plausible nationality/ethnicity, existing photos matched by gender. List old → new in the task note. |
@@ -27,3 +27,6 @@ Queue line 9. Build after: lines 3 (faith answers) and 7 (clean-up touches the d
 
 ## Update 2026-11-06 (from the SELAH chat's build check of line 3)
 The signed-in demo Seeker still shows as "Adam Khan" on Profile. Old cast names also sit as defaults in screen files, not only fixtures - include them: `lib/screens/journey/journey_flow_screen.dart` (~2981, ~5388), `lib/screens/mentor/seeker_mentor_tab.dart` (~283), `lib/dev/selah_one_journey_concept_shell.dart` (~3137, ~3231). The signed-in demo Seeker is **James** (as in every master).
+
+## Update 2026-11-06 (answers QUESTIONS row 9; spec V4)
+No "In a Journey" state: keep `discoverableProfiles` excluding this pair (peerOccupied) exactly as built. Five card states, not six; your default is right.

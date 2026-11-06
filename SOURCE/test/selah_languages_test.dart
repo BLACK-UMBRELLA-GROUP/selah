@@ -142,6 +142,7 @@ void main() {
     expect(await c.save(), isFalse);
     expect(c.showRequiredError, isTrue);
     c.toggle('invalid');
+    c.toggle('Another language');
     expect(c.languages, isEmpty);
     c.toggle(selahLanguageNames.first);
     c.toggle(selahLanguageNames[1]);
@@ -153,6 +154,26 @@ void main() {
     expect(() => saved!.add('invalid'), throwsUnsupportedError);
     c.dispose();
   });
+  test(
+    'existing catalogue picks survive editing without expanding the fixed shortlist',
+    () {
+      final c = SelahLanguagesController(
+        canAct: () => true,
+        read: () => ['English', 'Hindi'],
+        save: (_) => true,
+      );
+      expect(
+        c.displayChoices.take(10),
+        SelahLanguagesController.primaryChoices,
+      );
+      expect(c.displayChoices.last, 'Hindi');
+      expect(c.displayChoices, isNot(contains('Abkhazian')));
+      c.toggle('Hindi');
+      expect(c.languages, ['English']);
+      expect(c.displayChoices, SelahLanguagesController.primaryChoices);
+      c.dispose();
+    },
+  );
   test(
     'pending save denies repeat and edits; disposed result is ignored',
     () async {

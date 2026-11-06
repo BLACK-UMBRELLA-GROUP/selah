@@ -47,7 +47,7 @@ class SelahActionPause {
       'Ending your Journey with $name closes it for both of you.'
           '${hasShepherd ? ' $shepherdName will be told and can support you.' : ''}',
     SelahActionPauseKind.replace =>
-      'You already have three Journeys. Accepting $name means ending your '
+      'Your Journeys are full. Accepting $name means ending your '
           'Journey with $endingName. Your history stays. $shepherdName will be '
           'told, and so will $endingName’s and $name’s Shepherds.',
   };

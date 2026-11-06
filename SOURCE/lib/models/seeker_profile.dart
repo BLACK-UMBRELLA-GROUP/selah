@@ -11,6 +11,7 @@
 // indicator, which needs more than one photo per candidate to matter.
 
 import 'selah_faith_profile.dart';
+import 'selah_marriage_values.dart';
 
 class SeekerProfile {
   final String id;
@@ -55,6 +56,7 @@ class SeekerProfile {
   /// retained nationality, ethnicity and compatibility fields are not inferred.
   final SelahFaithProfileAnswers? faithProfile;
   final String? faithDenominationText;
+  final SelahMarriageValuesAnswers? marriageValues;
 
   /// 2026-07-27 (Founder: "selah one account users can upload a video...
   /// maybe for on account show how the video will look and on the left
@@ -88,6 +90,7 @@ class SeekerProfile {
     this.publicEthnicity,
     this.faithProfile,
     this.faithDenominationText,
+    this.marriageValues,
     this.videoPhotoIndex,
     this.alreadyLikedYou = false,
   });
@@ -97,6 +100,40 @@ class SeekerProfile {
   // A privacy-filtered or not-yet-uploaded photo list is valid. The shared
   // image widget uses an empty URL for its neutral placeholder.
   String get photoUrl => photos.isEmpty ? '' : photos.first;
+
+  /// LOCK 16: only these three explicitly saved answers belong in Browse.
+  String get browseMarriageLine {
+    final values = marriageValues;
+    if (values == null) return '';
+    return [
+      if (switch (values.marriedBefore) {
+            'No' => 'Never married',
+            'Yes, divorced' => 'Divorced',
+            'Yes, widowed' => 'Widowed',
+            'Yes, annulled' => 'Annulled',
+            _ => null,
+          }
+          case final String history)
+        history,
+      if (switch (values.children) {
+            'No' => 'No children',
+            'Yes, they live with me' ||
+            'Yes, they don’t live with me' => 'Has children',
+            _ => null,
+          }
+          case final String children)
+        children,
+      if (switch (values.wouldLikeChildren) {
+            'Yes' => 'Would like children',
+            'Open to it' => 'Open to children',
+            'No' => 'Doesn’t want children',
+            'Not sure yet' => 'Not sure about children',
+            _ => null,
+          }
+          case final String future)
+        future,
+    ].join(' · ');
+  }
 
   /// LOCK 8's ordered projection of explicitly supplied faith answers.
   /// Absent and withheld values produce no replacement or inferred label.

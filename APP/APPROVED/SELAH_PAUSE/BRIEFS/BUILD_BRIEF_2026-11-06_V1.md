@@ -16,7 +16,7 @@ Queue line 8. Build after: line 1 (look). ROADMAP row: **SELAH's own identity an
 
 | # | Step | Detail |
 |---|---|---|
-| 1 | Read | `SELAH/AGENTS.md`, `MAP.md` to "Route paths", `SELAH_PAUSE/RECORD/SELAH_PAUSE_SPEC_CURRENT_VERSION_V3.md`, its LOCK_RECORD, the 9 masters, LOOK spec V2. |
+| 1 | Read | `SELAH/AGENTS.md`, `MAP.md` to "Route paths", `SELAH_PAUSE/RECORD/SELAH_PAUSE_SPEC_CURRENT_VERSION_V4.md`, its LOCK_RECORD, the 9 masters, LOOK spec V2. |
 | 2 | Find the three actions | In the draft, find every place that sends a Journey request, accepts one, or ends a Journey (e.g. Browse/Connections "Send request", My SELAH accept, `screens/journey/journey_flow_screen.dart` "End Journey"; also the concept shell in `lib/dev/`). List each in the task note. |
 | 3 | One pause widget | Build one full-screen pause widget (kind = ask / accept / end / replace) to spec §2-3 and show it before each action commits. Where an existing confirmation dialog/sheet already guards that action, replace it with the pause - no double confirmation, no dead code left. |
 | 4 | Names | <Name> and <Shepherd> come from the existing profile and Shepherd data; pronouns from the profile. If the draft has no Shepherd name at that point, file a QUESTION (do not invent one). |
@@ -35,3 +35,9 @@ Queue line 8. Build after: line 1 (look). ROADMAP row: **SELAH's own identity an
 | # | Change |
 |---|---|
 | c | **No Shepherd**: ask, accept and Replace show the toast "Add a Shepherd to request or accept a Journey." and open no pause; End shows its pause without the Shepherd sentence (master L07_pause_end__no_shepherd, 10 masters now). Never invent a name. |
+
+## Update 2026-11-06 (answers QUESTIONS row 10; spec V4)
+| # | Change |
+|---|---|
+| d | **Scope:** the Replace pause wraps the offline draft's local end-and-accept only. The retained server takeover in Connections (`_settleTakeover`, end_journey / promote_journey_to_active) is out of scope - leave it, its limits and its confirmation exactly as built; no server or configuration change. A later backend brief (OA-SELAH-002) will make it one action. |
+| e | Replace body now starts "Your Journeys are full." (no number) for every membership; use the 3 re-rendered masters. |

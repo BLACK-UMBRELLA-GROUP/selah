@@ -236,6 +236,14 @@ class _SelahBrowseDesignsState extends State<SelahBrowseDesigns> {
             ],
           ),
         ],
+        if (profile.browseMarriageLine.isNotEmpty) ...[
+          const SizedBox(height: 14),
+          Text(
+            profile.browseMarriageLine,
+            key: ValueKey('concept_browse_marriage_${profile.id}'),
+            style: SelahText.subtext().copyWith(height: 1.5),
+          ),
+        ],
         if (_faithQuote(profile).isNotEmpty) ...[
           const SizedBox(height: 14),
           Text(
@@ -588,6 +596,15 @@ class _SelahBrowseDesignsState extends State<SelahBrowseDesigns> {
         rowHeight = math.max(rowHeight, chipHeight);
       }
       height += 14 + chipsHeight + rowHeight;
+    }
+    if (profile.browseMarriageLine.isNotEmpty) {
+      height +=
+          14 +
+          _textHeight(
+            profile.browseMarriageLine,
+            SelahText.subtext().copyWith(height: 1.5),
+            width,
+          );
     }
     if (_faithQuote(profile).isNotEmpty) {
       height +=

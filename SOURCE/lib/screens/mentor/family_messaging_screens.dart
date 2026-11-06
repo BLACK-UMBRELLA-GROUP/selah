@@ -819,26 +819,34 @@ class _SelahShepherdCircleScreenState extends State<SelahShepherdCircleScreen> {
         return;
       }
       setState(() {
-        final messageId = 'dev-family-${_messages.length + 1}';
+        final messageId =
+            'dev-family-${(_previewData?.messageCount ?? _messages.length) + 1}';
         if (discussionTopic != null &&
             _includesDiscussionTopic(discussionTopic)) {
           _discussionMessageTags[messageId] = discussionTopic;
         }
-        _messages = [
-          ..._messages,
-          SelahFamilyMessage(
-            id: messageId,
-            senderId: _currentSenderId,
-            senderFirstName: 'You',
-            senderRoleLabel: _previewData?.participants
-                .where((person) => person.isCurrentUser)
-                .firstOrNull
-                ?.roleLabel,
-            body: text,
-            createdAt: DateTime.now(),
-            context: selectedContext,
-          ),
-        ];
+        final sentMessage = SelahFamilyMessage(
+          id: messageId,
+          senderId: _currentSenderId,
+          senderFirstName: 'You',
+          senderRoleLabel: _previewData?.participants
+              .where((person) => person.isCurrentUser)
+              .firstOrNull
+              ?.roleLabel,
+          body: text,
+          createdAt: DateTime.now(),
+          context: selectedContext,
+        );
+        final owner = _previewData;
+        if (owner != null) {
+          if (!owner.appendSentMessage(sentMessage)) {
+            _sending = false;
+            return;
+          }
+          _messages = owner.messages;
+        } else {
+          _messages = [..._messages, sentMessage];
+        }
         _sending = false;
         _selectedContext = null;
         if (_composer.text == draft) _composer.clear();

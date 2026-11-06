@@ -22,6 +22,7 @@ import 'package:selah/widgets/selah_shell_navigation.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'master_capture.dart';
+import 'your_values_driver.dart';
 
 const _questions = <int, String>{
   1: 'L05_marriage_1_married_before__empty',
@@ -144,6 +145,9 @@ Future<void> _finishLanguages(WidgetTester tester) async {
   await tester.pumpAndSettle();
   await _tap(tester, _key('language_choice_0'));
   await _tap(tester, _key('languages_save'));
+  if (_key('values_overview').evaluate().isNotEmpty) {
+    await finishYourValuesFromOverview(tester);
+  }
 }
 
 Future<void> _showProfile(WidgetTester tester) async {

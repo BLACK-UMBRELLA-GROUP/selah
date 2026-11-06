@@ -1,14 +1,14 @@
 ---
 id: DOC-SELAH-0048
 type: SPEC
-status: CURRENT
+status: ARCHIVED
 feature: ABOUT_YOU
 purpose: SELAH asks only which languages a Seeker speaks at sign-up - no country of birth, nationality or ethnicity, and no background filters (LOCK 14)
 links: [OA-SELAH-003, AD-AIOS-123, DOC-SELAH-0017, DOC-SELAH-0009]
 owner: SELAH chat
 ---
 
-# SELAH ABOUT YOU — SPEC — CURRENT VERSION V1 (LOCK 14)
+# SELAH ABOUT YOU — SPEC — V1 (ARCHIVED 2026-11-06) (LOCK 14)
 
 Founder, 6 Nov 2026: "A · Languages only — LOCK it" (prototype V29, cleaned as V30). Look: LOOK spec V2.
 ROADMAP row: **SELAH's own identity and private delivery acceptance**.
@@ -53,7 +53,7 @@ Steps 0-3 (photos, where you live, where your spouse lives, flexibility) are not
 
 ## 4. Where it shows
 Profile: new label "ABOUT YOU" and card below Marriage values, one row "Languages" = chosen names joined by ", "
-(master L14_profile_about_you). Browse card: unchanged (BROWSE_CARD spec V3, faith chips only).
+(master L14_profile_about_you). Browse card: unchanged (BROWSE_CARD spec V4, faith chips only).
 
 ## 5. Saved data
 Languages save into the existing languages field. The removed questions' saved fields stay in storage untouched (no

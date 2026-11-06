@@ -1,21 +1,21 @@
 ---
 id: DOC-SELAH-0022
 type: SPEC
-status: CURRENT
+status: ARCHIVED
 feature: MARRIAGE_VALUES
 purpose: SELAH's seven marriage-values questions, asked right after the faith questions at sign-up, and where the answers show (LOCK 5)
 links: [OA-SELAH-003, AD-AIOS-123, DOC-SELAH-0017, DOC-SELAH-0009]
 owner: SELAH chat
 ---
 
-# SELAH MARRIAGE VALUES — SPEC — CURRENT VERSION V6 (LOCK 5, updated by LOCK 6)
+# SELAH MARRIAGE VALUES — SPEC — V6 (ARCHIVED 2026-11-06) (LOCK 5, updated by LOCK 6)
 
 Founder, 6 Nov 2026: "A · Right after faith — LOCK it" (prototype V10, cleaned as V11). Same layout, states and controls as
 the faith questions (FAITH_PROFILE spec §1 and §3) - only the header word and the questions differ. Look: LOOK spec V2.
 ROADMAP rows: **Christian content and production experience** and **SELAH's own identity and private delivery acceptance**.
 
 ## 1. Where it sits
-Sign-up: … Shepherd "Invite sent" → faith questions 1-7 → **marriage questions 1-7** → languages (ABOUT_YOU spec V1, LOCK 14) → Browse. Faith question 7's
+Sign-up: … Shepherd "Invite sent" → faith questions 1-7 → **marriage questions 1-7** → languages (ABOUT_YOU spec V2, LOCK 14) → Browse. Faith question 7's
 **Save and continue** (or **Skip**) now opens marriage question 1 (FAITH_PROFILE spec V5; master L05_faith_7__continues_to_marriage).
 Toasts: after faith "Faith profile saved."; after marriage "Marriage values saved."
 Back on marriage question 1 → faith question 7, or the consent screen if the member chose "Skip these questions" (CONSENT spec V2, LOCK 6).
@@ -56,7 +56,7 @@ Under the card, muted 13 px: "Marriage history and children show on your Browse 
 ## 6. Who sees the answers (LOCK 16, Founder 6 Nov: "A · Upfront — LOCK it")
 | Who | Sees |
 |---|---|
-| Members browsing | One line on the Browse card: married before · children · would like children (BROWSE_CARD spec V3). "I’d rather share later" keeps marriage history off it |
+| Members browsing | One line on the Browse card: married before · children · would like children (BROWSE_CARD spec V4). "I’d rather share later" keeps marriage history off it |
 | The other person in a Journey | All seven, on that person's profile inside the Journey (opened from their name at the top of the Journey; master L16_journey_their_profile) with the line "You can see these because you’re on a Journey together." |
 | Your Shepherds | All seven |
 | Journey Bio | No longer asks marriage status, children, future children or relocation (`lib/models/journey_bio.dart`) - these answers are the only source |

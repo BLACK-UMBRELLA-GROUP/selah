@@ -16,7 +16,7 @@ Queue line 5. Build after: line 3 (faith profile). ROADMAP rows: **Christian con
 
 | # | Step | Detail |
 |---|---|---|
-| 1 | Read | `SELAH/AGENTS.md`, `MAP.md` to "Route paths", `MARRIAGE_VALUES/RECORD/SELAH_MARRIAGE_VALUES_SPEC_CURRENT_VERSION_V6.md`, its `LOCK_RECORD.md`, the 14 masters in `MARRIAGE_VALUES/MASTERS/`, FAITH_PROFILE spec V5, LOOK spec V2. |
+| 1 | Read | `SELAH/AGENTS.md`, `MAP.md` to "Route paths", `MARRIAGE_VALUES/RECORD/SELAH_MARRIAGE_VALUES_SPEC_CURRENT_VERSION_V7.md`, its `LOCK_RECORD.md`, the 14 masters in `MARRIAGE_VALUES/MASTERS/`, FAITH_PROFILE spec V5, LOOK spec V2. |
 | 2 | Reuse | Use the same question screen built for line 3 (one shared widget for both sections, header word and question list as inputs) - no second copy of the screen. |
 | 3 | Flow | Faith question 7 → marriage question 1 → Browse (spec §1). Back on marriage 1 → faith 7. |
 | 4 | Answers | Store in the draft's existing local profile model. If the model already has fields for any of these (e.g. previous marriage, children - check the retained `values_preferences_flow.dart` / `compatibility_categories.dart`), use them with exactly the spec's answer words; list in the task note which field each question uses. If an existing field conflicts with the spec words, stop and file a QUESTION - do not invent a mapping. |

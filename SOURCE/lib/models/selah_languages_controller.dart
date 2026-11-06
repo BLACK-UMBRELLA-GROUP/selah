@@ -7,6 +7,18 @@ enum SelahLanguagesSaveState { idle, saving, failed, saved }
 
 /// A transient editor of the existing profile languages field.
 class SelahLanguagesController extends ChangeNotifier {
+  static const primaryChoices = <String>[
+    'English',
+    'Spanish',
+    'Portuguese',
+    'French',
+    'Polish',
+    'Yoruba',
+    'Igbo',
+    'Twi',
+    'Tagalog',
+    'Korean',
+  ];
   SelahLanguagesController({
     required bool Function() canAct,
     required List<String> Function() read,
@@ -57,6 +69,10 @@ class SelahLanguagesController extends ChangeNotifier {
   }
 
   List<String> get languages => current ? List.unmodifiable(_values) : const [];
+  List<String> get displayChoices => List.unmodifiable([
+    ...primaryChoices,
+    ...languages.where((language) => !primaryChoices.contains(language)),
+  ]);
   bool get showRequiredError => current && _required && _values.isEmpty;
   SelahLanguagesSaveState get saveState =>
       current ? _state : SelahLanguagesSaveState.idle;

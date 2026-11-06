@@ -1,0 +1,582 @@
+{
+  "queue_line": 16,
+  "action": "OA-SELAH-003",
+  "built_from": "APP/APPROVED/REPAIRS/BRIEFS/CLEANUP_BRIEF_2026-11-06_TEST_CONTROLS_V1.md",
+  "control_families": 9,
+  "control_moves": [
+    {
+      "id": "recipient_accept",
+      "file": "SOURCE/lib/dev/selah_one_journey_concept_shell.dart",
+      "line": 1907,
+      "page": "requests/sent",
+      "keys": [
+        "draft_recipient_<id>"
+      ],
+      "calls": [
+        "_accept(p,false)",
+        "_model.simulateRecipientAccept(p.id)"
+      ],
+      "preserve": "existing capacity/invite/state checks and resulting Journey navigation"
+    },
+    {
+      "id": "peer_begin_ready",
+      "file": "SOURCE/lib/dev/selah_one_journey_concept_shell.dart",
+      "line": 2638,
+      "page": "journey/preparing",
+      "keys": [
+        "draft_peer_ready_<id>"
+      ],
+      "calls": [
+        "_model.simulatePeerReady(id)"
+      ]
+    },
+    {
+      "id": "peer_resume",
+      "file": "SOURCE/lib/dev/selah_one_journey_concept_shell.dart",
+      "line": 2689,
+      "page": "journey/resumeRequested",
+      "keys": [
+        "draft_agree_resume_<id>"
+      ],
+      "calls": [
+        "_model.agreeResume(id)"
+      ]
+    },
+    {
+      "id": "mutual_pause",
+      "file": "SOURCE/lib/dev/selah_one_journey_concept_shell.dart",
+      "line": 2727,
+      "page": "journey/pauseRequested",
+      "keys": [
+        "draft_agree_pause_<id>"
+      ],
+      "calls": [
+        "_model.agreePause(id)"
+      ]
+    },
+    {
+      "id": "mutual_continue",
+      "file": "SOURCE/lib/dev/selah_one_journey_concept_shell.dart",
+      "line": 2737,
+      "page": "journey/pauseRequested",
+      "keys": [
+        "draft_continue_<id>"
+      ],
+      "calls": [
+        "_model.continueJourney(id)"
+      ]
+    },
+    {
+      "id": "peer_greeting",
+      "file": "SOURCE/lib/dev/selah_one_journey_concept_shell.dart",
+      "line": 3040,
+      "page": "journey/greeting_exchange",
+      "keys": [
+        "draft_peer_greeting_<id>"
+      ],
+      "calls": [
+        "_model.simulatePeerGreeting(id)"
+      ]
+    },
+    {
+      "id": "peer_reveal",
+      "file": "SOURCE/lib/dev/selah_one_journey_concept_shell.dart",
+      "line": 3052,
+      "page": "journey/compatibility_reveal",
+      "keys": [
+        "draft_peer_reveal_<id>"
+      ],
+      "calls": [
+        "_model.simulatePeerCompatibilityReveal(id)"
+      ]
+    },
+    {
+      "id": "sample_message",
+      "file": "SOURCE/lib/dev/selah_one_journey_concept_shell.dart",
+      "line": 3066,
+      "page": "journey/conversation",
+      "keys": [
+        "concept_message",
+        "concept_send_message"
+      ],
+      "calls": [
+        "_messages[id].add(trimmed text)",
+        "_message.clear()"
+      ],
+      "preserve": "existing 280-character input and conversationOpen gate; move composer only, retain ordinary message history"
+    },
+    {
+      "id": "peer_stage_ready",
+      "file": "SOURCE/lib/dev/selah_one_journey_concept_shell.dart",
+      "line": 3106,
+      "page": "journey/nonconversation",
+      "keys": [
+        "draft_stage_peer_ready_<id>"
+      ],
+      "calls": [
+        "_model.simulatePeerStageContinue(id)"
+      ]
+    }
+  ],
+  "member_text_changes": [
+    {
+      "file": "SOURCE/lib/dev/selah_one_journey_concept_shell.dart",
+      "line": 600,
+      "before": "Profile hidden in this sample view only.",
+      "after": "Profile hidden.",
+      "occurrences": 2
+    },
+    {
+      "file": "SOURCE/lib/dev/selah_one_journey_concept_shell.dart",
+      "line": 1368,
+      "before": "Sample photos could not load. No member photo was accessed.",
+      "after": "Photos didn’t load",
+      "occurrences": 1
+    },
+    {
+      "file": "SOURCE/lib/dev/selah_one_journey_concept_shell.dart",
+      "line": 1887,
+      "before": "Sample request declined.",
+      "after": "Request declined.",
+      "occurrences": 1
+    },
+    {
+      "file": "SOURCE/lib/dev/selah_one_journey_concept_shell.dart",
+      "line": 1902,
+      "before": "Sample request cancelled.",
+      "after": "Request cancelled.",
+      "occurrences": 1
+    },
+    {
+      "file": "SOURCE/lib/dev/selah_one_journey_concept_shell.dart",
+      "line": 1979,
+      "before": "Accepted in this sample. Both places are reserved while you prepare.",
+      "after": "Accepted. Both places are reserved while you prepare.",
+      "occurrences": 1
+    },
+    {
+      "file": "SOURCE/lib/dev/selah_one_journey_concept_shell.dart",
+      "line": 2154,
+      "before": "This sample Journey place is retained. The profile and conversation are unavailable.",
+      "after": "This Journey place is retained. The profile and conversation are unavailable.",
+      "occurrences": 1
+    },
+    {
+      "file": "SOURCE/lib/dev/selah_one_journey_concept_shell.dart",
+      "line": 2357,
+      "before": "Sample Journey ended. History retained.",
+      "after": "Journey ended. Your history stays.",
+      "occurrences": 1
+    },
+    {
+      "file": "SOURCE/lib/dev/selah_one_journey_concept_shell.dart",
+      "line": 2434,
+      "before": "No ended sample Journeys.",
+      "after": "No ended Journeys.",
+      "occurrences": 1
+    },
+    {
+      "file": "SOURCE/lib/dev/selah_one_journey_concept_shell.dart",
+      "line": 2435,
+      "before": "No paused sample Journeys.",
+      "after": "No paused Journeys.",
+      "occurrences": 1
+    },
+    {
+      "file": "SOURCE/lib/dev/selah_one_journey_concept_shell.dart",
+      "line": 2448,
+      "before": "This ended sample Journey remains archived. Its profile and messages are unavailable.",
+      "after": "This ended Journey remains archived. Its profile and messages are unavailable.",
+      "occurrences": 1
+    },
+    {
+      "file": "SOURCE/lib/dev/selah_one_journey_concept_shell.dart",
+      "line": 2569,
+      "before": "This ended sample Journey is read-only. No messages or new request can reopen this attempt.",
+      "after": "This ended Journey is read-only. No messages or new request can reopen this attempt.",
+      "occurrences": 1
+    },
+    {
+      "file": "SOURCE/lib/dev/selah_one_journey_concept_shell.dart",
+      "line": 2574,
+      "before": "Sample messages",
+      "after": "Messages",
+      "occurrences": 1
+    },
+    {
+      "file": "SOURCE/lib/dev/selah_one_journey_concept_shell.dart",
+      "line": 2582,
+      "before": "No sample messages in this archive.",
+      "after": "No messages in this archive.",
+      "occurrences": 1
+    },
+    {
+      "file": "SOURCE/lib/dev/selah_one_journey_concept_shell.dart",
+      "line": 2600,
+      "before": "This sample profile and conversation are unavailable.",
+      "after": "This profile and conversation are unavailable.",
+      "occurrences": 1
+    },
+    {
+      "file": "SOURCE/lib/dev/selah_one_journey_concept_shell.dart",
+      "line": 2652,
+      "before": "Sample Journey begun. Start by saying hello.",
+      "after": "Journey begun. Start by saying hello.",
+      "occurrences": 1
+    },
+    {
+      "file": "SOURCE/lib/dev/selah_one_journey_concept_shell.dart",
+      "line": 2683,
+      "before": "Sample Resume requested.",
+      "after": "Resume requested.",
+      "occurrences": 1
+    },
+    {
+      "file": "SOURCE/lib/dev/selah_one_journey_concept_shell.dart",
+      "line": 2699,
+      "before": "Sample Journey resumed.",
+      "after": "Journey resumed.",
+      "occurrences": 1
+    },
+    {
+      "file": "SOURCE/lib/dev/selah_one_journey_concept_shell.dart",
+      "line": 2711,
+      "before": "Sample Journey remains Paused.",
+      "after": "Journey remains Paused.",
+      "occurrences": 1
+    },
+    {
+      "file": "SOURCE/lib/dev/selah_one_journey_concept_shell.dart",
+      "line": 2732,
+      "before": "Mutual Pause settled in this concept.",
+      "after": "Mutual Pause settled.",
+      "occurrences": 1
+    },
+    {
+      "file": "SOURCE/lib/dev/selah_one_journey_concept_shell.dart",
+      "line": 2743,
+      "before": "Sample Journey continues.",
+      "after": "Journey continues.",
+      "occurrences": 1
+    },
+    {
+      "file": "SOURCE/lib/dev/selah_one_journey_concept_shell.dart",
+      "line": 3100,
+      "before": "Your sample choice is recorded.",
+      "after": "Your choice is recorded.",
+      "occurrences": 1
+    },
+    {
+      "file": "SOURCE/lib/dev/selah_one_journey_concept_shell.dart",
+      "line": 3125,
+      "before": "Next sample stage.",
+      "after": "Next stage.",
+      "occurrences": 1
+    },
+    {
+      "file": "SOURCE/lib/dev/selah_one_journey_concept_shell.dart",
+      "line": 3145,
+      "before": "A sample record of this attempt. It does not include private search behaviour.",
+      "after": "A record of this attempt. It does not include private search behaviour.",
+      "occurrences": 1
+    },
+    {
+      "file": "SOURCE/lib/dev/selah_one_journey_concept_shell.dart",
+      "line": 3377,
+      "before": "Your sample Journey place is retained.",
+      "after": "Your Journey place is retained.",
+      "occurrences": 1
+    },
+    {
+      "file": "SOURCE/lib/dev/selah_one_journey_concept_shell.dart",
+      "line": 4575,
+      "before": "Sample request sent. No real request was sent.",
+      "after": "Request sent.",
+      "occurrences": 1
+    },
+    {
+      "file": "SOURCE/lib/dev/selah_one_journey_concept_shell.dart",
+      "line": 5065,
+      "before": "SAMPLE UPDATES",
+      "after": "UPDATES",
+      "occurrences": 1
+    },
+    {
+      "file": "SOURCE/lib/dev/selah_one_journey_concept_shell.dart",
+      "line": 5069,
+      "before": "<count> sample Journeys are in progress. Open Journey to choose one.",
+      "after": "<count> Journeys are in progress. Open Journey to choose one.",
+      "occurrences": 1
+    },
+    {
+      "file": "SOURCE/lib/dev/selah_one_journey_concept_shell.dart",
+      "line": 5072,
+      "before": "A sample Journey invitation is waiting in My SELAH.",
+      "after": "A Journey invitation is waiting in My SELAH.",
+      "occurrences": 1
+    },
+    {
+      "file": "SOURCE/lib/dev/selah_one_journey_concept_shell.dart",
+      "line": 5075,
+      "before": "This sample Journey is unavailable. Its place is retained until you end it.",
+      "after": "This Journey is unavailable. Its place is retained until you end it.",
+      "occurrences": 1
+    },
+    {
+      "file": "SOURCE/lib/dev/selah_one_journey_concept_shell.dart",
+      "line": 5236,
+      "before": "Your current location is not available in this preview.",
+      "after": "Your current location is not available.",
+      "occurrences": 1
+    },
+    {
+      "file": "SOURCE/lib/dev/selah_one_journey_concept_shell.dart",
+      "line": 5314,
+      "before": "Profile blocked in this sample view only.",
+      "after": "Profile blocked.",
+      "occurrences": 1
+    }
+  ],
+  "additional_changes": [
+    {
+      "before": "This sample attempt has ended. Its Timeline remains read-only.",
+      "after": "This attempt has ended. Its Timeline remains read-only."
+    },
+    {
+      "before": "Sample location · Manchester",
+      "after": "Location · Manchester"
+    },
+    {
+      "before": "Up to three current Journeys in this preview",
+      "after": "Up to three current Journeys"
+    },
+    {
+      "before": "One current Journey in this preview",
+      "after": "One current Journey"
+    },
+    {
+      "before": "<membership> · Preview",
+      "after": "<membership>"
+    },
+    {
+      "before": "Local rehearsal only. No joining fee has been paid.",
+      "after": "No joining fee has been paid."
+    },
+    {
+      "before": "Choose the 1 Journey sample first. Existing sample Journeys have not been removed.",
+      "after": "Choose the 1 Journey option first. Existing Journeys have not been removed."
+    },
+    {
+      "before": "Fictional history added. Current Journey is unchanged.",
+      "after": "History added. Current Journey is unchanged."
+    },
+    {
+      "before": "Counterpart readiness simulated.",
+      "after": "Private model call only; no member toast."
+    },
+    {
+      "before": "Account fallback title Preview",
+      "after": "Account"
+    }
+  ],
+  "private_help_moves": [
+    {
+      "file": "SOURCE/lib/dev/selah_one_journey_concept_shell.dart",
+      "lines": [
+        2383,
+        2384
+      ],
+      "page": "journey_compatibility",
+      "before": "This sample does not calculate a score, load private answers or spend Compatibility Unlocks.",
+      "after": "same explanation/readout in existing private Page options help"
+    },
+    {
+      "file": "SOURCE/lib/dev/selah_one_journey_concept_shell.dart",
+      "lines": [
+        2575,
+        2576
+      ],
+      "page": "journey/ended",
+      "before": "Invented local messages only. No real conversation is loaded.",
+      "after": "same explanation/readout in existing private Page options help"
+    },
+    {
+      "file": "SOURCE/lib/dev/selah_one_journey_concept_shell.dart",
+      "lines": [
+        3030,
+        3034,
+        3036
+      ],
+      "page": "journey",
+      "before": "LOCAL PREVIEW CONTROLS | These controls simulate the other person and chapter checkpoints. Question fields are display-only here. No messages, private answers, credits or Family Review decisions are sent or approved.",
+      "after": "same explanation/readout in existing private Page options help"
+    },
+    {
+      "file": "SOURCE/lib/dev/selah_one_journey_concept_shell.dart",
+      "lines": [
+        3059,
+        3060
+      ],
+      "page": "journey/compatibility_reveal",
+      "before": "This local preview has no score or private result. Your real answers, credit balance and results are untouched.",
+      "after": "same explanation/readout in existing private Page options help"
+    },
+    {
+      "file": "SOURCE/lib/dev/selah_one_journey_concept_shell.dart",
+      "lines": [
+        3130,
+        3131,
+        3132
+      ],
+      "page": "journey/nonconversation",
+      "before": "The demo still requires both choices and the current threshold. Phase review is simulated, not a server approval.",
+      "after": "same explanation/readout in existing private Page options help"
+    },
+    {
+      "file": "SOURCE/lib/dev/selah_one_journey_concept_shell.dart",
+      "lines": [
+        3517
+      ],
+      "page": "MySELAH",
+      "before": "This action is held in the local preview. Your account is unchanged.",
+      "after": "same explanation/readout in existing private Page options help"
+    },
+    {
+      "file": "SOURCE/lib/dev/selah_one_journey_concept_shell.dart",
+      "lines": [
+        3968,
+        4422,
+        4440,
+        4467,
+        4540
+      ],
+      "page": "held_action",
+      "before": "PREVIEW ONLY | held invite explanation(s)",
+      "after": "same explanation/readout in existing private Page options help"
+    },
+    {
+      "file": "SOURCE/lib/dev/selah_one_journey_concept_shell.dart",
+      "lines": [
+        4563,
+        4564
+      ],
+      "page": "network_request",
+      "before": "This sample stays in the comparison. No real request or conversation opens.",
+      "after": "same explanation/readout in existing private Page options help"
+    },
+    {
+      "file": "SOURCE/lib/dev/selah_one_journey_concept_shell.dart",
+      "lines": [
+        4923,
+        4929,
+        4930
+      ],
+      "page": "account_action",
+      "before": "PREVIEW ONLY | basket/general action-held explanation(s)",
+      "after": "same explanation/readout in existing private Page options help"
+    },
+    {
+      "file": "SOURCE/lib/dev/selah_one_journey_concept_shell.dart",
+      "lines": [
+        4966,
+        4967,
+        4968
+      ],
+      "page": "bio",
+      "before": "No real or sample private biography is auto-revealed in this comparison. Sharing controls and stored consent remain unchanged.",
+      "after": "same explanation/readout in existing private Page options help"
+    },
+    {
+      "file": "SOURCE/lib/dev/selah_one_journey_concept_shell.dart",
+      "lines": [
+        5092
+      ],
+      "page": "notifications",
+      "before": "No real notifications are fetched, marked read or sent.",
+      "after": "same explanation/readout in existing private Page options help"
+    },
+    {
+      "file": "SOURCE/lib/dev/selah_one_journey_concept_shell.dart",
+      "lines": [
+        5172,
+        5288
+      ],
+      "page": "filters",
+      "before": "Sample people only | These public heritage labels and locations are invented samples. Private compatibility answers are not accessed. Occupied profiles stay excluded; real preferences and eligibility are unchanged.",
+      "after": "same explanation/readout in existing private Page options help"
+    },
+    {
+      "file": "SOURCE/lib/dev/selah_one_journey_account_presentation.dart",
+      "lines": [
+        1190
+      ],
+      "page": "membership",
+      "before": "Preview features only; no payment or entitlement change",
+      "after": "same explanation/readout in existing private Page options help"
+    },
+    {
+      "file": "SOURCE/lib/dev/selah_draft_compatibility_presentation.dart",
+      "lines": [
+        743,
+        750,
+        755
+      ],
+      "page": "compatibility",
+      "before": "SHEPHERD EXAMPLE | Demo Shepherd · Father | Main Shepherd · Fictional example",
+      "after": "same explanation/readout in existing private Page options help"
+    }
+  ],
+  "additional_private_help": [
+    "Compatibility Shepherd example readout removed from member card and reserved measurement; retained in Page options help.",
+    "Draft-only compatibility accessible labels removed; numeric aligned/discuss/opposed values and current person name preserved.",
+    "Membership preview-only feature explanation moved to Profile Page options."
+  ],
+  "retained_own_actions": [
+    "I’m ready to begin",
+    "Begin your Journey",
+    "Request Resume",
+    "Keep Paused",
+    "Send Greeting",
+    "Reveal Compatibility",
+    "I’m ready for the next step",
+    "Continue together",
+    "End Journey",
+    "Marriage preparation toggles/retry",
+    "ordinary request accept/decline/cancel",
+    "actual Shepherd invitation accept/decline",
+    "Switch role",
+    "Preview my profile"
+  ],
+  "existing_private_controls": [
+    "Prayer states (4)",
+    "Invite states (3)",
+    "Marriage preparation failed (1)",
+    "Circle topic layout",
+    "Compatibility credits 0/1/5",
+    "Browse next motion",
+    "Journey count 1/2/3",
+    "Seeker membership",
+    "Shepherd membership",
+    "Request tab picker",
+    "Ended history seed",
+    "Reset",
+    "Role picker"
+  ],
+  "guards": [
+    "original UI revision + role + tab + Page options foreground",
+    "exact source page, person, Journey state and stage",
+    "actual DeveloperAccess",
+    "outgoing accept has separate Sent-source Page options branch; incoming member and owned-Pause rules preserved",
+    "real model eligibility and capacity checks unchanged"
+  ],
+  "verification": [
+    "theme/action tests16 passed;1 previously undecided compact larger-text skip",
+    "Marriage preparation6 tests passed and4pairs captured in MARRIAGE_PREP/BUILT/V1_2",
+    "new held peer-callback menu ABA test proves no mutation; new current option still works"
+  ],
+  "comparison": "Member simulation controls removed. Actual Journey stage/header, private rail and existing spacing remain; comparison is as-built evidence, not a MATCH claim.",
+  "limits": [
+    "No backend or phone delivery proof.",
+    "No changes to role/admission/entitlements or native/tooling."
+  ]
+}

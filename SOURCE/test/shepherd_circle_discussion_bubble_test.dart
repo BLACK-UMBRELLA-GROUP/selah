@@ -606,7 +606,7 @@ void main() {
         tester.widget<TextField>(_composer).controller!.text,
         'The next draft is still here',
       );
-      expect(fixture.data.messages.length, 2);
+      expect(fixture.data.messages.length, 4);
       expect(fixture.contextOpens, 0);
       await _capture(tester, 'discussion-chronological-markers');
     },

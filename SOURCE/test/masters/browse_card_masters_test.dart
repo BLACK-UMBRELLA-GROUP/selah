@@ -126,7 +126,6 @@ void main() {
         .toSet();
     expect(present, {
       ..._cards.map((c) => 'L08_browse_card__${c.$2}'),
-      'L08_browse_card__in_a_journey',
       'L08_browse__no_one_new',
     });
     originalHttpOverrides = HttpOverrides.current;
@@ -180,27 +179,6 @@ void main() {
       await _capture.capture(tester, screen, 'L08_browse_card__$master');
     });
   }
-  testWidgets(
-    'Browse faith card: actual existing Journey disables request',
-    (tester) async {
-      final screen = await _mount(tester);
-      await _tab(tester, 'Journey');
-      await _tap(tester, _key('draft_back'));
-      await _tap(tester, _key('concept_journey_preview_1'));
-      await _tab(tester, 'Browse');
-      await _waitForBrowse(tester);
-      await _showPerson(tester, 'draft-sara');
-      final deck = _deck(tester);
-      final person = deck.profiles[deck.selectedIndex];
-      expect(deck.canRequest!(person), isFalse);
-      expect(find.text('In a Journey'), findsOneWidget);
-      await tester.pump(const Duration(seconds: 5));
-      await tester.pumpAndSettle();
-      await _capture.capture(tester, screen, 'L08_browse_card__in_a_journey');
-    },
-    // Q9: the actual discovery contract excludes this state. No invented image.
-    skip: true,
-  );
   testWidgets('Browse keeps an own active Journey outside discovery', (
     tester,
   ) async {

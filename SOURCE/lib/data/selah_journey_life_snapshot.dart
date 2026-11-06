@@ -75,24 +75,7 @@ abstract final class SelahJourneyLifeSnapshotMock {
       label: 'Education',
       value: "Bachelor's degree",
     ),
-    SelahJourneyLifeSnapshotField(
-      id: 'marriage_status',
-      section: 'Family & marriage',
-      label: 'Marriage status',
-      value: 'Never married',
-    ),
-    SelahJourneyLifeSnapshotField(
-      id: 'children',
-      section: 'Family & marriage',
-      label: 'Children',
-      value: 'No children',
-    ),
-    SelahJourneyLifeSnapshotField(
-      id: 'future_children',
-      section: 'Family & marriage',
-      label: 'Future children',
-      value: 'If God wills',
-    ),
+
     SelahJourneyLifeSnapshotField(
       id: 'responsibilities',
       section: 'Family & marriage',
@@ -117,12 +100,6 @@ abstract final class SelahJourneyLifeSnapshotMock {
       label: 'Current home',
       value: 'Living with family',
     ),
-    SelahJourneyLifeSnapshotField(
-      id: 'relocation',
-      section: 'Practical life',
-      label: 'Relocation',
-      value: 'Open for the right person',
-    ),
   ];
 
   static const Set<String> defaultVisibleFieldIds = {
@@ -130,14 +107,10 @@ abstract final class SelahJourneyLifeSnapshotMock {
     'employment',
     'work_pattern',
     'education',
-    'marriage_status',
-    'children',
-    'future_children',
     'responsibilities',
     'income',
     'financial_position',
     'home',
-    'relocation',
   };
 
   static Set<String> toggle(Set<String> current, String id) {

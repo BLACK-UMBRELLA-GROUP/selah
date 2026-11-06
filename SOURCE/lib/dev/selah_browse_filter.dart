@@ -6,7 +6,7 @@ import 'selah_view_request_draft_model.dart';
 /// Pure sample filtering, not a production discovery or permission boundary.
 /// Radius uses this explicit invented origin, never the device's location.
 const selahBrowseSampleOrigin = SelahBrowsePoint(53.48, -2.24);
-const selahBrowseSampleOriginLabel = 'Sample location · Manchester';
+const selahBrowseSampleOriginLabel = 'Location · Manchester';
 
 class SelahBrowsePoint {
   const SelahBrowsePoint(this.latitude, this.longitude);

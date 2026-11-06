@@ -14,3 +14,4 @@ owner: SELAH chat
 |---|---|---|---|
 | 14 | 2026-11-06 | Clickable answer: "A · Languages only — LOCK it" (prototype V29, opened on the question with A and B in the Deciding-now bar) | `RECORD/SELAH_ABOUT_YOU_SPEC_CURRENT_VERSION_V1.md`; 6 masters `MASTERS/L14_*.png`; CONSENT → V2 (3 masters), MARRIAGE_VALUES → V3 (1 master); prototype V30; queue line 15 |
 | 14 (change) | 2026-11-06 | From LOCK 16 | `L14_profile_about_you` re-rendered with the Marriage values note (old in ARCHIVE/MASTERS_V1). Spec unchanged |
+| 14 (fix) | 2026-11-06 | Build check of line 15 (no Founder decision needed - matches his LOCKed masters) | Spec V2: the 11 rows + Another language → search; queue line 21 |

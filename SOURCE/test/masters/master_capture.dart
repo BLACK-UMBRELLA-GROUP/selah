@@ -152,11 +152,23 @@ class MasterCaptureHarness {
     });
   }
 
+  /// Extra evidence explicitly requested without a designer-supplied master.
+  Future<void> captureBuild(
+    WidgetTester tester,
+    MasterScreen screen,
+    String name,
+  ) async {
+    await _prepareImages(tester);
+    expect(tester.getSize(find.byKey(screen.boundary)), masterPhoneSize);
+    await _golden(tester, screen.boundary, '${name}__build.png');
+  }
+
   Future<void> capture(
     WidgetTester tester,
     MasterScreen screen,
-    String master,
-  ) async {
+    String master, {
+    File? masterFile,
+  }) async {
     await _prepareImages(tester);
     expect(tester.getSize(find.byKey(screen.boundary)), masterPhoneSize);
     await _golden(tester, screen.boundary, '${master}__build.png');
@@ -173,7 +185,7 @@ class MasterCaptureHarness {
               SizedBox.fromSize(
                 size: masterPhoneSize,
                 child: Image.file(
-                  File('${featureRoot.path}/MASTERS/$master.png'),
+                  masterFile ?? File('${featureRoot.path}/MASTERS/$master.png'),
                   fit: BoxFit.fill,
                   filterQuality: FilterQuality.none,
                 ),

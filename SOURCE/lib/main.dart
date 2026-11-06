@@ -30,6 +30,8 @@ import 'screens/onboarding/selah_marriage_values_flow.dart';
 import 'screens/onboarding/article9_consent_screen.dart';
 import 'screens/onboarding/selah_languages_flow.dart';
 import 'models/selah_languages_controller.dart';
+import 'models/selah_your_values_controller.dart';
+import 'screens/onboarding/selah_your_values_flow.dart';
 
 final selahNavigatorKey = GlobalKey<NavigatorState>();
 final selahKeyboardDismissNavigatorObserver =
@@ -216,6 +218,10 @@ class _SelahDraftRootState extends State<SelahDraftRoot> {
   bool _marriage = false;
   bool _consent = false;
   bool _languages = false;
+  bool _yourValues = false;
+  int _valuesGeneration = 0;
+  String? _valuesPartId;
+  SelahYourValuesController? _valuesController;
   bool _faithSkipped = false;
   SelahConsentPreviewState _consentPreview = SelahConsentPreviewState.idle;
   int _faithInitialQuestion = 1;
@@ -249,6 +255,44 @@ class _SelahDraftRootState extends State<SelahDraftRoot> {
     save: owner.saveLanguages,
   );
 
+  void _openYourValues(SelahRequestAccountSession owner) {
+    if (!mounted ||
+        !identical(owner, _accountSession) ||
+        !owner.current ||
+        !_languages ||
+        _languagesController.saveState != SelahLanguagesSaveState.saved ||
+        owner.details.languages.isEmpty ||
+        _shepherd) {
+      return;
+    }
+    final generation = ++_valuesGeneration;
+    final old = _valuesController;
+    setState(() {
+      _languages = false;
+      _yourValues = true;
+      _valuesPartId = null;
+      _valuesController = SelahYourValuesController(
+        canAct: () =>
+            mounted &&
+            _yourValues &&
+            !_shepherd &&
+            generation == _valuesGeneration &&
+            identical(owner, _accountSession) &&
+            owner.current,
+        gender: 'male',
+        readAnswers: () => owner.compatibility.rawAnswers,
+        readSignUpPreferences: () => owner.compatibility.signUpPreferences,
+        onSavePart: owner.compatibility.saveYourValuesPart,
+        readHardRequirements: () => owner.compatibility.rawHardRequirements,
+        readDealbreakersSaved: () => owner.compatibility.dealbreakersSaved,
+        onSaveDealbreakers: owner.compatibility.saveDealbreakers,
+      );
+    });
+    if (old != null) {
+      WidgetsBinding.instance.addPostFrameCallback((_) => old.dispose());
+    }
+  }
+
   SelahRequestAccountSession _newAccountSession() {
     final generation = _profileGeneration;
     return SelahRequestAccountSession(
@@ -275,6 +319,11 @@ class _SelahDraftRootState extends State<SelahDraftRoot> {
     final oldController = _faithController;
     final oldMarriageController = _marriageController;
     final oldLanguagesController = _languagesController;
+    final oldValuesController = _valuesController;
+    _valuesGeneration++;
+    _valuesController = null;
+    _yourValues = false;
+    _valuesPartId = null;
     _profileGeneration++;
     _accountSession = _newAccountSession();
     _faithController = _newFaithController(_accountSession);
@@ -284,6 +333,7 @@ class _SelahDraftRootState extends State<SelahDraftRoot> {
       oldController.dispose();
       oldMarriageController.dispose();
       oldLanguagesController.dispose();
+      oldValuesController?.dispose();
       oldSession.dispose();
     });
   }
@@ -302,6 +352,8 @@ class _SelahDraftRootState extends State<SelahDraftRoot> {
         _marriage = false;
         _consent = false;
         _languages = false;
+        _yourValues = false;
+        _valuesGeneration++;
         _home = false;
         _opening = false;
       });
@@ -315,6 +367,7 @@ class _SelahDraftRootState extends State<SelahDraftRoot> {
     _faithController.dispose();
     _marriageController.dispose();
     _languagesController.dispose();
+    _valuesController?.dispose();
     _accountSession.dispose();
     super.dispose();
   }
@@ -336,6 +389,7 @@ class _SelahDraftRootState extends State<SelahDraftRoot> {
       _marriageInitialQuestion = 1;
       _consent = false;
       _languages = false;
+      _yourValues = false;
       _faithSkipped = false;
       _consentPreview = SelahConsentPreviewState.idle;
       _home = false;
@@ -350,6 +404,10 @@ class _SelahDraftRootState extends State<SelahDraftRoot> {
         !SelahDeveloperAccess.canUseDeveloperTools) {
       return;
     }
+    final valuesController = _valuesController;
+    final valuesGeneration = _valuesGeneration;
+    final valuesPartId = _valuesPartId;
+    final profileOwner = _accountSession;
     await showModalBottomSheet<void>(
       context: context,
       builder: (sheetContext) {
@@ -371,6 +429,42 @@ class _SelahDraftRootState extends State<SelahDraftRoot> {
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
                 Text('Page options', style: SelahText.heading(size: 18)),
+                if (_yourValues && valuesController != null) ...[
+                  TextButton(
+                    key: const ValueKey('values_saving'),
+                    onPressed: () => choose(() {
+                      if (_yourValues &&
+                          valuesGeneration == _valuesGeneration &&
+                          valuesPartId == _valuesPartId &&
+                          identical(valuesController, _valuesController) &&
+                          identical(profileOwner, _accountSession) &&
+                          profileOwner.current) {
+                        valuesController.showSaving(
+                          partId:
+                              _valuesPartId ?? valuesController.parts.first.id,
+                        );
+                      }
+                    }),
+                    child: const Text('Your values · saving'),
+                  ),
+                  TextButton(
+                    key: const ValueKey('values_failed'),
+                    onPressed: () => choose(() {
+                      if (_yourValues &&
+                          valuesGeneration == _valuesGeneration &&
+                          valuesPartId == _valuesPartId &&
+                          identical(valuesController, _valuesController) &&
+                          identical(profileOwner, _accountSession) &&
+                          profileOwner.current) {
+                        valuesController.showFailure(
+                          partId:
+                              _valuesPartId ?? valuesController.parts.first.id,
+                        );
+                      }
+                    }),
+                    child: const Text("Your values · didn't save"),
+                  ),
+                ],
                 if (_languages) ...[
                   TextButton(
                     key: const ValueKey('languages_saving'),
@@ -470,6 +564,8 @@ class _SelahDraftRootState extends State<SelahDraftRoot> {
     _marriage = false;
     _consent = false;
     _languages = false;
+    _yourValues = false;
+    _valuesGeneration++;
     _session++;
   });
   @override
@@ -478,11 +574,53 @@ class _SelahDraftRootState extends State<SelahDraftRoot> {
 
   Widget _content(BuildContext context) {
     final profileOwner = _accountSession;
-    if (_signup || _faith || _marriage || _consent || _languages) {
+    final valuesOwner = _valuesController;
+    final valuesGeneration = _valuesGeneration;
+    bool currentValues() =>
+        mounted &&
+        _yourValues &&
+        valuesGeneration == _valuesGeneration &&
+        identical(valuesOwner, _valuesController) &&
+        identical(profileOwner, _accountSession) &&
+        profileOwner.current;
+    if (_signup ||
+        _faith ||
+        _marriage ||
+        _consent ||
+        _languages ||
+        _yourValues) {
       return Stack(
         fit: StackFit.expand,
         children: [
-          if (_languages)
+          if (_yourValues && valuesOwner != null)
+            SelahYourValuesFlow(
+              key: ValueKey('your-values-$_valuesGeneration'),
+              controller: valuesOwner,
+              onPageChanged: (partId) {
+                if (currentValues()) {
+                  _valuesPartId = partId;
+                }
+              },
+              onBack: () {
+                if (!currentValues()) {
+                  return;
+                }
+                setState(() {
+                  _yourValues = false;
+                  _valuesGeneration++;
+                  _languages = true;
+                });
+              },
+              onFinished: () {
+                if (!currentValues() ||
+                    !valuesOwner.allPartsDone ||
+                    !valuesOwner.dealbreakersDone) {
+                  return;
+                }
+                _explore(false);
+              },
+            )
+          else if (_languages)
             SelahLanguagesFlow(
               controller: _languagesController,
               onBack: () => setState(() {
@@ -490,7 +628,7 @@ class _SelahDraftRootState extends State<SelahDraftRoot> {
                 _marriage = true;
                 _marriageInitialQuestion = 7;
               }),
-              onSaved: () => _explore(false),
+              onSaved: () => _openYourValues(profileOwner),
             )
           else if (_consent)
             Article9ConsentScreen(
@@ -600,6 +738,8 @@ class _SelahDraftRootState extends State<SelahDraftRoot> {
                       _marriage = false;
                       _consent = false;
                       _languages = false;
+                      _yourValues = false;
+                      _valuesGeneration++;
                       _home = true;
                     });
                   } else {

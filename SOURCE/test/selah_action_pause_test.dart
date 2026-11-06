@@ -59,7 +59,7 @@ void main() {
     );
     expect(
       replace.body,
-      'You already have three Journeys. Accepting Naomi means ending your '
+      'Your Journeys are full. Accepting Naomi means ending your '
       'Journey with Esther. Your history stays. Pastor David will be told, '
       'and so will Esther’s and Naomi’s Shepherds.',
     );

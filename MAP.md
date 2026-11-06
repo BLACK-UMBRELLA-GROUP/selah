@@ -31,15 +31,16 @@ re-run the tool.
 
 _Stop here unless you need to look up another ID._
 
-## Documents (56 live)
+## Documents (61 live)
 
 ### ABOUT_YOU
 
 | ID | File | Type | Purpose | Links | KB |
 |---|---|---|---|---|---|
-| DOC-SELAH-0048 | `APP/APPROVED/ABOUT_YOU/RECORD/SELAH_ABOUT_YOU_SPEC_CURRENT_VERSION_V1.md` | SPEC | SELAH asks only which languages a Seeker speaks at sign-up - no country of birth, nationality or ethnicity,… | OA-SELAH-003, AD-AIOS-123, DOC-SELAH-0017, DOC-SELAH-0009 | 3 |
+| DOC-SELAH-0048 | `APP/APPROVED/ABOUT_YOU/RECORD/SELAH_ABOUT_YOU_SPEC_CURRENT_VERSION_V2.md` | SPEC | SELAH asks only which languages a Seeker speaks at sign-up - no country of birth, nationality or ethnicity,… | OA-SELAH-003, AD-AIOS-123, DOC-SELAH-0017, DOC-SELAH-0009 | 3 |
 | DOC-SELAH-0049 | `APP/APPROVED/ABOUT_YOU/RECORD/LOCK_RECORD.md` | REGISTER | LOCK record for SELAH's About you (languages only) - each LOCK with the Founder's exact words |  | 1 |
 | DOC-SELAH-0050 | `APP/APPROVED/ABOUT_YOU/BRIEFS/BUILD_BRIEF_2026-11-06_V1.md` | PLAN | Build brief for LOCK 14 - remove country of birth, nationality and ethnicity questions; one languages question | DOC-SELAH-0048, DOC-SELAH-0020, OA-SELAH-003, AD-AIOS-123 | 2 |
+| DOC-SELAH-0060 | `APP/APPROVED/REPAIRS/BRIEFS/FIX_BRIEF_2026-11-06_LANGUAGES_LIST_V1.md` | PLAN | Fix brief from the line 15 build check - languages question shows the full alphabetical list instead of the… | DOC-SELAH-0048, DOC-SELAH-0020, OA-SELAH-003, AD-AIOS-123 | 1 |
 
 ### BASELINE
 
@@ -51,7 +52,7 @@ _Stop here unless you need to look up another ID._
 
 | ID | File | Type | Purpose | Links | KB |
 |---|---|---|---|---|---|
-| DOC-SELAH-0032 | `APP/APPROVED/BROWSE_CARD/RECORD/SELAH_BROWSE_CARD_SPEC_CURRENT_VERSION_V3.md` | SPEC | What a profile card shows on SELAH's Browse (faith chips only), the "no one new" state, and SELAH's own demo… | OA-SELAH-003, AD-AIOS-123, DOC-SELAH-0017, DOC-SELAH-0009 | 4 |
+| DOC-SELAH-0032 | `APP/APPROVED/BROWSE_CARD/RECORD/SELAH_BROWSE_CARD_SPEC_CURRENT_VERSION_V4.md` | SPEC | What a profile card shows on SELAH's Browse (faith chips only), the "no one new" state, and SELAH's own demo… | OA-SELAH-003, AD-AIOS-123, DOC-SELAH-0017, DOC-SELAH-0009 | 4 |
 | DOC-SELAH-0033 | `APP/APPROVED/BROWSE_CARD/RECORD/LOCK_RECORD.md` | REGISTER | LOCK record for the SELAH Browse card - each LOCK with the Founder's exact words |  | 1 |
 | DOC-SELAH-0034 | `APP/APPROVED/BROWSE_CARD/BRIEFS/BUILD_BRIEF_2026-11-06_V1.md` | PLAN | Build brief for LOCK 8 - faith chips on the Browse card, the no-one-new state, and SELAH's own demo cast | DOC-SELAH-0032, DOC-SELAH-0020, OA-SELAH-003, AD-AIOS-123 | 2 |
 
@@ -97,8 +98,8 @@ _Stop here unless you need to look up another ID._
 
 | ID | File | Type | Purpose | Links | KB |
 |---|---|---|---|---|---|
-| DOC-SELAH-0006 | `APP/APPROVED/BUILD_QUEUE.md` | REGISTER | Build queue - every LOCKed brief waits here; Codex builds WAITING lines at 01:00 or on GO (charters rule 9) | AD-AIOS-115 | 8 |
-| DOC-SELAH-0007 | `APP/APPROVED/QUESTIONS.md` | REGISTER | Codex's questions for the SELAH chat - Codex never asks Shakeel in chat; he files the question here, marks… | AD-AIOS-116 | 11 |
+| DOC-SELAH-0006 | `APP/APPROVED/BUILD_QUEUE.md` | REGISTER | Build queue - every LOCKed brief waits here; Codex builds WAITING lines at 01:00 or on GO (charters rule 9) | AD-AIOS-115 | 9 |
+| DOC-SELAH-0007 | `APP/APPROVED/QUESTIONS.md` | REGISTER | Codex's questions for the SELAH chat - Codex never asks Shakeel in chat; he files the question here, marks… | AD-AIOS-116 | 15 |
 | DOC-SELAH-0008 | `ROADMAP.md` | PLAN | Approval-gated roadmap for SELAH - its own identity from 3 Nov 2026, then member services and launch… | OA-SELAH-001, OA-SELAH-002, OA-SELAH-003, OA-SELAH-004, OA-AIOS-414 | 4 |
 | INDEX-OUTSTANDING_ACTIONS_V1 | `SYSTEM/OUTSTANDING_ACTIONS/OUTSTANDING_ACTIONS_V1_INDEX.md` | INDEX | Generated one-line index of OUTSTANDING_ACTIONS_V1.md; find the ID here, then search the register for it |  | 1 |
 
@@ -122,7 +123,7 @@ _Stop here unless you need to look up another ID._
 
 | ID | File | Type | Purpose | Links | KB |
 |---|---|---|---|---|---|
-| DOC-SELAH-0022 | `APP/APPROVED/MARRIAGE_VALUES/RECORD/SELAH_MARRIAGE_VALUES_SPEC_CURRENT_VERSION_V6.md` | SPEC | SELAH's seven marriage-values questions, asked right after the faith questions at sign-up, and where the… | OA-SELAH-003, AD-AIOS-123, DOC-SELAH-0017, DOC-SELAH-0009 | 5 |
+| DOC-SELAH-0022 | `APP/APPROVED/MARRIAGE_VALUES/RECORD/SELAH_MARRIAGE_VALUES_SPEC_CURRENT_VERSION_V7.md` | SPEC | SELAH's seven marriage-values questions, asked right after the faith questions at sign-up, and where the… | OA-SELAH-003, AD-AIOS-123, DOC-SELAH-0017, DOC-SELAH-0009 | 6 |
 | DOC-SELAH-0023 | `APP/APPROVED/MARRIAGE_VALUES/RECORD/LOCK_RECORD.md` | REGISTER | LOCK record for SELAH marriage values - each LOCK with the Founder's exact words |  | 1 |
 | DOC-SELAH-0024 | `APP/APPROVED/MARRIAGE_VALUES/BRIEFS/BUILD_BRIEF_2026-11-06_V1.md` | PLAN | Build brief for LOCK 5 - seven marriage-values questions right after the faith questions, and the Profile card | DOC-SELAH-0022, DOC-SELAH-0017, DOC-SELAH-0020, OA-SELAH-003, AD-AIOS-123 | 2 |
 | DOC-SELAH-0056 | `APP/APPROVED/MARRIAGE_VALUES/BRIEFS/BUILD_BRIEF_2026-11-06_LOCK16_V1.md` | PLAN | Build brief for LOCK 16 - who sees the marriage answers (Browse card line, in-Journey profile) and Journey… | DOC-SELAH-0020, OA-SELAH-003, AD-AIOS-123 | 2 |
@@ -137,9 +138,9 @@ _Stop here unless you need to look up another ID._
 
 | ID | File | Type | Purpose | Links | KB |
 |---|---|---|---|---|---|
-| DOC-SELAH-0038 | `APP/APPROVED/PRAYER/RECORD/SELAH_PRAYER_SPEC_CURRENT_VERSION_V1.md` | SPEC | SELAH prayer requests - a Seeker asks their Shepherd for prayer; the Shepherd sees requests at the top of… | OA-SELAH-003, AD-AIOS-123, DOC-SELAH-0009 | 3 |
+| DOC-SELAH-0038 | `APP/APPROVED/PRAYER/RECORD/SELAH_PRAYER_SPEC_CURRENT_VERSION_V2.md` | SPEC | SELAH prayer requests - a Seeker asks their Shepherd for prayer; the Shepherd sees requests at the top of… | OA-SELAH-003, AD-AIOS-123, DOC-SELAH-0009 | 3 |
 | DOC-SELAH-0039 | `APP/APPROVED/PRAYER/RECORD/LOCK_RECORD.md` | REGISTER | LOCK record for SELAH prayer requests - each LOCK with the Founder's exact words |  | 1 |
-| DOC-SELAH-0040 | `APP/APPROVED/PRAYER/BRIEFS/BUILD_BRIEF_2026-11-06_V1.md` | PLAN | Build brief for LOCK 10 - prayer requests from Seeker to Shepherd, shown on the Shepherd Dashboard | DOC-SELAH-0038, DOC-SELAH-0020, OA-SELAH-003, AD-AIOS-123 | 1 |
+| DOC-SELAH-0040 | `APP/APPROVED/PRAYER/BRIEFS/BUILD_BRIEF_2026-11-06_V1.md` | PLAN | Build brief for LOCK 10 - prayer requests from Seeker to Shepherd, shown on the Shepherd Dashboard | DOC-SELAH-0038, DOC-SELAH-0020, OA-SELAH-003, AD-AIOS-123 | 2 |
 
 ### PROTOTYPE
 
@@ -168,9 +169,9 @@ _Stop here unless you need to look up another ID._
 
 | ID | File | Type | Purpose | Links | KB |
 |---|---|---|---|---|---|
-| DOC-SELAH-0029 | `APP/APPROVED/SELAH_PAUSE/RECORD/SELAH_PAUSE_SPEC_CURRENT_VERSION_V3.md` | SPEC | The Selah pause - SELAH's calm full-screen moment before asking someone to begin a Journey, accepting a… | OA-SELAH-003, AD-AIOS-123, DOC-SELAH-0009 | 5 |
+| DOC-SELAH-0029 | `APP/APPROVED/SELAH_PAUSE/RECORD/SELAH_PAUSE_SPEC_CURRENT_VERSION_V4.md` | SPEC | The Selah pause - SELAH's calm full-screen moment before asking someone to begin a Journey, accepting a… | OA-SELAH-003, AD-AIOS-123, DOC-SELAH-0009 | 5 |
 | DOC-SELAH-0030 | `APP/APPROVED/SELAH_PAUSE/RECORD/LOCK_RECORD.md` | REGISTER | LOCK record for the Selah pause - each LOCK with the Founder's exact words |  | 1 |
-| DOC-SELAH-0031 | `APP/APPROVED/SELAH_PAUSE/BRIEFS/BUILD_BRIEF_2026-11-06_V1.md` | PLAN | Build brief for LOCK 7 - the Selah pause before sending, accepting and ending a Journey | DOC-SELAH-0029, DOC-SELAH-0020, OA-SELAH-003, AD-AIOS-123 | 2 |
+| DOC-SELAH-0031 | `APP/APPROVED/SELAH_PAUSE/BRIEFS/BUILD_BRIEF_2026-11-06_V1.md` | PLAN | Build brief for LOCK 7 - the Selah pause before sending, accepting and ending a Journey | DOC-SELAH-0029, DOC-SELAH-0020, OA-SELAH-003, AD-AIOS-123 | 3 |
 
 ### SHEPHERD_INVITE
 
@@ -188,6 +189,15 @@ _Stop here unless you need to look up another ID._
 | DOC-SELAH-0041 | `APP/APPROVED/WORDING/RECORD/SELAH_WORDING_SPEC_CURRENT_VERSION_V1.md` | SPEC | Two app-wide wording rules for SELAH - the app's name is written "Selah" in member-facing text, and asking… | OA-SELAH-003, AD-AIOS-123, DOC-SELAH-0009 | 2 |
 | DOC-SELAH-0042 | `APP/APPROVED/WORDING/RECORD/LOCK_RECORD.md` | REGISTER | LOCK record for SELAH app-wide wording - each LOCK with the Founder's exact words |  | 1 |
 | DOC-SELAH-0043 | `APP/APPROVED/WORDING/BRIEFS/BUILD_BRIEF_2026-11-06_V1.md` | PLAN | Build brief for LOCK 11 - write the app's name as "Selah" in all member-facing text and keep "Request a… | DOC-SELAH-0041, OA-SELAH-003, AD-AIOS-123 | 1 |
+
+### YOUR_VALUES
+
+| ID | File | Type | Purpose | Links | KB |
+|---|---|---|---|---|---|
+| DOC-SELAH-0057 | `APP/APPROVED/YOUR_VALUES/RECORD/SELAH_YOUR_VALUES_SPEC_CURRENT_VERSION_V3.md` | SPEC | SELAH's own compatibility questions - 27 in 7 parts, replacing the 104-question bank copied from ZYRA (LOCK… | OA-SELAH-003, AD-AIOS-123, DOC-SELAH-0017, DOC-SELAH-0052 | 6 |
+| DOC-SELAH-0058 | `APP/APPROVED/YOUR_VALUES/RECORD/LOCK_RECORD.md` | REGISTER | LOCK record for SELAH Your values - each LOCK with the Founder's exact words |  | 1 |
+| DOC-SELAH-0059 | `APP/APPROVED/YOUR_VALUES/BRIEFS/BUILD_BRIEF_2026-11-06_V1.md` | PLAN | Build brief for LOCK 17 - Your values becomes 27 questions in 7 parts | DOC-SELAH-0057, DOC-SELAH-0052, DOC-SELAH-0020, OA-SELAH-003, AD-AIOS-123 | 2 |
+| DOC-SELAH-0061 | `APP/APPROVED/YOUR_VALUES/BRIEFS/BUILD_BRIEF_2026-11-06_LOCK18_V1.md` | PLAN | Build brief for LOCK 18 - no partner-preference screens; one optional deal-breakers screen | DOC-SELAH-0057, DOC-SELAH-0020, OA-SELAH-003, AD-AIOS-123 | 2 |
 
 ## Needs attention
 

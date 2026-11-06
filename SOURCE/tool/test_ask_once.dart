@@ -124,7 +124,7 @@ void runAskOnceChecks(void Function(bool, String) check) {
       final raw = {qid: 'old answer', 'unrelated': 'keep'};
       final effective = projection.answersOver(raw);
       check(
-        effective[qid] == entry.value && effective['unrelated'] == 'keep',
+        effective[qid] == entry.value && !effective.containsKey('unrelated'),
         'ask-once $qid overwrites or removes old storage on read',
       );
       check(
@@ -172,8 +172,8 @@ void runAskOnceChecks(void Function(bool, String) check) {
       'ask-once divorced ${entry.key} maps only the exact Divorced preference',
     );
     check(
-      effective['ch3_q2']?['Yes, living with me'] == TrafficLight.red,
-      'ask-once divorced mapping preserves other partner preferences',
+      !effective.containsKey('ch3_q2'),
+      'LOCK18 other raw partner preferences stay unused',
     );
     check(
       !projection
@@ -211,8 +211,8 @@ void runAskOnceChecks(void Function(bool, String) check) {
       .map((question) => question.id)
       .toSet();
   check(
-    fullIds.length == 104 && visibleIds.length == 95,
-    'all 104 definitions remain while nine duplicates leave Your Values',
+    fullIds.length == 36 && visibleIds.length == 27,
+    'LOCK17 active compatibility36 contains27 asked plus9 mapped',
   );
   check(
     fullIds.difference(visibleIds).length == 9 &&
@@ -220,22 +220,22 @@ void runAskOnceChecks(void Function(bool, String) check) {
     'exactly the nine explicit ask-once IDs leave self-answer lists',
   );
   check(
-    chapter3Categories.length == 11 &&
+    chapter3Categories.length == 7 &&
         chapter3Categories.every((category) => category.questions.isNotEmpty),
-    'all eleven self-answer categories remain nonempty',
+    'all seven LOCK17 self-answer parts remain nonempty',
   );
   for (final (id, before, after) in [
-    ('faith_practice', 17, 14),
-    ('marriage_intentions', 8, 5),
-    ('children_parenting', 5, 3),
-    ('home_roles', 8, 7),
+    ('faith_practice', 8, 5),
+    ('marriage_intentions', 7, 4),
+    ('family_in_laws', 6, 4),
+    ('home_roles', 4, 3),
   ]) {
     check(
       chapter3CompatibilityCategories
                   .singleWhere((category) => category.id == id)
                   .questions
-              .map((question) => question.id)
-              .toSet()
+                  .map((question) => question.id)
+                  .toSet()
                   .length ==
               before &&
           chapter3Categories
@@ -249,10 +249,7 @@ void runAskOnceChecks(void Function(bool, String) check) {
     );
   }
   for (final category in chapter3CompatibilityCategories) {
-    final expected = category.questions
-        .where((question) => question.ch4Status != Ch4Status.none)
-        .map((question) => question.id)
-        .toSet();
+    final expected = category.questions.map((question) => question.id).toSet();
     final actual = compatibilityCategories
         .singleWhere((item) => item.id == category.id)
         .questionIds
@@ -267,13 +264,7 @@ void runAskOnceChecks(void Function(bool, String) check) {
       .where((question) => question.ch4Status != Ch4Status.none)
       .map((question) => question.id)
       .toSet();
-  check(
-    !preferenceIds.contains('ch3_q1') &&
-        preferenceIds.containsAll(
-          selahSignUpQuestionIds.difference({'ch3_q1'}),
-        ),
-    'only q1 partner preference question is retired; other eight remain distinct',
-  );
+  check(preferenceIds.isEmpty, 'LOCK18 removes all partner question lists');
   check(
     visibleIds.contains('ch3_q64'),
     'household responsibilities q64 remains asked',

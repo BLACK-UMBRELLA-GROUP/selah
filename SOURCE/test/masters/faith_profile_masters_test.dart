@@ -24,6 +24,7 @@ import 'package:selah/widgets/selah_shell_navigation.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'master_capture.dart';
+import 'your_values_driver.dart';
 
 const _shortWords = 'Church is where I grew up.';
 const _fullWords =
@@ -207,6 +208,9 @@ Future<void> _completeMarriage(WidgetTester tester) async {
   await tester.pumpAndSettle();
   await _tap(tester, _key('language_choice_0'));
   await _tap(tester, _key('languages_save'));
+  if (_key('values_overview').evaluate().isNotEmpty) {
+    await finishYourValuesFromOverview(tester);
+  }
 }
 
 Future<void> _showProfile(WidgetTester tester) async {

@@ -48,3 +48,6 @@ table. Scoring, weights and category membership do not change. Old saved bank an
 
 ## Update 2026-11-06 (answers QUESTIONS row 6)
 Line 5 saves the seven marriage answers as **SELAH's own profile fields** in the exact LOCK words (a scoped new-field exception, one store) and does no mapping. All translation to ch3/ch4 values happens here (rows 1-10). Children "shared custody" is not offered in SELAH; no value maps to it.
+
+## Update 2026-11-06 (LOCK 17)
+"Category membership does not change" is superseded by line 20: Your values becomes 27 questions in 7 parts; line 20 places these mapped answers into its parts (YOUR_VALUES spec §3). This line keeps doing only the removal and the mapping.

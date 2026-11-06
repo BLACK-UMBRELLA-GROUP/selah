@@ -16,7 +16,7 @@ Queue line 15. Build after: 3, 5, 6 (faith, marriage, consent). ROADMAP row: **S
 
 | # | Step | Detail |
 |---|---|---|
-| 1 | Read | `SELAH/AGENTS.md`, `MAP.md` to "Route paths", `ABOUT_YOU/RECORD/SELAH_ABOUT_YOU_SPEC_CURRENT_VERSION_V1.md`, its LOCK_RECORD, the 6 masters, CONSENT V2, MARRIAGE_VALUES V3, LOOK V2. |
+| 1 | Read | `SELAH/AGENTS.md`, `MAP.md` to "Route paths", `ABOUT_YOU/RECORD/SELAH_ABOUT_YOU_SPEC_CURRENT_VERSION_V2.md`, its LOCK_RECORD, the 6 masters, CONSENT V2, MARRIAGE_VALUES V3, LOOK V2. |
 | 2 | Remove | `chapter2_flow.dart` steps 9-17 and 19-20 (spec §1) from the active step list, back/skip logic and `_totalSteps`; update the consent-gate constants (`_firstNonArticle9Step` etc.) so declining consent still skips only faith. Keep shared widgets used elsewhere; list any file moved to `BLACK UMBRELLA GROUP/tmp/_to_delete/selah_<date>/`. |
 | 3 | Languages | Step 18 re-presented to spec §2 after the marriage questions; existing languages field and list. |
 | 4 | Completion check | `seeker_profile_completion.dart`: stop requiring countryOfBirth, nationality, ethnicity, their preferred/flexibility sections and the languages preference/flexibility; require at least one language. Keep the consent-Skip rule. |

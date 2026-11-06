@@ -466,7 +466,11 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
           child: Center(child: SelahLoading.profile()),
         )
       else if (_draft != null && _canUse)
-        for (final kind in CompatibilityEditorKind.values)
+        for (final kind in const [
+          CompatibilityEditorKind.aboutYou,
+          CompatibilityEditorKind.lifestyle,
+          CompatibilityEditorKind.marriagePreferences,
+        ])
           _CompatibilityRow(
             key: ValueKey('compatibility-editor-${kind.name}'),
             kind: kind,

@@ -21,7 +21,7 @@ void main() {
         goldEnabled: false,
       );
   final childrenCategory = chapter3Categories.singleWhere(
-    (category) => category.id == 'children_parenting',
+    (category) => category.id == 'marriage_intentions',
   );
   SelahMarriageValuesAnswers complete(String wouldLikeChildren) =>
       SelahMarriageValuesAnswers(
@@ -104,11 +104,10 @@ void main() {
         draft.compatibilityHardRequirements.containsKey('ch3_q1'),
         isFalse,
       );
-      expect(
-        draft.compatibilityPreferences['ch3_q2'],
-        snapshot.ch4Preferences['ch3_q2'],
-      );
-      expect(draft.compatibilityHardRequirements['ch3_q2'], {'No'});
+      expect(draft.compatibilityPreferences['ch3_q2'], isNull);
+      expect(draft.compatibilityHardRequirements['ch3_q2'], isNull);
+      expect(draft.preferences['ch3_q2'], snapshot.ch4Preferences['ch3_q2']);
+      expect(draft.hardRequirements['ch3_q2'], {'No'});
       final retired = chapter3CompatibilityCategories
           .expand((category) => category.questions)
           .firstWhere((question) => question.id == 'ch3_q1');

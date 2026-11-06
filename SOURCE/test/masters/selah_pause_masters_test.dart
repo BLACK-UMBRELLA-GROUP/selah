@@ -1,4 +1,4 @@
-// LOCK 7/13 and Q7: real root Journey actions, with the existing private
+// LOCK 7/13, Q7/Q10: real root Journey actions, with the existing private
 // scenario controls. No isolated mock pause or admission bypass is captured.
 import 'dart:io';
 
@@ -21,6 +21,12 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'master_capture.dart';
 
 final _capture = MasterCaptureHarness(feature: 'SELAH_PAUSE');
+final _replaceCapture = MasterCaptureHarness(
+  feature: 'SELAH_PAUSE',
+  version: 'V1_1',
+);
+MasterCaptureHarness _captureFor(String master) =>
+    master.startsWith('L07_pause_replace') ? _replaceCapture : _capture;
 const _masters = {
   'L07_pause_ask',
   'L07_pause_ask__sending',
@@ -96,7 +102,8 @@ Future<void> _openReceived(WidgetTester tester) async {
 
 Future<void> _removeShepherds(WidgetTester tester) async {
   await _tab(tester, 'Shepherd');
-  for (var index = 0; index < 2; index++) {
+  for (final id in ['draft-shepherd-hassan', 'draft-shepherd-yusuf']) {
+    await _tap(tester, _key('seeker_shepherd_manage_$id'));
     await _tap(tester, _key('shepherd-remove').hitTestable());
     final confirmation = _key('shepherd-remove-confirmation');
     await _tap(
@@ -205,7 +212,7 @@ void main() {
         entry.value,
         noShepherd: entry.key.endsWith('no_shepherd'),
       );
-      await _capture.capture(tester, screen, entry.key);
+      await _captureFor(entry.key).capture(tester, screen, entry.key);
     });
   }
 
@@ -220,7 +227,7 @@ void main() {
       final screen = await _openPause(tester, entry.value);
       final failed = entry.key.contains('didnt');
       await _preset(tester, failed ? 'failed' : 'working');
-      await _capture.capture(tester, screen, entry.key);
+      await _captureFor(entry.key).capture(tester, screen, entry.key);
     });
   }
 
@@ -268,6 +275,10 @@ void main() {
   ) async {
     await _openPause(tester, SelahActionPauseKind.replace);
     final pause = _controller(tester).pause;
+    expect(
+      find.textContaining('Your Journeys are full. Accepting ${pause.name}'),
+      findsOneWidget,
+    );
     await _tap(tester, _key('pause_not_yet'));
     expect(_key('request_capacity_choice'), findsOneWidget);
     await _tap(tester, _key('request_capacity_continue'));

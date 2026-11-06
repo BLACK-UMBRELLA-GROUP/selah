@@ -6,6 +6,7 @@ import '../../theme/selah_colors.dart';
 import '../../theme/selah_text.dart';
 import '../../widgets/selah_shepherd_invite_views.dart';
 import '../../widgets/selah_state_widgets.dart';
+import '../../widgets/selah_quiet_page_presentation.dart';
 
 /// One full-screen LOCK 7/13 pause for all four existing Journey actions.
 class SelahPauseScreen extends StatefulWidget {
@@ -137,106 +138,78 @@ class _SelahPauseScreenState extends State<SelahPauseScreen>
         body: Stack(
           fit: StackFit.expand,
           children: [
-            SafeArea(
-              bottom: false,
-              child: SelahInviteFillScroll(
-                padding: const EdgeInsets.fromLTRB(26, 20, 26, 26),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: [
-                    Align(
-                      alignment: Alignment.centerLeft,
-                      child: TextButton(
-                        key: const ValueKey('pause_back'),
-                        onPressed: _cancel,
-                        style: TextButton.styleFrom(
-                          foregroundColor: SelahColors.lake,
-                          minimumSize: Size.zero,
-                          padding: const EdgeInsets.symmetric(vertical: 6),
-                          tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                        ),
-                        child: Text(
-                          '‹ Back',
-                          style: SelahText.button(color: SelahColors.lake),
-                        ),
-                      ),
-                    ),
-                    if (failed) ...[
-                      const SizedBox(height: 8),
-                      SelahErrorBanner(
-                        key: const ValueKey('pause_failure'),
-                        message: pause.failureMessage,
-                        retryKey: const ValueKey('pause_retry'),
-                        onRetry: _confirm,
-                      ),
-                    ],
-                    const SizedBox(height: 30),
-                    Text(
-                      '’',
-                      style: SelahText.heading(
-                        size: 120,
-                        color: SelahColors.dawn,
-                      ).copyWith(height: .6),
-                    ),
-                    const Spacer(),
-                    Text(
-                      'SELAH',
-                      style: SelahText.chapterLabel().copyWith(height: 1),
-                    ),
-                    const SizedBox(height: 14),
-                    Text(
-                      pause.heading,
-                      style: SelahText.heading(size: 48).copyWith(height: 1.05),
-                    ),
-                    const SizedBox(height: 14),
-                    Text(pause.body, style: SelahText.body()),
-                    const SizedBox(height: 14),
-                    ClipRRect(
-                      borderRadius: BorderRadius.circular(2),
-                      child: SizedBox(
-                        height: 4,
-                        child: ColoredBox(
-                          color: SelahColors.line,
-                          child: Align(
-                            alignment: Alignment.centerLeft,
-                            child: AnimatedBuilder(
-                              animation: _breath,
-                              builder: (context, _) => FractionallySizedBox(
-                                key: const ValueKey('pause_breath'),
-                                widthFactor: Curves.easeInOut.transform(
-                                  _breath.value,
-                                ),
-                                child: const SizedBox(
-                                  height: 4,
-                                  child: ColoredBox(color: SelahColors.lake),
-                                ),
-                              ),
+            SelahQuietPagePresentation(
+              header: Align(
+                alignment: Alignment.centerLeft,
+                child: TextButton(
+                  key: const ValueKey('pause_back'),
+                  onPressed: _cancel,
+                  style: TextButton.styleFrom(
+                    foregroundColor: SelahColors.lake,
+                    minimumSize: Size.zero,
+                    padding: const EdgeInsets.symmetric(vertical: 6),
+                    tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                  ),
+                  child: Text(
+                    '‹ Back',
+                    style: SelahText.button(color: SelahColors.lake),
+                  ),
+                ),
+              ),
+              failure: failed
+                  ? SelahErrorBanner(
+                      key: const ValueKey('pause_failure'),
+                      message: pause.failureMessage,
+                      retryKey: const ValueKey('pause_retry'),
+                      onRetry: _confirm,
+                    )
+                  : null,
+              label: 'SELAH',
+              heading: pause.heading,
+              body: pause.body,
+              afterBody: [
+                ClipRRect(
+                  borderRadius: BorderRadius.circular(2),
+                  child: SizedBox(
+                    height: 4,
+                    child: ColoredBox(
+                      color: SelahColors.line,
+                      child: Align(
+                        alignment: Alignment.centerLeft,
+                        child: AnimatedBuilder(
+                          animation: _breath,
+                          builder: (context, _) => FractionallySizedBox(
+                            key: const ValueKey('pause_breath'),
+                            widthFactor: Curves.easeInOut.transform(
+                              _breath.value,
+                            ),
+                            child: const SizedBox(
+                              height: 4,
+                              child: ColoredBox(color: SelahColors.lake),
                             ),
                           ),
                         ),
                       ),
                     ),
-                    const SizedBox(height: 14),
-                    Text(
-                      'Take a breath. Pray if you wish.',
-                      style: SelahText.body(size: 13, color: SelahColors.muted),
-                    ),
-                    const Spacer(),
-                    _primary(working),
-                    if (working)
-                      // Preserve the locked private demo-row geometry without
-                      // presenting a member-facing completion control.
-                      const SizedBox(height: 42),
-                    const SizedBox(height: 10),
-                    SelahInviteButton(
-                      key: const ValueKey('pause_not_yet'),
-                      label: 'Not yet',
-                      ghost: true,
-                      onPressed: _cancel,
-                    ),
-                  ],
+                  ),
                 ),
-              ),
+                const SizedBox(height: 14),
+                Text(
+                  'Take a breath. Pray if you wish.',
+                  style: SelahText.body(size: 13, color: SelahColors.muted),
+                ),
+              ],
+              actions: [
+                _primary(working),
+                if (working) const SizedBox(height: 42),
+                const SizedBox(height: 10),
+                SelahInviteButton(
+                  key: const ValueKey('pause_not_yet'),
+                  label: 'Not yet',
+                  ghost: true,
+                  onPressed: _cancel,
+                ),
+              ],
             ),
             if (widget.developerControls != null &&
                 SelahDeveloperAccess.canUseDeveloperTools)

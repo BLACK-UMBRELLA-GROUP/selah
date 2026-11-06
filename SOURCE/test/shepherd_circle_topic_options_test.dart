@@ -537,7 +537,7 @@ void main() {
           findsNothing,
         );
         expect(fixture.contextOpens, 0);
-        expect(fixture.data.messages.length, 1);
+        expect(fixture.data.messages.length, 2);
         await _capture(tester, '${mode.name}-current-message');
       },
     );
@@ -690,7 +690,7 @@ void main() {
       await _press(tester, _circleButton('Send message'));
       expect(find.text('An unfinished shared draft'), findsOneWidget);
       expect(_messageTag('draft-circle-past-0'), findsNWidgets(2));
-      expect(fixture.data.messages.length, 1);
+      expect(fixture.data.messages.length, 3);
       expect(fixture.contextOpens, 0);
     },
   );
@@ -1265,7 +1265,7 @@ void main() {
       await _press(tester, _key('draft_back'));
       await _press(tester, _key('concept_journey_preview_3'));
       await _nav(tester, 3);
-      await _press(tester, _key('shepherd-family-messages-top'));
+      await _press(tester, _key('seeker_shepherd_message'));
       final owner = tester.widget<SelahShepherdCircleScreen>(
         find.byType(SelahShepherdCircleScreen),
       );
@@ -1323,7 +1323,7 @@ void main() {
       await _capture(tester, 'protected-shell-in-chat');
       await _press(tester, _circleButton('Back'));
       expect(find.byType(SelahShepherdCircleScreen), findsNothing);
-      expect(_key('shepherd-family-messages-top'), findsOneWidget);
+      expect(_key('seeker_shepherd_message'), findsOneWidget);
       expect(find.byType(FloatingNavBar), findsOneWidget);
     },
   );
@@ -1363,7 +1363,7 @@ void main() {
     final parentTitle = shepherd ? 'Seekers' : 'Shepherd';
     final circleEntry = shepherd
         ? 'seeker-family-chat-draft-self'
-        : 'shepherd-family-messages-top';
+        : 'seeker_shepherd_message';
     final dropdown = find.byType(
       DropdownButtonFormField<SelahCircleTopicLayout>,
     );

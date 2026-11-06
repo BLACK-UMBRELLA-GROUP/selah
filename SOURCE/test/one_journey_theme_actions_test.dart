@@ -175,7 +175,8 @@ Future<void> _nav(WidgetTester tester, int index) async {
     find.byType(SelahShellNavigation).evaluate().isEmpty && depth < 6;
     depth++
   ) {
-    await _press(tester, 'draft_back');
+    await tester.binding.handlePopRoute();
+    await tester.pumpAndSettle();
   }
   tester
       .widget<SelahShellNavigation>(find.byType(SelahShellNavigation))
@@ -291,6 +292,20 @@ Future<void> _dismissSheet(WidgetTester tester) async {
 }
 
 Future<void> _local(WidgetTester tester, String id) async {
+  if ([
+    'draft_peer_ready_',
+    'draft_agree_resume_',
+    'draft_agree_pause_',
+    'draft_continue_',
+    'draft_peer_greeting_',
+    'draft_peer_reveal_',
+    'draft_stage_peer_ready_',
+  ].any(id.startsWith)) {
+    await _press(tester, 'draft_back');
+    await _press(tester, id);
+    return;
+  }
+
   if (_key(id).evaluate().isEmpty &&
       find.byType(SelahConceptJourneyPresentation).evaluate().isNotEmpty) {
     final pager = find.descendant(
@@ -638,6 +653,51 @@ void main() {
       // Widget teardown disposes this independently admitted test host.
     }, network);
     expect(network.attempts, 0);
+  });
+
+  testWidgets('private peer controls reject held callbacks after menu ABA', (
+    tester,
+  ) async {
+    await _mount(tester);
+    await _seed(tester);
+    await _press(tester, 'draft_journey_draft-aisha');
+    await _press(tester, 'concept_journey_arrival_continue');
+    await _local(tester, 'draft_greeting_draft-aisha');
+    expect(_key('draft_peer_greeting_draft-aisha'), findsNothing);
+    expect(find.text('LOCAL PREVIEW CONTROLS'), findsNothing);
+    expect(find.textContaining('Phase review is simulated'), findsNothing);
+
+    await _press(tester, 'draft_back');
+    final held = _action(tester, 'draft_peer_greeting_draft-aisha');
+    await _press(tester, 'draft_back');
+    held();
+    await tester.pumpAndSettle();
+    await _press(tester, 'concept_journey_arrival_continue');
+    expect(
+      tester
+          .widget<SelahConceptJourneyThresholdBody>(
+            find.byType(SelahConceptJourneyThresholdBody),
+          )
+          .theirs,
+      isFalse,
+    );
+
+    await _press(tester, 'draft_back');
+    held();
+    await tester.pumpAndSettle();
+    expect(_key('draft_peer_greeting_draft-aisha'), findsOneWidget);
+    await _press(tester, 'draft_peer_greeting_draft-aisha');
+    await _press(tester, 'concept_journey_arrival_continue');
+    expect(
+      tester
+          .widget<SelahConceptJourneyThresholdBody>(
+            find.byType(SelahConceptJourneyThresholdBody),
+          )
+          .theirs,
+      isTrue,
+    );
+    expect(_key('draft_peer_greeting_draft-aisha'), findsNothing);
+    expect(_key('draft_stage_ready_draft-aisha'), findsOneWidget);
   });
 
   testWidgets('simplified active Journey has no Pause action or Paused route', (

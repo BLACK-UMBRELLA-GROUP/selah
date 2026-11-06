@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../../widgets/selah_switch.dart';
+import '../../models/selah_shepherd_recent.dart';
 import 'dart:math' as math;
 
 import '../../services/selah_mentor_link_service.dart';
@@ -73,8 +74,6 @@ mixin _ShepherdControlLifetime<T extends StatefulWidget> on State<T> {
 }
 
 const double _managerPageTopInset = 16;
-const double _shepherdPageDotTail = 4;
-const double _shepherdPageNavigationGap = 20;
 
 String _recordedShepherdRole(MentorLinkedPerson person) => [
   if (person.relationshipLabel != null) person.relationshipLabel!,
@@ -484,16 +483,19 @@ typedef ShepherdRemoveAction = Future<String?> Function(String shepherdId);
 /// Canonical Seeker Shepherd page selected by the Founder.
 ///
 /// Horizontal [PageView] movement is the sole Shepherd-to-Shepherd navigation.
-/// Each Shepherd page is a fixed one-screen layout: Journey access is always
-/// visible and vertical scrolling is deliberately not part of this surface.
+/// LOCK 12: one vertical Main-first page using the existing control owners.
 class SeekerShepherdPage extends StatelessWidget {
   final List<MentorLinkedPerson> people;
+  final Map<String, String> displayNames;
+  final List<SelahShepherdRecentItem> recent;
+  final Widget? mainPhoto;
   final Map<String, List<ShepherdActivity>> activity;
   final bool linksAvailable;
   final bool activityAvailable;
   final VoidCallback onRetry;
   final VoidCallback onAdd;
   final VoidCallback? onOpenMessages;
+  final VoidCallback? onAskForPrayer;
   final ShepherdPendingInvitesLoader? pendingInvitesLoader;
   final ShepherdPageHistoryConsentLoader? historyConsentLoader;
   final ShepherdPageJourneyAccessLoader? journeyAccessLoader;
@@ -512,12 +514,16 @@ class SeekerShepherdPage extends StatelessWidget {
   const SeekerShepherdPage({
     super.key,
     required this.people,
+    this.displayNames = const {},
+    this.recent = const [],
+    this.mainPhoto,
     required this.activity,
     required this.linksAvailable,
     required this.activityAvailable,
     required this.onRetry,
     required this.onAdd,
     this.onOpenMessages,
+    this.onAskForPrayer,
     this.pendingInvitesLoader,
     this.historyConsentLoader,
     this.journeyAccessLoader,
@@ -549,386 +555,384 @@ class SeekerShepherdPage extends StatelessWidget {
         titleSize: titleSize,
       );
     }
-
-    // Reserve the shared bar's full touch height, not only its smaller idle
-    // height. The pager may sit in SafeArea(bottom: false), so retain the
-    // actual bottom inset instead of assuming it was already consumed.
-    final navigationReserve =
+    final main = ordered.where((person) => person.isMain).firstOrNull;
+    final additional = ordered.where((person) => !person.isMain).toList();
+    final now = comparisonNow ?? DateTime.now();
+    final shortName = main == null
+        ? ''
+        : '${main.relationship == 'pastor' ? 'Pastor ' : ''}${main.firstName}';
+    final reserve =
         math.max(
           MediaQuery.paddingOf(context).bottom,
           SelahNavBarMetrics.bottomInset,
         ) +
-        SelahNavBarMetrics.height +
-        _shepherdPageNavigationGap -
-        _shepherdPageDotTail;
-    return Column(
-      key: const ValueKey('shepherd-page-quiet-sections'),
+        SelahNavBarMetrics.height;
+    return ListView(
+      key: const ValueKey('seeker_shepherd_scroll'),
+      padding: EdgeInsets.fromLTRB(22, 6, 22, reserve + 16),
       children: [
-        Padding(
-          padding: const EdgeInsets.fromLTRB(20, _managerPageTopInset, 20, 0),
-          child: _ManagerHeader(
-            onAdd: onAdd,
-            onOpenMessages: onOpenMessages,
-            titleAlignment: titleAlignment,
-            titleSize: titleSize,
-          ),
+        Text(
+          'My Shepherd',
+          style: SelahText.pageTitle().copyWith(fontSize: titleSize),
         ),
         const SizedBox(height: 10),
-        Expanded(
-          child: Padding(
-            padding: EdgeInsets.only(bottom: navigationReserve),
-            child: _ShepherdPager(
-              key: const ValueKey('shepherd-pager'),
-              people: ordered,
-              activity: activity,
-              activityAvailable: activityAvailable,
-              onRetry: onRetry,
-              historyConsentLoader: historyConsentLoader,
-              journeyAccessLoader: journeyAccessLoader,
-              historyConsentPreview: historyConsentPreview,
-              previewActiveJourneyCount: previewActiveJourneyCount,
-              makeMainShepherd: makeMainShepherd,
-              clearMainShepherd: clearMainShepherd,
-              removeShepherd: removeShepherd,
-              onChanged: onChanged,
-            ),
+        if (main != null) ...[
+          _LockedMainShepherd(
+            person: main,
+            name: displayNames[main.id] ?? main.firstName,
+            photo: mainPhoto,
+            onAsk: onAskForPrayer,
+            onMessage: onOpenMessages,
+            manage: _LockedShepherdManage(person: main, page: this),
           ),
-        ),
-      ],
-    );
-  }
-}
-
-class _ShepherdPager extends StatefulWidget {
-  final List<MentorLinkedPerson> people;
-  final Map<String, List<ShepherdActivity>> activity;
-  final bool activityAvailable;
-  final VoidCallback onRetry;
-  final ShepherdPageHistoryConsentLoader? historyConsentLoader;
-  final ShepherdPageJourneyAccessLoader? journeyAccessLoader;
-  final bool historyConsentPreview;
-  final int previewActiveJourneyCount;
-  final ShepherdMakeMainAction? makeMainShepherd;
-  final ShepherdClearMainAction? clearMainShepherd;
-  final ShepherdRemoveAction? removeShepherd;
-  final VoidCallback? onChanged;
-
-  const _ShepherdPager({
-    super.key,
-    required this.people,
-    required this.activity,
-    required this.activityAvailable,
-    required this.onRetry,
-    required this.historyConsentLoader,
-    required this.journeyAccessLoader,
-    required this.historyConsentPreview,
-    required this.previewActiveJourneyCount,
-    required this.makeMainShepherd,
-    required this.clearMainShepherd,
-    required this.removeShepherd,
-    required this.onChanged,
-  });
-
-  @override
-  State<_ShepherdPager> createState() => _ShepherdPagerState();
-}
-
-class _ShepherdPagerState extends State<_ShepherdPager> {
-  late final PageController _controller = PageController();
-  int _page = 0;
-
-  @override
-  void didUpdateWidget(covariant _ShepherdPager oldWidget) {
-    super.didUpdateWidget(oldWidget);
-    final oldPage = _page.clamp(0, oldWidget.people.length - 1);
-    final currentShepherdId = oldWidget.people[oldPage].id;
-    final sameShepherdPage = widget.people.indexWhere(
-      (person) => person.id == currentShepherdId,
-    );
-    final nextPage = sameShepherdPage >= 0
-        ? sameShepherdPage
-        : _page.clamp(0, widget.people.length - 1);
-    if (nextPage == _page) return;
-    _page = nextPage;
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      if (_controller.hasClients) _controller.jumpToPage(_page);
-    });
-  }
-
-  @override
-  void dispose() {
-    _controller.dispose();
-    super.dispose();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Expanded(
-          child: PageView.builder(
-            key: const ValueKey('shepherd-page-view'),
-            controller: _controller,
-            physics: const BouncingScrollPhysics(),
-            itemCount: widget.people.length,
-            onPageChanged: (value) => setState(() => _page = value),
-            itemBuilder: (context, index) {
-              final person = widget.people[index];
-              final activities = widget.activity[person.id] ?? const [];
-              return Semantics(
-                label:
-                    'Shepherd ${index + 1} of ${widget.people.length}: '
-                    '${person.firstName}',
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 20),
-                  child: _ShepherdPageContent(
+          const SizedBox(height: 14),
+          _lockedShepherdLabel('Recently from $shortName'),
+          const SizedBox(height: 14),
+          _lockedShepherdCard(
+            key: const ValueKey('seeker_shepherd_recent'),
+            child: recent.isEmpty
+                ? Text(
+                    'Nothing yet. When $shortName prays for you or sends a message, it shows here.',
+                    style: SelahText.subtext(size: 13).copyWith(height: 1.4),
+                  )
+                : Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                      for (var i = 0; i < recent.length; i++) ...[
+                        if (i > 0) Divider(height: 1, color: SelahColors.line),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 12),
+                          child: Text(
+                            recent[i].lineAt(now),
+                            key: ValueKey(
+                              'seeker_shepherd_recent_${recent[i].key}',
+                            ),
+                            style: SelahText.body(
+                              size: 14.5,
+                            ).copyWith(height: 1.4),
+                          ),
+                        ),
+                      ],
+                    ],
+                  ),
+          ),
+          const SizedBox(height: 14),
+        ],
+        _lockedShepherdLabel('Additional Shepherds'),
+        const SizedBox(height: 14),
+        _lockedShepherdCard(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              for (final person in additional)
+                Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 12),
+                  child: _LockedShepherdManage(
                     person: person,
-                    activities: activities,
-                    activityAvailable: widget.activityAvailable,
-                    onRetry: widget.onRetry,
-                    historyConsentLoader: widget.historyConsentLoader,
-                    journeyAccessLoader: widget.journeyAccessLoader,
-                    historyConsentPreview: widget.historyConsentPreview,
-                    previewActiveJourneyCount: widget.previewActiveJourneyCount,
-                    otherShepherds: widget.people
-                        .where((candidate) => candidate.id != person.id)
-                        .toList(growable: false),
-                    makeMainShepherd: widget.makeMainShepherd,
-                    clearMainShepherd: widget.clearMainShepherd,
-                    removeShepherd: widget.removeShepherd,
-                    onChanged: widget.onChanged,
+                    page: this,
+                    identity: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          displayNames[person.id] ?? person.firstName,
+                          style: SelahText.body(
+                            size: 15,
+                          ).copyWith(fontWeight: FontWeight.w600, height: 1.4),
+                        ),
+                        Text(
+                          [
+                            ?person.relationshipLabel,
+                            'Supports you with your Journey.',
+                          ].join(' · '),
+                          style: SelahText.subtext(
+                            size: 13,
+                          ).copyWith(height: 1.4),
+                        ),
+                      ],
+                    ),
                   ),
                 ),
-              );
-            },
-          ),
-        ),
-        if (widget.people.length > 1) ...[
-          const SizedBox(height: 12),
-          _ShepherdPageDots(count: widget.people.length, selected: _page),
-          const SizedBox(height: _shepherdPageDotTail),
-        ],
-      ],
-    );
-  }
-}
-
-class _ShepherdPageContent extends StatelessWidget {
-  final MentorLinkedPerson person;
-  final List<ShepherdActivity> activities;
-  final bool activityAvailable;
-  final VoidCallback onRetry;
-  final ShepherdPageHistoryConsentLoader? historyConsentLoader;
-  final ShepherdPageJourneyAccessLoader? journeyAccessLoader;
-  final bool historyConsentPreview;
-  final int previewActiveJourneyCount;
-  final List<MentorLinkedPerson> otherShepherds;
-  final ShepherdMakeMainAction? makeMainShepherd;
-  final ShepherdClearMainAction? clearMainShepherd;
-  final ShepherdRemoveAction? removeShepherd;
-  final VoidCallback? onChanged;
-
-  const _ShepherdPageContent({
-    required this.person,
-    required this.activities,
-    required this.activityAvailable,
-    required this.onRetry,
-    required this.historyConsentLoader,
-    required this.journeyAccessLoader,
-    required this.historyConsentPreview,
-    required this.previewActiveJourneyCount,
-    required this.otherShepherds,
-    required this.makeMainShepherd,
-    required this.clearMainShepherd,
-    required this.removeShepherd,
-    required this.onChanged,
-  });
-
-  ShepherdActivity? get obligation {
-    for (final item in activities) {
-      if (item.type == 'review_waiting' && item.line != null) return item;
-    }
-    return null;
-  }
-
-  @override
-  Widget build(BuildContext context) => LayoutBuilder(
-    builder: (context, constraints) => FittedBox(
-      key: ValueKey('shepherd-page-static-${person.id}'),
-      fit: BoxFit.scaleDown,
-      alignment: Alignment.bottomCenter,
-      child: SizedBox(
-        width: constraints.maxWidth,
-        child: IntrinsicHeight(
-          child: ConstrainedBox(
-            constraints: BoxConstraints(minHeight: constraints.maxHeight),
-            child: _QuietSections(
-              person: person,
-              obligation: obligation,
-              activityAvailable: activityAvailable,
-              onRetry: onRetry,
-              access: _access(),
-              otherShepherds: otherShepherds,
-              preview: historyConsentPreview,
-              makeMainShepherd: makeMainShepherd,
-              clearMainShepherd: clearMainShepherd,
-              removeShepherd: removeShepherd,
-              onChanged: onChanged,
-              compact: constraints.maxHeight < 650,
-            ),
-          ),
-        ),
-      ),
-    ),
-  );
-
-  Widget _access() => person.isMain
-      ? _MainShepherdJourneyAccess(
-          person: person,
-          loader: journeyAccessLoader,
-          historyConsentLoader: historyConsentLoader,
-          preview: historyConsentPreview,
-          previewActiveJourneyCount: previewActiveJourneyCount,
-        )
-      : _AdditionalShepherdJourneyAccess(
-          person: person,
-          loader: journeyAccessLoader,
-          historyConsentLoader: historyConsentLoader,
-          preview: historyConsentPreview,
-          previewActiveJourneyCount: previewActiveJourneyCount,
-        );
-}
-
-class _QuietSections extends StatelessWidget {
-  final MentorLinkedPerson person;
-  final ShepherdActivity? obligation;
-  final bool activityAvailable;
-  final VoidCallback onRetry;
-  final Widget access;
-  final List<MentorLinkedPerson> otherShepherds;
-  final bool preview;
-  final ShepherdMakeMainAction? makeMainShepherd;
-  final ShepherdClearMainAction? clearMainShepherd;
-  final ShepherdRemoveAction? removeShepherd;
-  final VoidCallback? onChanged;
-  final bool compact;
-
-  const _QuietSections({
-    required this.person,
-    required this.obligation,
-    required this.activityAvailable,
-    required this.onRetry,
-    required this.access,
-    required this.otherShepherds,
-    required this.preview,
-    required this.makeMainShepherd,
-    required this.clearMainShepherd,
-    required this.removeShepherd,
-    required this.onChanged,
-    required this.compact,
-  });
-
-  @override
-  Widget build(BuildContext context) => Column(
-    key: ValueKey('shepherd-quiet-sections-${person.id}'),
-    mainAxisSize: MainAxisSize.max,
-    mainAxisAlignment: MainAxisAlignment.start,
-    children: [
-      SizedBox(height: compact ? 2 : 4),
-      Row(
-        children: [
-          _ShepherdMonogram(person: person, size: compact ? 58 : 64),
-          const SizedBox(width: 14),
-          Expanded(child: _ShepherdIdentity(person: person)),
-        ],
-      ),
-      SizedBox(height: compact ? 10 : 14),
-      _ShepherdDetailsStrip(person: person),
-      SizedBox(height: compact ? 12 : 16),
-      Divider(height: 1, color: SelahColors.ink(.12)),
-      const SizedBox(height: 10),
-      Expanded(child: access),
-      if (!person.isMain && (!activityAvailable || obligation != null))
-        _QuietSection(
-          label: 'CURRENT OBLIGATION',
-          compact: true,
-          child: _ActivityTruth(
-            available: activityAvailable,
-            obligation: obligation,
-            onRetry: onRetry,
-            compact: true,
-          ),
-        ),
-      const SizedBox(height: 10),
-      _QuietSection(
-        compact: true,
-        child: _ShepherdManageActions(
-          person: person,
-          otherShepherds: otherShepherds,
-          preview: preview,
-          makeMainShepherd: makeMainShepherd,
-          clearMainShepherd: clearMainShepherd,
-          removeShepherd: removeShepherd,
-          onChanged: onChanged,
-          compact: compact,
-        ),
-      ),
-    ],
-  );
-}
-
-class _ShepherdDetailsStrip extends StatelessWidget {
-  final MentorLinkedPerson person;
-
-  const _ShepherdDetailsStrip({required this.person});
-
-  @override
-  Widget build(BuildContext context) => Container(
-    key: const ValueKey('shepherd-details-strip'),
-    padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 9),
-    decoration: BoxDecoration(
-      color: SelahColors.surfaceFill,
-      borderRadius: BorderRadius.circular(16),
-      border: Border.all(color: SelahColors.surfaceBorder),
-    ),
-    child: Row(
-      children: [
-        const Icon(
-          Icons.check_circle_outline_rounded,
-          size: 17,
-          color: SelahColors.journeyGold,
-        ),
-        const SizedBox(width: 7),
-        Flexible(
-          child: Text(
-            'Active',
-            maxLines: 1,
-            overflow: TextOverflow.ellipsis,
-            style: SelahText.body(size: 12.25),
-          ),
-        ),
-        Expanded(
-          flex: 3,
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.end,
-            children: [
-              Text('Linked', style: SelahText.subtext(size: 10.75)),
-              const SizedBox(width: 7),
-              Flexible(
-                child: Text(
-                  person.linkedDateLabel ?? 'Not recorded',
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                  textAlign: TextAlign.end,
-                  style: SelahText.body(size: 12.25),
-                ),
+              const SizedBox(height: 10),
+              _lockedShepherdButton(
+                'Add a Shepherd',
+                onAdd,
+                key: const ValueKey('seeker_shepherd_add'),
               ),
             ],
           ),
         ),
+        if (main != null) ...[
+          const SizedBox(height: 14),
+          _MainShepherdJourneyAccess(
+            key: ValueKey('locked_shepherd_access_${main.id}'),
+            person: main,
+            loader: journeyAccessLoader,
+            historyConsentLoader: historyConsentLoader,
+            preview: historyConsentPreview,
+            previewActiveJourneyCount: previewActiveJourneyCount,
+            lockedVertical: true,
+          ),
+        ],
       ],
-    ),
-  );
+    );
+  }
+}
+
+Widget _lockedShepherdCard({required Widget child, Key? key}) => Container(
+  key: key,
+  padding: const EdgeInsets.all(16),
+  decoration: BoxDecoration(
+    color: SelahColors.surface,
+    border: Border.all(color: SelahColors.line),
+    borderRadius: BorderRadius.circular(14),
+  ),
+  child: child,
+);
+
+Widget _lockedShepherdLabel(String text) => Text(
+  text.toUpperCase(),
+  style: SelahText.body(
+    size: 11,
+    color: SelahColors.muted,
+  ).copyWith(fontWeight: FontWeight.w600, letterSpacing: 1.32, height: 1),
+);
+
+Widget _lockedShepherdButton(
+  String label,
+  VoidCallback? action, {
+  Key? key,
+  bool primary = false,
+}) => SizedBox(
+  width: double.infinity,
+  child: primary
+      ? FilledButton(
+          key: key,
+          onPressed: action,
+          style: FilledButton.styleFrom(
+            minimumSize: const Size(0, 35.5),
+            tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+            padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
+            textStyle: SelahText.body(
+              size: 13.5,
+            ).copyWith(fontWeight: FontWeight.w600, height: 1),
+          ),
+          child: Text(label),
+        )
+      : OutlinedButton(
+          key: key,
+          onPressed: action,
+          style: OutlinedButton.styleFrom(
+            minimumSize: const Size(0, 35.5),
+            tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+            padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
+            textStyle: SelahText.body(
+              size: 13.5,
+            ).copyWith(fontWeight: FontWeight.w600, height: 1),
+          ),
+          child: Text(label),
+        ),
+);
+
+class _LockedMainShepherd extends StatelessWidget {
+  const _LockedMainShepherd({
+    required this.person,
+    required this.name,
+    required this.photo,
+    required this.onAsk,
+    required this.onMessage,
+    required this.manage,
+  });
+  final MentorLinkedPerson person;
+  final String name;
+  final Widget? photo;
+  final VoidCallback? onAsk, onMessage;
+  final Widget manage;
+
+  @override
+  Widget build(BuildContext context) {
+    final role = person.relationshipLabel;
+    final date = person.linkedAt;
+    final month = date == null
+        ? null
+        : const [
+            'January',
+            'February',
+            'March',
+            'April',
+            'May',
+            'June',
+            'July',
+            'August',
+            'September',
+            'October',
+            'November',
+            'December',
+          ][date.month - 1];
+    final relationship = role == null ? null : 'Your ${role.toLowerCase()}';
+    final detail = [
+      ?relationship,
+      if (month != null) 'walking with you since $month',
+      if (month == null) 'Linked date not recorded',
+    ].join(' · ');
+    return _lockedShepherdCard(
+      key: const ValueKey('seeker_shepherd_main'),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          Row(
+            children: [
+              ClipRRect(
+                borderRadius: BorderRadius.circular(18),
+                child: SizedBox(
+                  width: 78,
+                  height: 78,
+                  child: photo ?? _ShepherdMonogram(person: person, size: 78),
+                ),
+              ),
+              const SizedBox(width: 14),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      name,
+                      style: SelahText.body(
+                        size: 18,
+                      ).copyWith(fontWeight: FontWeight.w600, height: 1.2),
+                    ),
+                    Text(
+                      detail,
+                      style: SelahText.subtext(size: 13).copyWith(height: 1.4),
+                    ),
+                    const SizedBox(height: 6),
+                    Container(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 8,
+                        vertical: 5,
+                      ),
+                      decoration: BoxDecoration(
+                        color: SelahColors.soft,
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                      child: Text(
+                        'Main Shepherd',
+                        style: SelahText.body(
+                          size: 11,
+                          color: SelahColors.lake,
+                        ).copyWith(fontWeight: FontWeight.w600, height: 1),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: 10),
+          Row(
+            children: [
+              Expanded(
+                child: _lockedShepherdButton(
+                  'Ask for prayer',
+                  onAsk,
+                  key: const ValueKey('ask_for_prayer'),
+                  primary: true,
+                ),
+              ),
+              const SizedBox(width: 10),
+              Expanded(
+                child: _lockedShepherdButton(
+                  'Message',
+                  onMessage,
+                  key: const ValueKey('seeker_shepherd_message'),
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: 10),
+          manage,
+        ],
+      ),
+    );
+  }
+}
+
+class _LockedShepherdManage extends StatefulWidget {
+  const _LockedShepherdManage({
+    required this.person,
+    required this.page,
+    this.identity,
+  });
+  final MentorLinkedPerson person;
+  final SeekerShepherdPage page;
+  final Widget? identity;
+  @override
+  State<_LockedShepherdManage> createState() => _LockedShepherdManageState();
+}
+
+class _LockedShepherdManageState extends State<_LockedShepherdManage> {
+  bool _open = false;
+  @override
+  Widget build(BuildContext context) {
+    final page = widget.page;
+    final person = widget.person;
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        if (widget.identity case final identity?)
+          Row(
+            children: [
+              Expanded(child: identity),
+              const SizedBox(width: 12),
+              SizedBox(
+                width: 78,
+                child: _lockedShepherdButton(
+                  'Manage',
+                  () => setState(() => _open = !_open),
+                  key: ValueKey('seeker_shepherd_manage_${person.id}'),
+                ),
+              ),
+            ],
+          )
+        else
+          _lockedShepherdButton(
+            'Manage',
+            () => setState(() => _open = !_open),
+            key: ValueKey('seeker_shepherd_manage_${person.id}'),
+          ),
+        if (_open) ...[
+          const SizedBox(height: 10),
+          _ShepherdManageActions(
+            person: person,
+            otherShepherds: page.people
+                .where((other) => other.id != person.id)
+                .toList(),
+            preview: page.historyConsentPreview,
+            makeMainShepherd: page.makeMainShepherd,
+            clearMainShepherd: page.clearMainShepherd,
+            removeShepherd: page.removeShepherd,
+            onChanged: page.onChanged,
+          ),
+          if (!person.isMain) ...[
+            const SizedBox(height: 10),
+            SizedBox(
+              height:
+                  MediaQuery.sizeOf(context).height -
+                  MediaQuery.paddingOf(context).vertical -
+                  SelahNavBarMetrics.height -
+                  SelahNavBarMetrics.bottomInset,
+              child: _AdditionalShepherdJourneyAccess(
+                person: person,
+                loader: page.journeyAccessLoader,
+                historyConsentLoader: page.historyConsentLoader,
+                preview: page.historyConsentPreview,
+                previewActiveJourneyCount: page.previewActiveJourneyCount,
+              ),
+            ),
+          ],
+        ],
+      ],
+    );
+  }
 }
 
 class _ShepherdManageActions extends StatefulWidget {
@@ -939,7 +943,7 @@ class _ShepherdManageActions extends StatefulWidget {
   final ShepherdClearMainAction? clearMainShepherd;
   final ShepherdRemoveAction? removeShepherd;
   final VoidCallback? onChanged;
-  final bool compact;
+  final bool compact = false;
 
   const _ShepherdManageActions({
     required this.person,
@@ -949,7 +953,6 @@ class _ShepherdManageActions extends StatefulWidget {
     required this.clearMainShepherd,
     required this.removeShepherd,
     required this.onChanged,
-    this.compact = false,
   });
 
   @override
@@ -1189,12 +1192,15 @@ class _ManageActionButton extends StatelessWidget {
 
 class _MainShepherdJourneyAccess extends StatefulWidget {
   final MentorLinkedPerson person;
+  final bool lockedVertical;
   final ShepherdPageJourneyAccessLoader? loader;
   final ShepherdPageHistoryConsentLoader? historyConsentLoader;
   final bool preview;
   final int previewActiveJourneyCount;
 
   const _MainShepherdJourneyAccess({
+    super.key,
+    this.lockedVertical = false,
     required this.person,
     required this.loader,
     required this.historyConsentLoader,
@@ -1310,22 +1316,154 @@ class _MainShepherdJourneyAccessState extends State<_MainShepherdJourneyAccess>
   }
 
   @override
-  Widget build(BuildContext context) => Column(
-    key: const ValueKey('main-shepherd-protected-access'),
-    crossAxisAlignment: CrossAxisAlignment.stretch,
-    children: [
-      const _ShepherdJourneyAccessHeading(),
-      const SizedBox(height: 6),
-      Expanded(child: _buildJourneyAccess()),
-      const SizedBox(height: 12),
-      _ShepherdHistoryConsentControl(
-        key: ValueKey('shepherd-history-consent-${widget.person.id}'),
-        person: widget.person,
-        loader: widget.historyConsentLoader,
-        preview: widget.preview,
-      ),
-    ],
-  );
+  Widget build(BuildContext context) => widget.lockedVertical
+      ? Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            _lockedShepherdLabel('Journey access'),
+            const SizedBox(height: 14),
+            _lockedShepherdCard(
+              key: const ValueKey('seeker_shepherd_journey_access'),
+              child: _buildLockedJourneyAccess(),
+            ),
+            const SizedBox(height: 14),
+            _lockedShepherdLabel('Past Journey summaries'),
+            const SizedBox(height: 14),
+            _lockedShepherdCard(
+              child: _ShepherdHistoryConsentControl(
+                key: ValueKey('shepherd-history-consent-${widget.person.id}'),
+                person: widget.person,
+                loader: widget.historyConsentLoader,
+                preview: widget.preview,
+                lockedVertical: true,
+              ),
+            ),
+          ],
+        )
+      : Column(
+          key: const ValueKey('main-shepherd-protected-access'),
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            const _ShepherdJourneyAccessHeading(),
+            const SizedBox(height: 6),
+            Expanded(child: _buildJourneyAccess()),
+            const SizedBox(height: 12),
+            _ShepherdHistoryConsentControl(
+              key: ValueKey('shepherd-history-consent-${widget.person.id}'),
+              person: widget.person,
+              loader: widget.historyConsentLoader,
+              preview: widget.preview,
+            ),
+          ],
+        );
+
+  Widget _buildLockedJourneyAccess() {
+    if (_loading && _confirmed == null) {
+      return Text(
+        'Loading Journey access…',
+        style: SelahText.subtext(size: 13),
+      );
+    }
+    if (!_available || _confirmed == null) {
+      return SelahErrorBanner(
+        message: 'Journey access didn’t load.',
+        onRetry: _loading ? null : boundShepherdCallback(_load),
+      );
+    }
+    final states = _confirmed!;
+    if (states.isEmpty) {
+      return Text(
+        'No active Journeys. Access is set when one begins.',
+        style: SelahText.subtext(size: 13).copyWith(height: 1.4),
+      );
+    }
+    final name =
+        '${widget.person.relationship == 'pastor' ? 'Pastor ' : ''}${widget.person.firstName}';
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        for (var index = 0; index < states.length; index++) ...[
+          if (index > 0) Divider(height: 1, color: SelahColors.line),
+          Padding(
+            padding: const EdgeInsets.symmetric(vertical: 12),
+            child: Row(
+              children: [
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        'Journey with ${states[index].counterpartFirstName}',
+                        style: SelahText.body(
+                          size: 15,
+                        ).copyWith(fontWeight: FontWeight.w600, height: 1.4),
+                      ),
+                      Text(
+                        'View is required for each active Journey.',
+                        style: SelahText.subtext(
+                          size: 13,
+                        ).copyWith(height: 1.4),
+                      ),
+                    ],
+                  ),
+                ),
+                const SizedBox(width: 12),
+                Container(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 10,
+                    vertical: 6,
+                  ),
+                  decoration: BoxDecoration(
+                    color: SelahColors.soft,
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                  child: Text('View', style: SelahText.subtext(size: 13)),
+                ),
+              ],
+            ),
+          ),
+          Divider(height: 1, color: SelahColors.line),
+          Padding(
+            padding: const EdgeInsets.symmetric(vertical: 12),
+            child: Row(
+              children: [
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        'Chat',
+                        style: SelahText.body(
+                          size: 15,
+                        ).copyWith(fontWeight: FontWeight.w600, height: 1.4),
+                      ),
+                      Text(
+                        '$name can join the chat for this Journey.',
+                        style: SelahText.subtext(
+                          size: 13,
+                        ).copyWith(height: 1.4),
+                      ),
+                    ],
+                  ),
+                ),
+                const SizedBox(width: 12),
+                SelahSwitch(
+                  key: ValueKey(
+                    'shepherd-journey-chat-toggle-${states[index].attemptId}',
+                  ),
+                  value:
+                      states[index].included &&
+                      states[index].chatAvailable &&
+                      states[index].chatEnabled,
+                  onChanged: null,
+                ),
+              ],
+            ),
+          ),
+        ],
+      ],
+    );
+  }
 
   Widget _buildJourneyAccess() {
     final states = _confirmed;
@@ -2069,10 +2207,12 @@ class _CompactSelahSwitch extends StatelessWidget {
 
 class _ShepherdHistoryConsentControl extends StatefulWidget {
   final MentorLinkedPerson person;
+  final bool lockedVertical;
   final ShepherdPageHistoryConsentLoader? loader;
   final bool preview;
 
   const _ShepherdHistoryConsentControl({
+    this.lockedVertical = false,
     super.key,
     required this.person,
     required this.loader,
@@ -2313,6 +2453,60 @@ class _ShepherdHistoryConsentControlState
   Widget build(BuildContext context) {
     final confirmed = _confirmed;
     final lifetime = shepherdLifetime;
+    if (widget.lockedVertical) {
+      return Padding(
+        padding: const EdgeInsets.symmetric(vertical: 12),
+        child: Row(
+          children: [
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    'Share past Journey summaries',
+                    style: SelahText.body(
+                      size: 15,
+                    ).copyWith(fontWeight: FontWeight.w600, height: 1.4),
+                  ),
+                  Text(
+                    'Names, messages, answers and notes are never included.',
+                    style: SelahText.subtext(size: 13).copyWith(height: 1.4),
+                  ),
+                  if (!_available)
+                    SelahErrorBanner(
+                      message:
+                          'Past-summary permission could not be refreshed.',
+                      onRetry: _loading || _busy
+                          ? null
+                          : boundShepherdCallback(_load),
+                    ),
+                ],
+              ),
+            ),
+            const SizedBox(width: 12),
+            if (confirmed != null)
+              SelahSwitch(
+                key: const ValueKey('shepherd-history-consent-toggle'),
+                value: confirmed.enabled,
+                onChanged: _available && !_loading && !_busy
+                    ? (enabled) {
+                        if (identical(lifetime, shepherdLifetime) &&
+                            identical(confirmed, _confirmed) &&
+                            lifetime.isCurrent) {
+                          _setEnabled(enabled);
+                        }
+                      }
+                    : null,
+              )
+            else
+              Text(
+                _loading ? 'Loading…' : 'Unavailable',
+                style: SelahText.subtext(size: 11),
+              ),
+          ],
+        ),
+      );
+    }
     return Column(
       key: const ValueKey('shepherd-history-consent'),
       crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -2393,93 +2587,6 @@ class _ShepherdHistoryConsentControlState
   }
 }
 
-class _ActivityTruth extends StatelessWidget {
-  final bool available;
-  final ShepherdActivity? obligation;
-  final VoidCallback onRetry;
-  final bool compact;
-
-  const _ActivityTruth({
-    required this.available,
-    required this.obligation,
-    required this.onRetry,
-    this.compact = false,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    if (!available) {
-      return Padding(
-        padding: EdgeInsets.only(top: compact ? 0 : 14),
-        child: SelahErrorBanner(
-          message: 'Current Shepherd activity could not be refreshed.',
-          onRetry: onRetry,
-        ),
-      );
-    }
-    final current = obligation;
-    if (current == null) return const SizedBox.shrink();
-    return Padding(
-      padding: EdgeInsets.only(top: compact ? 0 : 17),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Container(
-                width: 8,
-                height: 8,
-                margin: const EdgeInsets.only(top: 5),
-                decoration: const BoxDecoration(
-                  color: SelahColors.journeyGold,
-                  shape: BoxShape.circle,
-                ),
-              ),
-              const SizedBox(width: 10),
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(current.line!, style: SelahText.body(size: 13.25)),
-                    const SizedBox(height: 3),
-                    Text(
-                      current.timingLabel ?? '',
-                      style: SelahText.subtext(
-                        size: 10.75,
-                        color: SelahColors.ink(0.42),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ],
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-class _ShepherdIdentity extends StatelessWidget {
-  final MentorLinkedPerson person;
-
-  const _ShepherdIdentity({required this.person});
-
-  @override
-  Widget build(BuildContext context) => Column(
-    crossAxisAlignment: CrossAxisAlignment.start,
-    children: [
-      Text(person.firstName, style: SelahText.heading(size: 27)),
-      const SizedBox(height: 3),
-      Text(
-        _recordedShepherdRole(person),
-        style: SelahText.subtext(size: 12.5, color: SelahColors.ink(0.58)),
-      ),
-    ],
-  );
-}
-
 class _ShepherdMonogram extends StatelessWidget {
   final MentorLinkedPerson person;
   final double size;
@@ -2503,72 +2610,4 @@ class _ShepherdMonogram extends StatelessWidget {
       style: SelahText.heading(size: size * 0.38),
     ),
   );
-}
-
-class _ShepherdPageDots extends StatelessWidget {
-  final int count;
-  final int selected;
-
-  const _ShepherdPageDots({required this.count, required this.selected});
-
-  @override
-  Widget build(BuildContext context) => Semantics(
-    label: 'Shepherd ${selected + 1} of $count',
-    child: Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        for (var index = 0; index < count; index++)
-          AnimatedContainer(
-            key: ValueKey('shepherd-page-dot-$index'),
-            duration: const Duration(milliseconds: 180),
-            width: index == selected ? 20 : 5,
-            height: 5,
-            margin: const EdgeInsets.symmetric(horizontal: 3),
-            decoration: BoxDecoration(
-              color: index == selected
-                  ? SelahColors.journeyGold
-                  : SelahColors.ink(0.25),
-              borderRadius: BorderRadius.circular(20),
-            ),
-          ),
-      ],
-    ),
-  );
-}
-
-class _QuietSection extends StatelessWidget {
-  final String? label;
-  final Widget child;
-  final bool compact;
-
-  const _QuietSection({this.label, required this.child, this.compact = false});
-
-  @override
-  Widget build(BuildContext context) => Container(
-    width: double.infinity,
-    padding: EdgeInsets.symmetric(vertical: compact ? 7 : 10, horizontal: 2),
-    decoration: BoxDecoration(
-      border: Border(top: BorderSide(color: SelahColors.ink(0.13))),
-    ),
-    child: Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        if (label != null) ...[
-          _DesignSectionLabel(label!),
-          SizedBox(height: compact ? 4 : 6),
-        ],
-        child,
-      ],
-    ),
-  );
-}
-
-class _DesignSectionLabel extends StatelessWidget {
-  final String text;
-
-  const _DesignSectionLabel(this.text);
-
-  @override
-  Widget build(BuildContext context) =>
-      Text(text, style: SelahText.chapterLabel(color: SelahColors.ink(0.47)));
 }

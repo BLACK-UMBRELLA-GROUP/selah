@@ -2,6 +2,7 @@ import 'dart:collection';
 
 import '../data/selah_journey_stages.dart';
 import '../data/selah_reference_data.dart' show selahRelationshipLabel;
+import '../models/selah_marriage_values.dart';
 
 /// Disposable request/transition UI, not a new canonical server lifecycle.
 /// This model has no account, storage, entitlement or backend dependency.
@@ -38,6 +39,7 @@ class DraftProfile {
     this.churchAttendance,
     this.baptised,
     this.faithWords = '',
+    this.marriageValues = const {},
   });
 
   final String id;
@@ -54,12 +56,24 @@ class DraftProfile {
   final String? churchAttendance;
   final String? baptised;
   final String faithWords;
+  final Map<String, String> marriageValues;
+  SelahMarriageValuesAnswers get marriageAnswers =>
+      SelahMarriageValuesAnswers.fromMap(marriageValues);
 }
 
 const List<DraftProfile> draftProfiles = [
   DraftProfile(
     id: 'draft-amira',
     firstName: 'Grace',
+    marriageValues: {
+      'marriedBefore': 'No',
+      'children': 'No',
+      'wouldLikeChildren': 'Yes',
+      'rolesInMarriage': 'Equal partners who decide together',
+      'openToDivorced': 'Yes',
+      'whereToLive': 'Near where I live now',
+      'hopingToMarry': 'In 1–2 years',
+    },
     surname: 'Clarke',
     age: 29,
     city: 'Leeds',
@@ -77,6 +91,15 @@ const List<DraftProfile> draftProfiles = [
   DraftProfile(
     id: 'draft-sara',
     firstName: 'Esther',
+    marriageValues: {
+      'marriedBefore': 'No',
+      'children': 'No',
+      'wouldLikeChildren': 'Yes',
+      'rolesInMarriage': 'Somewhere in between',
+      'openToDivorced': 'It depends on the situation',
+      'whereToLive': 'Open to moving within my country',
+      'hopingToMarry': 'When it’s the right person',
+    },
     surname: 'Mensah',
     age: 31,
     city: 'Birmingham',
@@ -94,6 +117,15 @@ const List<DraftProfile> draftProfiles = [
   DraftProfile(
     id: 'draft-aisha',
     firstName: 'Naomi',
+    marriageValues: {
+      'marriedBefore': 'Yes, widowed',
+      'children': 'Yes, they live with me',
+      'wouldLikeChildren': 'Open to it',
+      'rolesInMarriage': 'Equal partners who decide together',
+      'openToDivorced': 'Yes',
+      'whereToLive': 'Near where I live now',
+      'hopingToMarry': 'Within a year',
+    },
     surname: 'Fernandes',
     age: 27,
     city: 'London',
@@ -111,6 +143,15 @@ const List<DraftProfile> draftProfiles = [
   DraftProfile(
     id: 'draft-maryam',
     firstName: 'Abigail',
+    marriageValues: {
+      'marriedBefore': 'Yes, divorced',
+      'children': 'No',
+      'wouldLikeChildren': 'Yes',
+      'rolesInMarriage': 'The husband leads, with love and care',
+      'openToDivorced': 'Yes',
+      'whereToLive': 'Open to moving abroad',
+      'hopingToMarry': 'In 1–2 years',
+    },
     surname: 'Reyes',
     age: 33,
     city: 'Manchester',
@@ -219,9 +260,9 @@ final List<DraftShepherd> draftShepherds = List.unmodifiable([
   ),
   DraftShepherd(
     id: 'draft-shepherd-yusuf',
-    firstName: 'Joseph',
-    surname: 'Clarke',
-    relationshipCode: 'church_elder',
+    firstName: 'Mark',
+    surname: 'Carter',
+    relationshipCode: 'brother',
     linkedAt: DateTime(2026, 9, 23),
     isMain: false,
   ),

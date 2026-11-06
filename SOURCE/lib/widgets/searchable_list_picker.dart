@@ -12,6 +12,7 @@ Future<String?> showSingleSearchPicker(
   BuildContext context,
   List<String> items, {
   String? current,
+  String searchHint = 'Search…',
 }) {
   return showModalBottomSheet<String>(
     context: context,
@@ -24,6 +25,7 @@ Future<String?> showSingleSearchPicker(
       items: items,
       multi: false,
       initialSelection: current == null ? const [] : [current],
+      searchHint: searchHint,
     ),
   );
 }
@@ -49,11 +51,13 @@ class _PickerSheet extends StatefulWidget {
   final List<String> items;
   final bool multi;
   final List<String> initialSelection;
+  final String searchHint;
 
   const _PickerSheet({
     required this.items,
     required this.multi,
     required this.initialSelection,
+    this.searchHint = 'Search…',
   });
 
   @override
@@ -65,6 +69,12 @@ class _PickerSheetState extends State<_PickerSheet> {
   late final List<String> _selected = List<String>.from(
     widget.initialSelection,
   );
+
+  @override
+  void dispose() {
+    _search.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -85,9 +95,9 @@ class _PickerSheetState extends State<_PickerSheet> {
                 child: TextField(
                   controller: _search,
                   onChanged: (_) => setState(() {}),
-                  style: SelahText.body(size: 15, color: Colors.white),
+                  style: SelahText.body(size: 15, color: SelahColors.inkColor),
                   decoration: InputDecoration(
-                    hintText: 'Search…',
+                    hintText: widget.searchHint,
                     hintStyle: SelahText.body(
                       size: 15,
                       color: SelahColors.ink(0.38),
@@ -123,7 +133,7 @@ class _PickerSheetState extends State<_PickerSheet> {
                               item,
                               style: SelahText.body(
                                 size: 14,
-                                color: Colors.white,
+                                color: SelahColors.inkColor,
                               ),
                             ),
                             trailing: selected

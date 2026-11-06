@@ -6,8 +6,15 @@ import '../theme/selah_text.dart';
 
 /// LOCK 5's Profile card, reading only the existing profile owner's answers.
 class SelahMarriageValuesCard extends StatelessWidget {
-  const SelahMarriageValuesCard({super.key, required this.answers});
+  const SelahMarriageValuesCard({
+    super.key,
+    required this.answers,
+    this.visibilityNote = ownVisibilityNote,
+  });
   final SelahMarriageValuesAnswers answers;
+  static const ownVisibilityNote =
+      'Marriage history and children show on your Browse card. All seven show once a Journey begins. Your Shepherds can see them.';
+  final String? visibilityNote;
   static const _labels = [
     'Married before',
     'Children',
@@ -46,6 +53,14 @@ class SelahMarriageValuesCard extends StatelessWidget {
           ],
         ),
       ),
+      if (visibilityNote != null) ...[
+        const SizedBox(height: 14),
+        Text(
+          visibilityNote!,
+          key: const ValueKey('marriage_values_visibility_note'),
+          style: SelahText.body(size: 13, color: SelahColors.muted),
+        ),
+      ],
     ],
   );
 

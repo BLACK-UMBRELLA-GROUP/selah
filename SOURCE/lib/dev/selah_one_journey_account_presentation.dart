@@ -1182,12 +1182,11 @@ List<String> _membershipFeatures(
     ? [
         'Request a Journey without swiping',
         product == SelahMembershipProduct.seekerOne
-            ? 'Up to three current Journeys in this preview'
-            : 'One current Journey in this preview',
+            ? 'Up to three current Journeys'
+            : 'One current Journey',
         'Compatibility opens through mutual reveal',
         'Linked Shepherd support',
         'Ended Journey history remains read-only',
-        'Preview features only; no payment or entitlement change',
       ]
     : switch (product) {
         SelahMembershipProduct.seekerOne => [
@@ -1370,7 +1369,7 @@ class _CurrentMembershipCard extends StatelessWidget {
                     : one
                     ? SelahMembershipCatalog.title(product)
                     : basicPreview
-                    ? '${SelahMembershipCatalog.title(product)} · Preview'
+                    ? SelahMembershipCatalog.title(product)
                     : 'No active membership',
                 style: SelahText.heading(size: 18),
               ),
@@ -1381,7 +1380,7 @@ class _CurrentMembershipCard extends StatelessWidget {
                     : one
                     ? SelahMembershipCatalog.price(product)
                     : basicPreview
-                    ? 'Local rehearsal only. No joining fee has been paid.'
+                    ? 'No joining fee has been paid.'
                     : 'Choose a membership. A signup choice is not payment confirmation.',
                 style: SelahText.subtext(size: 12.5),
               ),
