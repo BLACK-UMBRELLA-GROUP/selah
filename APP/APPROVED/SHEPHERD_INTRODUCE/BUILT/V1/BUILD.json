@@ -1,0 +1,66 @@
+{
+  "schema": 1,
+  "feature": "SHEPHERD_INTRODUCE",
+  "lock": 19,
+  "built_from": [
+    "APP/APPROVED/SHEPHERD_INTRODUCE/BRIEFS/BUILD_BRIEF_2026-11-06_V1.md",
+    "APP/APPROVED/SHEPHERD_INTRODUCE/RECORD/SELAH_SHEPHERD_INTRODUCE_SPEC_CURRENT_VERSION_V2.md",
+    "APP/APPROVED/SHEPHERD_INTRODUCE/RECORD/LOCK_RECORD.md",
+    "QUESTIONS row16"
+  ],
+  "commit": "1ce5dd9ca3c63691c4bc028a8c8d7d24fcce24c8",
+  "flutter": "3.44.2",
+  "dart": "3.12.2",
+  "build_mode": "flutter-test real widgets; offline draft define;430x932@3x",
+  "recorded_at_utc": "2026-11-06T22:22:51.969175+00:00",
+  "evidence": {
+    "master_pairs": 11,
+    "png_count": 22,
+    "png_bytes": 9088220,
+    "hashes": "HASHES.json",
+    "hashes_sha256": "8f0eb71bd96c3a905c300f7567d0f7791af2403fa896704e5f1d23ef49b097d5"
+  },
+  "checks": {
+    "capture_cases": 16,
+    "plain_replay_cases": 16,
+    "owner_and_existing_action_cases": 30,
+    "existing_larger_text_skip": 1,
+    "pure_models": 1190,
+    "cached_analysis_files": 394,
+    "cached_errors": 0,
+    "cached_warnings": 0,
+    "cached_prior_infos": 1,
+    "flutter_errors": 0,
+    "flutter_warnings": 0,
+    "flutter_prior_infos": 10,
+    "static_boundaries": 20635
+  },
+  "behavior": [
+    "One account-local Introductions collection reuses the existing DTO; no backend create service/table/RPC.",
+    "James and fresh Joel use separate discovery state; no James hidden/blocked/request/preferences copied.",
+    "Suggestions write once, including after dismissal; Shepherd receives no seen/dismissed outcome.",
+    "Seeker card and Introductions list read same owner; See addresses actual eligible Browse profile, Not now dismisses locally.",
+    "Exact same original lifetime/role/link/candidate guard rechecked before write.",
+    "Private suggesting/failure/empty presets do not erase or create ledger records.",
+    "Draft Network family-request confirmation/profile entrypoints retired.",
+    "Actual invitation review binds the locked dock; embedded draft workspace reads INTRODUCE."
+  ],
+  "retained_unchanged": [
+    "Real HomeShell/MentorHomeShell Network and its retained service paths remain until OA-SELAH-002.",
+    "Legacy SelahOneJourneyShepherdNetworkPresentation remains source-only/unreachable from the draft; server family-request models and services unchanged.",
+    "Seeker discovery, request/admission, Pause and other feature contracts unchanged."
+  ],
+  "visual_review": {
+    "new_states": "All6L19 plus5affectedreference pairs inspected. Duplicate label fixed, Grace master fixture reached by actual suggestion, footer sizes and larger-text reachability tested.",
+    "known_differences": [
+      "Native OS/safe-area and header spacing, private rail and retained material navigation glyphs.",
+      "Actual local photo crops and actual invitation James age30 differ from browser fixture31.",
+      "LOOKV2 requires600italic quote; kept that locked role despite browser inherited-weight rendering.",
+      "Lower MySelah groups/data remain as built; no invented Naomi request, stage update or prayer event added to match browserfixture.",
+      "L01 Seekers retains existing workspace; L10 Dashboard reference content contains upcoming25NeedsYou/check-ins. No layout change made under24outside its explicit scope."
+    ],
+    "claim": "Implementation and review evidence supplied; no blanket pixel MATCH or Founder visual acceptance."
+  },
+  "phone": "Not yet repinned or installed with24source; last verified phone installation is queue29/23source. Final GO batch delivery will refresh compiled pin after remaining eligible work.",
+  "version": "0.1.0+1 unchanged"
+}
