@@ -1,0 +1,76 @@
+{
+  "schema": 1,
+  "feature": "LATEST_PRIVATE_IPHONE_UPDATE",
+  "built_from": [
+    "APP/APPROVED/DELIVERY_REPAIR/BRIEFS/BUILD_BRIEF_2026-11-06_V1.md",
+    "APP/APPROVED/SHEPHERD_INTRODUCE/BRIEFS/BUILD_BRIEF_2026-11-06_V1.md",
+    "APP/APPROVED/SHEPHERD_DASHBOARD/BRIEFS/BUILD_BRIEF_2026-11-06_V1.md",
+    "APP/APPROVED/JOURNEY_STAGES/BRIEFS/BUILD_BRIEF_2026-11-06_V1.md",
+    "APP/APPROVED/FAMILY_STAGE/BRIEFS/BUILD_BRIEF_2026-11-06_V1.md"
+  ],
+  "authorization": "Existing Founder GO to update phone; connected and unlocked confirmed. No new approval inferred.",
+  "commit": "84930414ff0174aff794f8992eaf56842231d324",
+  "app_source_commit": "1e2324d9054d5dc1116cdae56f5b14d64a109447",
+  "recorded_at_utc": "2026-11-06T23:39:42.948042+00:00",
+  "flutter": "3.44.2",
+  "dart": "3.12.2",
+  "sdk": "iPhoneOS 27.2 existing installed SDK",
+  "build_mode": "Profile-draft; local-only; network/Git/Xcode-project build denied during raw Dart assemble",
+  "version": "0.1.0+1 unchanged; private update only, no release",
+  "source_fingerprint": "e50c8a14facd62b1f3a3212e82e9811c55c59c48e9f05e0e38b75e6e2e609937",
+  "installed_matches_final_committed_inputs": true,
+  "compiled_content": {
+    "app": {
+      "stripped_size": 14434488,
+      "normalized_sha256": "400c857fff7810f582d7b82eb6b6fef45ad54350370edf5232f0810154033bbd",
+      "raw_sha256": "e908da47901cefcfb3293078f53cfbf0d20f77543572b232780d0a7379522205"
+    },
+    "objective_c": {
+      "stripped_size": 146192,
+      "normalized_sha256": "2217039d1873d374727fcfa83d94f9203b136c45dda037b933e011027456bcc6"
+    },
+    "pin_change": "Only reviewed App normalized SHA and expected stripped size refreshed; native/dependency/tool/engine/helper/objc pins unchanged."
+  },
+  "verification": {
+    "intended_physical_paired_connected_phone": true,
+    "unlocked": true,
+    "strict_signatures_and_existing_profile": true,
+    "existing_profile_unchanged": true,
+    "install": "verified",
+    "launch": "verified",
+    "same_process_after_22_seconds": "verified",
+    "bundle_name_version_container_postquery": "verified",
+    "operator_elapsed_seconds": 84
+  },
+  "render_observation": {
+    "scene": "App switcher shows rendered Selah Browse card beyond splash after reopen; not a full foreground screenshot or initial-entry proof.",
+    "private_capture_sha256": "8ab64440a5c324b6ea2dcc0ef09cb969acc38a0c9c4671b15aebecd132cd5012",
+    "png_dimensions": [
+      1290,
+      2796
+    ],
+    "capture_kept_ignored_locally": "Contains unrelated system/app history; no screenshot copied into public evidence.",
+    "excluded_capture": "Initial screenshot contained an unrelated foreground app; moved with diagnostic to Founder trash, excluded from Selah evidence."
+  },
+  "checks": {
+    "whole_flutter_suite_passed": 511,
+    "existing_larger_text_skip": 1,
+    "mandatory_models_passed": 1338,
+    "analysis_errors": 0,
+    "analysis_warnings": 0,
+    "static_boundaries_passed": 20688
+  },
+  "scope": {
+    "includes_queue_lines": [
+      24,
+      25,
+      26,
+      27
+    ],
+    "icon_and_splash": "Queue28 held on Q17; no Android host or native resources changed.",
+    "new_tools_or_dependencies": "None installed, upgraded or fetched for this update.",
+    "founder_visual_acceptance": "Not recorded",
+    "unplugged_relaunch": "Not checked"
+  },
+  "evidence_policy": "Only JSON text in this folder; compiled apps remain in normal ignored SOURCE/build areas. No credentials, signing identifiers, phone identifiers or container paths included."
+}
