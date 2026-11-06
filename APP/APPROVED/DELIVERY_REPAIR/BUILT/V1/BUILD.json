@@ -1,0 +1,127 @@
+{
+  "schema": 1,
+  "task": "queue29: reviewed private iPhone delivery repair",
+  "built_from": "APP/APPROVED/DELIVERY_REPAIR/BRIEFS/BUILD_BRIEF_2026-11-06_V1.md",
+  "commit": "8f51b7ba195a3550c77a527837e411b9fe0e47e0",
+  "flutter": "3.44.2",
+  "dart": "3.12.2",
+  "sdk": "existing physical iPhoneOS27.2",
+  "build_mode": "profile-draft",
+  "recorded_at_utc": "2026-11-06T22:03:22.586677+00:00",
+  "version": "0.1.0+1",
+  "source_fingerprint": "567a4ba77f1451ad8cf2b1765d9f58eb27ddcd68446a3a8c1aacb03b99524b35",
+  "runner_sha256": "4c2ad7694bc1cd9d9d648f427ed12c4865dab557e7eec68d4aa7494c1f4eb227",
+  "checks": {
+    "toolchain_and_dependency_preflight": true,
+    "strict_deep_signature": true,
+    "exact_team_and_application_identity": true,
+    "exact_device_in_unexpired_development_profile": true,
+    "physical_paired_connected_phone": true,
+    "unlocked_phone": true,
+    "installed_bundle_name_version_build_and_container": true,
+    "same_pid_after_22_seconds": true,
+    "first_observed_flutter_frame": true,
+    "normalization_pure_cases": 20,
+    "device_receipt_pure_cases": 71,
+    "draft_release_boundary_cases": 6,
+    "static_boundary_cases": 20571,
+    "flutter_analyze_errors": 0,
+    "flutter_analyze_warnings": 0,
+    "flutter_analyze_prior_information": 10
+  },
+  "dependency_preparation": {
+    "dart_packages": 159,
+    "dart": "offline --enforce-lockfile; no download; lock unchanged",
+    "swift": [
+      {
+        "package": "AppAuth-iOS",
+        "prepared_bytes": 2359927,
+        "source": "Xcode reported cached fetch"
+      },
+      {
+        "package": "GTMAppAuth",
+        "prepared_bytes": 404784,
+        "source": "Xcode reported cached fetch"
+      },
+      {
+        "package": "GoogleSignIn-iOS",
+        "prepared_bytes": 1500219,
+        "source": "Xcode reported cached fetch"
+      },
+      {
+        "package": "GoogleUtilities",
+        "prepared_bytes": 775496,
+        "source": "Xcode reported cached fetch"
+      },
+      {
+        "package": "app-check",
+        "prepared_bytes": 718134,
+        "source": "Xcode reported cached fetch"
+      },
+      {
+        "package": "gtm-session-fetcher",
+        "prepared_bytes": 1145306,
+        "source": "Xcode reported cached fetch"
+      },
+      {
+        "package": "interop-ios-for-google-sdks",
+        "prepared_bytes": 65630,
+        "source": "Xcode reported cached fetch"
+      },
+      {
+        "package": "promises",
+        "prepared_bytes": 698535,
+        "source": "Xcode reported cached fetch"
+      }
+    ],
+    "swift_lock_unchanged": true,
+    "network_downloads": "No uncached source fetch or binary artifact download was reported; network transfer byte count was not measured",
+    "tools_or_sdks_installed_or_upgraded": false
+  },
+  "pin_changes": [
+    {
+      "input": "$SELAH_PROJECT_ROOT/tooling/no_git/xcrun",
+      "before": "f492d28a78b16a73978f334d8b8677161d1565e1a3d6943a4a5b300dab86206d",
+      "after": "d34533af4fd0e24526f721694b2d79a474afe62752fb117e93b768e8a6f69120",
+      "changed": true
+    },
+    {
+      "input": "$SELAH_PROJECT_ROOT/pubspec.yaml",
+      "before": "65673dee219d5b74f4ff1ae1c12e2dab90d556a9f3758475da497974f5aafd37",
+      "after": "5a8423d41b6ef6fea9de02c259cd4dbe5f95fda4f0f0ac20a7ef4c399f72f8f4",
+      "changed": true
+    },
+    {
+      "input": "$SELAH_PROJECT_ROOT/.dart_tool/package_config.json",
+      "before": "23638bcf000362ac572f22fe2e0c3a1744a6e5c5d1e09aa8d12b26eee5c8f678",
+      "after": "a4ac457d2c63f0c2a0283ea4fbe80ca3caa4b897ff42566c0b67b98c87cf4016",
+      "changed": true
+    },
+    {
+      "input": "$SELAH_PROJECT_ROOT/ios/Flutter/ephemeral/Packages/FlutterGeneratedPluginSwiftPackage/Package.swift",
+      "before": "45ea497c4ba672066cf4a22d31556001b7c0d0b0cc23cbd49cfdc78341428ed3",
+      "after": "d07ad9434c73235a8156e8bf21be24c85b38510ec14e958b5212dfb6b7e1a929",
+      "changed": true
+    }
+  ],
+  "native_pin_reason": "Full native shell rebuilt from current source with existingSDK27.2; base Runner/App/Info/native payload/engine and unsignedRunner pins refreshed. Reviewed current Dart content replaces obsolete startup-fix content pin. Parsed __LINKEDIT.vmsize preserves the prior signing-allocation allowance; all other bytes remain hashed. Objective_c base/raw content agrees after that allowance. Helper itself is pinned.",
+  "additional_repairs": [
+    "Current native plist already declares delivery metadata; Set replaces obsolete Add assumptions.",
+    "Exact profile-device membership and positive development authority/expiry checks replace substring membership.",
+    "Exact process executable paths and paired-device identity checks precede install.",
+    "Caller-provided private signing/device values stay out of public receipts."
+  ],
+  "physical_frame": {
+    "local_ignored_path": "SOURCE/build/phone-update-2026-11-06/PHONE_FIRST_OBSERVED_FLUTTER_FRAME.png",
+    "sha256": "2330df3dde872641a126631670060d09d6089fff34ef1a362227a96510c59bb3",
+    "observed": "Real Prayer screen with Pastor David after stable launch; member may have navigated. Not proof of initial entry frame.",
+    "public_image": "Kept locally because system chrome exposes unrelated prior-app history."
+  },
+  "visual_comparison": "No screen design changed in queue29; prior queue23 FIRST_PAGES/SELAH_PAUSE/PRAYER V1_FIX_LABELS master/build pairs remain the applicable comparisons.",
+  "limits": [
+    "Founder visual acceptance and unplugged relaunch not measured.",
+    "No live backend, public release or version change.",
+    "Icon/splash queue28 held on Q17: Android host absent; no icon source changes.",
+    "Answered queue24\u201327 await implementation after priority29."
+  ]
+}
