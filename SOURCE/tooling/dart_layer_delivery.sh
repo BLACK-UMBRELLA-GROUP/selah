@@ -28,7 +28,7 @@ SELAH_BASE_INFO_SHA='dfdb6a2a65285b116fea38a53a9754ec4000581ba1db199c40dc9abffa6
 SELAH_BASE_NATIVE_DIGEST='3d27fffbf9a9432a3a50f180f2f438a4081e43f81d3e5d99226a73f5b76c0253'
 SELAH_FLUTTER_ENGINE_SHA='6dbc2dd29819fcd5cc5492049457ce1d04293a7c094749e67e8864b31879445d'
 SELAH_RUNNER_UNSIGNED_SHA='c861e47212f0f00cc554855f80ade856b73bc9ba433805a7373179505b5f8626'
-SELAH_APP_NORMALIZED_SHA='69425d2f951effd3787d7b47c86f58cfea88db4ea381c4336900abc1ad311474'
+SELAH_APP_NORMALIZED_SHA='400c857fff7810f582d7b82eb6b6fef45ad54350370edf5232f0810154033bbd'
 SELAH_OBJECTIVE_C_NORMALIZED_SHA='2217039d1873d374727fcfa83d94f9203b136c45dda037b933e011027456bcc6'
 SELAH_OBJECTIVE_C_INFO_SHA='21eabba1ce090680496e14367008f7952305d214d3828af85e395761384e28b0'
 
@@ -93,7 +93,7 @@ normalized_app_sha() {
   /bin/cp "$source" "$output"
   /usr/bin/codesign --remove-signature "$output" >/dev/null 2>&1 || fail 'could not strip copied Mach-O signature'
   /usr/bin/python3 "$SELAH_PROJECT_ROOT/tooling/macho_content_digest.py" \
-    --expected-size 16498872  "$output" || fail 'reviewed Mach-O structure changed'
+    --expected-size 14434488  "$output" || fail 'reviewed Mach-O structure changed'
 }
 
 native_digest() {
