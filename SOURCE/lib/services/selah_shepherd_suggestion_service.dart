@@ -22,40 +22,14 @@
 import 'package:flutter/foundation.dart';
 import '../main.dart';
 import '../models/seeker_profile.dart';
+import '../models/selah_shepherd_suggestion.dart';
 import 'selah_auth.dart';
 import 'selah_photo_service.dart';
 import 'selah_ages_service.dart';
-import 'selah_mentor_link_service.dart' show SelahSourceFailure, SelahSourceResult;
+import 'selah_mentor_link_service.dart'
+    show SelahSourceFailure, SelahSourceResult;
 
-class ShepherdSuggestion {
-  /// The suggested Seeker, ready to render with the same card as everything
-  /// else in Connections.
-  final SeekerProfile profile;
-
-  /// Who suggested them — used for the human line the UX Writing standard
-  /// asks for ("Suggested by Ibrahim"), rather than a system label.
-  final String suggestedBy;
-
-  /// True until the Seeker has landed on Introductions with this suggestion
-  /// present. Drives the badge, and ONLY the badge.
-  ///
-  /// Seen and resolved are different questions, which is the whole reason
-  /// this exists — see BADGE_STANDARD:
-  ///
-  ///   badge      counts UNSEEN     clears on arrival at the surface
-  ///   list count counts UNRESOLVED clears when the item is resolved
-  ///
-  /// Not exposed to the Shepherd. They must not learn that their suggestion
-  /// has been looked at and not yet answered — that is pressure, and the
-  /// Seeker is entitled to take three days over it.
-  final bool unseen;
-
-  const ShepherdSuggestion({
-    required this.profile,
-    required this.suggestedBy,
-    this.unseen = false,
-  });
-}
+export '../models/selah_shepherd_suggestion.dart' show ShepherdSuggestion;
 
 class SelahShepherdSuggestionService {
   SelahShepherdSuggestionService._();
@@ -185,7 +159,8 @@ class SelahShepherdSuggestionService {
         out.add(
           ShepherdSuggestion(
             profile: p,
-            suggestedBy: mentorNames[m['mentor_id'] as String] ?? 'your Shepherd',
+            suggestedBy:
+                mentorNames[m['mentor_id'] as String] ?? 'your Shepherd',
             unseen: m['seen_at'] == null,
           ),
         );

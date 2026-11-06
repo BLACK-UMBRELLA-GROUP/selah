@@ -297,9 +297,15 @@ class _DraftJourneyProgress {
 /// Stage labels come from the existing pure canonical source; walkthrough
 /// advancement is not real answers, Family Review time or server enforcement.
 class ViewRequestDraftModel {
-  ViewRequestDraftModel({int capacity = 1}) : _capacity = capacity {
-    if (capacity < 1 || capacity > 3) {
-      throw RangeError.range(capacity, 1, 3, 'capacity');
+  ViewRequestDraftModel({int capacity = 1}) : this._(capacity, true);
+
+  /// LOCK 19's new Seeker starts without another Seeker's private scenario.
+  ViewRequestDraftModel.freshSeeker({int capacity = 1})
+    : this._(capacity, false);
+
+  ViewRequestDraftModel._(this._capacity, this._seedDefaultScenario) {
+    if (_capacity < 1 || _capacity > 3) {
+      throw RangeError.range(_capacity, 1, 3, 'capacity');
     }
     _seed();
   }
@@ -309,6 +315,7 @@ class ViewRequestDraftModel {
   };
 
   int _capacity;
+  final bool _seedDefaultScenario;
   final Map<String, DraftJourneyState> _states = {};
   final Set<String> _saved = {};
   final Set<String> _busyPeers = {};
@@ -877,9 +884,10 @@ class ViewRequestDraftModel {
   }
 
   void _seed() {
-    _states
-      ..clear()
-      ..[draftProfiles.first.id] = DraftJourneyState.received;
+    _states.clear();
+    if (_seedDefaultScenario) {
+      _states[draftProfiles.first.id] = DraftJourneyState.received;
+    }
     _saved.clear();
     _hiddenPeers.clear();
     _blockedPeers.clear();
@@ -894,9 +902,8 @@ class ViewRequestDraftModel {
       }
     }
     _peerMainShepherdOverrides.clear();
-    _busyPeers
-      ..clear()
-      ..add(draftProfiles.last.id);
+    _busyPeers.clear();
+    if (_seedDefaultScenario) _busyPeers.add(draftProfiles.last.id);
     _ownMainShepherd = _peerMainShepherd = true;
   }
 

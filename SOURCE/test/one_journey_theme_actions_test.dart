@@ -956,7 +956,7 @@ void main() {
             .widget<SelahShellNavigation>(find.byType(SelahShellNavigation))
             .items
             .map((item) => item.label),
-        ['Dashboard', 'Network', 'Seekers', 'Profile'],
+        ['Dashboard', 'Introduce', 'Seekers', 'Profile'],
       );
       expect(tester.takeException(), isNull);
     },

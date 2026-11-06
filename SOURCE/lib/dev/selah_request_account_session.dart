@@ -10,6 +10,7 @@ import '../models/selah_faith_profile.dart';
 import '../models/selah_faith_profile_details.dart';
 import '../models/selah_marriage_values.dart';
 import '../models/selah_marriage_values_details.dart';
+import '../models/selah_shepherd_suggestion.dart';
 import '../models/selah_sign_up_compatibility.dart';
 import '../models/selah_your_values.dart';
 import '../data/chapter3_categories.dart';
@@ -46,6 +47,9 @@ class SelahRequestAccountSession extends ChangeNotifier {
   bool _disposed = false;
   final _photos = <bool, List<String>>{};
   final _avatar = <bool, Offset>{};
+  // One account-owned Introduction collection. A null value is an internal
+  // resolved record, retained only to prevent suggesting the same pair again.
+  final _localIntroductions = <String, Map<String, ShepherdSuggestion?>>{};
   late final SelahRequestCompatibilityRepository compatibility;
   SelahDevPalette _palette;
   SelahHapticLevel _hapticLevel;
@@ -78,6 +82,110 @@ class SelahRequestAccountSession extends ChangeNotifier {
       selahFaithProfileAnswersFromDetails(details);
   SelahMarriageValuesAnswers get marriageAnswers =>
       selahMarriageValuesAnswersFromDetails(details);
+
+  List<ShepherdSuggestion> introductionsFor(String seekerId) => !current
+      ? const []
+      : List<ShepherdSuggestion>.unmodifiable(
+          (_localIntroductions[seekerId]?.values ?? const [])
+              .whereType<ShepherdSuggestion>()
+              .toList()
+              .reversed,
+        );
+
+  /// Privacy-neutral duplicate suppression, including resolved records.
+  /// It never distinguishes seen, dismissed or another Seeker's response.
+  bool hasIntroduction(String seekerId, String profileId) =>
+      current &&
+      (_localIntroductions[seekerId]?.containsKey(profileId) ?? false);
+
+  static bool _introductionAllowed(bool Function() guard) {
+    try {
+      return guard();
+    } catch (_) {
+      return false;
+    }
+  }
+
+  bool recordIntroduction({
+    required String seekerId,
+    required ShepherdSuggestion suggestion,
+    required bool Function() canSuggest,
+    required Iterable<String> Function() eligibleProfileIds,
+  }) {
+    final profileId = suggestion.profile.id;
+    bool eligible() {
+      try {
+        return eligibleProfileIds().contains(profileId);
+      } catch (_) {
+        return false;
+      }
+    }
+
+    if (!current ||
+        !_introductionAllowed(canSuggest) ||
+        seekerId.trim().isEmpty ||
+        profileId.trim().isEmpty ||
+        seekerId == profileId ||
+        suggestion.suggestedBy.trim().isEmpty ||
+        hasIntroduction(seekerId, profileId) ||
+        !eligible()) {
+      return false;
+    }
+    final next = suggestion.snapshot(unseen: true);
+    if (!eligible() ||
+        !current ||
+        !_introductionAllowed(canSuggest) ||
+        hasIntroduction(seekerId, profileId) ||
+        !current) {
+      return false;
+    }
+    (_localIntroductions[seekerId] ??= {})[profileId] = next;
+    notifyListeners();
+    return true;
+  }
+
+  bool markIntroductionsSeen(
+    String seekerId, {
+    required bool Function() canRead,
+  }) {
+    if (!current || !_introductionAllowed(canRead)) return false;
+    final records = _localIntroductions[seekerId];
+    if (records == null) return false;
+    final next = <String, ShepherdSuggestion>{
+      for (final entry in records.entries)
+        if (entry.value case final suggestion? when suggestion.unseen)
+          entry.key: suggestion.snapshot(unseen: false),
+    };
+    if (next.isEmpty ||
+        !current ||
+        !_introductionAllowed(canRead) ||
+        !current) {
+      return false;
+    }
+    records.addAll(next);
+    notifyListeners();
+    return true;
+  }
+
+  bool dismissIntroduction(
+    String seekerId,
+    String profileId, {
+    required bool Function() canDismiss,
+  }) {
+    if (!current || !_introductionAllowed(canDismiss)) return false;
+    final records = _localIntroductions[seekerId];
+    final previous = records?[profileId];
+    if (previous == null ||
+        !current ||
+        !_introductionAllowed(canDismiss) ||
+        !identical(records?[profileId], previous) ||
+        !current) {
+      return false;
+    }
+    records![profileId] = null;
+    notifyListeners();
+    return true;
+  }
 
   /// Seeds the existing details owner once for an isolated local review.
   /// This never infers new answers from old Chapter 2 values.
@@ -271,6 +379,7 @@ class SelahRequestAccountSession extends ChangeNotifier {
     _revoked = true;
     _photos.clear();
     _avatar.clear();
+    _localIntroductions.clear();
     _details = const SeekerDetails();
     compatibility.close();
     super.dispose();

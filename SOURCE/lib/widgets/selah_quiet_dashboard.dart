@@ -34,6 +34,7 @@ class SelahQuietDashboard extends StatefulWidget {
   final Future<void> Function()? onRefresh;
   final bool insightsEntitled;
   final bool blankUntilDeveloperSelection;
+  final Widget? leadingContent;
 
   /// Optional presentation-only rehearsal: one information page, no Insights
   /// pager. Ordinary callers keep the existing two-section dashboard.
@@ -63,6 +64,7 @@ class SelahQuietDashboard extends StatefulWidget {
     this.onRefresh,
     this.insightsEntitled = true,
     this.blankUntilDeveloperSelection = false,
+    this.leadingContent,
     this.singlePage = false,
     this.titleAlignment = Alignment.centerLeft,
     this.decoration,
@@ -385,6 +387,10 @@ class _SelahQuietDashboardState extends State<SelahQuietDashboard> {
         physics: const AlwaysScrollableScrollPhysics(),
         padding: const EdgeInsets.fromLTRB(22, 14, 22, 130),
         children: [
+          if (tab == 0 && widget.leadingContent != null) ...[
+            widget.leadingContent!,
+            const SizedBox(height: 24),
+          ],
           if (insightsBlocked)
             Padding(
               key: const ValueKey('quiet-index-insights-locked'),

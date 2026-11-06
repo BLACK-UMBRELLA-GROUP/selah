@@ -1,0 +1,169 @@
+{
+  "feature": "SHEPHERD_INTRODUCE",
+  "lock": 19,
+  "version": "V1",
+  "recorded_at_utc": "2026-11-06T22:20:28.625446+00:00",
+  "master_pairs": 11,
+  "png_count": 22,
+  "png_bytes": 9088220,
+  "checks": {
+    "capture": "16 passed",
+    "plain_replay": "16 passed"
+  },
+  "files": [
+    {
+      "path": "APP/APPROVED/SHEPHERD_INTRODUCE/BUILT/V1/L01_shepherd_seekers__build.png",
+      "bytes": 214378,
+      "sha256": "9394640c9cf30365245689e0feb6aa23ddd51dd2cc7006ef84dab8767c3e658e",
+      "width": 1290,
+      "height": 2796
+    },
+    {
+      "path": "APP/APPROVED/SHEPHERD_INTRODUCE/BUILT/V1/L01_shepherd_seekers__master_beside_build.png",
+      "bytes": 504709,
+      "sha256": "161ff2df8c791645d0467f882f1ddd878e3dcfa089c6de26fe609f467700c40d",
+      "width": 2580,
+      "height": 2796
+    },
+    {
+      "path": "APP/APPROVED/SHEPHERD_INTRODUCE/BUILT/V1/L03_shepherd_invitation__build.png",
+      "bytes": 284546,
+      "sha256": "2559d98861574148b033d87a4f974ede73d2792153acb3e708a6faa82fc2e8a5",
+      "width": 1290,
+      "height": 2796
+    },
+    {
+      "path": "APP/APPROVED/SHEPHERD_INTRODUCE/BUILT/V1/L03_shepherd_invitation__master_beside_build.png",
+      "bytes": 559695,
+      "sha256": "1fdf5be870c58444e1e4fd1a2c2f158e24227a9a269a30f8c147f5a49053d7b7",
+      "width": 2580,
+      "height": 2796
+    },
+    {
+      "path": "APP/APPROVED/SHEPHERD_INTRODUCE/BUILT/V1/L10_shepherd_dashboard__no_requests__build.png",
+      "bytes": 294821,
+      "sha256": "e27e308cc1aab2380d3a671d6fb8dddd58f4831999497fa512136a9e0d3c3a4f",
+      "width": 1290,
+      "height": 2796
+    },
+    {
+      "path": "APP/APPROVED/SHEPHERD_INTRODUCE/BUILT/V1/L10_shepherd_dashboard__no_requests__master_beside_build.png",
+      "bytes": 579013,
+      "sha256": "9547fb99bf261623fe6312936edacffdaad5192145b90051164549fa76295a29",
+      "width": 2580,
+      "height": 2796
+    },
+    {
+      "path": "APP/APPROVED/SHEPHERD_INTRODUCE/BUILT/V1/L10_shepherd_dashboard__prayed__build.png",
+      "bytes": 286847,
+      "sha256": "407509256680e254597df5f437ed11ebc147125827f68f18666be464be53c82b",
+      "width": 1290,
+      "height": 2796
+    },
+    {
+      "path": "APP/APPROVED/SHEPHERD_INTRODUCE/BUILT/V1/L10_shepherd_dashboard__prayed__master_beside_build.png",
+      "bytes": 549969,
+      "sha256": "3b3f1641c947085071d4f72398f314b3750f23af1eabc78b070bedd3bbac7af4",
+      "width": 2580,
+      "height": 2796
+    },
+    {
+      "path": "APP/APPROVED/SHEPHERD_INTRODUCE/BUILT/V1/L10_shepherd_dashboard__requests__build.png",
+      "bytes": 286184,
+      "sha256": "cbfe0b41f5f9dc050f6bdaf7dc06dc804a7e388daee8e2ace43bca435724a53f",
+      "width": 1290,
+      "height": 2796
+    },
+    {
+      "path": "APP/APPROVED/SHEPHERD_INTRODUCE/BUILT/V1/L10_shepherd_dashboard__requests__master_beside_build.png",
+      "bytes": 549219,
+      "sha256": "0ee2d77b3d3f4abed6b37d2884f9a14f4faf19007dae98be8de78b53be45fe55",
+      "width": 2580,
+      "height": 2796
+    },
+    {
+      "path": "APP/APPROVED/SHEPHERD_INTRODUCE/BUILT/V1/L19_introduce__build.png",
+      "bytes": 322895,
+      "sha256": "3dcc6c4347ab54d83c80ecfa57e137f2eefcc2c5a1789e2179cebef9be3aaf74",
+      "width": 1290,
+      "height": 2796
+    },
+    {
+      "path": "APP/APPROVED/SHEPHERD_INTRODUCE/BUILT/V1/L19_introduce__didnt_send__build.png",
+      "bytes": 349152,
+      "sha256": "dcfee390b7ea2538f6a1bf53c0eebfd5ab03894fac498395aed0508cd16e7946",
+      "width": 1290,
+      "height": 2796
+    },
+    {
+      "path": "APP/APPROVED/SHEPHERD_INTRODUCE/BUILT/V1/L19_introduce__didnt_send__master_beside_build.png",
+      "bytes": 694777,
+      "sha256": "a15a77aedf624c9417434b5633677777760e3e2982ef2beda294c5f6fe50488a",
+      "width": 2580,
+      "height": 2796
+    },
+    {
+      "path": "APP/APPROVED/SHEPHERD_INTRODUCE/BUILT/V1/L19_introduce__for_joel__build.png",
+      "bytes": 320791,
+      "sha256": "cf5408bd7e3468e4d869f77d793649b1e54047d2740088b494a963690cd03924",
+      "width": 1290,
+      "height": 2796
+    },
+    {
+      "path": "APP/APPROVED/SHEPHERD_INTRODUCE/BUILT/V1/L19_introduce__for_joel__master_beside_build.png",
+      "bytes": 632618,
+      "sha256": "2512405786dc35c8f78009d57efdd03d0bed22bec2d8adcf5cd7febfb711cd64",
+      "width": 2580,
+      "height": 2796
+    },
+    {
+      "path": "APP/APPROVED/SHEPHERD_INTRODUCE/BUILT/V1/L19_introduce__master_beside_build.png",
+      "bytes": 640183,
+      "sha256": "1e6a64ea6c9a4a9a17882a3d4a99598393b2bb114fb421cfd71d195a170ac527",
+      "width": 2580,
+      "height": 2796
+    },
+    {
+      "path": "APP/APPROVED/SHEPHERD_INTRODUCE/BUILT/V1/L19_introduce__no_one_new__build.png",
+      "bytes": 92428,
+      "sha256": "611114632cea9be41d717ecb8be5cc112c443b74c0d8c2a3b3cb272304d1d1dc",
+      "width": 1290,
+      "height": 2796
+    },
+    {
+      "path": "APP/APPROVED/SHEPHERD_INTRODUCE/BUILT/V1/L19_introduce__no_one_new__master_beside_build.png",
+      "bytes": 192211,
+      "sha256": "c42c499ebcfb0c94789ef73ca25e2b595af546784ade23649508bab9622b0cc5",
+      "width": 2580,
+      "height": 2796
+    },
+    {
+      "path": "APP/APPROVED/SHEPHERD_INTRODUCE/BUILT/V1/L19_introduce__suggesting__build.png",
+      "bytes": 320712,
+      "sha256": "dfce1a99cc000cbd07049869102fe9da4562069429808aac6666e3c2724f8ad6",
+      "width": 1290,
+      "height": 2796
+    },
+    {
+      "path": "APP/APPROVED/SHEPHERD_INTRODUCE/BUILT/V1/L19_introduce__suggesting__master_beside_build.png",
+      "bytes": 634232,
+      "sha256": "5e9bc599081421b306af16075db1e3c9e360b3ca5b081a98d39e976db2790599",
+      "width": 2580,
+      "height": 2796
+    },
+    {
+      "path": "APP/APPROVED/SHEPHERD_INTRODUCE/BUILT/V1/L19_my_selah__suggestion__build.png",
+      "bytes": 234208,
+      "sha256": "e8dda51ef2d3dcc1575fb295f226b4e5b72b3d3e8b82304cd0369bed21d80af6",
+      "width": 1290,
+      "height": 2796
+    },
+    {
+      "path": "APP/APPROVED/SHEPHERD_INTRODUCE/BUILT/V1/L19_my_selah__suggestion__master_beside_build.png",
+      "bytes": 544632,
+      "sha256": "f4408720f328761412936ca7aa91047636110e06af203d56f59c66d9fcd9b611",
+      "width": 2580,
+      "height": 2796
+    }
+  ]
+}

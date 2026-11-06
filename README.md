@@ -30,6 +30,8 @@ At Open Conversation, the local Journey includes the locked marriage-preparation
 
 The first-draft handover records passing static and pure-Dart checks and a signed build; on-device checks are still pending. No TestFlight or App Store delivery yet.
 
+The draft Shepherd tab is now Introduce. A Main Shepherd can suggest an eligible profile for James or the separately scoped Joel fixture. Each uses their own discovery state; a suggestion creates one account-local Introduction and sends nothing to the other person. The Seeker sees it on My Selah and Introductions, can open that person in Browse, or dismiss it privately. Seen and dismissed states are not disclosed to the Shepherd. The retained connected-service Network is unchanged and remains inactive in this offline entrypoint.
+
 ## Repository layout
 
 - `SOURCE/` — the Flutter package, local fixtures, tests and private delivery tooling.

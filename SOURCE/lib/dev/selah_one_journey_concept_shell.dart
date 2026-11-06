@@ -16,6 +16,8 @@ import '../models/selah_action_pause_controller.dart';
 import '../models/selah_prayer.dart';
 import '../models/selah_prayer_controller.dart';
 import '../models/selah_shepherd_recent.dart';
+import '../models/selah_shepherd_suggestion.dart';
+import '../widgets/selah_shepherd_introduce_views.dart';
 import '../widgets/selah_prayer_views.dart';
 import '../services/selah_developer_access.dart';
 import '../widgets/selah_shepherd_invite_scope.dart';
@@ -200,7 +202,12 @@ class _SelahOneJourneyConceptShellState
   bool _browseHideConfirmation = false;
   String? _browseOptionsPersonId;
   int _shepherdPage = 0;
-  int _networkTab = 0;
+  final _joelModel = ViewRequestDraftModel.freshSeeker(capacity: 3);
+  String _introduceSeekerId = 'draft-self';
+  final _introduceSkipped = <String, Set<String>>{};
+  bool _introduceSuggesting = false;
+  bool _introduceFailed = false;
+  bool _introduceEmptyView = false;
   String? _personId;
   String? _shepherdJourneyId;
   bool _journeyOptionsOpen = false;
@@ -288,7 +295,6 @@ class _SelahOneJourneyConceptShellState
           _model.stateFor(_personId!) != null) ||
       (const [
         'held_action',
-        'network_request',
         'account_action',
         'notifications',
         'filters',
@@ -311,7 +317,6 @@ class _SelahOneJourneyConceptShellState
     'bio' => 'Journey Bio',
     'timeline' => 'Timeline',
     'held_action' => _heldTitle,
-    'network_request' => 'Speak to Shepherd',
     'account_action' =>
       _accountDestination == null
           ? 'Account'
@@ -324,7 +329,7 @@ class _SelahOneJourneyConceptShellState
     'ended' || 'past_journeys' => 'Ended Journeys',
     _ =>
       _shepherdRole
-          ? const ['My Selah', 'Network', 'Seekers', 'Profile'][_tab]
+          ? const ['My Selah', 'Introduce', 'Seekers', 'Profile'][_tab]
           : const [
               'Browse',
               'Journey',
@@ -352,7 +357,6 @@ class _SelahOneJourneyConceptShellState
     'profile',
     'own_profile_preview',
     'shepherd_linked_profile',
-    'shepherd_network_profile',
   ].contains(_page);
   DraftProfile? get _person => _personId == null
       ? null
@@ -511,6 +515,7 @@ class _SelahOneJourneyConceptShellState
     _expansion.collapseAll();
     if (!_shepherdRole && index == 3) _shepherdPage = 0;
     _pages.clear();
+    _markIntroductionsSeen();
   });
   void _open(String page, {String? person}) {
     if (page == 'scan' &&
@@ -745,7 +750,7 @@ class _SelahOneJourneyConceptShellState
   Widget build(BuildContext context) {
     final railFresh = _accountFreshGuard();
     final names = _shepherdRole
-        ? ['Dashboard', 'Network', 'Seekers', 'Profile']
+        ? ['Dashboard', 'Introduce', 'Seekers', 'Profile']
         : ['Browse', 'Journey', 'My Selah', 'Shepherd', 'Profile'];
     final icons = _shepherdRole
         ? [
@@ -780,7 +785,6 @@ class _SelahOneJourneyConceptShellState
           'shepherd_circle',
           'account_action',
           'shepherd_linked_profile',
-          'shepherd_network_profile',
           'requests',
           'saved',
           'paused',
@@ -867,6 +871,7 @@ class _SelahOneJourneyConceptShellState
                 if (_browseOptionsOpen)
                   _browseOptionsNavigation()
                 else if (_page == null ||
+                    (_shepherdRole && _page == 'shepherd_invite_review') ||
                     (!_shepherdRole &&
                         (_page == 'prayer' ||
                             _page == 'journey_marriage_profile')))
@@ -883,12 +888,16 @@ class _SelahOneJourneyConceptShellState
                           dot:
                               !_shepherdRole &&
                               i == 2 &&
-                              _visibleRequests(
-                                DraftJourneyState.received,
-                              ).isNotEmpty,
+                              (_visibleRequests(
+                                    DraftJourneyState.received,
+                                  ).isNotEmpty ||
+                                  _ownIntroductions.any((item) => item.unseen)),
                         ),
                     ],
-                    currentIndex: _tab,
+                    currentIndex:
+                        _shepherdRole && _page == 'shepherd_invite_review'
+                        ? 2
+                        : _tab,
                     onTap: _tabTo,
                   ),
                 // The same developer rail as the current app, not an extra footer
@@ -1013,7 +1022,6 @@ class _SelahOneJourneyConceptShellState
     'journey_shepherds' => _journeyShepherds(),
     'shepherd_circle' => _shepherdCircle(),
     'prayer' => _prayerPage(),
-    'network_request' => _networkRequestConfirmation(),
     'held_action' => _heldPreviewAction(),
     'own_profile_preview' => _ownProfilePreview(),
     'past_journeys' => _activityPage('Ended Journeys', _history(true)),
@@ -1022,7 +1030,6 @@ class _SelahOneJourneyConceptShellState
     'ended' => _historyActivity(true),
     'shepherd' => _shepherdDetail(),
     'shepherd_linked_profile' => _shepherdLinkedProfile(),
-    'shepherd_network_profile' => _shepherdNetworkProfile(),
     'settings' => _settings(),
     'personalisation' => _personalisation(),
     'edit_profile' || 'manage_photos' => _retainedAccountLeaf(),
@@ -1771,6 +1778,7 @@ class _SelahOneJourneyConceptShellState
       _pages
         ..clear()
         ..add(page);
+      _markIntroductionsSeen();
     });
   }
 
@@ -1798,14 +1806,22 @@ class _SelahOneJourneyConceptShellState
       pages: [
         _requests(0),
         _requests(1),
-        const [
-          SizedBox(height: 80),
-          SelahEmptyState(
-            icon: Icons.groups_outlined,
-            title: 'No introductions yet',
-            message: 'People your Shepherds put forward will appear here.',
-          ),
-        ],
+        if (_ownIntroductions.isEmpty)
+          const [
+            SizedBox(height: 80),
+            SelahEmptyState(
+              icon: Icons.groups_outlined,
+              title: 'No introductions yet',
+              message: 'People your Shepherds put forward will appear here.',
+            ),
+          ]
+        else
+          [
+            for (final suggestion in _ownIntroductions) ...[
+              _introductionCard(suggestion),
+              const SizedBox(height: 12),
+            ],
+          ],
       ],
       selectedIndex: _requestsTab,
       onChanged: (i) {
@@ -1822,6 +1838,7 @@ class _SelahOneJourneyConceptShellState
         _act(() {
           _requestsTab = i;
           _expansion.collapseAll();
+          _markIntroductionsSeen();
         });
       },
     );
@@ -3366,6 +3383,17 @@ class _SelahOneJourneyConceptShellState
       resolution: resolution,
       fixtureMode: true,
       singlePage: true,
+      leadingContent: _ownIntroductions.isEmpty
+          ? null
+          : Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                for (final suggestion in _ownIntroductions) ...[
+                  _introductionCard(suggestion),
+                  const SizedBox(height: 12),
+                ],
+              ],
+            ),
       fixtureCards: [
         for (final event in _prayerStore.updatesFor(
           _accountSession.ownProfile(false).id,
@@ -3476,7 +3504,6 @@ class _SelahOneJourneyConceptShellState
   String _conceptMainShepherdId = 'draft-shepherd-hassan';
   final _conceptRemovedShepherds = <String>{};
   final _conceptShepherdHistory = <String, bool>{};
-  final _conceptNetworkSent = <String>{};
 
   bool get _conceptHassanLinked =>
       !_conceptRemovedShepherds.contains('draft-shepherd-hassan');
@@ -4211,34 +4238,6 @@ class _SelahOneJourneyConceptShellState
           ),
         );
 
-  Widget _shepherdNetworkProfile() {
-    if (!_conceptHassanLinked) return _conceptUnavailableShepherdProfile();
-    final person = _person;
-    if (person == null) return Center(child: _body('Profile unavailable'));
-    if (_model.isBlocked(person.id)) return _userNotFoundView();
-    // Same bounded display identity/photos as the current Network card.
-    // No surname, exact place, private answer, history or Journey data.
-    final profile = SeekerProfile(
-      id: person.id,
-      firstName: '${person.firstName[0]}., ${person.age}',
-      age: 0,
-      city: '',
-      gender: 'female',
-      photos: _photos?.forIndex(draftProfiles.indexOf(person)) ?? const [],
-    );
-    return SelahOneJourneyBrowsePresentation(
-      profile: profile,
-      onMenu: _bound(_back),
-      menuKey: const ValueKey('concept_shepherd_network_profile_back'),
-      menuLabel: 'Back',
-      menuIcon: Icons.arrow_back_ios_new,
-      menuOnLeft: true,
-      showMenu: false,
-      showActions: false,
-      identityBottom: 100,
-    );
-  }
-
   void _switchRole(bool shepherd) {
     if (!_allowed) return;
     _move(() {
@@ -4491,7 +4490,13 @@ class _SelahOneJourneyConceptShellState
             currentJourney: _conceptShepherdJourney,
             hasShepherdOne: _shepherdMembership == 'Shepherd One',
             onJourney: _bound(() => _open('shepherd')),
-            onNetwork: _bound(() => _tabTo(1)),
+            onNetwork: _bound(
+              () => _move(() {
+                _introduceSeekerId = 'draft-self';
+                _tab = 1;
+                _pages.clear();
+              }),
+            ),
             onInvite: _bound(
               () => _holdPreviewAction(
                 'Invite your Seeker',
@@ -4502,85 +4507,230 @@ class _SelahOneJourneyConceptShellState
           ),
         );
 
-  Widget _network() {
-    if (!_conceptHassanLinked) {
-      return SafeArea(
-        bottom: false,
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Padding(
-              padding: const EdgeInsets.fromLTRB(20, 16, 20, 6),
-              child: _mainHeading('Network'),
-            ),
-            Expanded(
-              child: Padding(
-                padding: const EdgeInsets.only(bottom: 96),
-                child: Center(
-                  child: SelahAddCircle(
-                    label: 'Invite your Seeker',
-                    onTap: _bound(
-                      () => _holdPreviewAction(
-                        'Invite your Seeker',
-                        'Support someone on their journey. Invitations stay in the current app; no real invitation is sent from this comparison.',
-                      ),
-                    ),
-                  ),
-                ),
-              ),
-            ),
-          ],
-        ),
-      );
+  List<({String id, String name})> get _introduceSeekers => [
+    if (_conceptHassanLinked) (id: 'draft-self', name: 'James'),
+    (id: _prayerJoelFixtureId, name: 'Joel'),
+  ];
+
+  String get _selectedIntroduceSeeker =>
+      _introduceSeekers.any((person) => person.id == _introduceSeekerId)
+      ? _introduceSeekerId
+      : _introduceSeekers.first.id;
+
+  ViewRequestDraftModel _introductionModel(String seekerId) =>
+      seekerId == _prayerJoelFixtureId ? _joelModel : _model;
+
+  bool _canIntroduceFor(String seekerId) =>
+      _accountSession.current &&
+      _introduceSeekers.any((person) => person.id == seekerId) &&
+      (seekerId == _prayerJoelFixtureId || _conceptLinkedSeeker.isMain);
+
+  List<DraftProfile> _introductionEligible(String seekerId) {
+    if (!_introduceSeekers.any((person) => person.id == seekerId)) {
+      return const [];
     }
+    final model = _introductionModel(seekerId);
+    if (!model.canBrowse) return const [];
+    final filter = seekerId == _prayerJoelFixtureId
+        ? const SelahBrowseFilter()
+        : _browseFilter;
+    return filter
+        .apply(model.discoverableProfiles)
+        .where((profile) => model.stateFor(profile.id) == null)
+        .toList(growable: false);
+  }
+
+  String get _introducingShepherdName {
+    final fixture = draftShepherds.first;
+    final linked = _conceptShepherdPeople
+        .where((person) => person.id == fixture.id)
+        .firstOrNull;
+    return selahShepherdShortDisplayName(
+      linked ??
+          MentorLinkedPerson(
+            id: fixture.id,
+            firstName: fixture.firstName,
+            relationship: fixture.relationshipCode,
+            linkedAt: fixture.linkedAt,
+            isMain: true,
+          ),
+    );
+  }
+
+  Widget _network() {
+    final seekerId = _selectedIntroduceSeeker;
+    final people = _introduceEmptyView
+        ? <DraftProfile>[]
+        : _introductionEligible(seekerId)
+              .where(
+                (profile) =>
+                    !(_introduceSkipped[seekerId]?.contains(profile.id) ??
+                        false) &&
+                    !_accountSession.hasIntroduction(seekerId, profile.id),
+              )
+              .toList(growable: false);
+    final candidate = people.firstOrNull;
     final revision = _uiRevision;
+    final owner = _accountSession;
     bool current() =>
         _allowed &&
+        owner.current &&
+        identical(owner, _accountSession) &&
         revision == _uiRevision &&
         _shepherdRole &&
-        _conceptHassanLinked &&
         _tab == 1 &&
-        _page == null;
-    void localAction(VoidCallback action) {
-      if (current()) _act(action);
+        _page == null &&
+        _selectedIntroduceSeeker == seekerId;
+    bool eligible() =>
+        candidate != null &&
+        _canIntroduceFor(seekerId) &&
+        !_introduceSuggesting &&
+        !_introduceEmptyView &&
+        !_accountSession.hasIntroduction(seekerId, candidate.id) &&
+        _introductionEligible(
+          seekerId,
+        ).any((person) => person.id == candidate.id);
+    void suggest() {
+      if (!current() || !eligible()) return;
+      final stored = owner.recordIntroduction(
+        seekerId: seekerId,
+        suggestion: ShepherdSuggestion(
+          profile: _displayProfile(candidate!),
+          suggestedBy: _introducingShepherdName,
+          unseen: true,
+        ),
+        canSuggest: () => current() && eligible(),
+        eligibleProfileIds: () =>
+            _introductionEligible(seekerId).map((p) => p.id),
+      );
+      if (!stored || !current()) return;
+      final name = _introduceSeekers.firstWhere((p) => p.id == seekerId).name;
+      _act(() {
+        _introduceFailed = false;
+        _notice = 'Suggested ${candidate.firstName} to $name. $name decides.';
+      });
     }
 
-    return SelahOneJourneyShepherdNetworkPresentation(
-      person: _conceptLinkedSeeker,
-      profiles: _model.canBrowse
-          ? _model.discoverableProfiles
-                .where((p) => !_conceptNetworkSent.contains(p.id))
-                .map(_displayProfile)
-                .toList()
-          : const [],
-      selectedIndex: _networkTab,
-      onChanged: (value) => localAction(() => _networkTab = value),
-      onViewingProfileChanged: () => localAction(() {}),
-      onSelectSeeker: _bound(() => _tabTo(2)),
-      onProfile: (profile) {
-        if (!current() || _model.isBlocked(profile.id)) return;
-        _open('shepherd_network_profile', person: profile.id);
-      },
-      onIntroduction: (profile) {
+    return SelahShepherdIntroduceView(
+      seekers: _introduceSeekers,
+      selectedSeekerId: seekerId,
+      candidate: candidate == null ? null : _displayProfile(candidate),
+      suggesting: _introduceSuggesting,
+      failed: _introduceFailed,
+      onSeekerChanged: (id) {
         if (!current() ||
-            !_conceptLinkedSeeker.isMain ||
-            !_model.canBrowse ||
-            _conceptNetworkSent.contains(profile.id) ||
-            !_model.discoverableProfiles.any((p) => p.id == profile.id)) {
+            id == seekerId ||
+            !_introduceSeekers.any((person) => person.id == id)) {
           return;
         }
-        _open('network_request', person: profile.id);
+        _act(() {
+          _introduceSeekerId = id;
+          _introduceSuggesting = _introduceFailed = _introduceEmptyView = false;
+        });
       },
-      sentProfiles: [
-        for (final person in draftProfiles)
-          if (!_model.isBlocked(person.id) &&
-              _conceptNetworkSent.contains(person.id))
-            _displayProfile(person),
-      ],
-      onWithdraw: (profile) {
-        if (_model.isBlocked(profile.id)) return;
-        localAction(() => _conceptNetworkSent.remove(profile.id));
+      onNext: candidate == null || _introduceSuggesting
+          ? null
+          : () {
+              if (!current() ||
+                  owner.hasIntroduction(seekerId, candidate.id) ||
+                  !_introductionEligible(
+                    seekerId,
+                  ).any((p) => p.id == candidate.id)) {
+                return;
+              }
+              _act(() {
+                (_introduceSkipped[seekerId] ??= <String>{}).add(candidate.id);
+                _introduceFailed = false;
+              });
+            },
+      onSuggest:
+          candidate == null ||
+              !_canIntroduceFor(seekerId) ||
+              _introduceSuggesting
+          ? null
+          : suggest,
+    );
+  }
+
+  List<ShepherdSuggestion> get _ownIntroductions => _accountSession
+      .introductionsFor(_accountSession.ownProfile(false).id)
+      .where((item) => !_model.isBlocked(item.profile.id))
+      .toList(growable: false);
+
+  Widget _introductionCard(ShepherdSuggestion suggestion) {
+    final revision = _uiRevision;
+    final page = _page;
+    final owner = _accountSession;
+    final seekerId = owner.ownProfile(false).id;
+    bool current() =>
+        _allowed &&
+        owner.current &&
+        identical(owner, _accountSession) &&
+        revision == _uiRevision &&
+        !_shepherdRole &&
+        _tab == 2 &&
+        _page == page &&
+        (page == null || (page == 'requests' && _requestsTab == 2)) &&
+        !_model.isBlocked(suggestion.profile.id) &&
+        owner
+            .introductionsFor(seekerId)
+            .any((s) => s.profile.id == suggestion.profile.id);
+    return SelahShepherdSuggestionCard(
+      profile: suggestion.profile,
+      shepherdName: suggestion.suggestedBy,
+      onDismiss: () {
+        if (!current()) return;
+        if (owner.dismissIntroduction(
+          seekerId,
+          suggestion.profile.id,
+          canDismiss: current,
+        )) {
+          _act(
+            () =>
+                _notice = 'Noted. ${suggestion.suggestedBy} won’t be told why.',
+          );
+        }
       },
+      onSee: () {
+        if (!current() || !_model.canBrowse) return;
+        final people = _browseFilter.apply(_model.discoverableProfiles);
+        final index = people.indexWhere((p) => p.id == suggestion.profile.id);
+        if (index < 0) return;
+        owner.markIntroductionsSeen(seekerId, canRead: current);
+        if (!current()) return;
+        _move(() {
+          _tab = 0;
+          _pages.clear();
+          _browseIndex = index;
+          // An addressed Introduction starts a fresh ID-only viewing trail.
+          // The previous Browse cursor must not override this explicit person.
+          _browseHistory.reset();
+          _browseHistory.reconcile(
+            people.map((person) => person.id),
+            fallbackId: suggestion.profile.id,
+          );
+          _browseExhausted = false;
+        });
+      },
+    );
+  }
+
+  void _markIntroductionsSeen() {
+    if (!_allowed ||
+        _shepherdRole ||
+        _tab != 2 ||
+        !(_page == null || (_page == 'requests' && _requestsTab == 2))) {
+      return;
+    }
+    final owner = _accountSession;
+    owner.markIntroductionsSeen(
+      owner.ownProfile(false).id,
+      canRead: () =>
+          _allowed &&
+          identical(owner, _accountSession) &&
+          !_shepherdRole &&
+          _tab == 2 &&
+          (_page == null || (_page == 'requests' && _requestsTab == 2)),
     );
   }
 
@@ -4595,45 +4745,6 @@ class _SelahOneJourneyConceptShellState
     crossAxisAlignment: CrossAxisAlignment.stretch,
     children: [_heading(_heldTitle, '')],
   );
-
-  Widget _networkRequestConfirmation() {
-    final p = _person;
-    if (p == null) return _unavailable();
-    final canSend =
-        _shepherdRole &&
-        _conceptHassanLinked &&
-        _conceptLinkedSeeker.isMain &&
-        _model.canBrowse &&
-        !_conceptNetworkSent.contains(p.id) &&
-        _model.discoverableProfiles.any((person) => person.id == p.id);
-    return Column(
-      key: ValueKey('concept_network_request_${p.id}'),
-      crossAxisAlignment: CrossAxisAlignment.stretch,
-      children: [
-        _heading('Speak to Shepherd', ''),
-        _card([
-          _body(
-            'Send a request to the Main Shepherd supporting this Seeker. They choose whether to respond.',
-          ),
-
-          _button(
-            'concept_confirm_network_request_${p.id}',
-            'Send request',
-            canSend
-                ? () => _act(() {
-                    _conceptNetworkSent.add(p.id);
-                    _networkTab = 1;
-                    _pages.removeLast();
-                    _notice = 'Request sent.';
-                  })
-                : null,
-            primary: true,
-          ),
-          _button('concept_cancel_network_request_${p.id}', 'Not yet', _back),
-        ]),
-      ],
-    );
-  }
 
   Widget _ownProfilePreview() {
     if (_photos == null && !_photoLoadFailed) {
@@ -5542,8 +5653,6 @@ class _SelahOneJourneyConceptShellState
       if (source == 'held_action') _heldDetail,
       if (source == null && !_shepherdRole && _tab == 2)
         'This action is held in the local preview. Your account is unchanged.',
-      if (source == 'network_request')
-        'This sample stays in the comparison. No real request or conversation opens.',
       if (source == 'account_action') ...[
         'This action is held in the comparison. It does not open your live account, edit member records, change security or device preferences, send invitations or feedback, or manage billing.',
         'This basket is local to the comparison. Checkout is not available here; no payment or entitlement is created.',
@@ -5576,6 +5685,7 @@ class _SelahOneJourneyConceptShellState
     final shepherd = mainPage && !_shepherdRole && _tab == 3;
     final prayer = !_shepherdRole && sourcePage == 'prayer';
     final prayerDashboard = mainPage && _shepherdRole && _tab == 0;
+    final introduce = mainPage && _shepherdRole && _tab == 1;
     final profile = mainPage && _tab == (_shepherdRole ? 3 : 4);
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -5608,6 +5718,31 @@ class _SelahOneJourneyConceptShellState
                 });
               },
             ),
+          ]),
+        if (introduce)
+          _controlSection([
+            for (final preset in const [
+              'ready',
+              'suggesting',
+              'failed',
+              'empty',
+            ])
+              _previewAction('introduce_$preset', 'Introduce · $preset', () {
+                if (!_allowed ||
+                    !SelahDeveloperAccess.canUseDeveloperTools ||
+                    !_shepherdRole ||
+                    _tab != 1 ||
+                    _page != 'controls' ||
+                    _pageOptionsSource != null) {
+                  return;
+                }
+                _move(() {
+                  _introduceSuggesting = preset == 'suggesting';
+                  _introduceFailed = preset == 'failed';
+                  _introduceEmptyView = preset == 'empty';
+                  _pages.removeLast();
+                });
+              }),
           ]),
         if (prayer)
           _controlSection([
@@ -5878,7 +6013,11 @@ class _SelahOneJourneyConceptShellState
               _browseHistory.reset();
               _messages.clear();
               _message.clear();
-              _conceptNetworkSent.clear();
+              _joelModel.reset();
+              _introduceSkipped.clear();
+              _introduceSeekerId = 'draft-self';
+              _introduceSuggesting = _introduceFailed = _introduceEmptyView =
+                  false;
               _conceptShepherdHistory.clear();
               _conceptRemovedShepherds.clear();
               _conceptMainShepherdId = 'draft-shepherd-hassan';
@@ -5895,7 +6034,7 @@ class _SelahOneJourneyConceptShellState
               _circleTopicLayout.value = SelahCircleTopicLayout.current;
               _accountDestination = null;
               _expansion.collapseAll();
-              _shepherdPage = _networkTab = 0;
+              _shepherdPage = 0;
               _browseIndex = 1;
               _personId = null;
               _shepherdJourneyId = null;

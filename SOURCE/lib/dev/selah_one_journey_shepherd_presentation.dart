@@ -220,6 +220,7 @@ class SelahOneJourneyShepherdSeekersPresentation extends StatelessWidget {
       pageBuilder: (entry) => ShepherdSeekerWorkspaceView(
         entry: entry,
         embedded: true,
+        introductionMode: true,
         hasShepherdOne: hasShepherdOne,
         photoUrl: profile.photoUrl,
         onRetrySummary: () {},

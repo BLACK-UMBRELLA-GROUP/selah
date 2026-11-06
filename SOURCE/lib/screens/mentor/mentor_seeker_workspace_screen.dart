@@ -46,7 +46,8 @@ class MentorSeekerWorkspaceScreen extends StatefulWidget {
       _MentorSeekerWorkspaceScreenState();
 }
 
-class _MentorSeekerWorkspaceScreenState extends State<MentorSeekerWorkspaceScreen> {
+class _MentorSeekerWorkspaceScreenState
+    extends State<MentorSeekerWorkspaceScreen> {
   bool _summaryLoading = false;
   bool _summaryUnavailable = false;
   bool _summaryLastKnown = false;
@@ -206,6 +207,7 @@ class ShepherdSeekerWorkspaceView extends StatelessWidget {
   final bool summaryUnavailable;
   final bool summaryLastKnown;
   final bool embedded;
+  final bool introductionMode;
   final VoidCallback onRetrySummary;
   final ValueChanged<MentorJourneyView>? onOpenJourney;
   final VoidCallback? onOpenNetwork;
@@ -221,6 +223,7 @@ class ShepherdSeekerWorkspaceView extends StatelessWidget {
     this.summaryUnavailable = false,
     this.summaryLastKnown = false,
     this.embedded = false,
+    this.introductionMode = false,
     required this.onRetrySummary,
     this.onOpenJourney,
     this.onOpenNetwork,
@@ -323,7 +326,9 @@ class ShepherdSeekerWorkspaceView extends StatelessWidget {
                     if (hasShepherdOne && onOpenNetwork != null) ...[
                       const SizedBox(height: 14),
                       _WorkspaceSection(
-                        title: 'SHEPHERD NETWORK',
+                        title: introductionMode
+                            ? 'INTRODUCE'
+                            : 'SHEPHERD NETWORK',
                         child: SizedBox(
                           width: double.infinity,
                           child: OutlinedButton.icon(
@@ -398,7 +403,7 @@ class ShepherdSeekerWorkspaceView extends StatelessWidget {
               ),
               if (hasShepherdOne && onOpenNetwork != null)
                 _QuietWorkspaceSection(
-                  label: 'SHEPHERD NETWORK',
+                  label: introductionMode ? 'INTRODUCE' : 'SHEPHERD NETWORK',
                   child: _QuietWorkspaceAction(
                     icon: Icons.diversity_3_outlined,
                     label: 'Open for ${_person.firstName}',
@@ -578,7 +583,10 @@ class _QuietWorkspaceSection extends StatelessWidget {
     child: Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(label, style: SelahText.chapterLabel(color: SelahColors.ink(0.47))),
+        Text(
+          label,
+          style: SelahText.chapterLabel(color: SelahColors.ink(0.47)),
+        ),
         const SizedBox(height: 7),
         child,
       ],
