@@ -1,0 +1,148 @@
+{
+  "queue_lines": [
+    12
+  ],
+  "action": "OA-SELAH-003",
+  "status": "BUILT",
+  "source_commit": "d48b9990cddfd061ba0d0a95734263b39d578742",
+  "flutter_version": "3.44.2",
+  "dart_version": "3.12.2",
+  "build_mode": "debug Flutter widget tests; no native compilation/installation",
+  "timestamp_utc": "2026-11-06T19:38:52.470069+00:00",
+  "built_from": [
+    "APP/APPROVED/WORDING/BRIEFS/BUILD_BRIEF_2026-11-06_V1.md",
+    "APP/APPROVED/WORDING/RECORD/SELAH_WORDING_SPEC_CURRENT_VERSION_V1.md",
+    "APP/APPROVED/WORDING/RECORD/LOCK_RECORD.md"
+  ],
+  "feature": "MARRIAGE_PREP",
+  "version": "V1_2_WORDING_V1",
+  "viewport_logical": [
+    430,
+    932
+  ],
+  "pixel_ratio": 3,
+  "images": [
+    {
+      "file": "L09_marriage_prep__all_done__build.png",
+      "bytes": 224541,
+      "pixels": [
+        1290,
+        2796
+      ],
+      "sha256": "50f1f2885003495b66f4b8f2ae4e90db17d6bf57e9f4dcf892272cb8bab7f8a1"
+    },
+    {
+      "file": "L09_marriage_prep__all_done__master_beside_build.png",
+      "bytes": 548105,
+      "pixels": [
+        2580,
+        2796
+      ],
+      "sha256": "d67e3e4664c13a5f1901e565e19c81799e14bdc84a56237a0481b61de2bede89"
+    },
+    {
+      "file": "L09_marriage_prep__didnt_save__build.png",
+      "bytes": 233853,
+      "pixels": [
+        1290,
+        2796
+      ],
+      "sha256": "278c99e4e691a1d139663496d646c34e251f75d0bd3579dfd82cdab39aab7456"
+    },
+    {
+      "file": "L09_marriage_prep__didnt_save__master_beside_build.png",
+      "bytes": 557184,
+      "pixels": [
+        2580,
+        2796
+      ],
+      "sha256": "24099473feb5bedf39f61bd8229a61f5a70fb38ee4a7aa15a96b57d3fdd86e65"
+    },
+    {
+      "file": "L09_marriage_prep__not_started__build.png",
+      "bytes": 227683,
+      "pixels": [
+        1290,
+        2796
+      ],
+      "sha256": "14fcc1a8196be7fc1401099439873effd8490ebc6f3247409b37aa377bb35fa5"
+    },
+    {
+      "file": "L09_marriage_prep__not_started__master_beside_build.png",
+      "bytes": 552716,
+      "pixels": [
+        2580,
+        2796
+      ],
+      "sha256": "87b944ad7591fa942790c189b8c4cdad4ea5547590859c5d261725422087afe7"
+    },
+    {
+      "file": "L09_marriage_prep__one_done__build.png",
+      "bytes": 226743,
+      "pixels": [
+        1290,
+        2796
+      ],
+      "sha256": "bd9f997c69c471c7efae0c9acf59bc673f2cb03b0438e8dd64319a9238e09a8e"
+    },
+    {
+      "file": "L09_marriage_prep__one_done__master_beside_build.png",
+      "bytes": 551480,
+      "pixels": [
+        2580,
+        2796
+      ],
+      "sha256": "b8d9c58534122e59825b686560a70840c6ee94ec797674311c024016d9693f0d"
+    }
+  ],
+  "masters": {
+    "APP/APPROVED/MARRIAGE_PREP/MASTERS/L09_marriage_prep__all_done.png": {
+      "sha256": "ea7a65a29ec8f2a3c3764aeca324efc63930d0d6507824de0d9b57d355157b8e",
+      "bytes": 296517
+    },
+    "APP/APPROVED/MARRIAGE_PREP/MASTERS/L09_marriage_prep__didnt_save.png": {
+      "sha256": "46fafb672a758d6b84bb145e44a4a65b1112f2a9dbef455d6ad9f8e2e7626b7e",
+      "bytes": 294646
+    },
+    "APP/APPROVED/MARRIAGE_PREP/MASTERS/L09_marriage_prep__not_started.png": {
+      "sha256": "be454647a1d2128199fa505fc49a4e59abe97598f4f1b11373039f377af2af59",
+      "bytes": 298527
+    },
+    "APP/APPROVED/MARRIAGE_PREP/MASTERS/L09_marriage_prep__one_done.png": {
+      "sha256": "8f3614a334aa5978ba80bac2b7e44d244687064abc8734fb53f2756b11cfece8",
+      "bytes": 297944
+    }
+  },
+  "image_bytes": 3122305,
+  "comparison": "New version after LOCK11; prior evidence preserved. Exact source wording and existing layout/state differences recorded in earlier feature receipts and daily report; no pixel MATCH claim.",
+  "checks": {
+    "all_masters_capture": 167,
+    "full_flutter_suite": {
+      "passed": 450,
+      "skipped": 1,
+      "exit": 0
+    },
+    "pure_checks": 1170,
+    "flutter_analyze": {
+      "errors": 0,
+      "warnings": 0,
+      "prior_infos": 10
+    },
+    "cached_analysis": {
+      "files": 390,
+      "errors": 0,
+      "warnings": 0,
+      "prior_infos": 1
+    },
+    "boundaries": {
+      "passed": 20571,
+      "findings": 0
+    }
+  },
+  "limits": [
+    "No phone/native/live-server/Founder visual acceptance proof.",
+    "One previously undecided320x568/text2header overflow check remains skipped.",
+    "Recent prayer dates follow real calendar time; byte replay was verified the same day."
+  ],
+  "founder_decisions": "LOCK11 name/request wording, including later locked screens; no new decision requested."
+}

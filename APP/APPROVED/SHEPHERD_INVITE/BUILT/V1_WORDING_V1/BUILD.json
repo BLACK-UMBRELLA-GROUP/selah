@@ -1,0 +1,258 @@
+{
+  "queue_lines": [
+    12
+  ],
+  "action": "OA-SELAH-003",
+  "status": "BUILT",
+  "source_commit": "d48b9990cddfd061ba0d0a95734263b39d578742",
+  "flutter_version": "3.44.2",
+  "dart_version": "3.12.2",
+  "build_mode": "debug Flutter widget tests; no native compilation/installation",
+  "timestamp_utc": "2026-11-06T19:38:52.470069+00:00",
+  "built_from": [
+    "APP/APPROVED/WORDING/BRIEFS/BUILD_BRIEF_2026-11-06_V1.md",
+    "APP/APPROVED/WORDING/RECORD/SELAH_WORDING_SPEC_CURRENT_VERSION_V1.md",
+    "APP/APPROVED/WORDING/RECORD/LOCK_RECORD.md"
+  ],
+  "feature": "SHEPHERD_INVITE",
+  "version": "V1_WORDING_V1",
+  "viewport_logical": [
+    430,
+    932
+  ],
+  "pixel_ratio": 3,
+  "images": [
+    {
+      "file": "L03_seeker_shepherd__invite_pending__build.png",
+      "bytes": 185094,
+      "pixels": [
+        1290,
+        2796
+      ],
+      "sha256": "0f581533d2d3017cfdc7dc33439a7923f15bc9e046e79881e3593b6d4b29428c"
+    },
+    {
+      "file": "L03_seeker_shepherd__invite_pending__master_beside_build.png",
+      "bytes": 379096,
+      "pixels": [
+        2580,
+        2796
+      ],
+      "sha256": "572bf827ed4c8b2e1bad29306394a211ecf4064210a013840ae3726910df31c7"
+    },
+    {
+      "file": "L03_signup_choose__empty__build.png",
+      "bytes": 152011,
+      "pixels": [
+        1290,
+        2796
+      ],
+      "sha256": "e6b5c35b17df40c31cb5741e74abc66cac7a0549578dafb385d09763001910c4"
+    },
+    {
+      "file": "L03_signup_choose__empty__master_beside_build.png",
+      "bytes": 320166,
+      "pixels": [
+        2580,
+        2796
+      ],
+      "sha256": "0ee7ed45801114016ee21a65d6e5042207c9f231f73905660541209221041a07"
+    },
+    {
+      "file": "L03_signup_choose__error__build.png",
+      "bytes": 163392,
+      "pixels": [
+        1290,
+        2796
+      ],
+      "sha256": "037722e482b4a42898d2978a809dd5d2d67cec9c9616db96cfb6ec87e7ed1bea"
+    },
+    {
+      "file": "L03_signup_choose__error__master_beside_build.png",
+      "bytes": 341948,
+      "pixels": [
+        2580,
+        2796
+      ],
+      "sha256": "2bacf704c889cf460fcabf4a87b387d3f26df5f7f269275d139c27aba4a39d17"
+    },
+    {
+      "file": "L03_signup_choose__selected__build.png",
+      "bytes": 152749,
+      "pixels": [
+        1290,
+        2796
+      ],
+      "sha256": "06fefe960ed333210f730e4f23d126442c26c7778edae5df3e82f137e5b9208d"
+    },
+    {
+      "file": "L03_signup_choose__selected__master_beside_build.png",
+      "bytes": 322795,
+      "pixels": [
+        2580,
+        2796
+      ],
+      "sha256": "4337de842ebd6a2f1f4625510bc4eb3acbffaaccece80d41e1abf58cb72c240d"
+    },
+    {
+      "file": "L03_signup_invite__build.png",
+      "bytes": 175265,
+      "pixels": [
+        1290,
+        2796
+      ],
+      "sha256": "8ed5dc77560a2cba57447df899363f59bbda32dfee9d2f233b313894396bdee0"
+    },
+    {
+      "file": "L03_signup_invite__failed__build.png",
+      "bytes": 198938,
+      "pixels": [
+        1290,
+        2796
+      ],
+      "sha256": "88db6e686aacdcbf030c610210a87b758c4f6851bc5dafd95e5bb5d9088b981c"
+    },
+    {
+      "file": "L03_signup_invite__failed__master_beside_build.png",
+      "bytes": 408548,
+      "pixels": [
+        2580,
+        2796
+      ],
+      "sha256": "187ae65710d06430e15d002ae46c4569899a18be5fe13e6fc9af032e121117bf"
+    },
+    {
+      "file": "L03_signup_invite__master_beside_build.png",
+      "bytes": 360478,
+      "pixels": [
+        2580,
+        2796
+      ],
+      "sha256": "65a11e6d96f527ec45fbd015444ccea73481bf6d35426328c12c141cf634b1f0"
+    },
+    {
+      "file": "L03_signup_invite__sending__build.png",
+      "bytes": 159658,
+      "pixels": [
+        1290,
+        2796
+      ],
+      "sha256": "6a3b6af7cb6354d15b37ad10b549b9c20e6d2699dc85738cee343de61b46e2da"
+    },
+    {
+      "file": "L03_signup_invite__sending__master_beside_build.png",
+      "bytes": 330538,
+      "pixels": [
+        2580,
+        2796
+      ],
+      "sha256": "62ddfbe28dcad8ee2607a8f504e8869109c575773fc9c8351c8e5d1d22dcfb87"
+    },
+    {
+      "file": "L03_signup_sent__build.png",
+      "bytes": 93878,
+      "pixels": [
+        1290,
+        2796
+      ],
+      "sha256": "19c4f97c6eea46ad9fa921750adfd515fe9e478ebf20ee554c709591eba7e335"
+    },
+    {
+      "file": "L03_signup_sent__master_beside_build.png",
+      "bytes": 193098,
+      "pixels": [
+        2580,
+        2796
+      ],
+      "sha256": "b36e65e610ee43ae07da6cd7caf27aaccd6f1b1f16daf8ce1ff76661cca58073"
+    },
+    {
+      "file": "L03_signup_welcome__build.png",
+      "bytes": 152890,
+      "pixels": [
+        1290,
+        2796
+      ],
+      "sha256": "9fbc4b2040dab3944474b66fda27fde8ca2fbc8e716d1c78124e42939809ce8d"
+    },
+    {
+      "file": "L03_signup_welcome__master_beside_build.png",
+      "bytes": 313649,
+      "pixels": [
+        2580,
+        2796
+      ],
+      "sha256": "dc9c5e7b352d0598c8df07c08b6694329658517b571d299b388828a502808b74"
+    }
+  ],
+  "masters": {
+    "APP/APPROVED/SHEPHERD_INVITE/MASTERS/L03_seeker_shepherd__invite_pending.png": {
+      "sha256": "01a80328a8c9064a395a71f4e44eb9e65dcdc187daa7ee397cbfc09682cbceae",
+      "bytes": 183983
+    },
+    "APP/APPROVED/SHEPHERD_INVITE/MASTERS/L03_signup_choose__empty.png": {
+      "sha256": "2bbd4c519c78fd4c9659e8a4f7e448d02212d435f24ba22ab360bc5708530211",
+      "bytes": 156786
+    },
+    "APP/APPROVED/SHEPHERD_INVITE/MASTERS/L03_signup_choose__error.png": {
+      "sha256": "9ac02f6ea30514ffe3ae99957b69984ca586888c4ef45ab72e03e05ba98e9559",
+      "bytes": 166694
+    },
+    "APP/APPROVED/SHEPHERD_INVITE/MASTERS/L03_signup_choose__selected.png": {
+      "sha256": "dfec1389e096f68ce0818ff9d76ba1147f47041734e6c04681f57f817563fcc1",
+      "bytes": 158685
+    },
+    "APP/APPROVED/SHEPHERD_INVITE/MASTERS/L03_signup_invite__failed.png": {
+      "sha256": "0107f3f2edcebb9a9048940f75a68901827a197df6fcc7acb78fbd4824a152de",
+      "bytes": 197780
+    },
+    "APP/APPROVED/SHEPHERD_INVITE/MASTERS/L03_signup_invite.png": {
+      "sha256": "2cd9e9cde06d4187a7cd34c729803ffe5b88a4f2074c9c0a7810b8fd9bb3a2e1",
+      "bytes": 177276
+    },
+    "APP/APPROVED/SHEPHERD_INVITE/MASTERS/L03_signup_invite__sending.png": {
+      "sha256": "f29e9c1fd53fd49e2e57eb8275a126522eac759da057f4ca5dafbf06f8cdafd0",
+      "bytes": 163013
+    },
+    "APP/APPROVED/SHEPHERD_INVITE/MASTERS/L03_signup_sent.png": {
+      "sha256": "8af7b178ac92186308b4596446b928b5f822ac51ae54f1c9690c7503a0fa6f45",
+      "bytes": 98305
+    },
+    "APP/APPROVED/SHEPHERD_INVITE/MASTERS/L03_signup_welcome.png": {
+      "sha256": "4a8f830f13bea048e2f3064b5937f727a62a6cab46ea9ab0e0a3c90899ed1482",
+      "bytes": 155794
+    }
+  },
+  "image_bytes": 4404191,
+  "comparison": "New version after LOCK11; prior evidence preserved. Exact source wording and existing layout/state differences recorded in earlier feature receipts and daily report; no pixel MATCH claim.",
+  "checks": {
+    "all_masters_capture": 167,
+    "full_flutter_suite": {
+      "passed": 450,
+      "skipped": 1,
+      "exit": 0
+    },
+    "pure_checks": 1170,
+    "flutter_analyze": {
+      "errors": 0,
+      "warnings": 0,
+      "prior_infos": 10
+    },
+    "cached_analysis": {
+      "files": 390,
+      "errors": 0,
+      "warnings": 0,
+      "prior_infos": 1
+    },
+    "boundaries": {
+      "passed": 20571,
+      "findings": 0
+    }
+  },
+  "limits": [
+    "No phone/native/live-server/Founder visual acceptance proof.",
+    "One previously undecided320x568/text2header overflow check remains skipped.",
+    "Recent prayer dates follow real calendar time; byte replay was verified the same day."
+  ],
+  "founder_decisions": "LOCK11 name/request wording, including later locked screens; no new decision requested."
+}

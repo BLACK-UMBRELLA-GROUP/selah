@@ -1,0 +1,214 @@
+{
+  "queue_lines": [
+    12
+  ],
+  "action": "OA-SELAH-003",
+  "status": "BUILT",
+  "source_commit": "d48b9990cddfd061ba0d0a95734263b39d578742",
+  "flutter_version": "3.44.2",
+  "dart_version": "3.12.2",
+  "build_mode": "debug Flutter widget tests; no native compilation/installation",
+  "timestamp_utc": "2026-11-06T19:38:52.470069+00:00",
+  "built_from": [
+    "APP/APPROVED/WORDING/BRIEFS/BUILD_BRIEF_2026-11-06_V1.md",
+    "APP/APPROVED/WORDING/RECORD/SELAH_WORDING_SPEC_CURRENT_VERSION_V1.md",
+    "APP/APPROVED/WORDING/RECORD/LOCK_RECORD.md"
+  ],
+  "feature": "PRAYER",
+  "version": "V1_WORDING_V1",
+  "viewport_logical": [
+    430,
+    932
+  ],
+  "pixel_ratio": 3,
+  "images": [
+    {
+      "file": "L10_seeker_ask_for_prayer__build.png",
+      "bytes": 141894,
+      "pixels": [
+        1290,
+        2796
+      ],
+      "sha256": "c034fec263060205be6900baceeae8ebf84225c178ed770eb646cd300a17f431"
+    },
+    {
+      "file": "L10_seeker_ask_for_prayer__didnt_send__build.png",
+      "bytes": 170216,
+      "pixels": [
+        1290,
+        2796
+      ],
+      "sha256": "fecad1ff2a250633b1a20d0ec957c3820af0e27c6ccc8001e26aca6913fadb20"
+    },
+    {
+      "file": "L10_seeker_ask_for_prayer__didnt_send__master_beside_build.png",
+      "bytes": 357327,
+      "pixels": [
+        2580,
+        2796
+      ],
+      "sha256": "8613837b3c420df59954e956c9c7e114d285b10dfbbb322a01fdf9261f91f1a6"
+    },
+    {
+      "file": "L10_seeker_ask_for_prayer__master_beside_build.png",
+      "bytes": 300933,
+      "pixels": [
+        2580,
+        2796
+      ],
+      "sha256": "a85089ecff9a438c2ccace6c6c97b1f6f04b7fa3c57b63bc862cc29cbaef8ced"
+    },
+    {
+      "file": "L10_seeker_ask_for_prayer__sending__build.png",
+      "bytes": 140697,
+      "pixels": [
+        1290,
+        2796
+      ],
+      "sha256": "88e647776cd4e085e6f5b682a323c14d8c12602e2bf6df6bff2c2d41cc90296e"
+    },
+    {
+      "file": "L10_seeker_ask_for_prayer__sending__master_beside_build.png",
+      "bytes": 292474,
+      "pixels": [
+        2580,
+        2796
+      ],
+      "sha256": "1920b241b4f474761ed0fc5d88854efcb1a6aff6a248c55300001bfbded9f743"
+    },
+    {
+      "file": "L10_seeker_my_selah__prayed_update__build.png",
+      "bytes": 169126,
+      "pixels": [
+        1290,
+        2796
+      ],
+      "sha256": "6925dc800022fc176b94a020f61fc7c44938429c02c5a958a38ad2dce6caa19c"
+    },
+    {
+      "file": "L10_seeker_my_selah__prayed_update__master_beside_build.png",
+      "bytes": 392434,
+      "pixels": [
+        2580,
+        2796
+      ],
+      "sha256": "58d078b184bfd22f99129b5d23c15c45b9b6e6683fb8ba45d62c9991588e4029"
+    },
+    {
+      "file": "L10_shepherd_dashboard__no_requests__build.png",
+      "bytes": 294515,
+      "pixels": [
+        1290,
+        2796
+      ],
+      "sha256": "95f9ea39600492dca7cce06bd8b83e72419387c639af07e29d04a6701a544b7d"
+    },
+    {
+      "file": "L10_shepherd_dashboard__no_requests__master_beside_build.png",
+      "bytes": 506547,
+      "pixels": [
+        2580,
+        2796
+      ],
+      "sha256": "eef24aad981102e669350ae5f0bebffbd35179e06472541dba2206360c1e412d"
+    },
+    {
+      "file": "L10_shepherd_dashboard__prayed__build.png",
+      "bytes": 286529,
+      "pixels": [
+        1290,
+        2796
+      ],
+      "sha256": "ed5055b9ec522a5d84e315f2271f18319caf521d1ad80c1f300f009258446f35"
+    },
+    {
+      "file": "L10_shepherd_dashboard__prayed__master_beside_build.png",
+      "bytes": 543593,
+      "pixels": [
+        2580,
+        2796
+      ],
+      "sha256": "fa2940d56f77afe8bffbc2d09d73d2f4f3db6232710708407aad7d731ceb7d7c"
+    },
+    {
+      "file": "L10_shepherd_dashboard__requests__build.png",
+      "bytes": 285878,
+      "pixels": [
+        1290,
+        2796
+      ],
+      "sha256": "2412d64260f5220b1a87f7b47f514a0cf357f5584e06a88ae9f17f7210b68dd4"
+    },
+    {
+      "file": "L10_shepherd_dashboard__requests__master_beside_build.png",
+      "bytes": 543040,
+      "pixels": [
+        2580,
+        2796
+      ],
+      "sha256": "b8f90861a212d56f811009e9dd305962ad2e799088eff2f3f9ae04d34c1c94e0"
+    }
+  ],
+  "masters": {
+    "APP/APPROVED/PRAYER/MASTERS/L10_seeker_ask_for_prayer__didnt_send.png": {
+      "sha256": "5e9abeb0243a1982abc1333b44875f07b40a2a690883a0c1ed17c76d98f3125e",
+      "bytes": 176863
+    },
+    "APP/APPROVED/PRAYER/MASTERS/L10_seeker_ask_for_prayer.png": {
+      "sha256": "5f497f6b876fddcedbee53de4147de40678433d1ce23496151f57dd8748f2e51",
+      "bytes": 151284
+    },
+    "APP/APPROVED/PRAYER/MASTERS/L10_seeker_ask_for_prayer__sending.png": {
+      "sha256": "4a672ef32fdd1678293e5a54eb7ca198fb01a9bfd3a590ceddd82c3b9ac01d51",
+      "bytes": 146672
+    },
+    "APP/APPROVED/PRAYER/MASTERS/L10_seeker_my_selah__prayed_update.png": {
+      "sha256": "3b30039dc0a8ecacb86f9e132f6398c5a2d5fd5af89298102cc9dfc72a28de23",
+      "bytes": 209331
+    },
+    "APP/APPROVED/PRAYER/MASTERS/L10_shepherd_dashboard__no_requests.png": {
+      "sha256": "c313327232571b33e8676c85e058fb25e3bf4b74c9fb7c4d81bea60ee131ef75",
+      "bytes": 191631
+    },
+    "APP/APPROVED/PRAYER/MASTERS/L10_shepherd_dashboard__prayed.png": {
+      "sha256": "48808bba98bc34a4ee95767b8e561a84e4b23a1d189b0a0be1f70868f360bb97",
+      "bytes": 233732
+    },
+    "APP/APPROVED/PRAYER/MASTERS/L10_shepherd_dashboard__requests.png": {
+      "sha256": "18315228d29efacd7af958e45d976fb74547a08be62e8192e8bb8f430c89fc70",
+      "bytes": 233954
+    }
+  },
+  "image_bytes": 4425203,
+  "comparison": "New version after LOCK11; prior evidence preserved. Exact source wording and existing layout/state differences recorded in earlier feature receipts and daily report; no pixel MATCH claim.",
+  "checks": {
+    "all_masters_capture": 167,
+    "full_flutter_suite": {
+      "passed": 450,
+      "skipped": 1,
+      "exit": 0
+    },
+    "pure_checks": 1170,
+    "flutter_analyze": {
+      "errors": 0,
+      "warnings": 0,
+      "prior_infos": 10
+    },
+    "cached_analysis": {
+      "files": 390,
+      "errors": 0,
+      "warnings": 0,
+      "prior_infos": 1
+    },
+    "boundaries": {
+      "passed": 20571,
+      "findings": 0
+    }
+  },
+  "limits": [
+    "No phone/native/live-server/Founder visual acceptance proof.",
+    "One previously undecided320x568/text2header overflow check remains skipped.",
+    "Recent prayer dates follow real calendar time; byte replay was verified the same day."
+  ],
+  "founder_decisions": "LOCK11 name/request wording, including later locked screens; no new decision requested."
+}

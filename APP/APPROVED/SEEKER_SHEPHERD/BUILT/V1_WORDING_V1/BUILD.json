@@ -1,0 +1,192 @@
+{
+  "queue_lines": [
+    12
+  ],
+  "action": "OA-SELAH-003",
+  "status": "BUILT",
+  "source_commit": "d48b9990cddfd061ba0d0a95734263b39d578742",
+  "flutter_version": "3.44.2",
+  "dart_version": "3.12.2",
+  "build_mode": "debug Flutter widget tests; no native compilation/installation",
+  "timestamp_utc": "2026-11-06T19:38:52.470069+00:00",
+  "built_from": [
+    "APP/APPROVED/WORDING/BRIEFS/BUILD_BRIEF_2026-11-06_V1.md",
+    "APP/APPROVED/WORDING/RECORD/SELAH_WORDING_SPEC_CURRENT_VERSION_V1.md",
+    "APP/APPROVED/WORDING/RECORD/LOCK_RECORD.md"
+  ],
+  "feature": "SEEKER_SHEPHERD",
+  "version": "V1_WORDING_V1",
+  "viewport_logical": [
+    430,
+    932
+  ],
+  "pixel_ratio": 3,
+  "images": [
+    {
+      "file": "L12_seeker_shepherd_tab__access_didnt_load__build.png",
+      "bytes": 224111,
+      "pixels": [
+        1290,
+        2796
+      ],
+      "sha256": "4ece279dc0871120de4983be7ad45149f8a6859fc8419adc37a5e07caa421993"
+    },
+    {
+      "file": "L12_seeker_shepherd_tab__access_didnt_load__master_beside_build.png",
+      "bytes": 476141,
+      "pixels": [
+        2580,
+        2796
+      ],
+      "sha256": "4f828cb36af2a96c02f635425bb3d8ce8f994fcba0c8519fa1f040cef781660f"
+    },
+    {
+      "file": "L12_seeker_shepherd_tab__access_loading__build.png",
+      "bytes": 227525,
+      "pixels": [
+        1290,
+        2796
+      ],
+      "sha256": "57ba0768e53e90d6591e75c7b41a36c6884d6480b6a47bd5dda1e58efa989f52"
+    },
+    {
+      "file": "L12_seeker_shepherd_tab__access_loading__master_beside_build.png",
+      "bytes": 488140,
+      "pixels": [
+        2580,
+        2796
+      ],
+      "sha256": "2d268f5e7c00cdd41112aa3ee17c8c69352e47e4df97dbb852436487b5906eb2"
+    },
+    {
+      "file": "L12_seeker_shepherd_tab__bottom__build.png",
+      "bytes": 239374,
+      "pixels": [
+        1290,
+        2796
+      ],
+      "sha256": "568f389fd60386e810a66c52c53dff0d4f1c3f2fea3f9cdc62e995a27f4938bb"
+    },
+    {
+      "file": "L12_seeker_shepherd_tab__bottom__master_beside_build.png",
+      "bytes": 494884,
+      "pixels": [
+        2580,
+        2796
+      ],
+      "sha256": "5222af65e0195a15d6fe6eaa71cb22b61b14ba001a0d67d42befe91901913175"
+    },
+    {
+      "file": "L12_seeker_shepherd_tab__no_active_journeys__build.png",
+      "bytes": 236936,
+      "pixels": [
+        1290,
+        2796
+      ],
+      "sha256": "748276665ae1450892a492722e018cc401c2a47920e33dadb1f1d9faefde6ef5"
+    },
+    {
+      "file": "L12_seeker_shepherd_tab__no_active_journeys__master_beside_build.png",
+      "bytes": 501161,
+      "pixels": [
+        2580,
+        2796
+      ],
+      "sha256": "22056cf64520529926ed86a19688ac18dfeef0419cccfdb704bf2c195ae56fc8"
+    },
+    {
+      "file": "L12_seeker_shepherd_tab__nothing_yet__build.png",
+      "bytes": 331791,
+      "pixels": [
+        1290,
+        2796
+      ],
+      "sha256": "ad6c3861e19ca99ca226edc56937163af49f40d90dbb05d73ed1c60f584ab737"
+    },
+    {
+      "file": "L12_seeker_shepherd_tab__nothing_yet__master_beside_build.png",
+      "bytes": 661809,
+      "pixels": [
+        2580,
+        2796
+      ],
+      "sha256": "46f9599eb802f93526d3f59b05c26e6308c15b4a36c0313fd8e4285b664554a1"
+    },
+    {
+      "file": "L12_seeker_shepherd_tab__top__build.png",
+      "bytes": 319268,
+      "pixels": [
+        1290,
+        2796
+      ],
+      "sha256": "18d31c2b6494f87d6da1c972ee604250c84c2af4a8b83e6fe97e053e205a3ecb"
+    },
+    {
+      "file": "L12_seeker_shepherd_tab__top__master_beside_build.png",
+      "bytes": 633357,
+      "pixels": [
+        2580,
+        2796
+      ],
+      "sha256": "400f3a4f1093475a8695a647cd99cd9249e96ae34fdc07402cc09f45019febc3"
+    }
+  ],
+  "masters": {
+    "APP/APPROVED/SEEKER_SHEPHERD/MASTERS/L12_seeker_shepherd_tab__access_didnt_load.png": {
+      "sha256": "64db1ff28f7c1c32603ba9174cd79a5a6ad990a738388d695899ae7a99efae90",
+      "bytes": 232742
+    },
+    "APP/APPROVED/SEEKER_SHEPHERD/MASTERS/L12_seeker_shepherd_tab__access_loading.png": {
+      "sha256": "2f32919398fe7fdec27676b767b067ff2b78d858814be244a6ab7dd7763bb365",
+      "bytes": 240747
+    },
+    "APP/APPROVED/SEEKER_SHEPHERD/MASTERS/L12_seeker_shepherd_tab__bottom.png": {
+      "sha256": "944037e0f00f639758dd75f7b7da5b0cb2d10eb86d89632c081677de4b06c05d",
+      "bytes": 235924
+    },
+    "APP/APPROVED/SEEKER_SHEPHERD/MASTERS/L12_seeker_shepherd_tab__no_active_journeys.png": {
+      "sha256": "949f3113cbd270b29fb1f41757746f620118513de3927a8fa1d804afd9087c1d",
+      "bytes": 246488
+    },
+    "APP/APPROVED/SEEKER_SHEPHERD/MASTERS/L12_seeker_shepherd_tab__nothing_yet.png": {
+      "sha256": "5d6fd40e66c12b4d134068876d878cc4f73a5ef93823336f783fd3807e5b7a72",
+      "bytes": 304355
+    },
+    "APP/APPROVED/SEEKER_SHEPHERD/MASTERS/L12_seeker_shepherd_tab__top.png": {
+      "sha256": "600d665301d25eeb6abcf2c1c7c15b917fdeb138287817e279b7805c8cb3091d",
+      "bytes": 290366
+    }
+  },
+  "image_bytes": 4834497,
+  "comparison": "New version after LOCK11; prior evidence preserved. Exact source wording and existing layout/state differences recorded in earlier feature receipts and daily report; no pixel MATCH claim.",
+  "checks": {
+    "all_masters_capture": 167,
+    "full_flutter_suite": {
+      "passed": 450,
+      "skipped": 1,
+      "exit": 0
+    },
+    "pure_checks": 1170,
+    "flutter_analyze": {
+      "errors": 0,
+      "warnings": 0,
+      "prior_infos": 10
+    },
+    "cached_analysis": {
+      "files": 390,
+      "errors": 0,
+      "warnings": 0,
+      "prior_infos": 1
+    },
+    "boundaries": {
+      "passed": 20571,
+      "findings": 0
+    }
+  },
+  "limits": [
+    "No phone/native/live-server/Founder visual acceptance proof.",
+    "One previously undecided320x568/text2header overflow check remains skipped.",
+    "Recent prayer dates follow real calendar time; byte replay was verified the same day."
+  ],
+  "founder_decisions": "LOCK11 name/request wording, including later locked screens; no new decision requested."
+}

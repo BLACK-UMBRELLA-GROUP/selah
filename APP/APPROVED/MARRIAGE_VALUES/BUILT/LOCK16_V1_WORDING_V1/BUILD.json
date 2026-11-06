@@ -1,0 +1,298 @@
+{
+  "queue_lines": [
+    12
+  ],
+  "action": "OA-SELAH-003",
+  "status": "BUILT",
+  "source_commit": "d48b9990cddfd061ba0d0a95734263b39d578742",
+  "flutter_version": "3.44.2",
+  "dart_version": "3.12.2",
+  "build_mode": "debug Flutter widget tests; no native compilation/installation",
+  "timestamp_utc": "2026-11-06T19:38:52.470069+00:00",
+  "built_from": [
+    "APP/APPROVED/WORDING/BRIEFS/BUILD_BRIEF_2026-11-06_V1.md",
+    "APP/APPROVED/WORDING/RECORD/SELAH_WORDING_SPEC_CURRENT_VERSION_V1.md",
+    "APP/APPROVED/WORDING/RECORD/LOCK_RECORD.md"
+  ],
+  "feature": "MARRIAGE_VALUES",
+  "version": "LOCK16_V1_WORDING_V1",
+  "viewport_logical": [
+    430,
+    932
+  ],
+  "pixel_ratio": 3,
+  "images": [
+    {
+      "file": "L01_seeker_browse__profile__build.png",
+      "bytes": 986605,
+      "pixels": [
+        1290,
+        2796
+      ],
+      "sha256": "1fd8b514d60c9fac46f549c482004abeb0c6f29bdde9646d91644eb671938eb4"
+    },
+    {
+      "file": "L01_seeker_browse__profile__master_beside_build.png",
+      "bytes": 1702122,
+      "pixels": [
+        2580,
+        2796
+      ],
+      "sha256": "d96d1b374ff0e976d911978183e9208396fe4f5f971ef0c7f1785c9bd0c711c2"
+    },
+    {
+      "file": "L03_seeker_browse__waiting_for_shepherd__build.png",
+      "bytes": 790296,
+      "pixels": [
+        1290,
+        2796
+      ],
+      "sha256": "0fdad91c851dd6540acd7297f3ea9cc810030d199dbf180a30cf01095a099a2b"
+    },
+    {
+      "file": "L03_seeker_browse__waiting_for_shepherd__master_beside_build.png",
+      "bytes": 1442330,
+      "pixels": [
+        2580,
+        2796
+      ],
+      "sha256": "3376cfa1c3448710135461ad3afe5e6c1a6493ab29aa20ffef66faab3f9d0136"
+    },
+    {
+      "file": "L05_profile_marriage__answered__build.png",
+      "bytes": 276653,
+      "pixels": [
+        1290,
+        2796
+      ],
+      "sha256": "ad69ac43031cad34817a570d0c4ac4da3011e283d4c876a4abd43eac3b6cbc2d"
+    },
+    {
+      "file": "L05_profile_marriage__answered__master_beside_build.png",
+      "bytes": 574129,
+      "pixels": [
+        2580,
+        2796
+      ],
+      "sha256": "04fc7e3e9499560c4b267f25c78ca16df25d47389e15b3f2beaca6807d0d0712"
+    },
+    {
+      "file": "L08_browse_card__abigail__build.png",
+      "bytes": 965120,
+      "pixels": [
+        1290,
+        2796
+      ],
+      "sha256": "f30cebcf024186e4a3900961725ad1333c50ec14e57e208b681930aaa8d278f1"
+    },
+    {
+      "file": "L08_browse_card__abigail__master_beside_build.png",
+      "bytes": 1779234,
+      "pixels": [
+        2580,
+        2796
+      ],
+      "sha256": "c2dac2e97f55835cf030c06a24d8f2ebecf5c7ff1cab6da2a6f0d1e4f76af9a0"
+    },
+    {
+      "file": "L08_browse_card__esther__build.png",
+      "bytes": 931625,
+      "pixels": [
+        1290,
+        2796
+      ],
+      "sha256": "f3fb42591aeae8cf79050fcefe1fffa26079f11ce62c6de80edc9a3cd975e591"
+    },
+    {
+      "file": "L08_browse_card__esther__master_beside_build.png",
+      "bytes": 1733006,
+      "pixels": [
+        2580,
+        2796
+      ],
+      "sha256": "ed206510eb6b8f15ed756645a7260aabb35f2f84f970f6eef51b0f884d1c9d10"
+    },
+    {
+      "file": "L08_browse_card__grace__build.png",
+      "bytes": 986605,
+      "pixels": [
+        1290,
+        2796
+      ],
+      "sha256": "1fd8b514d60c9fac46f549c482004abeb0c6f29bdde9646d91644eb671938eb4"
+    },
+    {
+      "file": "L08_browse_card__grace__master_beside_build.png",
+      "bytes": 1702122,
+      "pixels": [
+        2580,
+        2796
+      ],
+      "sha256": "d96d1b374ff0e976d911978183e9208396fe4f5f971ef0c7f1785c9bd0c711c2"
+    },
+    {
+      "file": "L08_browse_card__naomi__build.png",
+      "bytes": 1340391,
+      "pixels": [
+        1290,
+        2796
+      ],
+      "sha256": "64b1a417795692cce64b492e1c81952f80c073e1c12d4e7feca4505ea70f21fa"
+    },
+    {
+      "file": "L08_browse_card__naomi__master_beside_build.png",
+      "bytes": 2917494,
+      "pixels": [
+        2580,
+        2796
+      ],
+      "sha256": "b4af4d53c91d7acb12fe9520da52d8418b9887035dad21abc672dbfb09116690"
+    },
+    {
+      "file": "L14_profile_about_you__build.png",
+      "bytes": 276653,
+      "pixels": [
+        1290,
+        2796
+      ],
+      "sha256": "ad69ac43031cad34817a570d0c4ac4da3011e283d4c876a4abd43eac3b6cbc2d"
+    },
+    {
+      "file": "L14_profile_about_you__master_beside_build.png",
+      "bytes": 574129,
+      "pixels": [
+        2580,
+        2796
+      ],
+      "sha256": "04fc7e3e9499560c4b267f25c78ca16df25d47389e15b3f2beaca6807d0d0712"
+    },
+    {
+      "file": "L16_browse_card__share_later__build.png",
+      "bytes": 983084,
+      "pixels": [
+        1290,
+        2796
+      ],
+      "sha256": "cd8644b9f1647b8b1c7b1f93503588926e8d157e43891b6bd1680ba69ec542fa"
+    },
+    {
+      "file": "L16_browse_card__share_later__master_beside_build.png",
+      "bytes": 1693539,
+      "pixels": [
+        2580,
+        2796
+      ],
+      "sha256": "c069d2f126afdc346924aad55efc2bcf8b7a1a32ca226893798a8faa5daf3a09"
+    },
+    {
+      "file": "L16_journey_their_profile__build.png",
+      "bytes": 285916,
+      "pixels": [
+        1290,
+        2796
+      ],
+      "sha256": "84b11d900d72a5c174b18b3cced6c65b0597230afb793106c9b73989e3ace774"
+    },
+    {
+      "file": "L16_journey_their_profile__master_beside_build.png",
+      "bytes": 561428,
+      "pixels": [
+        2580,
+        2796
+      ],
+      "sha256": "1f361c5bb4a643cf68838585535870cdec7ef1095170204ef6a7f128ea60c435"
+    },
+    {
+      "file": "L16_shepherd_linked_seeker__marriage_values__build.png",
+      "bytes": 672249,
+      "pixels": [
+        1290,
+        2796
+      ],
+      "sha256": "05624a8cae04433f44ef16f1f3bdfcc7be58cbad88008aff90381d6e6111f4d3"
+    },
+    {
+      "file": "L16_shepherd_linked_seeker__marriage_values__master_beside_build.png",
+      "bytes": 1003089,
+      "pixels": [
+        2580,
+        2796
+      ],
+      "sha256": "128fb37433f4a5312a4996aea02bb8d157cb90e0cb99e1f5a15093f138871144"
+    }
+  ],
+  "masters": {
+    "APP/APPROVED/LOOK/MASTERS/L01_seeker_browse__profile.png": {
+      "sha256": "96b868bb8d2cca18aa6ba16edbefd0479c9a80bb167d0b5de57246f6157db7ed",
+      "bytes": 674999
+    },
+    "APP/APPROVED/SHEPHERD_INVITE/MASTERS/L03_seeker_browse__waiting_for_shepherd.png": {
+      "sha256": "6f8159084cc2e0cc314f2780fd07d50957bc64d9a45eb0712fc2149d812a7a53",
+      "bytes": 618141
+    },
+    "APP/APPROVED/MARRIAGE_VALUES/MASTERS/L05_profile_marriage__answered.png": {
+      "sha256": "da27105970a44a6fa509632ae1748f5602235c885eadf75c7f04b22684faa8c0",
+      "bytes": 270702
+    },
+    "APP/APPROVED/BROWSE_CARD/MASTERS/L08_browse_card__abigail.png": {
+      "sha256": "f6915833b9071f0accdc1e0b0c6514ff2b48ccdc2d8396b0af546a49858076aa",
+      "bytes": 760578
+    },
+    "APP/APPROVED/BROWSE_CARD/MASTERS/L08_browse_card__esther.png": {
+      "sha256": "eaf43c3327526872a7e0b00de81289962bc1a281f68b33f2673f40087a76231d",
+      "bytes": 757929
+    },
+    "APP/APPROVED/BROWSE_CARD/MASTERS/L08_browse_card__grace.png": {
+      "sha256": "4233558648168caab565af2d681b0d6724893516b01e88b31decf87cb90bb580",
+      "bytes": 674999
+    },
+    "APP/APPROVED/BROWSE_CARD/MASTERS/L08_browse_card__naomi.png": {
+      "sha256": "1a77d03a06316bd11dc6317ab099b4d8d5948b5f525f93cc92ec64a90c247b26",
+      "bytes": 1406376
+    },
+    "APP/APPROVED/ABOUT_YOU/MASTERS/L14_profile_about_you.png": {
+      "sha256": "5972215a115b0aefe4cc52e8c53b1d96f101f06a08bac7f20414474f5178e10e",
+      "bytes": 270702
+    },
+    "APP/APPROVED/MARRIAGE_VALUES/MASTERS/L16_browse_card__share_later.png": {
+      "sha256": "d0d55b344281c93605dddb984a84122c654257783f20c29997df129b2249922a",
+      "bytes": 671935
+    },
+    "APP/APPROVED/MARRIAGE_VALUES/MASTERS/L16_journey_their_profile.png": {
+      "sha256": "4fb77e23dfd4b22e7e7bb234cb835b90e912c9d59cd344e1b9ed25821abb419c",
+      "bytes": 256266
+    }
+  },
+  "image_bytes": 24177819,
+  "comparison": "New version after LOCK11; prior evidence preserved. Exact source wording and existing layout/state differences recorded in earlier feature receipts and daily report; no pixel MATCH claim.",
+  "checks": {
+    "all_masters_capture": 167,
+    "full_flutter_suite": {
+      "passed": 450,
+      "skipped": 1,
+      "exit": 0
+    },
+    "pure_checks": 1170,
+    "flutter_analyze": {
+      "errors": 0,
+      "warnings": 0,
+      "prior_infos": 10
+    },
+    "cached_analysis": {
+      "files": 390,
+      "errors": 0,
+      "warnings": 0,
+      "prior_infos": 1
+    },
+    "boundaries": {
+      "passed": 20571,
+      "findings": 0
+    }
+  },
+  "limits": [
+    "No phone/native/live-server/Founder visual acceptance proof.",
+    "One previously undecided320x568/text2header overflow check remains skipped.",
+    "Recent prayer dates follow real calendar time; byte replay was verified the same day."
+  ],
+  "founder_decisions": "LOCK11 name/request wording, including later locked screens; no new decision requested."
+}

@@ -1,0 +1,368 @@
+{
+  "queue_lines": [
+    12
+  ],
+  "action": "OA-SELAH-003",
+  "status": "BUILT",
+  "source_commit": "d48b9990cddfd061ba0d0a95734263b39d578742",
+  "flutter_version": "3.44.2",
+  "dart_version": "3.12.2",
+  "build_mode": "debug Flutter widget tests; no native compilation/installation",
+  "timestamp_utc": "2026-11-06T19:38:52.470069+00:00",
+  "built_from": [
+    "APP/APPROVED/WORDING/BRIEFS/BUILD_BRIEF_2026-11-06_V1.md",
+    "APP/APPROVED/WORDING/RECORD/SELAH_WORDING_SPEC_CURRENT_VERSION_V1.md",
+    "APP/APPROVED/WORDING/RECORD/LOCK_RECORD.md"
+  ],
+  "feature": "FAITH_PROFILE",
+  "version": "V1_WORDING_V1",
+  "viewport_logical": [
+    430,
+    932
+  ],
+  "pixel_ratio": 3,
+  "images": [
+    {
+      "file": "L04_faith_1_tradition__empty__build.png",
+      "bytes": 157870,
+      "pixels": [
+        1290,
+        2796
+      ],
+      "sha256": "e6e04b86ce5992aab13508e48942a6c119ff197a0135da578e66785ed9b1bd09"
+    },
+    {
+      "file": "L04_faith_1_tradition__empty__master_beside_build.png",
+      "bytes": 327329,
+      "pixels": [
+        2580,
+        2796
+      ],
+      "sha256": "c715e0d3a8fe6d63ae5794ad5f7713940a9a8a4e39634065ae36b388b225f1e7"
+    },
+    {
+      "file": "L04_faith_1_tradition__error__build.png",
+      "bytes": 168356,
+      "pixels": [
+        1290,
+        2796
+      ],
+      "sha256": "d68e15674c19bed7204ce70c6eab697beef0dc3b4621760f713bcdae249be88b"
+    },
+    {
+      "file": "L04_faith_1_tradition__error__master_beside_build.png",
+      "bytes": 347631,
+      "pixels": [
+        2580,
+        2796
+      ],
+      "sha256": "6c6a871a62515d9d1431ae702945b02369c663a798684d685cd961244dbb93dc"
+    },
+    {
+      "file": "L04_faith_1_tradition__selected__build.png",
+      "bytes": 158614,
+      "pixels": [
+        1290,
+        2796
+      ],
+      "sha256": "d127cb380c624a233cc48fff4c6fe57ea189a15d26262c54ba0ae428889effe1"
+    },
+    {
+      "file": "L04_faith_1_tradition__selected__master_beside_build.png",
+      "bytes": 330022,
+      "pixels": [
+        2580,
+        2796
+      ],
+      "sha256": "a44e0e47099a75799f54ff6546a9a227f1731c257ed55afc3eb5347522602bf3"
+    },
+    {
+      "file": "L04_faith_2_church__empty__build.png",
+      "bytes": 102238,
+      "pixels": [
+        1290,
+        2796
+      ],
+      "sha256": "6acdbaaf1dd791193ee5164f696f27c8602ac23536a3d07a3938e6fea4aa3ccf"
+    },
+    {
+      "file": "L04_faith_2_church__empty__master_beside_build.png",
+      "bytes": 210663,
+      "pixels": [
+        2580,
+        2796
+      ],
+      "sha256": "07b9c71571a28813d1a4fd393cdc72a3718bf3f493a6ce5b00101efc7e8eeed3"
+    },
+    {
+      "file": "L04_faith_3_baptised__empty__build.png",
+      "bytes": 81740,
+      "pixels": [
+        1290,
+        2796
+      ],
+      "sha256": "1f456fc25460a0fede6e954b169ef665ed1269390235eb8fa95935e4c70e814d"
+    },
+    {
+      "file": "L04_faith_3_baptised__empty__master_beside_build.png",
+      "bytes": 171458,
+      "pixels": [
+        2580,
+        2796
+      ],
+      "sha256": "23f6ecb4260201902c1a660f9a8428f37ea3a4c783fb6bbe7d7ceeb29e56b69e"
+    },
+    {
+      "file": "L04_faith_4_christian_for__empty__build.png",
+      "bytes": 116993,
+      "pixels": [
+        1290,
+        2796
+      ],
+      "sha256": "cb450890e39f5b52f5c818b1419e3f058e489537121728a3cc1bffb7191c8bd3"
+    },
+    {
+      "file": "L04_faith_4_christian_for__empty__master_beside_build.png",
+      "bytes": 242292,
+      "pixels": [
+        2580,
+        2796
+      ],
+      "sha256": "1407d54df0527cdde43a687bbdba430ac135adbf81424343f499148b79ed266f"
+    },
+    {
+      "file": "L04_faith_5_serving__empty__build.png",
+      "bytes": 134892,
+      "pixels": [
+        1290,
+        2796
+      ],
+      "sha256": "d0db4093389d54c50a83e0f5a9a0f1aa84b783f61bac7c2842ec9b45d585112f"
+    },
+    {
+      "file": "L04_faith_5_serving__empty__master_beside_build.png",
+      "bytes": 282159,
+      "pixels": [
+        2580,
+        2796
+      ],
+      "sha256": "76b0b853d8370e1f24623ec4af858de073845b29da2054ab2ef68b20d7bf0589"
+    },
+    {
+      "file": "L04_faith_5_serving__selected__build.png",
+      "bytes": 136625,
+      "pixels": [
+        1290,
+        2796
+      ],
+      "sha256": "c66aea09fb2ad078ab860a37b50a4bd8bea065b7de563ca4d040276c366a4baa"
+    },
+    {
+      "file": "L04_faith_5_serving__selected__master_beside_build.png",
+      "bytes": 287765,
+      "pixels": [
+        2580,
+        2796
+      ],
+      "sha256": "6fa852dc5b3abbb2cfed4ebe2cfe526003e0751fcf92577410636a4b3ae9bf08"
+    },
+    {
+      "file": "L04_faith_6_open__empty__build.png",
+      "bytes": 112221,
+      "pixels": [
+        1290,
+        2796
+      ],
+      "sha256": "1e97597a2393128cd97a71690ed828f9062749b30c616dc6d1a409e6b93b9bf5"
+    },
+    {
+      "file": "L04_faith_6_open__empty__master_beside_build.png",
+      "bytes": 233070,
+      "pixels": [
+        2580,
+        2796
+      ],
+      "sha256": "d3a90a61bf5c3ef7cc0039c4b4af3b52ca286ecdc253efc490102e614a25bf55"
+    },
+    {
+      "file": "L04_faith_7__didnt_save__build.png",
+      "bytes": 141087,
+      "pixels": [
+        1290,
+        2796
+      ],
+      "sha256": "217aa7ac28208d0ffc5dc6f3b0aa2c767989a590b5511e3e512785e942d3edc4"
+    },
+    {
+      "file": "L04_faith_7__didnt_save__master_beside_build.png",
+      "bytes": 293173,
+      "pixels": [
+        2580,
+        2796
+      ],
+      "sha256": "4298d47d6c12043d7dc7248bc128e08d0c8e25e5698e0e55accc3f99088cd88c"
+    },
+    {
+      "file": "L04_faith_7__saving__build.png",
+      "bytes": 107298,
+      "pixels": [
+        1290,
+        2796
+      ],
+      "sha256": "1aa8c0834c557948078b678e0df2a2d500e66144f933650eb360cd194a87bd49"
+    },
+    {
+      "file": "L04_faith_7__saving__master_beside_build.png",
+      "bytes": 221642,
+      "pixels": [
+        2580,
+        2796
+      ],
+      "sha256": "9c5c74ac9ec860a009a6bc44170a3374f3bcfafc4fb99eb297d2792f8c8bacd8"
+    },
+    {
+      "file": "L04_faith_7_own_words__empty__build.png",
+      "bytes": 121731,
+      "pixels": [
+        1290,
+        2796
+      ],
+      "sha256": "3eca355efade02873b2afc5bed520f3515ba763dc9d9f8428b8be982c8337cb9"
+    },
+    {
+      "file": "L04_faith_7_own_words__empty__master_beside_build.png",
+      "bytes": 249117,
+      "pixels": [
+        2580,
+        2796
+      ],
+      "sha256": "c1b279afebc1715f2b7974a6f51c5e8af9927fdd5295d40f20ec489e03097c5d"
+    },
+    {
+      "file": "L04_faith_7_own_words__filled__build.png",
+      "bytes": 134124,
+      "pixels": [
+        1290,
+        2796
+      ],
+      "sha256": "67fc0f9d029b494983588b421eba8744c9e3d4419078c870235fcf0f255a7667"
+    },
+    {
+      "file": "L04_faith_7_own_words__filled__master_beside_build.png",
+      "bytes": 279933,
+      "pixels": [
+        2580,
+        2796
+      ],
+      "sha256": "d233be07385054b561d5e7b43791b071dc0a00d485b7de217c8005302610ab09"
+    },
+    {
+      "file": "L04_faith_7_own_words__too_long__build.png",
+      "bytes": 133018,
+      "pixels": [
+        1290,
+        2796
+      ],
+      "sha256": "7e3832ad5faeab75e7352f32de6ed64d632eb67a4848f9520d188017e8c87236"
+    },
+    {
+      "file": "L04_faith_7_own_words__too_long__master_beside_build.png",
+      "bytes": 274375,
+      "pixels": [
+        2580,
+        2796
+      ],
+      "sha256": "3742ad3975144e108c801a592b7d0a5c7ccc87498d14e26775ecf3f98123b068"
+    }
+  ],
+  "masters": {
+    "APP/APPROVED/FAITH_PROFILE/MASTERS/L04_faith_1_tradition__empty.png": {
+      "sha256": "0f6133ac9bb91bfbe6c989f100ed0229f73a68cdeec8f58530fd9a598b743a47",
+      "bytes": 161002
+    },
+    "APP/APPROVED/FAITH_PROFILE/MASTERS/L04_faith_1_tradition__error.png": {
+      "sha256": "7a89e16bb497e4266970f14c4cbbbd7e7fd1894fb23b5a6a2ce9b94a7d86cfea",
+      "bytes": 169771
+    },
+    "APP/APPROVED/FAITH_PROFILE/MASTERS/L04_faith_1_tradition__selected.png": {
+      "sha256": "90c197251349430b8c18580187b0b4a9c49c75f524c42cde170bfb8cd9684675",
+      "bytes": 162606
+    },
+    "APP/APPROVED/FAITH_PROFILE/MASTERS/L04_faith_2_church__empty.png": {
+      "sha256": "5fe10c1865c44e8c441ccc28d8f6fab1541291ee3984e9d0570fd276c1fece21",
+      "bytes": 104454
+    },
+    "APP/APPROVED/FAITH_PROFILE/MASTERS/L04_faith_3_baptised__empty.png": {
+      "sha256": "376d5892b842fb1008c4e0f170e002a04cd10dfdddb01054f2246232b735f380",
+      "bytes": 88264
+    },
+    "APP/APPROVED/FAITH_PROFILE/MASTERS/L04_faith_4_christian_for__empty.png": {
+      "sha256": "b09f3beee767c5c62862c5cc9940838bf74ecde160294b5beda97f62ab33a0a4",
+      "bytes": 120151
+    },
+    "APP/APPROVED/FAITH_PROFILE/MASTERS/L04_faith_5_serving__empty.png": {
+      "sha256": "3cd287c34f24c3caf770d4eefea7e5980a7d0ecdee7db37e67ffc98d788fd403",
+      "bytes": 141379
+    },
+    "APP/APPROVED/FAITH_PROFILE/MASTERS/L04_faith_5_serving__selected.png": {
+      "sha256": "96033c2c9fbb7c9b5f782fc97d667b59f32871d88cb28a213c935d642ade40ed",
+      "bytes": 145078
+    },
+    "APP/APPROVED/FAITH_PROFILE/MASTERS/L04_faith_6_open__empty.png": {
+      "sha256": "f534190dc39b7780bb54fefe3effd46c63ba8eabac5063602761079ae91daee7",
+      "bytes": 115159
+    },
+    "APP/APPROVED/FAITH_PROFILE/MASTERS/L04_faith_7__didnt_save.png": {
+      "sha256": "ba34343dcc98257b8fc55cf2f7661be559cf4c67cd24277ae3587ca1b2429056",
+      "bytes": 146273
+    },
+    "APP/APPROVED/FAITH_PROFILE/MASTERS/L04_faith_7__saving.png": {
+      "sha256": "1f5c1b0c91e8a7aac72e0753431603d02257abe7ea1df2727e8cc73a6d0e14a5",
+      "bytes": 110395
+    },
+    "APP/APPROVED/FAITH_PROFILE/MASTERS/L04_faith_7_own_words__empty.png": {
+      "sha256": "1b3d93c4e052695d77b7b811d17b3f504869e7b643b7786bbe5164e07bc820e7",
+      "bytes": 122937
+    },
+    "APP/APPROVED/FAITH_PROFILE/MASTERS/L04_faith_7_own_words__filled.png": {
+      "sha256": "74dc10cf17117ec5c6c2ce0921652e7bb38504975d728be317a76e5295edc1d6",
+      "bytes": 140493
+    },
+    "APP/APPROVED/FAITH_PROFILE/MASTERS/L04_faith_7_own_words__too_long.png": {
+      "sha256": "efbc3d3d621676b507fec3399efb41a0d62970843b51b30e354a7d1a948d4ad0",
+      "bytes": 135510
+    }
+  },
+  "image_bytes": 5557436,
+  "comparison": "New version after LOCK11; prior evidence preserved. Exact source wording and existing layout/state differences recorded in earlier feature receipts and daily report; no pixel MATCH claim.",
+  "checks": {
+    "all_masters_capture": 167,
+    "full_flutter_suite": {
+      "passed": 450,
+      "skipped": 1,
+      "exit": 0
+    },
+    "pure_checks": 1170,
+    "flutter_analyze": {
+      "errors": 0,
+      "warnings": 0,
+      "prior_infos": 10
+    },
+    "cached_analysis": {
+      "files": 390,
+      "errors": 0,
+      "warnings": 0,
+      "prior_infos": 1
+    },
+    "boundaries": {
+      "passed": 20571,
+      "findings": 0
+    }
+  },
+  "limits": [
+    "No phone/native/live-server/Founder visual acceptance proof.",
+    "One previously undecided320x568/text2header overflow check remains skipped.",
+    "Recent prayer dates follow real calendar time; byte replay was verified the same day."
+  ],
+  "founder_decisions": "LOCK11 name/request wording, including later locked screens; no new decision requested."
+}

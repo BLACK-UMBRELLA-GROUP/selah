@@ -1,0 +1,139 @@
+{
+  "source_commit": "d48b9990cddfd061ba0d0a95734263b39d578742",
+  "timestamp_utc": "2026-11-06T19:38:52.470069+00:00",
+  "build_mode": "debug Flutter widget tests",
+  "flutter_version": "3.44.2",
+  "literal_replacements": 195,
+  "brand_name_replacements": 190,
+  "request_label_replacements": 5,
+  "dynamic_rendering_fixes": 3,
+  "affected_product_files": 78,
+  "test_finders_updated": 10,
+  "capture_versions": [
+    {
+      "path": "APP/APPROVED/ABOUT_YOU/BUILT/V1_1_WORDING_V1",
+      "pngs": 13,
+      "bytes": 3459202,
+      "manifest_sha256": "dd18956f21a41afb047f663c44d7eddf8a55893a2c06242e1b3bdf80b1405bf6"
+    },
+    {
+      "path": "APP/APPROVED/BROWSE_CARD/BUILT/V1_WORDING_V1",
+      "pngs": 10,
+      "bytes": 12664827,
+      "manifest_sha256": "617ca83c41d26e8cdc03236af72718688840ba286d888083f5b4d59f0e5b8471"
+    },
+    {
+      "path": "APP/APPROVED/CONSENT/BUILT/V1_WORDING_V1",
+      "pngs": 8,
+      "bytes": 3571472,
+      "manifest_sha256": "0ba8db72de7686c558d63afefa2e87c1fa250c8229be58d25d84c4b466652258"
+    },
+    {
+      "path": "APP/APPROVED/FAITH_PROFILE/BUILT/V1_1_WORDING_V1",
+      "pngs": 4,
+      "bytes": 1546507,
+      "manifest_sha256": "2667dc4a6a264e58480d7990584461bafab3219c7a78b681af42643068216e91"
+    },
+    {
+      "path": "APP/APPROVED/FAITH_PROFILE/BUILT/V1_WORDING_V1",
+      "pngs": 28,
+      "bytes": 5557436,
+      "manifest_sha256": "edbc48c72d0667bd03a89f9f635998debeb2fd88c050cc276b41f1ed0ba3e2c7"
+    },
+    {
+      "path": "APP/APPROVED/FIRST_PAGES/BUILT/V1_WORDING_V1",
+      "pngs": 8,
+      "bytes": 1301471,
+      "manifest_sha256": "d40beba10a02fb5ad1475a0defa8945780d48c67e43d1a38cc17e931de8cf8cb"
+    },
+    {
+      "path": "APP/APPROVED/LOOK/BUILT/V1_1_WORDING_V1",
+      "pngs": 12,
+      "bytes": 5753239,
+      "manifest_sha256": "2a4ddb3552e3143ba0653b65b9ebf9eeb8c217a3ba33f5d4b385560692a6b686"
+    },
+    {
+      "path": "APP/APPROVED/LOOK/BUILT/V1_WORDING_V1",
+      "pngs": 6,
+      "bytes": 771386,
+      "manifest_sha256": "d55323dbd4898995581613a389ba65aa405b3168d9ec72e898487716658d1bd5"
+    },
+    {
+      "path": "APP/APPROVED/MARRIAGE_PREP/BUILT/V1_2_WORDING_V1",
+      "pngs": 8,
+      "bytes": 3122305,
+      "manifest_sha256": "0820c0c2abeadc9cae23910f3b289928858676e489304ed3963722de5f142297"
+    },
+    {
+      "path": "APP/APPROVED/MARRIAGE_VALUES/BUILT/LOCK16_V1_WORDING_V1",
+      "pngs": 22,
+      "bytes": 24177819,
+      "manifest_sha256": "2e13f2b0001016e40dd9c7159ab9e1b1bf6808461b2d1b875ba3e800ce5f2f1e"
+    },
+    {
+      "path": "APP/APPROVED/MARRIAGE_VALUES/BUILT/V1_WORDING_V1",
+      "pngs": 28,
+      "bytes": 5928266,
+      "manifest_sha256": "6284f5a588d42ef1ca10204c5ade71d2a9f93481ae1d4a900db9ee00979c9df9"
+    },
+    {
+      "path": "APP/APPROVED/PRAYER/BUILT/V1_WORDING_V1",
+      "pngs": 14,
+      "bytes": 4425203,
+      "manifest_sha256": "b93290bd773df5e4cfe576ec05d73d0df16f4e97dbe8337f1f1c3430ac6cef14"
+    },
+    {
+      "path": "APP/APPROVED/SEEKER_SHEPHERD/BUILT/V1_WORDING_V1",
+      "pngs": 12,
+      "bytes": 4834497,
+      "manifest_sha256": "f5dcf22b2bee90f226c79b7f7104f505f1a7d07f40c6e426e4983cc87152a243"
+    },
+    {
+      "path": "APP/APPROVED/SELAH_PAUSE/BUILT/V1_1_WORDING_V1",
+      "pngs": 6,
+      "bytes": 1439589,
+      "manifest_sha256": "7b062497c0a52ca9c7aa7dc4651500699b171f8b1e724c475ff384b689f1c3b4"
+    },
+    {
+      "path": "APP/APPROVED/SELAH_PAUSE/BUILT/V1_WORDING_V1",
+      "pngs": 14,
+      "bytes": 2701588,
+      "manifest_sha256": "4cccfe4f37d7aa9626e58d78c3d17cd5cc31330523af8c6fd45e990910aeca4f"
+    },
+    {
+      "path": "APP/APPROVED/SHEPHERD_INVITE/BUILT/V1_1_WORDING_V1",
+      "pngs": 6,
+      "bytes": 3613356,
+      "manifest_sha256": "617d32b08e453cec107d54c6e09621757f4cca3b1455b698424a3268dc4d2cd6"
+    },
+    {
+      "path": "APP/APPROVED/SHEPHERD_INVITE/BUILT/V1_WORDING_V1",
+      "pngs": 18,
+      "bytes": 4404191,
+      "manifest_sha256": "227bd276f3893db90d4dda737b9a5025f3c12d013a401a1c2502071202d55c7c"
+    },
+    {
+      "path": "APP/APPROVED/YOUR_VALUES/BUILT/LOCK18_V1_WORDING_V1",
+      "pngs": 16,
+      "bytes": 5444367,
+      "manifest_sha256": "95c785d7e8f55a8b40759ffeb8c714a087f8fa6821d6a211faab1c017bd5c8ea"
+    },
+    {
+      "path": "APP/APPROVED/YOUR_VALUES/BUILT/V1_WORDING_V1",
+      "pngs": 16,
+      "bytes": 4109349,
+      "manifest_sha256": "10c691fa22666de8b4b279877cfcc90122315b1f399cd561a8b15ff3de829e7d"
+    }
+  ],
+  "png_count": 249,
+  "image_bytes": 98826070,
+  "pair_count": 124,
+  "full_suite": {
+    "passed": 450,
+    "skipped": 1,
+    "exit": 0
+  },
+  "model_checks": 1170,
+  "native_dependency_changes": false,
+  "review": "Existing approved scope only; no roadmap row/release claim; public scan is recorded in daily report after final commit."
+}
