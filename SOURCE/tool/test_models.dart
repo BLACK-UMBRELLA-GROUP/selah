@@ -330,5 +330,188 @@ void main() {
     'legacy faith keys cannot satisfy Christian completion',
   );
 
+  final marriage = ViewRequestDraftModel(capacity: 3);
+  check(
+    marriage.seedJourneys(2),
+    'marriage preparation uses two real local Journeys',
+  );
+  final firstJourney = draftProfiles[1].id;
+  final secondJourney = draftProfiles[2].id;
+  check(
+    !marriage.toggleMarriagePrepStep(firstJourney, 0),
+    'marriage preparation is unavailable before Open Conversation',
+  );
+  check(
+    !marriage.toggleMarriagePrepStep('unknown-journey', 0),
+    'unknown Journeys cannot acquire marriage preparation',
+  );
+  check(
+    marriage.marriagePrepCompletedFor('unknown-journey').isEmpty,
+    'unknown Journey has no marriage preparation facts',
+  );
+
+  void reachConversation(String id) {
+    // Reach the destination through the existing public two-person actions;
+    // this never writes a stage index or skips a gate for the new card.
+    while (marriage.stageFor(id)?.value != 'conversation') {
+      final stage = marriage.stageFor(id)!;
+      if (stage.value == 'greeting_exchange') {
+        check(marriage.sendGreeting(id), 'marriage fixture sends own greeting');
+        check(
+          marriage.simulatePeerGreeting(id),
+          'marriage fixture receives peer greeting',
+        );
+      } else if (stage.value == 'compatibility_reveal') {
+        check(
+          marriage.chooseCompatibilityReveal(id),
+          'marriage fixture chooses reveal',
+        );
+        check(
+          marriage.simulatePeerCompatibilityReveal(id),
+          'marriage fixture receives reveal',
+        );
+      }
+      check(
+        marriage.chooseStageContinue(id),
+        'marriage fixture chooses stage continuation',
+      );
+      check(
+        marriage.simulatePeerStageContinue(id),
+        'marriage fixture receives peer continuation',
+      );
+      check(
+        marriage.advanceStage(id),
+        'marriage fixture advances with both choices',
+      );
+    }
+    check(
+      marriage.conversationOpen(id),
+      'marriage fixture reaches Open Conversation',
+    );
+  }
+
+  reachConversation(firstJourney);
+  final firstMemberRead = marriage.marriagePrepCompletedFor(firstJourney);
+  check(firstMemberRead.isEmpty, 'marriage preparation starts with no ticks');
+  check(
+    marriage.toggleMarriagePrepStep(firstJourney, 2),
+    'course may be finished before earlier ticks',
+  );
+  check(
+    marriage.toggleMarriagePrepStep(firstJourney, 0),
+    'first preparation step toggles independently',
+  );
+  check(
+    marriage.toggleMarriagePrepStep(firstJourney, 1),
+    'all three preparation steps can be marked',
+  );
+  check(
+    firstMemberRead.length == 3,
+    'existing member read observes shared Journey ticks',
+  );
+  final otherMemberRead = marriage.marriagePrepCompletedFor(firstJourney);
+  check(
+    otherMemberRead.containsAll(const [0, 1, 2]),
+    'another presentation of the same Journey sees the same facts',
+  );
+  check(
+    marriage.toggleMarriagePrepStep(firstJourney, 0),
+    'marked preparation step may be unmarked',
+  );
+  check(
+    firstMemberRead.length == 2 && !otherMemberRead.contains(0),
+    'unmark is visible to both member presentations',
+  );
+  check(
+    marriage.marriagePrepCompletedFor(secondJourney).isEmpty,
+    'ticks are isolated from another Journey',
+  );
+  check(
+    !marriage.toggleMarriagePrepStep(secondJourney, 1),
+    'another Journey must independently reach Open Conversation',
+  );
+  for (final invalid in const [-1, 3, 99]) {
+    check(
+      !marriage.toggleMarriagePrepStep(firstJourney, invalid),
+      'invalid preparation index $invalid is refused',
+    );
+  }
+  check(
+    firstMemberRead.length == 2 && firstMemberRead.containsAll(const [1, 2]),
+    'invalid indexes preserve the completed steps',
+  );
+  var readIsImmutable = false;
+  try {
+    firstMemberRead.add(0);
+  } on UnsupportedError {
+    readIsImmutable = true;
+  }
+  check(
+    readIsImmutable &&
+        !marriage.marriagePrepCompletedFor(firstJourney).contains(0),
+    'a read cannot mutate marriage preparation',
+  );
+  marriage.setOwnMainShepherdPresent(false);
+  check(
+    !marriage.toggleMarriagePrepStep(firstJourney, 0),
+    'missing own Shepherd cannot bypass the existing Journey gate',
+  );
+  marriage.setOwnMainShepherdPresent(true);
+  marriage.setPeerMainShepherdPresent(false, id: firstJourney);
+  check(
+    !marriage.toggleMarriagePrepStep(firstJourney, 0),
+    'missing peer Shepherd cannot bypass the existing Journey gate',
+  );
+  marriage.setPeerMainShepherdPresent(true, id: firstJourney);
+  check(
+    marriage.requestPause(firstJourney),
+    'marriage fixture requests existing Journey pause',
+  );
+  check(
+    !marriage.toggleMarriagePrepStep(firstJourney, 0),
+    'pending pause retains the existing participation gate',
+  );
+  check(
+    marriage.continueJourney(firstJourney),
+    'marriage fixture continues existing Journey',
+  );
+  reachConversation(secondJourney);
+  check(
+    marriage.toggleMarriagePrepStep(secondJourney, 0),
+    'another Open Conversation owns its own tick set',
+  );
+  check(
+    firstMemberRead.length == 2,
+    'another Journey tick does not overwrite the first',
+  );
+  check(
+    marriage.end(secondJourney),
+    'marriage fixture ends an existing Journey',
+  );
+  check(
+    !marriage.toggleMarriagePrepStep(secondJourney, 1),
+    'ended Journey cannot change preparation',
+  );
+  check(
+    marriage.marriagePrepCompletedFor(secondJourney).contains(0),
+    'ended Journey retains its existing preparation facts',
+  );
+  check(
+    marriage.block(firstJourney),
+    'marriage fixture blocks its existing peer',
+  );
+  check(
+    !marriage.toggleMarriagePrepStep(firstJourney, 0),
+    'blocked peer cannot change preparation',
+  );
+  marriage.reset();
+  check(
+    marriage.marriagePrepCompletedFor(firstJourney).isEmpty &&
+        marriage.marriagePrepCompletedFor(secondJourney).isEmpty &&
+        firstMemberRead.isEmpty &&
+        otherMemberRead.isEmpty,
+    'reset clears preparation, including existing read views',
+  );
+
   print('PASS: $checks pure local model, question-bank and history checks.');
 }

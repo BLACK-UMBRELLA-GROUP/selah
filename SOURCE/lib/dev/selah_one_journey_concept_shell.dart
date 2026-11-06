@@ -14,6 +14,7 @@ import '../models/selah_shepherd_invite.dart';
 import '../services/selah_developer_access.dart';
 import '../widgets/selah_shepherd_invite_scope.dart';
 import '../widgets/selah_shepherd_invite_views.dart';
+import '../widgets/selah_marriage_prep_card.dart';
 import '../widgets/selah_profile_image.dart';
 import '../screens/onboarding/selah_shepherd_invite_flow.dart';
 import '../models/selah_dashboard_resolution.dart';
@@ -118,6 +119,7 @@ class _SelahOneJourneyConceptShellState
     extends State<SelahOneJourneyConceptShell>
     with SingleTickerProviderStateMixin {
   final _model = ViewRequestDraftModel(capacity: 3);
+  final _marriagePrepFailed = <String>{};
   SelahShepherdInviteController? _invite;
   bool _inviteWasPending = false;
   bool get _invitePending => _invite?.pending ?? false;
@@ -240,6 +242,11 @@ class _SelahOneJourneyConceptShellState
       _page == null ||
       _page == 'controls' ||
       _page == 'shepherd_circle' ||
+      (SelahDeveloperAccess.canUseDeveloperTools &&
+          !_shepherdRole &&
+          _page == 'journey' &&
+          _personId != null &&
+          _model.conversationOpen(_personId!)) ||
       (!_shepherdRole &&
           const [
             'compatibility',
@@ -2591,6 +2598,33 @@ class _SelahOneJourneyConceptShellState
             'draft_end_$id',
             'End Journey',
             () => _showJourneyAction(p, 'end'),
+          ),
+        ],
+        if (state == DraftJourneyState.active &&
+            stage?.value == 'conversation') ...[
+          const SizedBox(height: 24),
+          SelahMarriagePrepCard(
+            completedSteps: _model.marriagePrepCompletedFor(id),
+            saveFailed: _marriagePrepFailed.contains(id),
+            onToggle: (step) {
+              if (!_allowed ||
+                  _shepherdRole ||
+                  _page != 'journey' ||
+                  _personId != id) {
+                return;
+              }
+              _act(() {
+                if (!_model.toggleMarriagePrepStep(id, step)) return;
+                _marriagePrepFailed.remove(id);
+                _notice = _model.marriagePrepCompletedFor(id).contains(step)
+                    ? 'Marked done.'
+                    : 'Unmarked.';
+              });
+            },
+            onRetry: _bound(() {
+              if (!_model.conversationOpen(id)) return;
+              _act(() => _marriagePrepFailed.remove(id));
+            }),
           ),
         ],
       ],
@@ -5017,6 +5051,33 @@ class _SelahOneJourneyConceptShellState
           style: SelahText.heading(size: 15),
         ),
         const SizedBox(height: 14),
+        if (SelahDeveloperAccess.canUseDeveloperTools &&
+            !_shepherdRole &&
+            sourcePage == 'journey' &&
+            _personId != null &&
+            _model.conversationOpen(_personId!)) ...[
+          _controlSection([
+            _previewAction(
+              'marriage_prep_didnt_save',
+              "Marriage preparation · didn't save",
+              () {
+                if (!_allowed ||
+                    !SelahDeveloperAccess.canUseDeveloperTools ||
+                    _page != 'controls' ||
+                    _pageOptionsSource != 'journey' ||
+                    _personId == null ||
+                    !_model.conversationOpen(_personId!)) {
+                  return;
+                }
+                _move(() {
+                  _marriagePrepFailed.add(_personId!);
+                  _pages.removeLast();
+                });
+              },
+            ),
+          ]),
+          const SizedBox(height: 12),
+        ],
         if (_hasCircleDiscussionOptions) ...[
           _controlSection([
             _title('Journey discussion', size: 13),
@@ -5151,6 +5212,7 @@ class _SelahOneJourneyConceptShellState
               );
               _model.setCapacity(3);
               _model.reset();
+              _marriagePrepFailed.clear();
               _invite?.reset();
               _seenBrowseProfileIds.clear();
               _browseHistory.reset();

@@ -16,6 +16,8 @@ The LOCKed Still Water look uses a light mist canvas, lake accents, bundled Figt
 
 Private Home → Explore as a Seeker opens the locked Shepherd invite: choose a trusted supporter, enter their name and send locally. While waiting, Browse remains available; Request and Accept show the waiting message. The private Shepherd acceptance control restores those actions. Explore as a Shepherd can review the pending local request. No message, share sheet, clipboard link or account link is created.
 
+At Open Conversation, the local Journey includes the locked marriage-preparation card. Its three steps can be marked in any order and stay with that local Journey for the session. No courses, external links or live sharing are enabled.
+
 The first-draft handover records passing static and pure-Dart checks and a signed build; on-device checks are still pending. No TestFlight or App Store delivery yet.
 
 ## Repository layout
@@ -34,7 +36,7 @@ Use the existing lockfile with Flutter 3.44.2:
 ```bash
 cd SOURCE
 flutter pub get --offline --enforce-lockfile
-flutter test test/masters/look_masters_test.dart test/masters/shepherd_invite_masters_test.dart test/selah_shepherd_invite_test.dart --dart-define=SELAH_DRAFT_LOCAL_ONLY=true
+flutter test test/masters/look_masters_test.dart test/masters/shepherd_invite_masters_test.dart test/masters/marriage_prep_masters_test.dart test/selah_shepherd_invite_test.dart --dart-define=SELAH_DRAFT_LOCAL_ONLY=true
 ```
 
 Approved comparisons use real Flutter widgets at 430 × 932 and pixel ratio 3. Images live under each feature’s `APP/APPROVED/<FEATURE>/BUILT/V1/` folder. The `APP/APPROVED/COMPARE/` standard explains capture and replay. These checks demonstrate layout and local states; phone installation and native behaviour remain separate.

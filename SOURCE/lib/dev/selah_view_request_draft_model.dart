@@ -197,6 +197,7 @@ class _DraftJourneyProgress {
   bool peerCompatibilityConsent = false;
   bool stageContinue = false;
   bool peerStageContinue = false;
+  final Set<int> marriagePrepCompleted = <int>{};
 }
 
 /// Shared fictional state for all five alternative app destinations.
@@ -569,15 +570,33 @@ class ViewRequestDraftModel {
 
   SelahJourneyStage? stageFor(String id) {
     final progress = _progress[id];
-    return progress == null ? null : SelahJourneyStages.all[progress.stageIndex];
+    return progress == null
+        ? null
+        : SelahJourneyStages.all[progress.stageIndex];
   }
 
   bool conversationOpen(String id) =>
       canParticipateInJourney(id) && stageFor(id)?.value == 'conversation';
 
+  /// Shared local Journey facts, not a viewer's own copy or a server record.
+  /// Existing readers cannot mutate the set or bypass the Journey's gates.
+  Set<int> marriagePrepCompletedFor(String id) => UnmodifiableSetView<int>(
+    _progress[id]?.marriagePrepCompleted ?? const <int>{},
+  );
+
+  /// LOCK 9 has three independent steps, freely markable in any order at
+  /// Open Conversation. A true result means the requested toggle was applied.
+  bool toggleMarriagePrepStep(String id, int step) {
+    if (step < 0 || step >= 3 || !conversationOpen(id)) return false;
+    final completed = _progress[id]!.marriagePrepCompleted;
+    if (!completed.add(step)) completed.remove(step);
+    return true;
+  }
+
   bool hasSentGreeting(String id) => _progress[id]?.greeting ?? false;
   bool peerHasSentGreeting(String id) => _progress[id]?.peerGreeting ?? false;
-  bool greetingComplete(String id) => hasSentGreeting(id) && peerHasSentGreeting(id);
+  bool greetingComplete(String id) =>
+      hasSentGreeting(id) && peerHasSentGreeting(id);
 
   bool sendGreeting(String id) {
     if (!_atInteractiveStage(id, 'greeting_exchange') || hasSentGreeting(id)) {
@@ -588,7 +607,8 @@ class ViewRequestDraftModel {
   }
 
   bool simulatePeerGreeting(String id) {
-    if (!_atInteractiveStage(id, 'greeting_exchange') || peerHasSentGreeting(id)) {
+    if (!_atInteractiveStage(id, 'greeting_exchange') ||
+        peerHasSentGreeting(id)) {
       return false;
     }
     _progress[id]!.peerGreeting = true;
@@ -782,6 +802,9 @@ class ViewRequestDraftModel {
     _saved.clear();
     _hiddenPeers.clear();
     _blockedPeers.clear();
+    for (final progress in _progress.values) {
+      progress.marriagePrepCompleted.clear();
+    }
     _progress.clear();
     _shepherdAccess.clear();
     for (final entry in _shepherdMemberships.entries.toList()) {
