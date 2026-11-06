@@ -1,0 +1,104 @@
+{
+  "date_uk": "2026-11-06",
+  "queue_line": 4,
+  "brief": "APP/APPROVED/REPAIRS/BRIEFS/REPAIR_BRIEF_2026-11-06_CHECKPOINT_V1.md",
+  "status": "REPAIR_CHECKS_PASSED",
+  "enum_and_select_unchanged": true,
+  "outside_flexibility": "Required for all four church scopes, as chapter2_flow always asks question 6",
+  "source_files": [
+    "SOURCE/lib/models/seeker_setup_checkpoint.dart",
+    "SOURCE/lib/models/seeker_profile_completion.dart",
+    "SOURCE/tool/test_models.dart"
+  ],
+  "pure_helper_reason": "The real field predicate is extracted once for direct Dart testing without Flutter-dependent service imports; wrapper, saved shapes, callers and consent unchanged.",
+  "checks": {
+    "models": "221 passed, including 28 checkpoint tests",
+    "flutter_analyze": "0 errors, 0 warnings; 12 existing infos; --no-fatal-infos exit 0",
+    "cached_analyzer": "326 files, 0 errors, 0 warnings, 3 existing infos; report redirected only to dated evidence",
+    "draft_boundaries": "19836/19836 passed"
+  },
+  "leftovers_not_changed": [
+    {
+      "path": "SOURCE/lib/screens/settings/settings_screen.dart",
+      "lines": [
+        341
+      ]
+    },
+    {
+      "path": "SOURCE/lib/screens/profile/profile_screen.dart",
+      "lines": [
+        467,
+        470
+      ]
+    },
+    {
+      "path": "SOURCE/lib/screens/profile/edit_profile_screen.dart",
+      "lines": [
+        14
+      ]
+    },
+    {
+      "path": "SOURCE/lib/screens/onboarding/traffic_light_question_screen.dart",
+      "lines": [
+        34,
+        36,
+        41
+      ]
+    },
+    {
+      "path": "SOURCE/lib/dev/selah_dev_scenario.dart",
+      "lines": [
+        1337
+      ]
+    },
+    {
+      "path": "SOURCE/lib/data/help_content.dart",
+      "lines": [
+        287
+      ]
+    },
+    {
+      "path": "SOURCE/lib/data/compatibility_categories.dart",
+      "lines": [
+        43,
+        44
+      ]
+    },
+    {
+      "path": "SOURCE/lib/services/selah_consent_service.dart",
+      "lines": [
+        3,
+        53
+      ]
+    },
+    {
+      "path": "SOURCE/lib/services/selah_discovery_service.dart",
+      "lines": [
+        439
+      ]
+    },
+    {
+      "path": "SOURCE/lib/services/selah_seeker_details_service.dart",
+      "lines": [
+        195
+      ]
+    },
+    {
+      "path": "SOURCE/lib/services/selah_unlock_service.dart",
+      "lines": [
+        289
+      ]
+    },
+    {
+      "path": "SOURCE/lib/widgets/selah_profile_name_block.dart",
+      "lines": [
+        32,
+        37,
+        41,
+        151
+      ]
+    }
+  ],
+  "phone_delivery": "Not run or changed",
+  "other_source_changes": "Existing LOOK candidate remains uncommitted and is not part of repair commit"
+}

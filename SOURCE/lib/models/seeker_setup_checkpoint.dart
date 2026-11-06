@@ -1,5 +1,6 @@
 import '../services/selah_profile_service.dart';
 import '../services/selah_seeker_details_service.dart';
+import 'seeker_profile_completion.dart';
 
 /// Account admission is already complete. This selects the first unfinished
 /// profile section; it never grants identity, discovery or publication.
@@ -33,52 +34,17 @@ bool seekerProfileSectionComplete({
   required String? location,
   required bool? article9Consent,
 }) {
-  if (photoCount < 3 || (location ?? '').trim().isEmpty || details == null) {
-    return false;
-  }
-  bool light(Object? value) => const {'green', 'yellow', 'red'}.contains(value);
-  Map<dynamic, dynamic> section(String key) => details.preferences[key] is Map
-      ? details.preferences[key] as Map
-      : const {};
-  final distance = section('location');
-  if (distance['preference'] is! String ||
-      (distance['preference'] as String).isEmpty ||
-      !light(distance['flexibility'])) {
-    return false;
-  }
-  if (article9Consent != false) {
-    if ((details.sect ?? '').trim().isEmpty ||
-        details.revertStatus == null ||
-        (details.countryOfBirth ?? '').isEmpty ||
-        (details.nationality ?? '').isEmpty ||
-        (details.ethnicity ?? '').isEmpty) {
-      return false;
-    }
-    final sect = section('sect');
-    final matrix = sect['matrix'];
-    final other = const {'Sunni', 'Shia'}.contains(details.sect)
-        ? 'other'
-        : selahSectCodeFor(details.sect!);
-    if (matrix is! Map ||
-        !['sunni', 'shia', other].every((key) => light(matrix[key])) ||
-        !light(sect['outside_flexibility']) ||
-        !light(section('revert')['flexibility'])) {
-      return false;
-    }
-    for (final key in ['country_of_birth', 'nationality', 'ethnicity']) {
-      final value = section(key);
-      if (value['skipped'] == true) continue;
-      if (value['preferred'] is! List ||
-          (value['preferred'] as List).isEmpty ||
-          !light(value['flexibility'])) {
-        return false;
-      }
-    }
-  }
-  if (details.languages.isEmpty) return false;
-  final languages = section('languages');
-  return languages['skipped'] == true ||
-      (languages['preferred'] is List &&
-          (languages['preferred'] as List).isNotEmpty &&
-          light(languages['flexibility']));
+  if (details == null) return false;
+  return seekerProfileFieldsComplete(
+    christianFamily: details.christianFamily,
+    faithJourney: details.faithJourney,
+    countryOfBirth: details.countryOfBirth,
+    nationality: details.nationality,
+    ethnicity: details.ethnicity,
+    languages: details.languages,
+    preferences: details.preferences,
+    photoCount: photoCount,
+    location: location,
+    article9Consent: article9Consent,
+  );
 }

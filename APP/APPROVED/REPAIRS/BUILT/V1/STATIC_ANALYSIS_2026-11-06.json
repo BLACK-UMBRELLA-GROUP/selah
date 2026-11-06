@@ -1,0 +1,70 @@
+{
+  "timestamp": "2026-11-06T13:13:47.582Z",
+  "scope": "direct native static analyzer, no Flutter build",
+  "executable": "/opt/homebrew/share/flutter/bin/cache/dart-sdk/bin/dartaotruntime",
+  "snapshot": "/opt/homebrew/share/flutter/bin/cache/dart-sdk/bin/snapshots/analysis_server_aot.dart.snapshot",
+  "analyzedFiles": 326,
+  "errors": 0,
+  "warnings": 0,
+  "infos": 3,
+  "diagnostics": [
+    {
+      "file": "lib/screens/mentor/mentor_seekers_screen.dart",
+      "severity": "INFO",
+      "type": "LINT",
+      "location": {
+        "file": "/Users/shakeelahmad/Developer/DEVELOPMENT/SELAH/SOURCE/lib/screens/mentor/mentor_seekers_screen.dart",
+        "offset": 4463,
+        "length": 53,
+        "startLine": 131,
+        "startColumn": 7,
+        "endLine": 131,
+        "endColumn": 60
+      },
+      "message": "Statements in an if should be enclosed in a block.",
+      "correction": "Try wrapping the statement in a block.",
+      "code": "curly_braces_in_flow_control_structures",
+      "url": "https://dart.dev/diagnostics/curly_braces_in_flow_control_structures",
+      "hasFix": false
+    },
+    {
+      "file": "lib/screens/onboarding/chapter2_flow.dart",
+      "severity": "INFO",
+      "type": "HINT",
+      "location": {
+        "file": "/Users/shakeelahmad/Developer/DEVELOPMENT/SELAH/SOURCE/lib/screens/onboarding/chapter2_flow.dart",
+        "offset": 30672,
+        "length": 11,
+        "startLine": 890,
+        "startColumn": 17,
+        "endLine": 890,
+        "endColumn": 28
+      },
+      "message": "'activeColor' is deprecated and shouldn't be used. Use activeThumbColor or activeTrackColor instead. This feature was deprecated after v3.31.0-2.0.pre.",
+      "correction": "Try replacing the use of the deprecated member with the replacement.",
+      "code": "deprecated_member_use",
+      "url": "https://dart.dev/diagnostics/deprecated_member_use",
+      "hasFix": false
+    },
+    {
+      "file": "lib/screens/onboarding/chapter2_flow.dart",
+      "severity": "INFO",
+      "type": "HINT",
+      "location": {
+        "file": "/Users/shakeelahmad/Developer/DEVELOPMENT/SELAH/SOURCE/lib/screens/onboarding/chapter2_flow.dart",
+        "offset": 33208,
+        "length": 11,
+        "startLine": 951,
+        "startColumn": 17,
+        "endLine": 951,
+        "endColumn": 28
+      },
+      "message": "'activeColor' is deprecated and shouldn't be used. Use activeThumbColor or activeTrackColor instead. This feature was deprecated after v3.31.0-2.0.pre.",
+      "correction": "Try replacing the use of the deprecated member with the replacement.",
+      "code": "deprecated_member_use",
+      "url": "https://dart.dev/diagnostics/deprecated_member_use",
+      "hasFix": false
+    }
+  ],
+  "stderr": ""
+}
