@@ -22,14 +22,14 @@ SELAH_BASE_APP_BACKUP="$SELAH_LAYER_ROOT/base-App.framework"
 SELAH_SIGN_ID="${SELAH_SIGN_ID:?Set SELAH_SIGN_ID to your Apple development signing identity.}"
 SELAH_BUNDLE_ID='com.blackumbrella.selah.draft'
 SELAH_TEAM_ID="${SELAH_TEAM_ID:?Set SELAH_TEAM_ID to your Apple development team.}"
-SELAH_BASE_RUNNER_SHA='628e08ad2da6760366207674eb799662ff660602886c08cee7d73b747020c5ec'
-SELAH_BASE_DART_SHA='1ee18552533c3a4b060ca015e824ad2f82bf860438f43f83b7754dbb4223134c'
-SELAH_BASE_INFO_SHA='552f24a93d95375ba4917c31d837bcfe763d56bb2fa459b887999df4e3129e86'
-SELAH_BASE_NATIVE_DIGEST='696e5a2bfa4ab991acafd84e89d9a77b1d10cfd786f9eae1c99a007ccf49e6b6'
-SELAH_FLUTTER_ENGINE_SHA='5f0e570182c7964ae2177e1d388d9e12091b89234486daac7acd91e4f4f26ddc'
-SELAH_RUNNER_UNSIGNED_SHA='d609b124a3cdda4013cfd5c507ff5821d3ff3dd35b5bc00c51a8124e8f32e932'
-SELAH_APP_NORMALIZED_SHA='7a700db6625925d6f106349054da44a9f7f4831c028bea7f7cfab7db802302a2'
-SELAH_OBJECTIVE_C_NORMALIZED_SHA='6a5876b830a01455d87dc08b76d624793967a2656d45dc8ab99f40bf96ebea57'
+SELAH_BASE_RUNNER_SHA='50223a8db8f6b27d0b28db96b4f7e63af27bfddb78361e5a0d528e2bb837e651'
+SELAH_BASE_DART_SHA='b5d9720d3d1ae16b178b33fc6aeea21d8d3d3bb8596104b1bae48c42c9cb32ec'
+SELAH_BASE_INFO_SHA='dfdb6a2a65285b116fea38a53a9754ec4000581ba1db199c40dc9abffa6a15ed'
+SELAH_BASE_NATIVE_DIGEST='3d27fffbf9a9432a3a50f180f2f438a4081e43f81d3e5d99226a73f5b76c0253'
+SELAH_FLUTTER_ENGINE_SHA='6dbc2dd29819fcd5cc5492049457ce1d04293a7c094749e67e8864b31879445d'
+SELAH_RUNNER_UNSIGNED_SHA='c861e47212f0f00cc554855f80ade856b73bc9ba433805a7373179505b5f8626'
+SELAH_APP_NORMALIZED_SHA='69425d2f951effd3787d7b47c86f58cfea88db4ea381c4336900abc1ad311474'
+SELAH_OBJECTIVE_C_NORMALIZED_SHA='2217039d1873d374727fcfa83d94f9203b136c45dda037b933e011027456bcc6'
 SELAH_OBJECTIVE_C_INFO_SHA='21eabba1ce090680496e14367008f7952305d214d3828af85e395761384e28b0'
 
 case "$SELAH_RECEIPT_DIR" in
@@ -41,7 +41,7 @@ case "$SELAH_LAYER_ROOT" in
   *) fail 'build root escaped the Selah Dart-layer staging area' ;;
 esac
 [[ -d "$SELAH_BASE_APP" && -d "$SELAH_BASE_APP/Frameworks/App.framework" ]] ||
-  fail 'preserved pre-fix native shell is missing'
+  fail 'reviewed prepared native shell is missing'
 [[ ! -e "$SELAH_STAGED_APP" && ! -e "$SELAH_BASE_APP_BACKUP" ]] ||
   fail 'fresh staging root is not empty'
 [[ "$SELAH_SOURCE_FINGERPRINT" =~ ^[0-9a-f]{64}$ ]] ||
@@ -66,20 +66,11 @@ require_sha() {
 normalized_macho_sha() {
   local source="$1"
   local output="$2"
-  [[ -f "$source" && ! -e "$output" ]] ||
-    fail 'cannot prepare a fresh signature-independent native-asset check'
+  [[ -f "$source" && ! -e "$output" ]] || fail 'normalization requires a fresh disposable copy'
   /bin/cp "$source" "$output"
-  /usr/bin/codesign --remove-signature "$output" >/dev/null 2>&1 ||
-    fail "could not remove the copied Mach-O signature: $source"
-  [[ "$(/usr/bin/stat -f '%z' "$output")" == '146192' ]] ||
-    fail 'objective_c Mach-O layout changed'
-  # The same source/toolchain produces identical code. Its retained developer
-  # signature versus the fresh ad-hoc signature changes only the __LINKEDIT
-  # allocation and LC_UUID. Normalize those two load-command fields on the
-  # disposable copies before comparing every remaining byte.
-  /bin/dd if=/dev/zero of="$output" bs=1 seek=18904 count=8 conv=notrunc status=none
-  /bin/dd if=/dev/zero of="$output" bs=1 seek=19176 count=16 conv=notrunc status=none
-  sha256 "$output"
+  /usr/bin/codesign --remove-signature "$output" >/dev/null 2>&1 || fail 'could not strip copied Mach-O signature'
+  /usr/bin/python3 "$SELAH_PROJECT_ROOT/tooling/macho_content_digest.py" \
+    --expected-size 146192 --normalize-uuid "$output" || fail 'reviewed Mach-O structure changed'
 }
 
 unsigned_runner_sha() {
@@ -90,7 +81,7 @@ unsigned_runner_sha() {
   /bin/cp "$source" "$output"
   /usr/bin/codesign --remove-signature "$output" >/dev/null 2>&1 ||
     fail "could not remove the copied Runner signature: $source"
-  [[ "$(/usr/bin/stat -f '%z' "$output")" == '2832024' ]] ||
+  [[ "$(/usr/bin/stat -f '%z' "$output")" == '2826656' ]] ||
     fail 'native Runner Mach-O layout changed'
   sha256 "$output"
 }
@@ -98,18 +89,11 @@ unsigned_runner_sha() {
 normalized_app_sha() {
   local source="$1"
   local output="$2"
-  [[ -f "$source" && ! -e "$output" ]] ||
-    fail 'cannot prepare a fresh signature-independent App.framework check'
+  [[ -f "$source" && ! -e "$output" ]] || fail 'normalization requires a fresh disposable copy'
   /bin/cp "$source" "$output"
-  /usr/bin/codesign --remove-signature "$output" >/dev/null 2>&1 ||
-    fail "could not remove the copied App.framework signature: $source"
-  [[ "$(/usr/bin/stat -f '%z' "$output")" == '16498872' ]] ||
-    fail 'App.framework Mach-O layout changed'
-  # Re-signing changes only the __LINKEDIT allocation in this pinned Mach-O.
-  # Normalize that 8-byte load-command field on the disposable copy, then
-  # validate every remaining byte against the compiled-content fingerprint.
-  /bin/dd if=/dev/zero of="$output" bs=1 seek=17176 count=8 conv=notrunc status=none
-  sha256 "$output"
+  /usr/bin/codesign --remove-signature "$output" >/dev/null 2>&1 || fail 'could not strip copied Mach-O signature'
+  /usr/bin/python3 "$SELAH_PROJECT_ROOT/tooling/macho_content_digest.py" \
+    --expected-size 16498872  "$output" || fail 'reviewed Mach-O structure changed'
 }
 
 native_digest() {
@@ -142,6 +126,7 @@ retained_inputs_digest() {
     "$SELAH_CACHED_DART" \
     "$SELAH_FLUTTER_SNAPSHOT" \
     "$SELAH_PROJECT_ROOT/tooling/no_git/xcrun" \
+    "$SELAH_PROJECT_ROOT/tooling/macho_content_digest.py" \
     "$FLUTTER_ROOT/bin/cache/artifacts/engine/ios-profile/gen_snapshot_arm64" \
     "$FLUTTER_ROOT/bin/cache/artifacts/engine/darwin-x64/frontend_server_aot.dart.snapshot" \
     "$FLUTTER_ROOT/bin/cache/artifacts/engine/darwin-x64/font-subset" \
@@ -169,18 +154,20 @@ retained_inputs_digest() {
 # route, not only the SDK version labels that describe them.
 require_sha '3760a76d390be872c4b4a44a5d045f06183bc21b191b98c8f1e26bc9b1d65d20' "$SELAH_CACHED_DART"
 require_sha '13abc665bbccfaf78f1357ada1818adf27ed05663a1d3c4519da5b89e3ea0f1a' "$SELAH_FLUTTER_SNAPSHOT"
-require_sha 'f492d28a78b16a73978f334d8b8677161d1565e1a3d6943a4a5b300dab86206d' "$SELAH_PROJECT_ROOT/tooling/no_git/xcrun"
+require_sha 'd34533af4fd0e24526f721694b2d79a474afe62752fb117e93b768e8a6f69120' "$SELAH_PROJECT_ROOT/tooling/no_git/xcrun"
 require_sha '94e8eb91c6f0ac4ca9612e6298fd8fb08d445afee53b24155b60a18555b4f54d' "$FLUTTER_ROOT/bin/cache/artifacts/engine/ios-profile/gen_snapshot_arm64"
 require_sha 'd560d64f6c5484b234e34aaa5c91d16ef3c028b768f591ae27d33ea98c69f9c3' "$FLUTTER_ROOT/bin/cache/artifacts/engine/darwin-x64/frontend_server_aot.dart.snapshot"
 require_sha '1b56f94b39506146474a18372137bc948eb8a5cb7fd19a643ea7d0765e0ed386' "$FLUTTER_ROOT/bin/cache/artifacts/engine/darwin-x64/font-subset"
 
+require_sha '7067eda658de481ef3d52039009541a20276e38c6793cc66c3594c49fd82f3d9' "$SELAH_PROJECT_ROOT/tooling/macho_content_digest.py"
+
 # These exact inputs produced, or define compatibility with, the retained
 # native shell. Any drift stops the transplant instead of guessing ABI safety.
-require_sha '65673dee219d5b74f4ff1ae1c12e2dab90d556a9f3758475da497974f5aafd37' "$SELAH_PROJECT_ROOT/pubspec.yaml"
+require_sha '5a8423d41b6ef6fea9de02c259cd4dbe5f95fda4f0f0ac20a7ef4c399f72f8f4' "$SELAH_PROJECT_ROOT/pubspec.yaml"
 require_sha 'adf4a5d8e8e3e3d9366b0be138f72b6a33564c35dc15e1fce1a585c1638f7ce8' "$SELAH_PROJECT_ROOT/pubspec.lock"
-require_sha '23638bcf000362ac572f22fe2e0c3a1744a6e5c5d1e09aa8d12b26eee5c8f678' "$SELAH_PROJECT_ROOT/.dart_tool/package_config.json"
+require_sha 'a4ac457d2c63f0c2a0283ea4fbe80ca3caa4b897ff42566c0b67b98c87cf4016' "$SELAH_PROJECT_ROOT/.dart_tool/package_config.json"
 require_sha '0ee3c6889e0d9c1234d5612029e6bb42ca7fc70d4e132304389b36caec40cef0' "$SELAH_PROJECT_ROOT/.flutter-plugins-dependencies"
-require_sha '45ea497c4ba672066cf4a22d31556001b7c0d0b0cc23cbd49cfdc78341428ed3' "$SELAH_PROJECT_ROOT/ios/Flutter/ephemeral/Packages/FlutterGeneratedPluginSwiftPackage/Package.swift"
+require_sha 'd07ad9434c73235a8156e8bf21be24c85b38510ec14e958b5212dfb6b7e1a929' "$SELAH_PROJECT_ROOT/ios/Flutter/ephemeral/Packages/FlutterGeneratedPluginSwiftPackage/Package.swift"
 require_sha '50f8d28dd5c6b93cfb1696cc2d27ba5218e634f19bb6708eddeb1f1fead1a762' "$SELAH_PROJECT_ROOT/ios/Runner.xcworkspace/xcshareddata/swiftpm/Package.resolved"
 require_sha 'e30fec8e7c988f25942f580b77886caaec4e479ac1164e52eb8160b959784dda' "$SELAH_PROJECT_ROOT/ios/Runner/AppDelegate.swift"
 require_sha 'a5f88cc6415d2e639d2cb549348b84e02a7fdd0261603b0063abef6fa11f075a' "$SELAH_PROJECT_ROOT/ios/Runner/GeneratedPluginRegistrant.h"
@@ -219,7 +206,7 @@ SELAH_ENTITLEMENTS="$SELAH_RECEIPT_DIR/base-entitlements.plist"
 
 SELAH_SDKROOT="$(/usr/bin/xcrun --sdk iphoneos --show-sdk-path)"
 [[ -d "$SELAH_SDKROOT" ]] || fail 'the prepared iPhoneOS SDK is unavailable'
-[[ "$SELAH_SDKROOT" == '/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS27.0.sdk' ]] ||
+[[ "$SELAH_SDKROOT" == '/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS27.2.sdk' ]] ||
   fail 'the iPhoneOS SDK changed from the retained native shell toolchain'
 SELAH_DART_DEFINES='U0VMQUhfRFJBRlRfTE9DQUxfT05MWT10cnVl,RkxVVFRFUl9BUFBfRkxBVk9SPWRyYWZ0,RkxVVFRFUl9WRVJTSU9OPTMuNDQuMg==,RkxVVFRFUl9DSEFOTkVMPXN0YWJsZQ==,RkxVVFRFUl9HSVRfVVJMPWh0dHBzOi8vZ2l0aHViLmNvbS9mbHV0dGVyL2ZsdXR0ZXIuZ2l0,RkxVVFRFUl9GUkFNRVdPUktfUkVWSVNJT049YzlhNmM0ODQyMw==,RkxVVFRFUl9FTkdJTkVfUkVWSVNJT049NzdlMmU5NDc3Mg==,RkxVVFRFUl9EQVJUX1ZFUlNJT049My4xMi4y'
 /bin/mkdir -p "$SELAH_ASSEMBLED"
@@ -298,11 +285,9 @@ NO_PROXY=localhost,127.0.0.1 \
 [[ "$(/usr/bin/lipo -archs "$SELAH_ASSEMBLED/App.framework/App")" == 'arm64' ]] ||
   fail 'assembled App.framework is not arm64-only'
 SELAH_NEW_DART_SHA="$(sha256 "$SELAH_ASSEMBLED/App.framework/App")"
-[[ "$SELAH_NEW_DART_SHA" != "$SELAH_BASE_DART_SHA" ]] ||
-  fail 'assembled Dart binary is still the pre-fix binary'
 SELAH_ASSEMBLED_APP_NORMALIZED="$SELAH_LAYER_ROOT/assembled-App.normalized"
 [[ "$(normalized_app_sha "$SELAH_ASSEMBLED/App.framework/App" "$SELAH_ASSEMBLED_APP_NORMALIZED")" == "$SELAH_APP_NORMALIZED_SHA" ]] ||
-  fail 'assembled Dart content does not match the reviewed startup fix'
+  fail 'assembled Dart content does not match the reviewed current-source build'
 [[ -d "$SELAH_ASSEMBLED/native_assets/objective_c.framework" ]] ||
   fail 'raw assemble did not reproduce the pinned objective_c native asset'
 SELAH_NATIVE_ASSET_DIRS="$(find "$SELAH_ASSEMBLED/native_assets" -mindepth 1 -maxdepth 1 -type d -exec /usr/bin/basename {} \; | LC_ALL=C /usr/bin/sort | /usr/bin/tr '\n' ' ')"
@@ -325,8 +310,8 @@ SELAH_NEW_OBJECTIVE_NORMALIZED="$SELAH_LAYER_ROOT/new-objective_c.normalized"
 /usr/bin/ditto "$SELAH_BASE_APP" "$SELAH_STAGED_APP"
 /bin/mv "$SELAH_STAGED_APP/Frameworks/App.framework" "$SELAH_BASE_APP_BACKUP"
 /usr/bin/ditto "$SELAH_ASSEMBLED/App.framework" "$SELAH_STAGED_APP/Frameworks/App.framework"
-/usr/libexec/PlistBuddy -c 'Add :SelahDeliveryMode string profile-draft' "$SELAH_STAGED_APP/Info.plist"
-/usr/libexec/PlistBuddy -c "Add :SelahSourceFingerprint string $SELAH_SOURCE_FINGERPRINT" "$SELAH_STAGED_APP/Info.plist"
+/usr/libexec/PlistBuddy -c 'Set :SelahDeliveryMode profile-draft' "$SELAH_STAGED_APP/Info.plist"
+/usr/libexec/PlistBuddy -c "Set :SelahSourceFingerprint $SELAH_SOURCE_FINGERPRINT" "$SELAH_STAGED_APP/Info.plist"
 [[ "$(sha256 "$SELAH_STAGED_APP/Runner")" == "$SELAH_BASE_RUNNER_SHA" ]] ||
   fail 'staged native Runner changed before signing'
 [[ "$(sha256 "$SELAH_STAGED_APP/Frameworks/App.framework/App")" == "$SELAH_NEW_DART_SHA" ]] ||

@@ -10,6 +10,15 @@ owner: Codex
 
 # Selah first draft — as-built handover
 
+## Current delivery update — 6 November 2026
+
+Queue29 (DOC-SELAH-0078, OA-SELAH-007/OA-SELAH-001) repairs the older route described below. With the already installed Flutter3.44.2/Dart3.12.2 and Xcode's physical iPhoneOS27.2 SDK, the current native shell was rebuilt and every changed input/native/content pin reviewed. No tool or SDK was installed or upgraded. The unchanged lockfiles supplied159 cached Dart packages and8 cached Swift checkouts.
+
+The repaired installer passed strict signature and content checks, exact unexpired development-profile admission, exact paired physical-device identity, unlocked state, installation, app metadata/container queries and22-second same-PID survival. A subsequent physical screenshot shows the real Flutter Prayer screen with Pastor David; it is the first observed frame after the stability check, not proof of the initial entry screen or Founder visual acceptance. Raw phone/signing diagnostics stay ignored locally; sanitized evidence is `APP/APPROVED/DELIVERY_REPAIR/BUILT/V1/BUILD.json`. No live service or release is implied.
+
+Mach-O checks now parse the actual structure and preserve the old narrow signing allowance (`__LINKEDIT.vmsize`, plus objective_c UUID). All other bytes, including wrapper padding, filesize and fileoff, remain hashed.20 pure normalization cases and71 synthetic device-receipt cases pass;6 draft/release boundary cases pass. The app analysis retains10 prior information notices, with no errors or warnings; static boundaries pass20571/20571. The historical13October measurements below remain historical.
+
+
 Date: 2026-10-13, Europe/London.
 Status: corrected startup source and no-Git/no-paste delivery route CODEX
 INTERNALLY VERIFIED; FOUNDER GO recorded for the exact corrected rebuild/install.

@@ -8,7 +8,7 @@ links: [OA-SELAH-003, AD-AIOS-123, DOC-SELAH-0009]
 owner: SELAH chat
 ---
 
-# SELAH SHEPHERD INTRODUCE — SPEC — CURRENT VERSION V1 (LOCK 19)
+# SELAH SHEPHERD INTRODUCE — SPEC — CURRENT VERSION V2 (LOCK 19)
 
 Founder, 6 Nov 2026: "A · Shepherds suggest — LOCK it" (prototype V43, cleaned as V44). Look: LOOK spec V2.
 ROADMAP row: **SELAH's own identity and private delivery acceptance**.
@@ -44,6 +44,15 @@ Buttons: ghost "Not now" (removes it; toast "Noted. <Shepherd> won’t be told w
 | No one new | L19_introduce__no_one_new | Breath mark; "No one new to suggest for <Seeker>" / "New people join every week. Come back soon." |
 | No linked Seeker | (as built) | Existing "Link a Seeker first" state, unchanged |
 
+## 5. Scope and draft data (answers QUESTIONS row 16)
+
+| Item | Rule |
+|---|---|
+| Where it works | The offline draft only (same rule as SELAH_PAUSE V4 for Replace). A suggestion is one record in one same-account local Introductions collection, using the existing ShepherdSuggestion DTO and its existing read / markSeen. No new table, store, RPC or backend call |
+| Real app (HomeShell) | Stays exactly as built - Network and its retained paths unchanged, no new "unavailable" state - until a backend brief (OA-SELAH-002) adds a create service and retires family requests together |
+| Joel (draft fixture) | Joel Martins, 28 (BROWSE_CARD V4 §3 cast), draft-only local Seeker whose Main Shepherd is Pastor David. No Journeys, no requests sent or received, nothing hidden or blocked, the draft's default Browse preferences for a new Seeker. Nothing is copied from James's private data |
+| Joel's candidates | The draft women cast through the same discovery rules as any Seeker; first card Grace (master L19_introduce__for_joel), then cast order |
+
 ## Must not change
 Seekers tab, Dashboard (incl. LOCK 10 prayer requests), Shepherd Profile · Seeker's own Browse and request flow · look · draft boundaries. Server-side family-request code stays as built (not reachable from the app) until a backend brief (OA-SELAH-002).
 
@@ -54,3 +63,4 @@ How many suggestions a Shepherd can make · a Shepherd suggesting to an Addition
 | Date | Version | Change |
 |---|---|---|
 | 2026-11-06 | V1 | LOCK 19 - Founder: "A · Shepherds suggest — LOCK it" |
+| 2026-11-06 | V2 | QUESTIONS row 16: §5 scope (offline draft; real app as built until OA-SELAH-002) and the Joel fixture. V1 archived |

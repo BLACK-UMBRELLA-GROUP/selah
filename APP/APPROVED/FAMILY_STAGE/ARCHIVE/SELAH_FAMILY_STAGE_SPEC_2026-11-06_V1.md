@@ -1,14 +1,14 @@
 ---
 id: DOC-SELAH-0072
 type: SPEC
-status: CURRENT
+status: ARCHIVED
 feature: FAMILY_STAGE
 purpose: Family Compatibility (Journey stage 6) - each Seeker answers 4 questions from the other Seeker's Shepherd, written to fit a pastor or a parent; the unbuilt Seeker-to-Shepherd direction is removed (LOCK 22)
 links: [OA-SELAH-003, AD-AIOS-123, DOC-SELAH-0069, DOC-SELAH-0009]
 owner: SELAH chat
 ---
 
-# SELAH FAMILY COMPATIBILITY STAGE — SPEC — CURRENT VERSION V1 (LOCK 22)
+# SELAH FAMILY COMPATIBILITY STAGE — SPEC — V1 (ARCHIVED 2026-11-06) (LOCK 22)
 
 Founder, 6 Nov 2026: "A · Seekers answer — LOCK it" (prototype V49, cleaned as V50). Look: LOOK spec V2. Stages: JOURNEY_STAGES V1 (stage 6 of 7).
 ROADMAP row: **SELAH's own identity and private delivery acceptance**.

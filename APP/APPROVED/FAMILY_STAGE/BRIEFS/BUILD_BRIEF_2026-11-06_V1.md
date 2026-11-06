@@ -16,10 +16,15 @@ Queue line 27. Build after: 26. ROADMAP row: **SELAH's own identity and private 
 
 | # | Step | Detail |
 |---|---|---|
-| 1 | Read | `FAMILY_STAGE/RECORD/SELAH_FAMILY_STAGE_SPEC_CURRENT_VERSION_V1.md`, its LOCK_RECORD, masters `MASTERS/L22_*`, `lib/data/journey_questions.dart`, `_FamilyStageView` in `journey_flow_screen.dart`, and the draft's family stage (`selah_one_journey_concept_shell.dart`, "Your families meet your Journey here."). |
+| 1 | Read | `FAMILY_STAGE/RECORD/SELAH_FAMILY_STAGE_SPEC_CURRENT_VERSION_V2.md`, its LOCK_RECORD, masters `MASTERS/L22_*`, `lib/data/journey_questions.dart`, `_FamilyStageView` in `journey_flow_screen.dart`, and the draft's family stage (`selah_one_journey_concept_shell.dart`, "Your families meet your Journey here."). |
 | 2 | Questions | Replace `mentorToSeeker` with the 4 questions of spec §1 (ids `fam_q1..4`, 400-character limit). Remove `seekerToMentor` and every use of it (incl. `journey_flow_screen.dart` ~line 1003). Leave stored rows for old ids untouched. |
 | 3 | Page | Production `_FamilyStageView` and the draft family stage both follow spec §2 and the masters (label, note, Send answers rule). The draft's "<Name>’s family asks:" and its read-only fields go. |
 | 4 | States | Sending / didn't send / sent as spec §3; completion as built once both Seekers have sent. |
 | 5 | Checks | `flutter analyze`, `dart run tool/test_models.dart` (add: 4 questions and ids; send needs all 4; no `seekerToMentor`), `node tool/analyze_cached.mjs`, `node tool/check_draft_boundaries.mjs`. |
 | 6 | Compare | `COMPARE/SELAH_MASTER_COMPARE_ROUTE_CURRENT_VERSION_V1.md`; 5 beside images in `FAMILY_STAGE/BUILT/V1/`. |
 | 7 | Task note + queue | "Built from", files, removed code, screenshots, Disk, public checks A-F; mark line 27 BUILT or FAILED. |
+
+## Update 2026-11-06 (answers QUESTIONS row 15; spec V2)
+| # | Change |
+|---|---|
+| a | Label and sent card: when the other Shepherd is not named (JOURNEY_STAGES V2 §2a) use "<Name>’s Shepherd asks you" / "Sent to <Name>’s Shepherd and <Name>."; with no Shepherd of your own, "…to answer your Shepherd’s questions." |

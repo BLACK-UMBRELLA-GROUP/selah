@@ -38,7 +38,7 @@ for required in \
   'tooling/dart_layer_delivery.sh' \
   'Profile-draft' \
   'com.blackumbrella.selah.draft' \
-  '9Y7Z8F36SJ' \
+  'SELAH_TEAM_ID' \
   'SELAH_DRAFT_LOCAL_ONLY=true' \
   'FLUTTER_BUILD_MODE FLUTTER_TARGET DART_DEFINES' \
   'sandbox-exec' \

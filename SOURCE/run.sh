@@ -53,7 +53,7 @@ if [[ -z "$SELAH_SIGN_ID" ]]; then
   printf '%s\n' 'Set SELAH_SIGN_ID to your available Apple development signing identity.' >&2
   exit 2
 fi
-if [[ "$SELAH_BUILD_ONLY" != true && -z "$SELAH_DEVICE" ]]; then
+if [[ -z "$SELAH_DEVICE" ]]; then
   printf '%s\n' 'Set SELAH_DEVICE or pass --device with your paired-device ID.' >&2
   exit 2
 fi
@@ -198,11 +198,29 @@ fi
 /usr/bin/plutil -extract ProvisionedDevices xml1 \
   -o "$SELAH_RECEIPT_DIR/profile-devices.plist" \
   "$SELAH_RECEIPT_DIR/embedded-profile.plist"
-if ! /usr/bin/grep -Fq -- "$SELAH_DEVICE" \
-     "$SELAH_RECEIPT_DIR/profile-devices.plist"; then
-  printf '%s\n' 'Embedded profile does not contain the intended iPhone. No install was attempted.' >&2
-  exit 1
-fi
+# Compare complete identifiers, and require an unexpired development profile.
+# Never echo the private signing or device values.
+/usr/bin/python3 - "$SELAH_RECEIPT_DIR/embedded-profile.plist" \
+  "$SELAH_RECEIPT_DIR/artifact-entitlements.plist" "$SELAH_DEVICE" <<'PY'
+import datetime
+import plistlib
+import sys
+
+with open(sys.argv[1], 'rb') as source:
+    profile = plistlib.load(source)
+with open(sys.argv[2], 'rb') as source:
+    signed = plistlib.load(source)
+expiry = profile.get('ExpirationDate')
+valid = (
+    isinstance(expiry, datetime.datetime)
+    and expiry.replace(tzinfo=datetime.timezone.utc) > datetime.datetime.now(datetime.timezone.utc)
+    and sys.argv[3] in profile.get('ProvisionedDevices', [])
+    and profile.get('Entitlements', {}).get('get-task-allow') is True
+    and signed.get('get-task-allow') is True
+)
+if not valid:
+    sys.exit('Embedded profile is not valid development authority for the intended iPhone. No install was attempted.')
+PY
 
 SELAH_ARTIFACT_SHA="$(/usr/bin/shasum -a 256 "$SELAH_APP/Runner" | /usr/bin/cut -d ' ' -f 1)"
 printf '%s\n' \
@@ -225,11 +243,17 @@ SELAH_LAUNCH_JSON="$SELAH_RECEIPT_DIR/device-launch.json"
 SELAH_APPS_JSON="$SELAH_RECEIPT_DIR/device-apps.json"
 SELAH_PROCESSES_JSON="$SELAH_RECEIPT_DIR/device-processes.json"
 SELAH_STABLE_PROCESSES_JSON="$SELAH_RECEIPT_DIR/device-processes-stable.json"
+SELAH_DEVICES_JSON="$SELAH_RECEIPT_DIR/paired-devices.json"
 
 /usr/bin/xcrun devicectl device info lockState \
   --device "$SELAH_DEVICE" --timeout 30 --json-output "$SELAH_LOCK_JSON"
 "$SELAH_CACHED_DART" "$SELAH_PROJECT_ROOT/tooling/verify_devicectl_receipt.dart" \
   lock "$SELAH_LOCK_JSON"
+
+# The live lock query establishes the CoreDevice connection before inventory.
+/usr/bin/xcrun devicectl list devices --timeout 30 --json-output "$SELAH_DEVICES_JSON"
+"$SELAH_CACHED_DART" "$SELAH_PROJECT_ROOT/tooling/verify_devicectl_receipt.dart" \
+  device "$SELAH_DEVICES_JSON" "$SELAH_DEVICE"
 
 /usr/bin/xcrun devicectl device install app \
   --device "$SELAH_DEVICE" "$SELAH_APP" --timeout 60 \
@@ -274,7 +298,7 @@ fi
   processes "$SELAH_STABLE_PROCESSES_JSON" "$SELAH_CONTAINER" "$SELAH_PID"
 
 printf '%s\n' \
-  "device=$SELAH_DEVICE" \
+  'intended_device=verified' \
   "container=$SELAH_CONTAINER" \
   "pid=$SELAH_PID" \
   'install=verified' \
@@ -283,6 +307,6 @@ printf '%s\n' \
   'post_query=verified' \
   >> "$SELAH_RECEIPT_DIR/artifact-summary.txt"
 
-printf 'Selah %s (%s) installed and launched on %s.\n' \
-  "$SELAH_BUILT_VERSION" "$SELAH_BUILT_NUMBER" "$SELAH_DEVICE"
+printf 'Selah %s (%s) installed and launched on the intended iPhone.\n' \
+  "$SELAH_BUILT_VERSION" "$SELAH_BUILT_NUMBER"
 printf 'Receipt: %s\n' "$SELAH_RECEIPT_DIR"

@@ -55,7 +55,9 @@ Approved comparisons use real Flutter widgets at 430 × 932 and pixel ratio 3. I
 
 ## Private delivery route
 
-`SOURCE/run.sh` is a specialized private iPhone delivery route. It depends on a prepared local environment, a retained signed native base and matching local signing/provisioning material. It is not a fresh-clone setup script. The 6 November phone preflight found its prepared native app, Swift checkouts and pinned physical-device SDK unavailable; its old binary/resource pins also exclude the latest source and locked icon. Delivery is held on Question 14 pending a reviewed repair. The phone connection and unlocked state were verified; no new app was installed.
+`SOURCE/run.sh` is a specialized private iPhone delivery route. It depends on a prepared local environment, a reviewed signed native base and matching local signing/provisioning material. It is not a fresh-clone setup script. The separately approved 6 November repair rebuilt that base with the existing iPhoneOS 27.2 SDK and the pinned Flutter/Dart tools. Dart dependencies came from the offline cache; the eight locked Swift checkouts were restored from Xcode's cache. No tool, SDK or package version was upgraded.
+
+The repaired route installed and opened the app on the intended paired iPhone, verified the same process after 22 seconds, and captured a visible Flutter screen. This proves private draft delivery; it does not establish Founder visual acceptance or live services. The LOCK23 icon and splash remain held on Question17 because this checkout has no Android host.
 
 The source tooling pins cached Flutter **3.44.2** and Dart **3.12.2**; `SOURCE/pubspec.yaml` declares the Dart constraint `^3.12.2`. Review the project-local integration before changing those versions. The launcher checks its required local artifacts and stops when prerequisites do not match.
 
@@ -75,9 +77,18 @@ SELAH_DEVICE=YOUR_PAIRED_DEVICE_ID \
 ./run.sh
 ```
 
-`--device YOUR_PAIRED_DEVICE_ID` overrides `SELAH_DEVICE`. `--build-only` requires `SELAH_TEAM_ID` and `SELAH_SIGN_ID` but does not require a device; it prepares the local artifact without installation or launch. These are shell environment inputs; the launcher does not read a dotenv file. Keep your actual identifiers out of committed files and reports.
+`--device YOUR_PAIRED_DEVICE_ID` overrides `SELAH_DEVICE`. `--build-only` also requires the explicit intended device so the development profile can be checked; it prepares the local artifact without installation or launch. These are shell environment inputs; the launcher does not read a dotenv file. Keep your actual identifiers out of committed files and reports.
 
-The route validates and compiles the Profile Dart layer against its retained native shell.
+The route validates and compiles the Profile Dart layer against its reviewed native shell. Compilation denies network, Git and Xcode-project builds. Complete input/content pins, strict signatures, an unexpired development profile, exact physical-device identity and pairing, unlocked state and the 22-second same-PID check all remain mandatory. Changing source requires a separately reviewed compiled-content pin; changing native resources requires rebuilding and reviewing the native base.
+
+Delivery regression checks use existing tools:
+
+```bash
+cd SOURCE
+python3 -B -m unittest tooling.test_macho_content_digest
+./tooling/flutter_env.sh # verifies the pinned cached tool identity
+/opt/homebrew/Caskroom/flutter/3.44.2/flutter/bin/cache/dart-sdk/bin/dart tool/test_delivery_receipts.dart
+```
 
 ## How work is done
 

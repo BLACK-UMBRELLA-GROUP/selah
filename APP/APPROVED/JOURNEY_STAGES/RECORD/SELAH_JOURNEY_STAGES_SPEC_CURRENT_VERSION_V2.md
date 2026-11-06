@@ -8,7 +8,7 @@ links: [OA-SELAH-003, AD-AIOS-123, DOC-SELAH-0044, DOC-SELAH-0009]
 owner: SELAH chat
 ---
 
-# SELAH JOURNEY STAGES — SPEC — CURRENT VERSION V1 (LOCK 21)
+# SELAH JOURNEY STAGES — SPEC — CURRENT VERSION V2 (LOCK 21)
 
 Founder, 6 Nov 2026: "A · 7 stages — LOCK it" (prototype V47, cleaned as V48). Look: LOOK spec V2.
 ROADMAP row: **SELAH's own identity and private delivery acceptance**.
@@ -40,8 +40,20 @@ Marriage preparation card (LOCK 9) are unchanged.
 |---|---|---|
 | Compatibility Reveal → Continue | The Journey goes straight to Faith & Values. No Shepherd screen in between | L01_seeker_journey__stages |
 | A Journey already stored at `mentor_gate` | Shown as stage 3 of 7, Faith & Values, and moved on in the background when either Seeker opens it. If that fails: the existing "That didn't save. Try again." state | L09_marriage_prep__didnt_save (state pattern) |
-| Journeys list, My Selah, Seeker profile, Shepherd Seekers | "Stage n of 7 · <label>" | L01_seeker_journeys__pending_and_free_place, L01_seeker_my_selah__request, L01_seeker_profile__faith, L01_shepherd_seekers |
-| Journey header | "Stage n of 7 · Shepherds: <both Main Shepherds>" - the couple sees each other's Shepherds from the start | L01_seeker_journey__stages |
+| Journeys list, My Selah, Seeker profile | "Stage n of 7 · <label>" | L01_seeker_journeys__pending_and_free_place, L01_seeker_my_selah__request, L01_seeker_profile__faith |
+| Shepherd Seekers | "Stage n · <label>" as built - no "of 7" (it never showed a total; the master wins) | L01_shepherd_seekers |
+| Journey header | "Stage n of 7 · Shepherds: <your Main Shepherd> and <other Shepherd>" - names per §2a | L01_seeker_journey__stages |
+
+### 2a. Shepherd names (answers QUESTIONS row 15)
+
+| Whose | Name used |
+|---|---|
+| The other Seeker's Main Shepherd - offline draft demo cast | A draft-only fixture field on the demo Seeker (BROWSE_CARD V4 §3, made-up and local): Grace → "Her mother, Ruth" · Esther → "Pastor Ama Mensah" · Naomi → "Her father, Peter" · Abigail → "Her aunt, Teresa" |
+| The other Seeker's Main Shepherd - anyone else, and the real app | "<Name>’s Shepherd" (the wording already LOCKed in SELAH_PAUSE: "…and so will <Name>’s Shepherd.") |
+| Your own Main Shepherd | Their display name as the pause and prayer already use it. No Shepherd (SELAH_PAUSE no-Shepherd state) → header is "Stage n of 7" only |
+
+No paid lookup (`fetchUnlocked` / `shepherds_for_unlocked`), no server or metadata-contract change. Whether Seekers see the other
+Shepherd's real name before an unlock is a pricing question (OA-SELAH-004, Fable).
 
 **Removed with the stage:** the Shepherd Gate screen, its mutual "reveal your Shepherds" step and the optional Shepherd
 greetings at that stage; any Shepherd Dashboard or roster item that said a Journey was waiting at the Shepherd stage.
@@ -58,3 +70,4 @@ stored rows on. Until then the app passes through it (section 2).
 | Date | Version | Change |
 |---|---|---|
 | 2026-11-06 | V1 | LOCK 21 - Founder: "A · 7 stages — LOCK it" |
+| 2026-11-06 | V2 | QUESTIONS row 15 (no Founder decision needed): §2a Shepherd names with the "<Name>’s Shepherd" fallback; Shepherd Seekers caption keeps "Stage n ·" - V1 wrongly listed it under "of 7" (SELAH chat spec error). V1 archived |

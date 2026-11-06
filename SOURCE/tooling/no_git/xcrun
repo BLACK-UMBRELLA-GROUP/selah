@@ -26,12 +26,12 @@ if [[ $# -eq 2 && "$1" == '--find' ]]; then
 fi
 
 if [[ $# -eq 3 && "$1" == '--sdk' && "$2" == 'iphoneos' && "$3" == '--show-sdk-path' ]]; then
-  printf '%s\n' '/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS27.0.sdk'
+  printf '%s\n' '/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS27.2.sdk'
   exit 0
 fi
 
 if [[ $# -eq 3 && "$1" == '--show-sdk-path' && "$2" == '--sdk' && "$3" == 'iphoneos' ]]; then
-  printf '%s\n' '/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS27.0.sdk'
+  printf '%s\n' '/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS27.2.sdk'
   exit 0
 fi
 

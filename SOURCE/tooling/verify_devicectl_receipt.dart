@@ -40,18 +40,35 @@ Map<String, dynamic> _receipt(String path) {
 }
 
 String _containerFromUrl(String value) {
-  final match = RegExp(r'/Bundle/Application/([^/]+)/[^/]+\.app/').firstMatch(value);
+  final match = RegExp(
+    r'/Bundle/Application/([^/]+)/[^/]+\.app/',
+  ).firstMatch(value);
   if (match == null) {
     _fail('installed application URL is malformed');
   }
   return match.group(1)!;
 }
 
+bool _isInstalledRunner(dynamic executable, String container) {
+  if (executable is! String ||
+      !RegExp(r'^[A-Za-z0-9-]+$').hasMatch(container)) {
+    return false;
+  }
+  final path =
+      '/var/containers/Bundle/Application/$container/Runner.app/Runner';
+  return <String>{
+    path,
+    '/private$path',
+    'file://$path',
+    'file:///private$path',
+  }.contains(executable);
+}
+
 void main(List<String> arguments) {
   if (arguments.length < 2) {
     _fail(
       'usage: verify_devicectl_receipt.dart '
-      '{lock|install|launch|apps|processes} RECEIPT [expected values]',
+      '{device|lock|install|launch|apps|processes} RECEIPT [expected values]',
     );
   }
   final mode = arguments[0];
@@ -59,6 +76,34 @@ void main(List<String> arguments) {
   final result = _map(root['result'], 'receipt result');
 
   switch (mode) {
+    case 'device':
+      if (arguments.length != 3 || arguments[2].trim().isEmpty) {
+        _fail('device requires the exact intended device UDID');
+      }
+      final devices = _list(result['devices'], 'device query');
+      final matches = devices.whereType<Map<String, dynamic>>().where((device) {
+        final properties = device['properties'];
+        if (properties is! Map<String, dynamic>) return false;
+        final hardware = properties['hardware'];
+        return hardware is Map<String, dynamic> &&
+            hardware['udid'] == arguments[2];
+      }).toList();
+      if (matches.length != 1) {
+        _fail('device query does not identify exactly one intended iPhone');
+      }
+      final properties = _map(
+        matches.single['properties'],
+        'device properties',
+      );
+      final hardware = _map(properties['hardware'], 'device hardware');
+      final connection = _map(properties['connection'], 'device connection');
+      if (hardware['deviceType'] != 'iPhone' ||
+          hardware['reality'] != 'physical' ||
+          connection['pairingState'] != 'paired' ||
+          connection['state'] != 'connected') {
+        _fail('the intended physical iPhone is not paired and connected');
+      }
+      return;
     case 'lock':
       if (result['passcodeRequired'] != false) {
         _fail('the intended iPhone is locked');
@@ -70,7 +115,9 @@ void main(List<String> arguments) {
         result['installedApplications'],
         'installed applications',
       );
-      final application = applications.whereType<Map<String, dynamic>>().firstWhere(
+      final application = applications
+          .whereType<Map<String, dynamic>>()
+          .firstWhere(
             (value) => value['bundleID'] == arguments[2],
             orElse: () => _fail('install receipt has the wrong bundle ID'),
           );
@@ -83,9 +130,9 @@ void main(List<String> arguments) {
       final process = _map(result['process'], 'launched process');
       final executable = process['executable'];
       final pid = process['processIdentifier'];
-      if (pid is! int || pid <= 0 ||
-          executable is! String ||
-          !executable.contains('/${arguments[2]}/Runner.app/Runner')) {
+      if (pid is! int ||
+          pid <= 0 ||
+          !_isInstalledRunner(executable, arguments[2])) {
         _fail('launch receipt does not identify the installed Selah process');
       }
       stdout.writeln(pid);
@@ -96,9 +143,9 @@ void main(List<String> arguments) {
       }
       final apps = _list(result['apps'], 'installed app query');
       final app = apps.whereType<Map<String, dynamic>>().firstWhere(
-            (value) => value['bundleIdentifier'] == arguments[2],
-            orElse: () => _fail('installed app query has the wrong bundle ID'),
-          );
+        (value) => value['bundleIdentifier'] == arguments[2],
+        orElse: () => _fail('installed app query has the wrong bundle ID'),
+      );
       if (app['name'] != arguments[3] ||
           app['version'] != arguments[4] ||
           app['bundleVersion'].toString() != arguments[5]) {
@@ -115,11 +162,12 @@ void main(List<String> arguments) {
       final expectedPid = int.tryParse(arguments[3]);
       if (expectedPid == null) _fail('expected process ID is invalid');
       final processes = _list(result['runningProcesses'], 'process query');
-      final matched = processes.whereType<Map<String, dynamic>>().any((process) {
+      final matched = processes.whereType<Map<String, dynamic>>().any((
+        process,
+      ) {
         final executable = process['executable'];
         return process['processIdentifier'] == expectedPid &&
-            executable is String &&
-            executable.contains('/${arguments[2]}/Runner.app/Runner');
+            _isInstalledRunner(executable, arguments[2]);
       });
       if (!matched) _fail('Selah process is not present in the post-query');
       return;

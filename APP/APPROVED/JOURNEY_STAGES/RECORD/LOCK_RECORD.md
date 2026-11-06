@@ -12,4 +12,5 @@ owner: SELAH chat
 
 | # | Date / time (UK) | Founder's words (exact) | What it locks |
 |---|---|---|---|
-| 21 | 2026-11-06 | Clickable answer: "A · 7 stages — LOCK it" (prototype V47, opened on Esther's Journey with A and B in the Deciding-now bar) | `RECORD/SELAH_JOURNEY_STAGES_SPEC_CURRENT_VERSION_V1.md`; universal: 5 L01 masters (LOOK) and 4 L09 masters (MARRIAGE_PREP) re-rendered, old in each `ARCHIVE/MASTERS_LOCK21`; prototype V48; queue line 26 |
+| 21 | 2026-11-06 | Clickable answer: "A · 7 stages — LOCK it" (prototype V47, opened on Esther's Journey with A and B in the Deciding-now bar) | `RECORD/SELAH_JOURNEY_STAGES_SPEC_CURRENT_VERSION_V2.md`; universal: 5 L01 masters (LOOK) and 4 L09 masters (MARRIAGE_PREP) re-rendered, old in each `ARCHIVE/MASTERS_LOCK21`; prototype V48; queue line 26 |
+| 21 (change) | 2026-11-06 | QUESTIONS row 15 (no Founder decision needed) | Spec V2: Shepherd names (§2a, "<Name>’s Shepherd" fallback); Shepherd Seekers caption keeps "Stage n ·" - V1 listed it under "of 7" by mistake. V1 archived |

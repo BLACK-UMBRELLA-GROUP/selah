@@ -12,4 +12,5 @@ owner: SELAH chat
 
 | # | Date / time (UK) | Founder's words (exact) | What it locks |
 |---|---|---|---|
-| 22 | 2026-11-06 ~21:05 | Clickable answer: "A · Seekers answer — LOCK it" (prototype V49, opened on Family Compatibility with A and B in the Deciding-now bar) | `RECORD/SELAH_FAMILY_STAGE_SPEC_CURRENT_VERSION_V1.md`; 5 masters `MASTERS/L22_*.png`; prototype V50; queue line 27 |
+| 22 | 2026-11-06 ~21:05 | Clickable answer: "A · Seekers answer — LOCK it" (prototype V49, opened on Family Compatibility with A and B in the Deciding-now bar) | `RECORD/SELAH_FAMILY_STAGE_SPEC_CURRENT_VERSION_V2.md`; 5 masters `MASTERS/L22_*.png`; prototype V50; queue line 27 |
+| 22 (change) | 2026-11-06 | QUESTIONS row 15 (no Founder decision needed) | Spec V2: unnamed-Shepherd wording for label and sent card. V1 archived |

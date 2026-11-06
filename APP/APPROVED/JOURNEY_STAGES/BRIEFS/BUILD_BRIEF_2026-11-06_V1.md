@@ -16,7 +16,7 @@ Queue line 26. Build after: 25. ROADMAP row: **SELAH's own identity and private 
 
 | # | Step | Detail |
 |---|---|---|
-| 1 | Read | `JOURNEY_STAGES/RECORD/SELAH_JOURNEY_STAGES_SPEC_CURRENT_VERSION_V1.md`, its LOCK_RECORD, the re-rendered masters in `LOOK/MASTERS` (5 listed in spec §2) and `MARRIAGE_PREP/MASTERS/L09_*`, `lib/data/selah_journey_stages.dart`, `journey_flow_screen.dart`, `selah_journey_service.dart`. |
+| 1 | Read | `JOURNEY_STAGES/RECORD/SELAH_JOURNEY_STAGES_SPEC_CURRENT_VERSION_V2.md`, its LOCK_RECORD, the re-rendered masters in `LOOK/MASTERS` (5 listed in spec §2) and `MARRIAGE_PREP/MASTERS/L09_*`, `lib/data/selah_journey_stages.dart`, `journey_flow_screen.dart`, `selah_journey_service.dart`. |
 | 2 | Stage list | `SelahJourneyStages.all` = the 7 stages of spec §1, in order; `order` and `count` follow (count 7). `of('mentor_gate')` must still resolve without a crash (legacy value, not in `all`, displays as Faith & Values). Update the file's header notes to say 7 and why (LOCK 21). |
 | 3 | Pass-through | After `advanceStage(id,'compatibility_reveal')` returns stage `mentor_gate`, call `advanceStage(id,'mentor_gate')` at once. Opening a Journey stored at `mentor_gate` does the same. `stage_moved` = already moved (fine). Any other refusal → existing "That didn't save. Try again." state, and write the reason in the task note. Do not change the RPC or any SQL. |
 | 4 | Remove | `_MentorGateView` and its Shepherd reveal / greeting steps from the flow; `mentor_gate` branches in `selah_shepherd_dashboard_resolver.dart`, `selah_shepherd_seeker_roster_resolver.dart`, `selah_mentor_journey_service.dart` (treat as Faith & Values, no "waiting" item); dev scenario / test-control entries that open that stage (same rule as queue line 16). List anything left unreachable. |
@@ -25,3 +25,9 @@ Queue line 26. Build after: 25. ROADMAP row: **SELAH's own identity and private 
 | 6 | Checks | `flutter analyze`, `dart run tool/test_models.dart` (add: 7 stages in order; legacy `mentor_gate` resolves; pass-through after Compatibility Reveal; update any test asserting 8), `node tool/analyze_cached.mjs`, `node tool/check_draft_boundaries.mjs`. |
 | 7 | Compare | `COMPARE/SELAH_MASTER_COMPARE_ROUTE_CURRENT_VERSION_V1.md`; 9 beside images (5 L01 + 4 L09) in `JOURNEY_STAGES/BUILT/V1/`. |
 | 8 | Task note + queue | "Built from", files, removed code, screenshots, Disk, public checks A-F; mark line 26 BUILT or FAILED. |
+
+## Update 2026-11-06 (answers QUESTIONS row 15; spec V2)
+| # | Change |
+|---|---|
+| a | Shepherd names: spec §2a - draft-only fixture field for the 4 demo Seekers; everyone else and the real app "<Name>’s Shepherd"; your own Main Shepherd's display name; no Shepherd → header "Stage n of 7" only. No paid lookup, no server or contract change. |
+| b | Shepherd Seekers caption stays "Stage n · <label>" (master L01_shepherd_seekers). "of 7" is for Seeker screens only. |
