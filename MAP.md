@@ -31,7 +31,7 @@ re-run the tool.
 
 _Stop here unless you need to look up another ID._
 
-## Documents (78 live)
+## Documents (80 live)
 
 ### ABOUT_YOU
 
@@ -120,7 +120,7 @@ _Stop here unless you need to look up another ID._
 
 | ID | File | Type | Purpose | Links | KB |
 |---|---|---|---|---|---|
-| DOC-SELAH-0006 | `APP/APPROVED/BUILD_QUEUE.md` | REGISTER | Build queue - every LOCKed brief waits here; Codex builds WAITING lines at 01:00 or on GO (charters rule 9) | AD-AIOS-115 | 12 |
+| DOC-SELAH-0006 | `APP/APPROVED/BUILD_QUEUE.md` | REGISTER | Build queue - every LOCKed brief waits here; Codex builds WAITING lines at 01:00 or on GO (charters rule 9) | AD-AIOS-115 | 13 |
 | DOC-SELAH-0007 | `APP/APPROVED/QUESTIONS.md` | REGISTER | Codex's questions for the SELAH chat - Codex never asks Shakeel in chat; he files the question here, marks… | AD-AIOS-116 | 21 |
 | DOC-SELAH-0008 | `ROADMAP.md` | PLAN | Approval-gated roadmap for SELAH - its own identity from 3 Nov 2026, then member services and launch… | OA-SELAH-001, OA-SELAH-002, OA-SELAH-003, OA-SELAH-004, OA-AIOS-414 | 4 |
 | INDEX-OUTSTANDING_ACTIONS_V1 | `SYSTEM/OUTSTANDING_ACTIONS/OUTSTANDING_ACTIONS_V1_INDEX.md` | INDEX | Generated one-line index of OUTSTANDING_ACTIONS_V1.md; find the ID here, then search the register for it |  | 1 |
@@ -203,6 +203,13 @@ _Stop here unless you need to look up another ID._
 | DOC-SELAH-0029 | `APP/APPROVED/SELAH_PAUSE/RECORD/SELAH_PAUSE_SPEC_CURRENT_VERSION_V5.md` | SPEC | The Selah pause - SELAH's calm full-screen moment before asking someone to begin a Journey, accepting a… | AD-AIOS-129, OA-SELAH-003, AD-AIOS-123, DOC-SELAH-0009 | 7 |
 | DOC-SELAH-0030 | `APP/APPROVED/SELAH_PAUSE/RECORD/LOCK_RECORD.md` | REGISTER | LOCK record for the Selah pause - each LOCK with the Founder's exact words |  | 1 |
 | DOC-SELAH-0031 | `APP/APPROVED/SELAH_PAUSE/BRIEFS/BUILD_BRIEF_2026-11-06_V1.md` | PLAN | Build brief for LOCK 7 - the Selah pause before sending, accepting and ending a Journey | DOC-SELAH-0029, DOC-SELAH-0020, OA-SELAH-003, AD-AIOS-123 | 3 |
+
+### SERVER_PLAN
+
+| ID | File | Type | Purpose | Links | KB |
+|---|---|---|---|---|---|
+| DOC-SELAH-0079 | `APP/APPROVED/SERVER_PLAN/BRIEFS/PLAN_BRIEF_2026-11-07_V1.md` | PLAN | Founder-named task - Codex writes SELAH's own server plan (document only); building starts after 14 Dec | OA-SELAH-002, OA-SELAH-004, AD-AIOS-129, AD-AIOS-123, OA-AIOS-420 | 4 |
+| DOC-SELAH-0080 | `SYSTEM/DOCUMENTS/SELAH_SERVER_PLAN_CURRENT_VERSION_V1.md` | PLAN · DRAFT | Document-only plan for SELAH's independent server; build only after 14 December 2026 on separate Founder… | DOC-SELAH-0079, OA-SELAH-002, OA-SELAH-004, AD-AIOS-129, AD-AIOS-123, OA-AIOS-420 | 29 |
 
 ### SHEPHERD_DASHBOARD
 
