@@ -10,7 +10,7 @@ The Flutter demo opens a local Browse experience with Journey, My Selah, Shepher
 
 The draft has no configured member backend. Account and service integrations are inert, HTTP is denied, fixture state is session-only and release mode refuses the draft. Private developer controls simulate local states. They do not grant server authority.
 
-Sample profile pictures are free stock photos, not real members.
+The sample profile pictures are simple placeholder images made for this project; they show no real people. Earlier versions in the Git history used photos whose source was not recorded. The placeholders use this repository’s existing Apache-2.0 licence; see `LICENSE`.
 
 The LOCKed Still Water look uses a light mist canvas, lake accents, bundled Figtree and Cormorant Garamond, and a docked tab bar. Existing loading and failure states use the same theme; no live services are enabled. Member text uses “Selah”; profile actions read “Request a Journey”, or “Request later” while waiting for the Shepherd. The shared quiet-page labels render in capitals; Pause and Prayer use the same recorded short Shepherd display name as the Shepherd tab.
 
@@ -28,7 +28,7 @@ Offline controls that represent someone else or a server are in the existing pri
 
 At Open Conversation, the local Journey includes the locked marriage-preparation card. Its three steps can be marked in any order and stay with that local Journey for the session. No courses, external links or live sharing are enabled.
 
-The first-draft handover records passing static and pure-Dart checks and a signed build; on-device checks are still pending. No TestFlight or App Store delivery yet.
+History: the first-draft handover recorded passing static and pure-Dart checks and a signed build, with device checks pending at that earlier attempt. Private delivery to the Founder’s iPhone worked on 6 November 2026. Founder visual acceptance and live services are not established; Android remains held on Question 17. No TestFlight or App Store delivery is established.
 
 The draft Shepherd tab is now Introduce. A Main Shepherd can suggest an eligible profile for James or the separately scoped Joel fixture. Each uses their own discovery state; a suggestion creates one account-local Introduction and sends nothing to the other person. The Seeker sees it on My Selah and Introductions, can open that person in Browse, or dismiss it privately. Seen and dismissed states are not disclosed to the Shepherd. The retained connected-service Network is unchanged and remains inactive in this offline entrypoint. Dashboard shows Prayer requests, actionable Needs you, recent check-ins and Updates. Check-ins come only from successful recorded stage advances in the existing local Journey owner, cover seven days and show at most three; their actions open the same guarded Circle. The Dashboard no longer repeats the family snapshot or offers paid Insights. Existing retained priority/Updates failure and last-known states remain; no completion event is relabelled as an unproved stage entry.
 

@@ -124,7 +124,9 @@ by source creation or Apple development signing.
 The Founder requested the first phone draft by reusing the current app core,
 adapting content for ZYRA's faith community to Christian content, then
 iterating together.
-The prepared draft reuses presentation/code and local stock fixtures only.
+The prepared draft reuses presentation/code and local placeholder fixtures only.
+
+The sample profile pictures are simple placeholder images made for this project; they show no real people. Earlier versions in the Git history used photos whose source was not recorded.
 
 ## Load next
 

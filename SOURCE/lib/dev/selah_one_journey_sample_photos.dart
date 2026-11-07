@@ -2,7 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/services.dart';
 
-/// Offline display-size copies of the existing local stock portrait fixtures.
+/// The sample profile pictures are simple placeholder images made for this project; they show no real people. Earlier versions in the Git history used photos whose source was not recorded.
 /// Never reads a member photo, signed URL, image cache or remote service.
 /// Shared SelahProfileImage already renders data URLs locally, so these photos
 /// can be used in its original Browse, card and avatar presentation unchanged.

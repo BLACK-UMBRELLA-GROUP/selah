@@ -15,7 +15,7 @@ Product owner: APP/FIRST_DRAFT/SELAH_FIRST_DRAFT_SPEC_CURRENT_VERSION_V1.md.
 As-built owner: SELAH_FIRST_DRAFT_HANDOVER_CURRENT_VERSION_V1.md.
 
 1. Separate SOURCE tree and Dart package selah. Never edit the source app.
-2. Reuse only allowlisted Dart code, local stock portrait assets and bundled
+2. Reuse only allowlisted Dart code, local placeholder portrait assets and bundled
    fonts/notices. Exclude original main/config, credentials, native providers,
    caches/builds, repositories, live data and signing material.
 3. New entrypoint; exact installed draft bundle check; release refusal;
@@ -64,3 +64,5 @@ As-built owner: SELAH_FIRST_DRAFT_HANDOVER_CURRENT_VERSION_V1.md.
 Rollback: remove only the separately installed Selah app from the phone if the
 Founder chooses. Do not remove ZYRA, shared SDKs, profiles, certificates or
 source. No data recovery/production rollback is implied by the local draft.
+
+The sample profile pictures are simple placeholder images made for this project; they show no real people. Earlier versions in the Git history used photos whose source was not recorded.

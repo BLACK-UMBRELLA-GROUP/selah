@@ -44,7 +44,7 @@ stays as built.
 Shepherds: Pastor David Okafor (James's), Pastor Ama Mensah, Elder Joseph Clarke, mentor Sarah Lewis; family Shepherds by
 first name with a matching relation ("Her mother, Ruth", "Her father, Peter", "Her aunt, Teresa", "His brother, Mark").
 Rules: every relation matches the person (no woman as "father"); church traditions spread across the §1 list; ages 24-38;
-UK towns; demo photos stay the existing stock photos, matched to a name of the right gender; nationality/ethnicity values
+UK towns; demo pictures use project-made placeholders with the existing name/gender mapping; nationality/ethnicity values
 plausible for the name. Demo data stays made-up and local (public repo).
 
 ## Must not change
@@ -57,3 +57,5 @@ Filters screen design · full profile page layout.
 | Date | Version | Change |
 |---|---|---|
 | 2026-11-06 | V1 | LOCK 8 - Founder: "A · Faith chips only — LOCK it" |
+
+The sample profile pictures are simple placeholder images made for this project; they show no real people. Earlier versions in the Git history used photos whose source was not recorded.

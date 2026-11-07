@@ -10,7 +10,7 @@ owner: SELAH chat
 
 # SELAH prototype
 
-The one interactive prototype (charters rule 11, PROTOTYPE_STANDARD V1). `selah-prototype.html` is the source of the published page; the SELAH chat edits and republishes it. It shows designs and open options only - nothing here is LOCKed until a LOCK_RECORD says so. Photos are the demo stock fixtures from `SOURCE/assets/dev/`.
+The one interactive prototype (charters rule 11, PROTOTYPE_STANDARD V1). `selah-prototype.html` is the source of the published page; the SELAH chat edits and republishes it. It shows designs and open options only - nothing here is LOCKed until a LOCK_RECORD says so. The sample profile pictures are simple placeholder images made for this project; they show no real people. Earlier versions in the Git history used photos whose source was not recorded.
 
 | Version | Date | What |
 |---|---|---|

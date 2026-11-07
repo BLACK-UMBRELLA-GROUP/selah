@@ -45,7 +45,7 @@ stays as built; the main button reads **Request a Journey** (WORDING spec V1). M
 Shepherds: Pastor David Okafor (James's), Pastor Ama Mensah, Elder Joseph Clarke, mentor Sarah Lewis; family Shepherds by
 first name with a matching relation ("Her mother, Ruth", "Her father, Peter", "Her aunt, Teresa", "His brother, Mark").
 Rules: every relation matches the person (no woman as "father"); church traditions spread across the §1 list; ages 24-38;
-UK towns; demo photos stay the existing stock photos, matched to a name of the right gender; nationality/ethnicity values
+UK towns; demo pictures use project-made placeholders with the existing name/gender mapping; nationality/ethnicity values
 plausible for the name. Demo data stays made-up and local (public repo).
 
 ## Must not change
@@ -61,3 +61,5 @@ Filters screen design · full profile page layout.
 | 2026-11-06 | V2 | LOCK 11: masters re-rendered with "Request a Journey". V1 archived |
 | 2026-11-06 | V3 | LOCK 16 (Founder: "A · Upfront — LOCK it"): marriage line under the chips; 5 card masters re-rendered (old in ARCHIVE/MASTERS_V2). V2 archived |
 | 2026-11-06 | V4 | Answers Codex QUESTIONS row 9: the app keeps leaving out anyone you already have a Journey or request with (peerOccupied) - the better rule; the "In a Journey" state is retired, master moved to ARCHIVE/MASTERS_V3. V3 archived |
+
+The sample profile pictures are simple placeholder images made for this project; they show no real people. Earlier versions in the Git history used photos whose source was not recorded.

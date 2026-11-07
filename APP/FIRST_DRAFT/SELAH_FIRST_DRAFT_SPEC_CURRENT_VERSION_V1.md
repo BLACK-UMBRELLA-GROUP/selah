@@ -22,7 +22,7 @@ untouched and do not connect Selah to its accounts or live member data.
 
 ## First-draft content and routes
 
-- Browse: local stock profiles and photo carousel, bounded Back/Next history,
+- Browse: local sample profiles and photo carousel, bounded Back/Next history,
   Journey invitation/cancel state, local filtering/hide/block, compatibility
   reveal and local code lookup presentation.
 - Journey: up to three local Journeys, preparation and mutual confirmations,
@@ -59,3 +59,5 @@ accessed. Physical appearance and behaviour require Founder acceptance.
 
 Tracking: OA-SELAH-001 (draft/device delivery), OA-SELAH-002 (independent real
 services), OA-SELAH-003 (content/assets), OA-SELAH-004 (company/name/commerce).
+
+The sample profile pictures are simple placeholder images made for this project; they show no real people. Earlier versions in the Git history used photos whose source was not recorded.

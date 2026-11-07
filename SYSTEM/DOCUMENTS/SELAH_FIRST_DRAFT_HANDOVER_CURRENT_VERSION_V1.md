@@ -270,8 +270,9 @@ stable runtime or Founder visual acceptance.
    Home/role/onboarding/core navigation, camera/permissions where used and
    Founder physical acceptance. Do not promote the earlier failed attempt.
 2. OA-SELAH-003: review Christian copy/Shepherd scope, runtime layout,
-   accessibility and release-photo provenance. The local stock fixtures are
-   not declared publicly licensed by this import.
+   accessibility and production-photo provenance. The current local fixtures
+   are project-made placeholders under the repository’s existing Apache-2.0 licence.
+   The sample profile pictures are simple placeholder images made for this project; they show no real people. Earlier versions in the Git history used photos whose source was not recorded.
 3. OA-SELAH-002: design/approve independent real account/backend/verification/
    photo moderation/request/chat/safety/compatibility/receipt systems. None is
    activated by this draft. No price or calculated score becomes real merely
