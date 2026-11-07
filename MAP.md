@@ -104,7 +104,7 @@ _Stop here unless you need to look up another ID._
 
 | ID | File | Type | Purpose | Links | KB |
 |---|---|---|---|---|---|
-| DOC-SELAH-0002 | `APP/FIRST_DRAFT/SELAH_FIRST_DRAFT_SPEC_CURRENT_VERSION_V1.md` | SPEC | What the first private phone draft must show and what it must not do | OA-SELAH-001 | 2 |
+| DOC-SELAH-0002 | `APP/FIRST_DRAFT/SELAH_FIRST_DRAFT_SPEC_CURRENT_VERSION_V1.md` | SPEC | What the first private phone draft must show and what it must not do | OA-SELAH-001 | 3 |
 | DOC-SELAH-0003 | `SYSTEM/DOCUMENTS/SELAH_FIRST_DRAFT_BUILD_CONTRACT_CURRENT_VERSION_V1.md` | STANDARD | The build rules for the first draft: separate source tree, allowlisted ZYRA code only, no backend or live data | OA-SELAH-001, OA-AIOS-403 | 4 |
 | DOC-SELAH-0004 | `SYSTEM/DOCUMENTS/SELAH_FIRST_DRAFT_HANDOVER_CURRENT_VERSION_V1.md` | HANDOVER | What was actually built on 13 Oct, how it was checked, and what is still pending | OA-SELAH-001, OA-SELAH-002, OA-SELAH-003, OA-SELAH-004 | 17 |
 
@@ -176,7 +176,7 @@ _Stop here unless you need to look up another ID._
 
 | ID | File | Type | Purpose | KB |
 |---|---|---|---|---|
-| DOC-SELAH-0012 | `APP/APPROVED/PROTOTYPE/README.md` | GUIDE | What the SELAH interactive prototype file is and its version history | 6 |
+| DOC-SELAH-0012 | `APP/APPROVED/PROTOTYPE/README.md` | GUIDE | What the SELAH interactive prototype file is and its version history | 7 |
 
 ### REPAIRS
 
