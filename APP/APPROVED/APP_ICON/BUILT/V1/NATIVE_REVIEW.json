@@ -1,0 +1,114 @@
+{
+  "base_raw": {
+    "runner": "88a99a6adb494c48e9053d681ccd4d85d4517bab4d46bb11a017ca3386a124c6",
+    "app": "9d0c9a9eccdafae33a758c9f4b2f307e10117dcbb51dd3a3d0f3ead04b08ecbe",
+    "info": "9c7696ea45803bd687ed40a9467a234f20a483c47c9500abe849b235c8a93fd8",
+    "engine": "9745a51f5788e5faa565f5285945ede63714e98cc06039d7cb13b5c70be0ad8e"
+  },
+  "native_digest": "a104602eb1ae37108f5daf98d6023b4fa332a6c30abb2856852a363fadd5da3c",
+  "native_payload_digest": "e2ed0d42c20e0e7a1719c008c7f711e79591f1e62b33e0fe7b9cfd1b6381af19",
+  "runner": {
+    "stripped_size": 2826656,
+    "sha256": "0b29a219c69a869771305adc0bc6e918d3dc0cee804300fd37effbf3db6a40ce",
+    "normalized_sha256": "b0a9413d0ed11496b34e28103ff82d732c48de554b8c504da83e9bda0f988335"
+  },
+  "app": {
+    "stripped_size": 14434488,
+    "sha256": "58bb58026014bfa26136ac0a3400f5073292111b23f398485a1d82bc192cde0d",
+    "normalized_sha256": "400c857fff7810f582d7b82eb6b6fef45ad54350370edf5232f0810154033bbd"
+  },
+  "objc": {
+    "stripped_size": 146192,
+    "sha256": "28728fc060332c09544e1b6798ec21177acdd19fafb8973e831d8dc284150ae7",
+    "normalized_sha256": "2217039d1873d374727fcfa83d94f9203b136c45dda037b933e011027456bcc6"
+  },
+  "engine_old_staged": {
+    "stripped_size": 14841576,
+    "sha256": "343651a1f92aa598cd7be797c86dfc623bea29841e4e22860ce30be0456aa33b",
+    "normalized_sha256": "fdf4b7fbb07ab7249be33748f233dd9d9a37ee75e219c2ab634d352f2d709b7a"
+  },
+  "engine_new_base": {
+    "stripped_size": 14841576,
+    "sha256": "343651a1f92aa598cd7be797c86dfc623bea29841e4e22860ce30be0456aa33b",
+    "normalized_sha256": "fdf4b7fbb07ab7249be33748f233dd9d9a37ee75e219c2ab634d352f2d709b7a"
+  },
+  "engine_cached_sdk": {
+    "stripped_size": 14841576,
+    "sha256": "343651a1f92aa598cd7be797c86dfc623bea29841e4e22860ce30be0456aa33b",
+    "normalized_sha256": "fdf4b7fbb07ab7249be33748f233dd9d9a37ee75e219c2ab634d352f2d709b7a"
+  },
+  "info_changed_keys": [
+    "SelahSourceFingerprint"
+  ],
+  "runner_old_staged": {
+    "stripped_size": 2826656,
+    "normalized_sha256": "1f7509a8f0faa74d1f9273c4cdf7172c5682eed36cdafec51da4c10b95613fcf"
+  },
+  "runner_changed_byte_count": 86,
+  "runner_first_changed_offsets": [
+    4568,
+    4569,
+    4570,
+    4571,
+    4572,
+    4573,
+    4574,
+    4575,
+    4576,
+    4577,
+    4578,
+    4579,
+    4580,
+    4581,
+    4582,
+    4583,
+    33033,
+    34361,
+    36265,
+    36869,
+    37261,
+    39277,
+    39401,
+    68969,
+    83925,
+    88537,
+    90921,
+    92625,
+    118573,
+    120805,
+    127941,
+    128809,
+    128881,
+    130393,
+    140757,
+    149773,
+    163269,
+    163893,
+    168541,
+    171341,
+    173821,
+    173885,
+    173965,
+    178745,
+    178885,
+    179009,
+    179049,
+    179157,
+    264969,
+    328309,
+    328469,
+    328609,
+    328705,
+    329493,
+    329597,
+    404473,
+    425969,
+    452341,
+    501765,
+    501825,
+    501949,
+    519065,
+    520629,
+    526133
+  ]
+}

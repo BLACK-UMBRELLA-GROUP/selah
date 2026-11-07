@@ -1,0 +1,23 @@
+{
+  "source": "Independent read-only native review",
+  "changed_bytes": 86,
+  "uuid_bytes": 16,
+  "classref_bytes": 6,
+  "instruction_immediate_bytes": 64,
+  "instructions": {
+    "LDR": 56,
+    "ADD": 8
+  },
+  "class_imports": [
+    "NSBundle",
+    "NSUserActivity",
+    "UIOpenURLContext",
+    "FlutterEventChannel",
+    "LAContext",
+    "UIApplication"
+  ],
+  "proof": "Every changed instruction resolves to same class import; opcode/registers unchanged; all other bytes and load-command/section layout identical. Generated asset symbols compile and relink proven in native build log.",
+  "inference": "Linker choice of import order is order churn; semantic correspondence is proven independently.",
+  "strict_unsigned_pin": "0b29a219c69a869771305adc0bc6e918d3dc0cee804300fd37effbf3db6a40ce",
+  "normalization_changes": false
+}

@@ -1,0 +1,179 @@
+{
+  "schema": 1,
+  "feature": "APP_ICON",
+  "lock": 23,
+  "scope": "Founder-named iPhone correction; iOS built and installed. Android and full queue28 completion remain QUESTION/Q17.",
+  "built_from": [
+    "APP/APPROVED/APP_ICON/BRIEFS/BUILD_BRIEF_2026-11-06_V1.md",
+    "APP/APPROVED/APP_ICON/RECORD/SELAH_APP_ICON_SPEC_CURRENT_VERSION_V1.md",
+    "APP/APPROVED/APP_ICON/RECORD/LOCK_RECORD.md",
+    "APP/APPROVED/DELIVERY_REPAIR/BRIEFS/BUILD_BRIEF_2026-11-06_V1.md"
+  ],
+  "founder_request": "The app icon didnt update",
+  "commit": "bf6bf8f7b4cd8bb09aa27da5aac2afa77f2579e3",
+  "recorded_utc": "2026-11-07T00:13:15.348479+00:00",
+  "flutter": "3.44.2",
+  "dart": "3.12.2",
+  "sdk": "Existing iPhoneOS27.2; existing iphonesimulator27.2 for evidence",
+  "build_mode": "Physical Profile-draft/local-only; simulator Debug-draft/local-only",
+  "version": "0.1.0+1 unchanged; no release",
+  "source_fingerprint": "3896c1f8c1e1dd0addd3d038b42469e7983e0f4f3e35d6805a6f09544e86b285",
+  "committed_inputs_match_installed_build": true,
+  "masters": [
+    {
+      "path": "APP/APPROVED/APP_ICON/MASTERS/L23_close_up.png",
+      "sha256": "a5693dba3411c09dfbc8acf5155e6583e205fab0362e7104c371cffa49245d08",
+      "dimensions": [
+        1290,
+        2796
+      ]
+    },
+    {
+      "path": "APP/APPROVED/APP_ICON/MASTERS/L23_home_screen.png",
+      "sha256": "a5082fbeace05d8672705eddcd6128bd0917fcfbfe03801bf8b61595790e9c20",
+      "dimensions": [
+        1290,
+        2796
+      ]
+    },
+    {
+      "path": "APP/APPROVED/APP_ICON/MASTERS/L23_icon_1024.png",
+      "sha256": "4ed7d2ba6992411572b571e8c39a5d6f4ac49d782a0dd7dcd294f9dd4ebb8dca",
+      "dimensions": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "path": "APP/APPROVED/APP_ICON/MASTERS/L23_icon_android_foreground_1024.png",
+      "sha256": "2b1fae6cd78c6c797cad3207dac8d458ef7da9157ea0b201790bbdd1a82c9695",
+      "dimensions": [
+        1024,
+        1024
+      ]
+    },
+    {
+      "path": "APP/APPROVED/APP_ICON/MASTERS/L23_splash.png",
+      "sha256": "6e23a37cfbae638391ed8d4f27bff6f6233d5975b070674731ff819b9493b5b4",
+      "dimensions": [
+        1290,
+        2796
+      ]
+    },
+    {
+      "path": "APP/APPROVED/APP_ICON/MASTERS/L23_splash_wordmark_3x.png",
+      "sha256": "f0abee505c39b608d0aa83e45c8e257e34d8e993461b962291aaf75a5557a2f3",
+      "dimensions": [
+        780,
+        240
+      ]
+    }
+  ],
+  "source_verification": {
+    "icon_destinations_byte_identical_to_master": true,
+    "icon_catalogue_unchanged_complete": true,
+    "wordmark_3x_byte_identical": true,
+    "wordmark_rasters": {
+      "1x": [
+        260,
+        80
+      ],
+      "2x": [
+        520,
+        160
+      ],
+      "3x": [
+        780,
+        240
+      ]
+    },
+    "wordmark_alpha_preserved": true,
+    "launch_image_points": [
+      260,
+      80
+    ],
+    "centering": "Full root view centerX/centerY",
+    "background": "#EEF1F0 explicit sRGB",
+    "old_text_label_removed": true,
+    "dart_member_ui_changed": false
+  },
+  "native_review": {
+    "physical_native_build_seconds": 52,
+    "base_and_resource_pins": "6 measured base/candidate constants,2 existing source resource hashes,4 new imageset files pinned in both require_sha and retained_inputs_digest.",
+    "engine_code": "Old staged,new base,cached SDK stripped engine bytes identical. Raw signed digest refreshed only after re-signing/content proof.",
+    "runner": "86 differing bytes exhaustively mapped to16UUID,6same-class import-reference bytes,64equivalent LDR/ADD immediates; exact whole-file candidate pin, no new normalization.",
+    "app_normalized_sha256": "400c857fff7810f582d7b82eb6b6fef45ad54350370edf5232f0810154033bbd",
+    "objc_normalized_sha256": "2217039d1873d374727fcfa83d94f9203b136c45dda037b933e011027456bcc6",
+    "sdk_tool_helper_dependency_versions": "Unchanged; no installs/upgrades",
+    "strict_checks": "Signature,profile,architecture,pairing,physical identity,source fingerprint and22-second launch checks retained."
+  },
+  "physical_phone": {
+    "install": "verified",
+    "launch": "verified",
+    "same_pid_after22seconds": "verified",
+    "post_query": "verified",
+    "operator_seconds": 188,
+    "existing_profile_unchanged": true,
+    "home_icon_founder_confirmation": "Requested optionally; no answer received at trace time",
+    "unplugged_relaunch": "Not checked"
+  },
+  "checks": {
+    "flutter_errors": 0,
+    "flutter_warnings": 0,
+    "flutter_prior_infos": 10,
+    "cached_files": 407,
+    "cached_errors": 0,
+    "cached_warnings": 0,
+    "cached_prior_infos": 1,
+    "static_boundaries_passed": 20693,
+    "bash_syntax": true,
+    "old_purple_active_source_hits": 0,
+    "old_purple_nonactive_hits": [
+      {
+        "file": "APP/APPROVED/APP_ICON/ARCHIVE/OLD_ICON_2026-11-06/LaunchScreen.storyboard",
+        "line": 20,
+        "reason": "Intentional old archived source"
+      },
+      {
+        "file": "APP/APPROVED/APP_ICON/BRIEFS/BUILD_BRIEF_2026-11-06_V1.md",
+        "line": 24,
+        "reason": "Instruction naming retired values"
+      }
+    ],
+    "prior_unchanged_dart_validation": "511widget cases pass/1existing skip;1338model checks. Not rerun for artwork-only correction; normalized compiled App content unchanged."
+  },
+  "evidence": {
+    "home_pngs": [
+      {
+        "path": "APP/APPROVED/APP_ICON/BUILT/V1/L23_home_screen__build.png",
+        "bytes": 4510163,
+        "sha256": "f3c2a70da4ab89d293b05653f643df782f78bc4dcf34c25b8ff246973617eba8",
+        "dimensions": [
+          1320,
+          2868
+        ]
+      },
+      {
+        "path": "APP/APPROVED/APP_ICON/BUILT/V1/L23_home_screen__master_beside_build.png",
+        "bytes": 6036014,
+        "sha256": "756fb3a5f6bfde7de71b0879a78822395c48d96b054183a93ac9d08be29f1a17",
+        "dimensions": [
+          2610,
+          2868
+        ]
+      }
+    ],
+    "home_visually_reviewed": true,
+    "differences": "Actual iPhone18ProMax1320x2868 vs master1290x2796; different wallpaper,apps,status,dock,grid position andsystem rounding. No screenshot rescaling, no blanket MATCH.",
+    "splash_positive_screenshot": null,
+    "splash_limit": "Headless Debug simulator normal launch video214sampled frames and one held-before-first-frame attempt produced no pale wordmark frame (black/status or zoom surfaces). Source geometry/assets and native compilation verified; visual launch-screen comparison remains unverified. No fake splash pair published. This does not imply failure of physical Profile launch.",
+    "simulator_shutdown": true,
+    "manifest": "SIMULATOR_EVIDENCE.json"
+  },
+  "remaining_work": {
+    "android": "No host created; scope remains Q17OPEN",
+    "splash_visual_comparison": "Not obtained in headless Debug simulator; recorded as OA-SELAH-003 evidence limitation, not falsely passed.",
+    "founder_visual_acceptance": "Not recorded"
+  },
+  "evidence_policy": "Only PNG/JSON in this folder; compiled apps,macOS helper,video and raw diagnostics stay in ignored normal SOURCE/build. No keys/signing/device identifiers included."
+}

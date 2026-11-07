@@ -1,0 +1,149 @@
+{
+  "feature": "APP_ICON",
+  "lock": 23,
+  "spec": "V1",
+  "generatedUtc": "2026-11-07T00:11:03.238272+00:00",
+  "scope": "Founder named iPhone icon fix; existing-host simulator evidence only. Android remains held; no new host.",
+  "environment": {
+    "device": "existing iPhone Pro Max simulator",
+    "runtime": "iOS27.2",
+    "buildConfiguration": "Debug-draft",
+    "actualPixels": [
+      1320,
+      2868
+    ],
+    "masterPixels": [
+      1290,
+      2796
+    ],
+    "comparisonPixels": [
+      2610,
+      2868
+    ]
+  },
+  "buildResult": "Existing draft target succeeded using cached Flutter3.44.2 simulator engine and8 exact pinned Swift-package source revisions. Automatic package updates/resolution disabled; no tool/SDK/package install.",
+  "networkStatement": "Successful route relies on existing caches and Xcode resolution controls, not kernel network denial. First added outer sandbox failed before compile because SwiftPM nested sandbox_apply was not permitted; preserved separately.",
+  "productSourceChangedPaths": [],
+  "sourceFileCountVerified": 398,
+  "homeResult": "VERIFIED: actual OS Home visibly shows pale-water S plus warm mark, system-rounded icon and Selah label. Raw native PNG copied unchanged.",
+  "homeDifferences": [
+    "Actual native1320x2868 versus master1290x2796; images retain native pixel dimensions, top-aligned with72px blank canvas under shorter master.",
+    "Actual iOS27.2 Home wallpaper/app arrangement and native icon treatment differ from schematic master; Selah row2 column4 versus master row2 column2.",
+    "Native current clock/status glyphs and two populated dock icons differ from prototype9:41/placeholder grid/dock."
+  ],
+  "splashResult": "NOT VERIFIED: one normal cold-launch video yielded214 inspected pale-background samples with0 candidates; later actual frames black/status-only. One supported --wait-for-debugger held-before-first-frame attempt also showed black launch/zoom surface; terminated afterward. No fake splash comparison published.",
+  "cause": "Cause of missing wordmark in this headless Debug simulator is not established. Does not establish failure of the separately delivered physical Profile app.",
+  "guiLimitation": "Simulator.app GUI absent from selected Xcode installation/Applications inventory; CUA unavailable. Native simctl framebuffer/recording used.",
+  "actions": "Existing simulator boot/install and normal+held launch only; no reset/erase/recreate/uninstall. App stopped and owned simulator returned to original Shutdown state.",
+  "pngCount": 2,
+  "pngBytes": 10546177,
+  "images": [
+    {
+      "path": "APP/APPROVED/APP_ICON/BUILT/V1/L23_home_screen__build.png",
+      "bytes": 4510163,
+      "sha256": "f3c2a70da4ab89d293b05653f643df782f78bc4dcf34c25b8ff246973617eba8",
+      "width": 1320,
+      "height": 2868
+    },
+    {
+      "path": "APP/APPROVED/APP_ICON/BUILT/V1/L23_home_screen__master_beside_build.png",
+      "bytes": 6036014,
+      "sha256": "756fb3a5f6bfde7de71b0879a78822395c48d96b054183a93ac9d08be29f1a17",
+      "width": 2610,
+      "height": 2868
+    }
+  ],
+  "sourceAssets": [
+    {
+      "path": "APP/APPROVED/APP_ICON/MASTERS/L23_icon_1024.png",
+      "bytes": 48376,
+      "sha256": "4ed7d2ba6992411572b571e8c39a5d6f4ac49d782a0dd7dcd294f9dd4ebb8dca",
+      "width": 1024,
+      "height": 1024
+    },
+    {
+      "path": "APP/APPROVED/APP_ICON/MASTERS/L23_splash_wordmark_3x.png",
+      "bytes": 26187,
+      "sha256": "f0abee505c39b608d0aa83e45c8e257e34d8e993461b962291aaf75a5557a2f3",
+      "width": 780,
+      "height": 240
+    },
+    {
+      "path": "APP/APPROVED/APP_ICON/MASTERS/L23_home_screen.png",
+      "bytes": 1042989,
+      "sha256": "a5082fbeace05d8672705eddcd6128bd0917fcfbfe03801bf8b61595790e9c20",
+      "width": 1290,
+      "height": 2796
+    },
+    {
+      "path": "APP/APPROVED/APP_ICON/MASTERS/L23_splash.png",
+      "bytes": 40627,
+      "sha256": "6e23a37cfbae638391ed8d4f27bff6f6233d5975b070674731ff819b9493b5b4",
+      "width": 1290,
+      "height": 2796
+    }
+  ],
+  "diagnostics": [
+    {
+      "path": "SOURCE/build/app_icon_simulator/build.log",
+      "bytes": 2699066,
+      "sha256": "ada8877838c2fe9a83e6775aa529aa5ca8d7ec4c0fd48c261ef7f33b6376b701"
+    },
+    {
+      "path": "SOURCE/build/app_icon_simulator/build_nested_sandbox.log",
+      "bytes": 2296,
+      "sha256": "42af5306aec227717ccc2de9e86800a9c344d13a974d4d4296f5e566718aaf00"
+    },
+    {
+      "path": "SOURCE/build/app_icon_simulator/cache_audit.json",
+      "bytes": 1342,
+      "sha256": "dcb07cf8812e8bac5511e5832d83f6a45fa89238901beae472c5b814d7b1148e"
+    },
+    {
+      "path": "SOURCE/build/app_icon_simulator/launch.mov",
+      "bytes": 166357,
+      "sha256": "1ac43804e29b7487705965d94d272ec51dff04f3d9092675637d024f6cf16e9b"
+    },
+    {
+      "path": "SOURCE/build/app_icon_simulator/launch_events.json",
+      "bytes": 191,
+      "sha256": "c4094f0f8bae50005739abb657ed9674348df50a740d2c16bd151a9ff283ddab"
+    },
+    {
+      "path": "SOURCE/build/app_icon_simulator/scan/scan.json",
+      "bytes": 46,
+      "sha256": "2690d09014cb9386080d7f68e3a843e636aaf2b0f0a6e0e698689e8a71a90379"
+    },
+    {
+      "path": "SOURCE/build/app_icon_simulator/held_launch.png",
+      "bytes": 441099,
+      "sha256": "fdfa20e680c50409970b8dc64066461734bd5d4dd6d006b1c15765eb0b05518b",
+      "width": 1320,
+      "height": 2868
+    },
+    {
+      "path": "SOURCE/build/app_icon_simulator/held_launch_result.json",
+      "bytes": 67,
+      "sha256": "e6e35b3d92c6f8e1ed69848571965e9fdbf73e2fd34dc327ed8e3df437d31fe9"
+    },
+    {
+      "path": "SOURCE/build/app_icon_simulator/source_after_build.json",
+      "bytes": 25,
+      "sha256": "8b82f26f6b4052bdfd77caeaff3f273045b345990f42241867d76326bc188d65"
+    }
+  ],
+  "identifiers": "Exact simulator/runtime/bundle identifiers retained only in ignored selection/build logs; not in public evidence.",
+  "fetchDownloadObservation": {
+    "observedFetchDownloadLines": 0,
+    "statement": "No fetching/download observed in successful build log; existing8 resolved package source revisions were verified before build."
+  },
+  "positiveSplashEvidence": [],
+  "excludedSplashDiagnostics": [
+    "SOURCE/build/app_icon_simulator/launch.mov",
+    "SOURCE/build/app_icon_simulator/frames_early/",
+    "SOURCE/build/app_icon_simulator/frames_launch/",
+    "SOURCE/build/app_icon_simulator/after_launch.png",
+    "SOURCE/build/app_icon_simulator/held_launch.png"
+  ],
+  "finalState": "All child processes closed; owned simulator Shutdown. No CUA or additional build remains."
+}
