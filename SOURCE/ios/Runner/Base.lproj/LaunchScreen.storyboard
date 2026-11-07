@@ -12,15 +12,17 @@
                         <rect key="frame" x="0.0" y="0.0" width="390" height="844"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" text="SELAH" textAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="sEl-ah-Nam">
-                                <fontDescription key="fontDescription" type="system" weight="light" pointSize="28"/>
-                                <color key="textColor" red="0.886" green="0.804" blue="0.569" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                            </label>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" image="SelahLaunchWordmark" translatesAutoresizingMaskIntoConstraints="NO" id="sEl-ah-Img">
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="260" id="sEl-ah-Wdt"/>
+                                    <constraint firstAttribute="height" constant="80" id="sEl-ah-Hgt"/>
+                                </constraints>
+                            </imageView>
                         </subviews>
-                        <color key="backgroundColor" red="0.118" green="0.078" blue="0.157" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="backgroundColor" red="0.9333333333333333" green="0.9450980392156862" blue="0.9411764705882353" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
-                            <constraint firstItem="sEl-ah-Nam" firstAttribute="centerX" secondItem="Ze5-6b-2t3" secondAttribute="centerX" id="seL-ah-Cen"/>
-                            <constraint firstItem="sEl-ah-Nam" firstAttribute="centerY" secondItem="Ze5-6b-2t3" secondAttribute="centerY" id="seL-ah-Yct"/>
+                            <constraint firstItem="sEl-ah-Img" firstAttribute="centerX" secondItem="Ze5-6b-2t3" secondAttribute="centerX" id="seL-ah-Cen"/>
+                            <constraint firstItem="sEl-ah-Img" firstAttribute="centerY" secondItem="Ze5-6b-2t3" secondAttribute="centerY" id="seL-ah-Yct"/>
                         </constraints>
                     </view>
                 </viewController>
@@ -28,5 +30,7 @@
             </objects>
         </scene>
     </scenes>
+    <resources>
+        <image name="SelahLaunchWordmark" width="260" height="80"/>
+    </resources>
 </document>
-

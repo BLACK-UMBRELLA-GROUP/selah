@@ -22,12 +22,12 @@ SELAH_BASE_APP_BACKUP="$SELAH_LAYER_ROOT/base-App.framework"
 SELAH_SIGN_ID="${SELAH_SIGN_ID:?Set SELAH_SIGN_ID to your Apple development signing identity.}"
 SELAH_BUNDLE_ID='com.blackumbrella.selah.draft'
 SELAH_TEAM_ID="${SELAH_TEAM_ID:?Set SELAH_TEAM_ID to your Apple development team.}"
-SELAH_BASE_RUNNER_SHA='50223a8db8f6b27d0b28db96b4f7e63af27bfddb78361e5a0d528e2bb837e651'
-SELAH_BASE_DART_SHA='b5d9720d3d1ae16b178b33fc6aeea21d8d3d3bb8596104b1bae48c42c9cb32ec'
-SELAH_BASE_INFO_SHA='dfdb6a2a65285b116fea38a53a9754ec4000581ba1db199c40dc9abffa6a15ed'
-SELAH_BASE_NATIVE_DIGEST='3d27fffbf9a9432a3a50f180f2f438a4081e43f81d3e5d99226a73f5b76c0253'
-SELAH_FLUTTER_ENGINE_SHA='6dbc2dd29819fcd5cc5492049457ce1d04293a7c094749e67e8864b31879445d'
-SELAH_RUNNER_UNSIGNED_SHA='c861e47212f0f00cc554855f80ade856b73bc9ba433805a7373179505b5f8626'
+SELAH_BASE_RUNNER_SHA='88a99a6adb494c48e9053d681ccd4d85d4517bab4d46bb11a017ca3386a124c6'
+SELAH_BASE_DART_SHA='9d0c9a9eccdafae33a758c9f4b2f307e10117dcbb51dd3a3d0f3ead04b08ecbe'
+SELAH_BASE_INFO_SHA='9c7696ea45803bd687ed40a9467a234f20a483c47c9500abe849b235c8a93fd8'
+SELAH_BASE_NATIVE_DIGEST='a104602eb1ae37108f5daf98d6023b4fa332a6c30abb2856852a363fadd5da3c'
+SELAH_FLUTTER_ENGINE_SHA='9745a51f5788e5faa565f5285945ede63714e98cc06039d7cb13b5c70be0ad8e'
+SELAH_RUNNER_UNSIGNED_SHA='0b29a219c69a869771305adc0bc6e918d3dc0cee804300fd37effbf3db6a40ce'
 SELAH_APP_NORMALIZED_SHA='400c857fff7810f582d7b82eb6b6fef45ad54350370edf5232f0810154033bbd'
 SELAH_OBJECTIVE_C_NORMALIZED_SHA='2217039d1873d374727fcfa83d94f9203b136c45dda037b933e011027456bcc6'
 SELAH_OBJECTIVE_C_INFO_SHA='21eabba1ce090680496e14367008f7952305d214d3828af85e395761384e28b0'
@@ -146,7 +146,11 @@ retained_inputs_digest() {
     "$SELAH_PROJECT_ROOT/ios/Runner/Base.lproj/Main.storyboard" \
     "$SELAH_PROJECT_ROOT/ios/Runner/Base.lproj/LaunchScreen.storyboard" \
     "$SELAH_PROJECT_ROOT/ios/Runner/Assets.xcassets/AppIcon.appiconset/Contents.json" \
-    "$SELAH_PROJECT_ROOT/ios/Runner/Assets.xcassets/AppIcon.appiconset/Selah-1024.png" |
+    "$SELAH_PROJECT_ROOT/ios/Runner/Assets.xcassets/AppIcon.appiconset/Selah-1024.png" \
+    "$SELAH_PROJECT_ROOT/ios/Runner/Assets.xcassets/SelahLaunchWordmark.imageset/Contents.json" \
+    "$SELAH_PROJECT_ROOT/ios/Runner/Assets.xcassets/SelahLaunchWordmark.imageset/SelahLaunchWordmark.png" \
+    "$SELAH_PROJECT_ROOT/ios/Runner/Assets.xcassets/SelahLaunchWordmark.imageset/SelahLaunchWordmark@2x.png" \
+    "$SELAH_PROJECT_ROOT/ios/Runner/Assets.xcassets/SelahLaunchWordmark.imageset/SelahLaunchWordmark@3x.png" |
     /usr/bin/shasum -a 256 | /usr/bin/cut -d ' ' -f 1
 }
 
@@ -177,9 +181,13 @@ require_sha '1a8d11d01d1cc92c650c9c9ed35299240052d4683a15a719a2315ef44185e074' "
 require_sha '3f7508bd0620ba4c063f96057f4e3837e4d3643348ef8b81bbb104e7cfdbed4e' "$SELAH_PROJECT_ROOT/ios/Runner/Runner.entitlements"
 require_sha '5303948239b1752ec6ef5bd7c6914c48790da895019166fb2bfb200066a2aff5' "$SELAH_PROJECT_ROOT/ios/Runner/Info.plist"
 require_sha 'fd367b6c43006d61b730f674970dd48b9f662c8f2264e52ffc1558102a2c9f2d' "$SELAH_PROJECT_ROOT/ios/Runner/Base.lproj/Main.storyboard"
-require_sha '13f4d28c86b287c9ef9855137df13f81a7661abd87c43c48cd17a001918ab411' "$SELAH_PROJECT_ROOT/ios/Runner/Base.lproj/LaunchScreen.storyboard"
+require_sha '50a4033bbf50aa66ff00e578ddc130073c167a0429b8a41e467a90655f90cab1' "$SELAH_PROJECT_ROOT/ios/Runner/Base.lproj/LaunchScreen.storyboard"
 require_sha '6c7b1aa108325d655dfe8741e66dc66784d2c3e3e158d567ddfd9a9f525d590f' "$SELAH_PROJECT_ROOT/ios/Runner/Assets.xcassets/AppIcon.appiconset/Contents.json"
-require_sha '51426c8b5a218313c8f5d3d7be22c123096894ffb7f99e415eefd30d333a6d86' "$SELAH_PROJECT_ROOT/ios/Runner/Assets.xcassets/AppIcon.appiconset/Selah-1024.png"
+require_sha '4ed7d2ba6992411572b571e8c39a5d6f4ac49d782a0dd7dcd294f9dd4ebb8dca' "$SELAH_PROJECT_ROOT/ios/Runner/Assets.xcassets/AppIcon.appiconset/Selah-1024.png"
+require_sha 'c3b94ce4029490720ac5f91c5b1e5f79fd80795fd0f0faa932b9642556bfabc3' "$SELAH_PROJECT_ROOT/ios/Runner/Assets.xcassets/SelahLaunchWordmark.imageset/Contents.json"
+require_sha '674f5adc2db889795546883b5329e0792709c57914fcde3312a5ee85de31f378' "$SELAH_PROJECT_ROOT/ios/Runner/Assets.xcassets/SelahLaunchWordmark.imageset/SelahLaunchWordmark.png"
+require_sha 'bb7d4dbee852cae7c21eb4eb3187a38b42865e9d47338d75538ab5985e86a634' "$SELAH_PROJECT_ROOT/ios/Runner/Assets.xcassets/SelahLaunchWordmark.imageset/SelahLaunchWordmark@2x.png"
+require_sha 'f0abee505c39b608d0aa83e45c8e257e34d8e993461b962291aaf75a5557a2f3' "$SELAH_PROJECT_ROOT/ios/Runner/Assets.xcassets/SelahLaunchWordmark.imageset/SelahLaunchWordmark@3x.png"
 SELAH_RETAINED_INPUTS_BEFORE="$(retained_inputs_digest)"
 
 require_sha "$SELAH_BASE_RUNNER_SHA" "$SELAH_BASE_APP/Runner"
