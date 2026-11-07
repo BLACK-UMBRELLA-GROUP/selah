@@ -4,7 +4,7 @@ type: PLAN
 status: CURRENT
 feature: BROWSE_CARD
 purpose: Build brief for LOCK 8 - faith chips on the Browse card, the no-one-new state, and SELAH's own demo cast
-links: [DOC-SELAH-0032, DOC-SELAH-0020, OA-SELAH-003, AD-AIOS-123]
+links: [AD-AIOS-129, DOC-SELAH-0032, DOC-SELAH-0020, OA-SELAH-003, AD-AIOS-123]
 owner: SELAH chat
 ---
 
@@ -16,7 +16,7 @@ Queue line 9. Build after: lines 3 (faith answers) and 7 (clean-up touches the d
 
 | # | Step | Detail |
 |---|---|---|
-| 1 | Read | `SELAH/AGENTS.md`, `MAP.md` to "Route paths", `BROWSE_CARD/RECORD/SELAH_BROWSE_CARD_SPEC_CURRENT_VERSION_V4.md`, its LOCK_RECORD, the 6 masters, FAITH_PROFILE spec V5. |
+| 1 | Read | `SELAH/AGENTS.md`, `MAP.md` to "Route paths", `BROWSE_CARD/RECORD/SELAH_BROWSE_CARD_SPEC_CURRENT_VERSION_V5.md`, its LOCK_RECORD, the 6 masters, FAITH_PROFILE spec V5. |
 | 2 | Chips | On the Browse card, replace the nationality/ethnicity chips with spec §1 faith chips (exact texts and order). Do not remove nationality/ethnicity from the full profile or the model. |
 | 3 | No one new | Add spec §2 state where Browse runs out of people; its button opens the existing filters. |
 | 4 | Demo cast | In the draft's demo data (`lib/dev/selah_dev_scenario.dart`, `lib/dev/selah_one_journey_concept_shell.dart` and any other fixture file), replace every demo person and Shepherd with spec §3: names, relations that match, traditions, UK towns, plausible nationality/ethnicity, existing photos matched by gender. List old → new in the task note. |
@@ -30,3 +30,10 @@ The signed-in demo Seeker still shows as "Adam Khan" on Profile. Old cast names 
 
 ## Update 2026-11-06 (answers QUESTIONS row 9; spec V4)
 No "In a Journey" state: keep `discoverableProfiles` excluding this pair (peerOccupied) exactly as built. Five card states, not six; your default is right.
+
+## Founder amendment — 7 Nov 2026 (AD-AIOS-129)
+The current spec above carries the direct Founder name-rule amendment. Earliest peer-name eligibility is the same two
+Seekers' genuine mutual yes to their Journey in the existing request/accept flow, including an already admitted Journey
+fixture; not a stage, readiness, Main link, payment or unlock. Before agreement, or when the eligible name is genuinely
+unavailable, show "<Name>'s Shepherd". Own Main display stays unchanged. This is a spec/prototype amendment only: do not
+rebuild the app/server, overwrite past master pictures or treat historical BUILT evidence as proof of this amendment.

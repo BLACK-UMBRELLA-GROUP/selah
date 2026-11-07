@@ -1,14 +1,14 @@
 ---
 id: DOC-SELAH-0029
 type: SPEC
-status: CURRENT
+status: ARCHIVED
 feature: SELAH_PAUSE
 purpose: The Selah pause - SELAH's calm full-screen moment before asking someone to begin a Journey, accepting a request, or ending a Journey (LOCK 7, LOCK 13)
 links: [OA-SELAH-003, AD-AIOS-123, DOC-SELAH-0009]
 owner: SELAH chat
 ---
 
-# SELAH PAUSE — SPEC — CURRENT VERSION V4 (LOCK 7, LOCK 13)
+# SELAH PAUSE — SPEC — V4 (ARCHIVED 2026-11-07) (LOCK 7, LOCK 13)
 
 Founder, 6 Nov 2026: "A · Gentle — LOCK it" (prototype V15, cleaned as V16). New to SELAH - today these three actions
 commit at once. Look: LOOK spec V2. ROADMAP row: **SELAH's own identity and private delivery acceptance**.

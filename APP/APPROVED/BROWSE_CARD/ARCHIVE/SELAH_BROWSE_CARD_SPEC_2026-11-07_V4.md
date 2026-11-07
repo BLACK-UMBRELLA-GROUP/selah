@@ -1,14 +1,14 @@
 ---
 id: DOC-SELAH-0032
 type: SPEC
-status: CURRENT
+status: ARCHIVED
 feature: BROWSE_CARD
 purpose: What a profile card shows on SELAH's Browse (faith chips only), the "no one new" state, and SELAH's own demo cast replacing ZYRA's (LOCK 8)
 links: [OA-SELAH-003, AD-AIOS-123, DOC-SELAH-0017, DOC-SELAH-0009]
 owner: SELAH chat
 ---
 
-# SELAH BROWSE CARD — SPEC — CURRENT VERSION V4 (LOCK 8, updated by LOCK 11)
+# SELAH BROWSE CARD — SPEC — V4 (ARCHIVED 2026-11-07) (LOCK 8, updated by LOCK 11)
 
 Founder, 6 Nov 2026: "A · Faith chips only — LOCK it" (prototype V17, cleaned as V18). Look: LOOK spec V2. Faith answers:
 FAITH_PROFILE spec. ROADMAP rows: **SELAH's own identity and private delivery acceptance** and **Christian content and production experience**.

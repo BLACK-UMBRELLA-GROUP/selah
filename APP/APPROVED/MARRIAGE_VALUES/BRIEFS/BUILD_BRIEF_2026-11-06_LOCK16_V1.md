@@ -16,7 +16,7 @@ Queue line 19. Build after: 5, 9, 17. Before 12. ROADMAP row: **Christian conten
 
 | # | Step | Detail |
 |---|---|---|
-| 1 | Read | `MARRIAGE_VALUES/RECORD/SELAH_MARRIAGE_VALUES_SPEC_CURRENT_VERSION_V7.md` §5-6, its LOCK_RECORD, `BROWSE_CARD/RECORD/SELAH_BROWSE_CARD_SPEC_CURRENT_VERSION_V4.md` §1, masters `MARRIAGE_VALUES/MASTERS/L16_*`, re-rendered `L05_profile_marriage__answered`, `BROWSE_CARD/MASTERS/L08_browse_card__*`, `LOOK/MASTERS/L01_seeker_browse__profile`, `SHEPHERD_INVITE/MASTERS/L03_seeker_browse__waiting_for_shepherd`, `ABOUT_YOU/MASTERS/L14_profile_about_you`. |
+| 1 | Read | `MARRIAGE_VALUES/RECORD/SELAH_MARRIAGE_VALUES_SPEC_CURRENT_VERSION_V7.md` §5-6, its LOCK_RECORD, `BROWSE_CARD/RECORD/SELAH_BROWSE_CARD_SPEC_CURRENT_VERSION_V5.md` §1, masters `MARRIAGE_VALUES/MASTERS/L16_*`, re-rendered `L05_profile_marriage__answered`, `BROWSE_CARD/MASTERS/L08_browse_card__*`, `LOOK/MASTERS/L01_seeker_browse__profile`, `SHEPHERD_INVITE/MASTERS/L03_seeker_browse__waiting_for_shepherd`, `ABOUT_YOU/MASTERS/L14_profile_about_you`. |
 | 2 | Browse line | The muted line under the faith chips, words exactly as BROWSE_CARD V3 §1, from line 5's saved answers. |
 | 3 | In a Journey | Tapping the other person's name at the top of a Journey opens their profile there (use the app's existing in-Journey profile/detail page if it has one; otherwise build the page in master L16_journey_their_profile). It shows their faith chips and all seven marriage answers with the line "You can see these because you’re on a Journey together." Nowhere else shows all seven to another member. |
 | 4 | Shepherds | A Seeker's Shepherds can see all seven where they already see the Seeker's faith profile. |

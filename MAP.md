@@ -60,9 +60,9 @@ _Stop here unless you need to look up another ID._
 
 | ID | File | Type | Purpose | Links | KB |
 |---|---|---|---|---|---|
-| DOC-SELAH-0032 | `APP/APPROVED/BROWSE_CARD/RECORD/SELAH_BROWSE_CARD_SPEC_CURRENT_VERSION_V4.md` | SPEC | What a profile card shows on SELAH's Browse (faith chips only), the "no one new" state, and SELAH's own demo… | OA-SELAH-003, AD-AIOS-123, DOC-SELAH-0017, DOC-SELAH-0009 | 4 |
+| DOC-SELAH-0032 | `APP/APPROVED/BROWSE_CARD/RECORD/SELAH_BROWSE_CARD_SPEC_CURRENT_VERSION_V5.md` | SPEC | What a profile card shows on SELAH's Browse (faith chips only), the "no one new" state, and SELAH's own demo… | AD-AIOS-129, OA-SELAH-003, AD-AIOS-123, DOC-SELAH-0017, DOC-SELAH-0009 | 6 |
 | DOC-SELAH-0033 | `APP/APPROVED/BROWSE_CARD/RECORD/LOCK_RECORD.md` | REGISTER | LOCK record for the SELAH Browse card - each LOCK with the Founder's exact words |  | 1 |
-| DOC-SELAH-0034 | `APP/APPROVED/BROWSE_CARD/BRIEFS/BUILD_BRIEF_2026-11-06_V1.md` | PLAN | Build brief for LOCK 8 - faith chips on the Browse card, the no-one-new state, and SELAH's own demo cast | DOC-SELAH-0032, DOC-SELAH-0020, OA-SELAH-003, AD-AIOS-123 | 2 |
+| DOC-SELAH-0034 | `APP/APPROVED/BROWSE_CARD/BRIEFS/BUILD_BRIEF_2026-11-06_V1.md` | PLAN | Build brief for LOCK 8 - faith chips on the Browse card, the no-one-new state, and SELAH's own demo cast | AD-AIOS-129, DOC-SELAH-0032, DOC-SELAH-0020, OA-SELAH-003, AD-AIOS-123 | 3 |
 
 ### COMPARE
 
@@ -96,9 +96,9 @@ _Stop here unless you need to look up another ID._
 
 | ID | File | Type | Purpose | Links | KB |
 |---|---|---|---|---|---|
-| DOC-SELAH-0072 | `APP/APPROVED/FAMILY_STAGE/RECORD/SELAH_FAMILY_STAGE_SPEC_CURRENT_VERSION_V2.md` | SPEC | Family Compatibility (Journey stage 6) - each Seeker answers 4 questions from the other Seeker's Shepherd,… | OA-SELAH-003, AD-AIOS-123, DOC-SELAH-0069, DOC-SELAH-0009 | 3 |
+| DOC-SELAH-0072 | `APP/APPROVED/FAMILY_STAGE/RECORD/SELAH_FAMILY_STAGE_SPEC_CURRENT_VERSION_V3.md` | SPEC | Family Compatibility (Journey stage 6) - each Seeker answers 4 questions from the other Seeker's Shepherd,… | AD-AIOS-129, OA-SELAH-003, AD-AIOS-123, DOC-SELAH-0069, DOC-SELAH-0009 | 5 |
 | DOC-SELAH-0073 | `APP/APPROVED/FAMILY_STAGE/RECORD/LOCK_RECORD.md` | REGISTER | LOCK record for the SELAH Family Compatibility stage - each LOCK with the Founder's exact words |  | 1 |
-| DOC-SELAH-0074 | `APP/APPROVED/FAMILY_STAGE/BRIEFS/BUILD_BRIEF_2026-11-06_V1.md` | PLAN | Build brief for LOCK 22 - Family Compatibility with 4 new Shepherd questions answered by Seekers;… | DOC-SELAH-0072, DOC-SELAH-0020, OA-SELAH-003, AD-AIOS-123 | 2 |
+| DOC-SELAH-0074 | `APP/APPROVED/FAMILY_STAGE/BRIEFS/BUILD_BRIEF_2026-11-06_V1.md` | PLAN | Build brief for LOCK 22 - Family Compatibility with 4 new Shepherd questions answered by Seekers;… | AD-AIOS-129, DOC-SELAH-0072, DOC-SELAH-0020, OA-SELAH-003, AD-AIOS-123 | 3 |
 
 ### FIRST_DRAFT
 
@@ -129,9 +129,9 @@ _Stop here unless you need to look up another ID._
 
 | ID | File | Type | Purpose | Links | KB |
 |---|---|---|---|---|---|
-| DOC-SELAH-0069 | `APP/APPROVED/JOURNEY_STAGES/RECORD/SELAH_JOURNEY_STAGES_SPEC_CURRENT_VERSION_V2.md` | SPEC | The Journey has 7 stages - the "Shepherd support" stage (mentor_gate) leaves what Seekers and Shepherds see,… | OA-SELAH-003, AD-AIOS-123, DOC-SELAH-0044, DOC-SELAH-0009 | 4 |
+| DOC-SELAH-0069 | `APP/APPROVED/JOURNEY_STAGES/RECORD/SELAH_JOURNEY_STAGES_SPEC_CURRENT_VERSION_V3.md` | SPEC | The Journey has 7 stages - the "Shepherd support" stage (mentor_gate) leaves what Seekers and Shepherds see,… | AD-AIOS-129, OA-SELAH-003, AD-AIOS-123, DOC-SELAH-0044, DOC-SELAH-0009 | 6 |
 | DOC-SELAH-0070 | `APP/APPROVED/JOURNEY_STAGES/RECORD/LOCK_RECORD.md` | REGISTER | LOCK record for the SELAH Journey stages - each LOCK with the Founder's exact words |  | 1 |
-| DOC-SELAH-0071 | `APP/APPROVED/JOURNEY_STAGES/BRIEFS/BUILD_BRIEF_2026-11-06_V1.md` | PLAN | Build brief for LOCK 21 - 7 Journey stages; the Shepherd support stage leaves the app, the server map is… | DOC-SELAH-0069, DOC-SELAH-0020, OA-SELAH-003, AD-AIOS-123 | 3 |
+| DOC-SELAH-0071 | `APP/APPROVED/JOURNEY_STAGES/BRIEFS/BUILD_BRIEF_2026-11-06_V1.md` | PLAN | Build brief for LOCK 21 - 7 Journey stages; the Shepherd support stage leaves the app, the server map is… | AD-AIOS-129, DOC-SELAH-0069, DOC-SELAH-0020, OA-SELAH-003, AD-AIOS-123 | 4 |
 
 ### LOOK
 
@@ -176,7 +176,7 @@ _Stop here unless you need to look up another ID._
 
 | ID | File | Type | Purpose | KB |
 |---|---|---|---|---|
-| DOC-SELAH-0012 | `APP/APPROVED/PROTOTYPE/README.md` | GUIDE | What the SELAH interactive prototype file is and its version history | 7 |
+| DOC-SELAH-0012 | `APP/APPROVED/PROTOTYPE/README.md` | GUIDE | What the SELAH interactive prototype file is and its version history | 8 |
 
 ### REPAIRS
 
@@ -200,7 +200,7 @@ _Stop here unless you need to look up another ID._
 
 | ID | File | Type | Purpose | Links | KB |
 |---|---|---|---|---|---|
-| DOC-SELAH-0029 | `APP/APPROVED/SELAH_PAUSE/RECORD/SELAH_PAUSE_SPEC_CURRENT_VERSION_V4.md` | SPEC | The Selah pause - SELAH's calm full-screen moment before asking someone to begin a Journey, accepting a… | OA-SELAH-003, AD-AIOS-123, DOC-SELAH-0009 | 5 |
+| DOC-SELAH-0029 | `APP/APPROVED/SELAH_PAUSE/RECORD/SELAH_PAUSE_SPEC_CURRENT_VERSION_V5.md` | SPEC | The Selah pause - SELAH's calm full-screen moment before asking someone to begin a Journey, accepting a… | AD-AIOS-129, OA-SELAH-003, AD-AIOS-123, DOC-SELAH-0009 | 7 |
 | DOC-SELAH-0030 | `APP/APPROVED/SELAH_PAUSE/RECORD/LOCK_RECORD.md` | REGISTER | LOCK record for the Selah pause - each LOCK with the Founder's exact words |  | 1 |
 | DOC-SELAH-0031 | `APP/APPROVED/SELAH_PAUSE/BRIEFS/BUILD_BRIEF_2026-11-06_V1.md` | PLAN | Build brief for LOCK 7 - the Selah pause before sending, accepting and ending a Journey | DOC-SELAH-0029, DOC-SELAH-0020, OA-SELAH-003, AD-AIOS-123 | 3 |
 

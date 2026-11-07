@@ -1,0 +1,74 @@
+{
+  "schema": 1,
+  "decision": "AD-AIOS-129",
+  "date": "2026-11-07",
+  "scope": "Specs and interactive prototype only; no app/server implementation",
+  "rule": "The other Main Shepherd's real name is shown only after both Seekers say yes to this Journey; never sold or part of an unlock. Before that, <Name>'s Shepherd.",
+  "prototype_version": "V53",
+  "prototype_sha256": "90318eccc890ef4bfc179f36abe8ddd9add0c114d21abd3c4d4c9e2b2bb1e40b",
+  "prototype_readme_sha256": "01e5c710157ec814ad935339581bdf6348383d069231666c3dc3744c8b2a3815",
+  "specs": [
+    {
+      "path": "APP/APPROVED/BROWSE_CARD/RECORD/SELAH_BROWSE_CARD_SPEC_CURRENT_VERSION_V5.md",
+      "sha256": "cacee5cbc8b54744b43d4a2ab401e877159af23e62d36f93933eaba21c79e15a"
+    },
+    {
+      "path": "APP/APPROVED/BROWSE_CARD/ARCHIVE/SELAH_BROWSE_CARD_SPEC_2026-11-07_V4.md",
+      "sha256": "1368d3217f9ea80082804d2998cdeae8e575383897a5883a458a4b8352d785a0"
+    },
+    {
+      "path": "APP/APPROVED/JOURNEY_STAGES/RECORD/SELAH_JOURNEY_STAGES_SPEC_CURRENT_VERSION_V3.md",
+      "sha256": "8cb6e3a13c9e0897e96fb01da1bd6f642f6309bc282044accd57c64b74f8a7d8"
+    },
+    {
+      "path": "APP/APPROVED/JOURNEY_STAGES/ARCHIVE/SELAH_JOURNEY_STAGES_SPEC_2026-11-07_V2.md",
+      "sha256": "a0edbe622b892f0fc8cb5b962b4686e6596bbe82ff73d329c1bea055f99a2ae8"
+    },
+    {
+      "path": "APP/APPROVED/SELAH_PAUSE/RECORD/SELAH_PAUSE_SPEC_CURRENT_VERSION_V5.md",
+      "sha256": "b4b4443231529c8e1dde16c2b6a1056f6679f01687d4e71867e4a3a7257b3755"
+    },
+    {
+      "path": "APP/APPROVED/SELAH_PAUSE/ARCHIVE/SELAH_PAUSE_SPEC_2026-11-07_V4.md",
+      "sha256": "abf1ff251808cad28bf045324b245f4727d95e80765ccee88377553e81c3d63f"
+    },
+    {
+      "path": "APP/APPROVED/FAMILY_STAGE/RECORD/SELAH_FAMILY_STAGE_SPEC_CURRENT_VERSION_V3.md",
+      "sha256": "af9a8be8781b0cb228c85794c528cdcb7edf5488544859a91cbef9132b42351d"
+    },
+    {
+      "path": "APP/APPROVED/FAMILY_STAGE/ARCHIVE/SELAH_FAMILY_STAGE_SPEC_2026-11-07_V2.md",
+      "sha256": "18e23ee71492940f3574b07301be9f21b078c38bd43570a90c16d83d5ba372e7"
+    }
+  ],
+  "verification": {
+    "final_source_syntax_bootstrap": "PASS",
+    "actual_flow_scenarios": 14,
+    "assertions_passed": 248,
+    "all_screen_picker_routes_rendered": 90,
+    "normalized_render_comparisons_passed": 90,
+    "css_exactly_unchanged": true,
+    "picture_data_exactly_unchanged": "Verified by prototype task against its pre-edit snapshot",
+    "covers": [
+      "before/after mutual yes",
+      "text/initial/title/aria masking",
+      "no paid/compatibility/Main-link/stage authority",
+      "Seeker owner/pair/current Journey attempt isolation",
+      "ended consent cannot authorize a new same-pair request",
+      "stale acceptance controls",
+      "missing-name fallback",
+      "Family auto sample/sending/sent context isolation"
+    ]
+  },
+  "browser_visual_check": "NOT RUN: browser tool rejected local file protocol and explicitly disallowed workaround; no server/alternate surface or fake screenshot. Functional checks execute actual source JavaScript in a unit VM.",
+  "historical_evidence": "Prior LOCK words, master PNGs and BUILD receipts unchanged. No new LOCK number invented.",
+  "installed_app": "Unchanged by this documentation/prototype task",
+  "server_plan": {
+    "queue": 30,
+    "fresh_task_id": "01a1b5e6-c3f6-76c2-8fc5-dc8021d353cf",
+    "title": "SELAH queue 30 \u2014 server plan only",
+    "mode": "Document planning only; no accounts,installs,code,setup or deployment",
+    "implementation_date_gate": "After14December2026; each setup step still requires Founder approval per brief"
+  },
+  "recorded_utc": "2026-11-07T12:19:34.840303+00:00"
+}

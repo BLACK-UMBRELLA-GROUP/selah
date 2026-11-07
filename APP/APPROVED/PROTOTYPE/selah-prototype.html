@@ -182,7 +182,7 @@ textarea{font:400 15px/1.45 var(--body);color:var(--ink);background:var(--surf);
     <div class="ctl"><div class="pills" id="flows" aria-label="Who you are"></div><button class="back" id="back" hidden>‹ Back</button></div>
     <div class="pick"><button class="arrow" id="prev" aria-label="Previous screen">‹</button><select id="demo" aria-label="Screen"></select><button class="arrow" id="next" aria-label="Next screen">›</button><span class="count" id="count"></span></div>
     <div class="holder" id="holder"><div id="dev" data-look="water"><div id="screen"></div></div></div>
-    <div class="strip"><p class="note" id="lookNote">LOCK 1 · Look: Still Water · LOCK 3 · Shepherd invite · LOCK 4 · Faith profile · LOCK 5 · Marriage values · LOCK 6 · Consent · LOCK 7 · Selah pause · LOCK 8 · Browse card · LOCK 9 · Marriage preparation · LOCK 10 · Prayer · LOCK 11 · Wording · LOCK 12 · Seeker Shepherd tab · LOCK 13 · Pause at three Journeys · LOCK 14 · Languages only · LOCK 15 · First pages · LOCK 16 · Marriage answers upfront · LOCK 17 · Your values · LOCK 18 · Deal-breakers · LOCK 19 · Shepherds suggest · LOCK 20 · Shepherd Dashboard · LOCK 21 · Seven Journey stages</p><div class="pills" id="sizes"></div><p class="diff">New in SELAH: Shepherd on every profile and request · Selah pause before ask, accept and end · prayer · docked tab bar · faith profile · Marriage preparation stage. V52 · 6 Nov 2026 · LOCK 23 App icon and splash</p></div>
+    <div class="strip"><p class="note" id="lookNote">LOCK 1 · Look: Still Water · LOCK 3 · Shepherd invite · LOCK 4 · Faith profile · LOCK 5 · Marriage values · LOCK 6 · Consent · LOCK 7 · Selah pause · LOCK 8 · Browse card · LOCK 9 · Marriage preparation · LOCK 10 · Prayer · LOCK 11 · Wording · LOCK 12 · Seeker Shepherd tab · LOCK 13 · Pause at three Journeys · LOCK 14 · Languages only · LOCK 15 · First pages · LOCK 16 · Marriage answers upfront · LOCK 17 · Your values · LOCK 18 · Deal-breakers · LOCK 19 · Shepherds suggest · LOCK 20 · Shepherd Dashboard · LOCK 21 · Seven Journey stages</p><div class="pills" id="sizes"></div><p class="diff">New in SELAH: Shepherd on every profile and request · Selah pause before ask, accept and end · prayer · docked tab bar · faith profile · Marriage preparation stage. V53 · 7 Nov 2026 · AD-AIOS-129 Peer Shepherd names after both Seekers say yes</p></div>
   </main>
 </div>
 
@@ -224,16 +224,40 @@ const FAMQ=['How have you seen God lead you in this Journey so far?','Which chur
 const FAMSAMPLE=['Through Pastor David’s suggestion and three months of honest answers. I have prayed about every stage.','','',''];
 const FAMFULL=[FAMSAMPLE[0],'St Mark’s, where we both have friends. I would keep serving with the youth team.','By being at Sunday lunch with them often, and asking her pastor to stay close to us.','Pastor David and Pastor Ama, and the couples in our house group.'];
 const FAMI=()=>STAGES.findIndex(x=>x[0]==='Family Compatibility');
-const famAt=(o)=>{S.flow='seeker';S.tab=1;const j=S.journeys.find(x=>x.id==='esther');j.status='active';j.stage=FAMI();Object.assign(S,o);};
+/* AD-AIOS-129 · Names are never sold/unlocked. These are transient prototype
+   agreement facts, not a server contract or a new permission to open a view. */
+const SELF_SEEKER_ID='james';
+const SEEKER_OWNER_IDS=Object.freeze(['james','joel']);
+let journeyAttemptSerial=0;
+const agreementKey=(ownerId,id,attemptId)=>SEEKER_OWNER_IDS.includes(ownerId)&&PEOPLE.some(p=>p.id===id)&&typeof attemptId==='string'&&attemptId?JSON.stringify([ownerId,id,attemptId]):null;
+function journeyRecord(id,{ownerId=SELF_SEEKER_ID,stage=0,status='pending',ownYes=false,peerYes=false}={}){
+  const attemptId=`prototype-journey-${++journeyAttemptSerial}`;
+  return {id,ownerId,attemptId,stage,status,agreement:Object.freeze({key:agreementKey(ownerId,id,attemptId),ownYes:ownYes===true,peerYes:peerYes===true})};
+}
+const incomingRequest=id=>journeyRecord(id,{status:'incoming',peerYes:true});
+const hasAgreementRecord=(record,ownerId,id)=>!!record&&record.id===id&&record.ownerId===ownerId&&!!agreementKey(ownerId,id,record.attemptId)&&record.agreement?.key===agreementKey(ownerId,id,record.attemptId);
+const bothSeekersSaidYes=(record,ownerId,id)=>hasAgreementRecord(record,ownerId,id)&&record.agreement.ownYes===true&&record.agreement.peerYes===true;
+const archiveJourney=record=>({...record,agreement:record.agreement?Object.freeze({...record.agreement}):undefined});
+const historyId=record=>typeof record==='string'?record:record.id;
+const familyContextFor=id=>{const j=currentJourneyFor(SELF_SEEKER_ID,id);return bothSeekersSaidYes(j,SELF_SEEKER_ID,id)?agreementKey(SELF_SEEKER_ID,id,j.attemptId):null;};
+const familyContextCurrent=id=>!!familyContextFor(id)&&S.famContext===familyContextFor(id);
+const famAt=(o)=>{S.flow='seeker';S.tab=1;const j=S.journeys.find(x=>x.id==='esther');j.status='active';j.stage=FAMI();Object.assign(S,o);S.famContext=familyContextFor('esther');if(!S.famContext){S.famA=null;S.famSend=null;S.famSent=false;}};
 const fresh=()=>({flow:'seeker',tab:0,pages:[],look:'water',size:'max',bi:0,pi:0,
-  journeys:[{id:'esther',stage:STAGES.findIndex(x=>x[0]==='Faith & Values'),status:'active'}],history:[],
-  incoming:[{id:'naomi'}],
+  journeys:[journeyRecord('esther',{stage:STAGES.findIndex(x=>x[0]==='Faith & Values'),status:'active',ownYes:true,peerYes:true})],history:[],
+  incoming:[incomingRequest('naomi')],
   updates:['Pastor David prayed for your Journey with Esther.','Esther moved your Journey to Faith & values.'],
   perms:{requests:true,stages:true,prayer:true,messages:false},
   prayers:[{who:'James',t:'For wisdom in my Journey with Esther',n:2,mine:false},{who:'Joel',t:'For patience while I wait',n:5,mine:false},{who:'James',t:'For my family to be at peace with my choice',n:1,mine:false},{who:'Joel',t:'For courage to ask someone to begin',n:3,mine:false}],
-  askSel:0,state:null,pSend:null,prSend:null,op:0,noShep:false,needsNone:false,brand:'home',famA:null,famSend:null,famSent:false,introFor:'James',introI:0,sugg:null,introSave:null,introEmpty:false,yva:{},yvDone:false,yvParts:0,db:[],dbNone:false,dbSave:null,dbDone:false,chatOn:{esther:true},pastOn:false,jaState:null,shRecent:['Prayed for your Journey with Esther · Yesterday','“Praying for you both this week.” · Monday','Prayed for you · Sunday'],shUpdates:['Joel asked you for prayer.','James and Esther reached Faith & Values.','Naomi asked James to begin a Journey.','James joined Selah with you as his Shepherd.'],mpDone:[],mpFail:false,fq:0,fa:{trad:'Baptist',att:'Every week',bap:'Yes',yrs:'More than 10 years',serve:['Youth'],open:'Yes, any tradition',words:'Church is where I grew up. I want a home where we pray together and serve together.'},fErr:'',fSave:null,sec:'faith',mv:{prev:'No',kids:'No',want:'Yes',roles:'Equal partners who decide together',remarry:'It depends on the situation',live:'Open to moving within my country',when:'In 1–2 years'},bg:{lang:['English','Yoruba']},shOk:true,suSend:null,su:0,rel:null,suName:'David Okafor',suErr:''});
+  askSel:0,state:null,pSend:null,prSend:null,op:0,noShep:false,needsNone:false,brand:'home',famContext:null,famA:null,famSend:null,famSent:false,introFor:'James',introI:0,sugg:null,introSave:null,introEmpty:false,yva:{},yvDone:false,yvParts:0,db:[],dbNone:false,dbSave:null,dbDone:false,chatOn:{esther:true},pastOn:false,jaState:null,shRecent:['Prayed for your Journey with Esther · Yesterday','“Praying for you both this week.” · Monday','Prayed for you · Sunday'],shUpdates:['Joel asked you for prayer.','James and Esther reached Faith & Values.','Naomi asked James to begin a Journey.','James joined Selah with you as his Shepherd.'],mpDone:[],mpFail:false,fq:0,fa:{trad:'Baptist',att:'Every week',bap:'Yes',yrs:'More than 10 years',serve:['Youth'],open:'Yes, any tradition',words:'Church is where I grew up. I want a home where we pray together and serve together.'},fErr:'',fSave:null,sec:'faith',mv:{prev:'No',kids:'No',want:'Yes',roles:'Equal partners who decide together',remarry:'It depends on the situation',live:'Open to moving within my country',when:'In 1–2 years'},bg:{lang:['English','Yoruba']},shOk:true,suSend:null,su:0,rel:null,suName:'David Okafor',suErr:''});
 let S=fresh();
 const P=id=>PEOPLE.find(p=>p.id===id);
+const currentJourneyFor=(ownerId,id)=>S.journeys.find(j=>j.ownerId===ownerId&&j.id===id);
+function peerShepherd(p,ownerId,record=currentJourneyFor(ownerId,p?.id)){
+  const name=typeof p?.n==='string'?p.n:'';
+  const available=typeof p?.sh==='string'?p.sh.trim():'';
+  const named=bothSeekersSaidYes(record,ownerId,p?.id)&&available.length>0;
+  return {label:named?available:`${name}’s Shepherd`,initial:named?(p.shi?.trim()||available[0]):(name[0]||''),named};
+}
 const page=()=>S.pages[S.pages.length-1];
 const open=p=>{S.pages.push(p);if(p.p==='pause')S.pSend=null;render();};
 const scr=document.getElementById('screen');
@@ -384,7 +408,7 @@ function browse(){
   if(S.state==='error') return `<div class="top">${word()}<div class="row"><button class="ib" data-act="filters" aria-label="Filters">${ICON.filter}</button></div></div>
   <div class="pad grow" style="padding-bottom:16px"><div class="empty"><div class="mark">’</div><p><b>Profiles didn’t load</b></p><p class="muted small">Check your connection, then try again. Nothing you did was lost.</p><button class="btn sm" data-act="retry">Try again</button></div></div>`;
   const V=VIS();if(!V.length){S.state='empty';return browse();}
-  const p=V[S.bi%V.length]; const ph=p.ph[S.pi%p.ph.length];
+  const p=V[S.bi%V.length]; const ph=p.ph[S.pi%p.ph.length];const shepherd=peerShepherd(p,SELF_SEEKER_ID);
   const inJ=false;
   return `<div class="top">${word()}<div class="row"><button class="ib" data-act="filters" aria-label="Filters">${ICON.filter}</button></div></div>
   <div class="pad grow" style="padding-bottom:14px">${S.shOk?'':waitBar()}
@@ -393,7 +417,7 @@ function browse(){
     <div class="chips"><span class="chip">${p.den}</span><span class="chip">${p.ch}</span><span class="chip">${p.bap}</span></div>
     ${mvLine(p.id)?`<p class="muted small" style="margin:0">${mvLine(p.id)}</p>`:''}
     <p class="quote">“${p.q}”</p>
-    <div class="shep"><span class="av">${p.shi}</span><span>Shepherd: ${p.sh}</span></div>
+    <div class="shep"><span class="av">${shepherd.initial}</span><span>Shepherd: ${shepherd.label}</span></div>
     <div class="row"><button class="btn ghost" data-act="bprev">‹ Back</button><button class="btn ghost" data-act="bnext">Not now</button><button class="btn main" data-act="${S.shOk?'ask':'askwait'}" ${inJ?'disabled style="opacity:.5"':''}>${inJ?'In a Journey':S.shOk?reqLabel():'Request later'}</button></div>
   </div>`;
 }
@@ -404,7 +428,7 @@ function journeyTab(){
   if(!act.length) return h+`<div class="empty"><div class="mark">’</div><p><b>No Journey yet</b></p><p class="muted small">When you and someone both agree to begin, your Journey shows here, with your Shepherds beside you.</p><button class="btn sm" data-tab="0">Browse</button></div></div>`;
   act.forEach(j=>{const p=P(j.id);const pend=j.status==='pending';
     h+=`<div class="card"><div class="jitem" data-act="openj" data-id="${j.id}"><img src="${PH[p.ph[0]]}" alt=""><div style="flex:1;min-width:0"><b style="font-size:16px">${p.n}</b><div class="muted small">${pend?'Request sent · waiting for '+p.n:'Stage '+(j.stage+1)+' of '+NST()+' · '+STAGES[j.stage][0]}</div>${pend?'':`<div class="prog"><i style="width:${(j.stage+1)/NST()*100}%"></i></div>`}</div></div>
-    ${pend?`<button class="demo-b" data-act="demoaccept" data-id="${j.id}">Demo: ${p.n} accepts</button>`:''}</div>`;});
+    ${pend?`<button class="demo-b" data-act="demoaccept" data-id="${j.id}" data-attempt="${j.attemptId}">Demo: ${p.n} accepts</button>`:''}</div>`;});
   if(act.length<3) h+=`<div class="card" style="flex:1 0 auto;justify-content:center;align-items:center;text-align:center;border-style:dashed"><div class="empty" style="padding:10px"><div class="mark">’</div><p><b>${3-act.length} place${3-act.length===1?'':'s'} free</b></p><p class="muted small">Browse to find someone, or wait for a request.</p><button class="btn sm" data-tab="0">Browse</button></div></div>`;
   h+=`<p class="muted small">Up to three Journeys at a time. Your Shepherd, Pastor David, can see each one.</p>`;
   if(S.history.length) h+=`<button class="btn ghost sm" data-act="history">Ended Journeys (${S.history.length})</button>`;
@@ -416,9 +440,9 @@ function mySelah(){
   if(S.sugg){const g=P(S.sugg);h+=`<div class="lbl">From your Shepherd</div><div class="card"><div class="jitem"><img src="${PH[g.ph[0]]}" alt=""><div style="flex:1"><b>${g.n}, ${g.a}</b><div class="muted small">Pastor David thinks you might like to meet ${g.n}.</div></div></div><div class="row"><button class="btn ghost sm" data-act="suggno">Not now</button><button class="btn sm" data-act="suggsee">See ${g.n}</button></div></div>`;}
   h+=`<div class="lbl">Requests for you</div><div class="card">`;
   if(!S.incoming.length) h+=`<p class="muted small">No requests right now.</p>`;
-  S.incoming.forEach(r=>{const p=P(r.id);h+=`<div class="jitem"><img src="${PH[p.ph[0]]}" alt=""><div style="flex:1"><b>${p.n}, ${p.a}</b><div class="muted small">Asked to begin a Journey · her Shepherd: ${p.sh}</div></div></div><div class="row"><button class="btn ghost sm" data-act="decline" data-id="${p.id}">Decline</button><button class="btn sm" data-act="acceptreq" data-id="${p.id}">Accept</button></div>`;});
+  S.incoming.forEach(r=>{const p=P(r.id);const shepherd=peerShepherd(p,r.ownerId,r);h+=`<div class="jitem"><img src="${PH[p.ph[0]]}" alt=""><div style="flex:1"><b>${p.n}, ${p.a}</b><div class="muted small">Asked to begin a Journey · her Shepherd: ${shepherd.label}</div></div></div><div class="row"><button class="btn ghost sm" data-act="decline" data-id="${p.id}">Decline</button><button class="btn sm" data-act="acceptreq" data-id="${p.id}" data-attempt="${r.attemptId}">Accept</button></div>`;});
   h+=`</div><div class="lbl">Updates</div><div class="card">`+S.updates.map(u=>`<div class="li"><div class="tx"><span style="color:var(--ink);font-size:14.5px">${u}</span></div></div>`).join('')+`</div>`;
-  h+=`<div class="lbl">History</div><div class="card"><div class="li"><div class="tx"><span>${S.history.length?S.history.map(x=>P(x).n).join(', ')+' · ended with kindness':'No ended Journeys'}</span></div></div></div>`;
+  h+=`<div class="lbl">History</div><div class="card"><div class="li"><div class="tx"><span>${S.history.length?S.history.map(x=>P(historyId(x)).n).join(', ')+' · ended with kindness':'No ended Journeys'}</span></div></div></div>`;
   return h+'</div>';
 }
 function shepTab(){
@@ -478,7 +502,6 @@ function shIntro(){const who=S.introFor||'James';const p=P(['grace','naomi','abi
   <div class="row" style="gap:8px">${['James','Joel'].map(n=>`<button class="pill" aria-pressed="${who===n}" data-act="introfor" data-v="${n}">For ${n}</button>`).join('')}</div>
   <div class="card"><div class="prof"><img src="${PH[p.ph[0]]}" alt=""><div><b style="font-size:18px">${p.n}, ${p.a}</b><div class="muted small">${p.c}</div></div></div><div class="chips"><span class="chip">${p.den}</span><span class="chip">${p.ch}</span><span class="chip">${p.bap}</span></div>${mvLine(p.id)?`<p class="muted small" style="margin:0">${mvLine(p.id)}</p>`:''}<p class="quote" style="margin:0">“${p.q}”</p></div>
   <div class="row" style="margin-top:auto"><button class="btn ghost" data-act="intronext">Not for ${who}</button>${S.introSave==='sending'?`<button class="btn main" aria-busy="true" style="opacity:.75">Suggesting…</button>`:`<button class="btn main" data-act="introsend">Suggest to ${who}</button>`}</div></div>`;}
-function shNet(){return `<div class="top"><h2 class="ttl">Network</h2></div><div class="pad grow" style="padding-bottom:16px"><p class="muted">Other Shepherds you walk alongside.</p><div class="card" style="flex:1 0 auto">${[['Pastor Ama Mensah','Esther’s Shepherd'],['Elder Joseph Clarke','St Mark’s, Manchester'],['Sarah Lewis','Mentor']].map(x=>`<div class="li"><div class="tx"><b>${x[0]}</b><span>${x[1]}</span></div><button class="btn ghost sm" data-act="netmsg">Message</button></div>`).join('')}</div><p class="muted small">The Network screen is already in the app; it gets the new look only.</p></div>`;}
 function shProfile(){return `<div class="top"><h2 class="ttl">Profile</h2></div><div class="pad grow" style="padding-bottom:16px"><div class="card"><div class="prof"><img src="${PH.david}" alt=""><div><b style="font-size:20px">Pastor David Okafor</b><div class="muted small">St Mark’s, Manchester</div></div></div></div><div class="card"><div class="kv"><span>Role</span><span>Pastor</span></div><div class="kv"><span>Walking with</span><span>2 seekers</span></div><div class="kv"><span>Church tradition</span><span>Baptist</span></div></div><button class="btn ghost sm" style="margin-top:auto" data-act="settings">Settings</button></div>`;}
 
 /* ---------- Pages ---------- */
@@ -488,33 +511,33 @@ const PAGES={
    <p class="muted small">You don’t need a profile of your own or be looking for marriage. You can step back at any time.</p>
    <div class="row" style="margin-top:auto"><button class="btn ghost" data-act="invno">Not now</button><button class="btn main" data-act="invyes">Accept</button></div></div>`;},
  /* LOCK 7 V16 · Selah pause, gentle (Founder 2026-11-06 "A · Gentle — LOCK it") */
- pause(pg){const p=P(pg.id);const e=pg.end?P(pg.end):null;const m={ask:['Pause before you ask.',`Asking ${p.n} to begin a Journey is a serious step toward marriage. Pastor David will see this request, and so will ${p.n}’s Shepherd.`,'Send request','sendask'],
+ pause(pg){const p=P(pg.id);const e=pg.end?P(pg.end):null;const target=pg.kind==='end'?currentJourneyFor(SELF_SEEKER_ID,pg.id):S.incoming.find(r=>r.ownerId===SELF_SEEKER_ID&&r.id===pg.id);const attempt=target?.attemptId||'';const endAttempt=pg.kind==='replace'?(currentJourneyFor(SELF_SEEKER_ID,pg.end)?.attemptId||''):'';const actionAttrs=`data-id="${p.id}" data-attempt="${attempt}" data-end-attempt="${endAttempt}"`;const m={ask:['Pause before you ask.',`Asking ${p.n} to begin a Journey is a serious step toward marriage. Pastor David will see this request, and so will ${p.n}’s Shepherd.`,'Send request','sendask'],
    accept:['Pause before you accept.',`Accepting ${p.n} starts a Journey. Your Shepherd and hers will both walk with you.`,'Accept and begin','doaccept'],
    end:['Pause before you end.',`Ending your Journey with ${p.n} closes it for both of you.${S.noShep?'':' Pastor David will be told and can support you.'}`,'End Journey','doend'],
    /* LOCK 13 (Founder 2026-11-06 "Yes — LOCK it") */ replace:['Pause before you choose.',`Your Journeys are full. Accepting ${p.n} means ending your Journey with ${e?e.n:''}. Your history stays. Pastor David will be told, and so will ${e?e.n:''}’s and ${p.n}’s Shepherds.`,'End and accept','doreplace']}[pg.kind];
    const fail={ask:'Your request didn’t send. Try again.',accept:'Your answer didn’t send. Try again.',end:'Ending didn’t go through. Try again.',replace:'That didn’t go through. Nothing has changed. Try again.'}[pg.kind];
-   return `<div class="pause"><div><div class="hdr" style="padding:0"><button class="bk" data-act="pop">‹ Back</button></div>${S.pSend==='failed'?`<div class="errbar" role="alert" style="margin-top:8px"><span class="ei">!</span><span style="flex:1">${fail}</span><button class="btn ghost sm" data-act="${m[3]}" data-id="${p.id}">Try again</button></div>`:''}<div class="mark">’</div></div>
+   return `<div class="pause"><div><div class="hdr" style="padding:0"><button class="bk" data-act="pop">‹ Back</button></div>${S.pSend==='failed'?`<div class="errbar" role="alert" style="margin-top:8px"><span class="ei">!</span><span style="flex:1">${fail}</span><button class="btn ghost sm" data-act="${m[3]}" ${actionAttrs}>Try again</button></div>`:''}<div class="mark">’</div></div>
    <div style="display:flex;flex-direction:column;gap:14px"><div class="lbl">Selah</div><h3>${m[0]}</h3><p>${m[1]}</p><div class="breath"><i></i></div><p class="muted small">Take a breath. Pray if you wish.</p></div>
-   <div style="display:flex;flex-direction:column;gap:10px">${S.pSend==='sending'?`<button class="btn ${pg.kind==='end'||pg.kind==='replace'?'warn':''}" aria-busy="true" style="opacity:.75">${pg.kind==='end'||pg.kind==='replace'?'Ending…':'Sending…'}</button><button class="demo-b" style="align-self:center" data-act="pdemo" data-id="${p.id}" data-k="${m[3]}">Demo: finish</button>`:`<button class="btn ${pg.kind==='end'||pg.kind==='replace'?'warn':''}" data-act="${m[3]}" data-id="${p.id}">${m[2]}</button>`}<button class="btn ghost" data-act="pop">Not yet</button></div></div>`;},
+   <div style="display:flex;flex-direction:column;gap:10px">${S.pSend==='sending'?`<button class="btn ${pg.kind==='end'||pg.kind==='replace'?'warn':''}" aria-busy="true" style="opacity:.75">${pg.kind==='end'||pg.kind==='replace'?'Ending…':'Sending…'}</button><button class="demo-b" style="align-self:center" data-act="pdemo" ${actionAttrs} data-k="${m[3]}">Demo: finish</button>`:`<button class="btn ${pg.kind==='end'||pg.kind==='replace'?'warn':''}" data-act="${m[3]}" ${actionAttrs}>${m[2]}</button>`}<button class="btn ghost" data-act="pop">Not yet</button></div></div>`;},
  theirmv(pg){const p=P(pg.id);
    return hdr(p.n)+`<div class="pad grow" style="padding-bottom:16px"><div class="card"><div class="prof"><img src="${PH[p.ph[0]]}" alt=""><div><b style="font-size:18px">${p.n}, ${p.a}</b><div class="muted small">${p.c}</div></div></div><div class="chips"><span class="chip">${p.den}</span><span class="chip">${p.ch}</span><span class="chip">${p.bap}</span></div></div>
    <div class="lbl">Marriage values</div>${mvOther(p.id)}<p class="muted small">You can see these because you’re on a Journey together.</p></div>`;},
- journey(pg){const j=S.journeys.find(x=>x.id===pg.id);if(!j){S.pages.pop();return render.inner();}const p=P(j.id);
-   return hdr(`<button data-act="theirmv" data-id="${p.id}" style="all:unset;cursor:pointer" aria-label="See ${p.n}’s profile">${p.n}</button>`)+`<div class="pad grow" style="padding-bottom:16px"><div class="muted small">Stage ${j.stage+1} of ${NST()} · Shepherds: Pastor David and ${p.sh}</div><div class="card steps">`+
+ journey(pg){const j=S.journeys.find(x=>x.id===pg.id);if(!j){S.pages.pop();return render.inner();}const p=P(j.id);const shepherd=peerShepherd(p,SELF_SEEKER_ID,j);
+   return hdr(`<button data-act="theirmv" data-id="${p.id}" style="all:unset;cursor:pointer" aria-label="See ${p.n}’s profile">${p.n}</button>`)+`<div class="pad grow" style="padding-bottom:16px"><div class="muted small">Stage ${j.stage+1} of ${NST()} · Shepherds: Pastor David and ${shepherd.label}</div><div class="card steps">`+
    STAGES.map((s,i)=>`<div class="step ${i<j.stage?'done':i===j.stage?'now':''}"><span class="dot">${i<j.stage?'✓':''}</span><div><b>${s[0]}</b><span>${s[1]}</span></div></div>`).join('')+
-   `</div><div class="row" style="margin-top:auto"><button class="btn warn sm" data-act="endj" data-id="${p.id}">End Journey</button>${STAGES[j.stage][0]==='Family Compatibility'&&!S.famSent?`<button class="btn sm" data-act="famopen" data-id="${p.id}">Answer questions</button>`:`<button class="btn sm" data-act="nextstage" data-id="${p.id}">${j.stage<NST()-1?'Continue':'Finished'}</button>`}</div>${j.stage===NST()-1?mpCard():''}</div>`;},
- fam(pg){const p=P(pg.id);const a=S.famA||[];const n=FAMQ.filter((q,i)=>(a[i]||'').trim()).length;
-   const qs=FAMQ.map((q,i)=>`<div class="card" style="padding:14px;display:flex;flex-direction:column;gap:8px"><b style="font-size:15px;line-height:1.35">${q.replace('Esther',p.n)}</b>${S.famSent?`<span class="muted small">${(a[i]||'').trim()||'—'}</span>`:`<textarea data-fam="${i}" maxlength="400" style="min-height:64px" placeholder="Your answer">${(a[i]||'').trim()}</textarea><span class="muted small" style="align-self:flex-end">${(a[i]||'').trim().length} of 400</span>`}</div>`).join('');
-   const foot=S.famSent?`<div class="card" style="padding:14px"><b>Sent to ${p.sh} and ${p.n}.</b><div class="muted small" style="margin-top:4px">Waiting for ${p.n} to answer Pastor David’s questions. The Journey moves on when you have both answered.</div></div>`:
-     (S.famSend==='failed'?`<div class="errbar" role="alert"><span class="ei">!</span><span style="flex:1">Your answers didn’t send. Try again.</span><button class="btn ghost sm" data-act="famsend">Try again</button></div>`:'')+
+   `</div><div class="row" style="margin-top:auto"><button class="btn warn sm" data-act="endj" data-id="${p.id}">End Journey</button>${STAGES[j.stage][0]==='Family Compatibility'&&!(familyContextCurrent(p.id)&&S.famSent)?`<button class="btn sm" data-act="famopen" data-id="${p.id}">Answer questions</button>`:`<button class="btn sm" data-act="nextstage" data-id="${p.id}">${j.stage<NST()-1?'Continue':'Finished'}</button>`}</div>${j.stage===NST()-1?mpCard():''}</div>`;},
+ fam(pg){const p=P(pg.id);const shepherd=peerShepherd(p,SELF_SEEKER_ID);const current=familyContextCurrent(pg.id);const a=current?(S.famA||[]):[];const sent=current&&S.famSent;const send=current?S.famSend:null;const n=FAMQ.filter((q,i)=>(a[i]||'').trim()).length;
+   const qs=FAMQ.map((q,i)=>`<div class="card" style="padding:14px;display:flex;flex-direction:column;gap:8px"><b style="font-size:15px;line-height:1.35">${q.replace('Esther',p.n)}</b>${sent?`<span class="muted small">${(a[i]||'').trim()||'—'}</span>`:`<textarea data-fam="${i}" maxlength="400" style="min-height:64px" placeholder="Your answer">${(a[i]||'').trim()}</textarea><span class="muted small" style="align-self:flex-end">${(a[i]||'').trim().length} of 400</span>`}</div>`).join('');
+   const foot=sent?`<div class="card" style="padding:14px"><b>Sent to ${shepherd.label} and ${p.n}.</b><div class="muted small" style="margin-top:4px">Waiting for ${p.n} to answer Pastor David’s questions. The Journey moves on when you have both answered.</div></div>`:
+     (send==='failed'?`<div class="errbar" role="alert"><span class="ei">!</span><span style="flex:1">Your answers didn’t send. Try again.</span><button class="btn ghost sm" data-act="famsend">Try again</button></div>`:'')+
      `<p class="muted small" style="margin:0">${p.n} and both Shepherds read your answers.</p>`+
-     (S.famSend==='sending'?`<button class="btn" aria-busy="true" style="opacity:.75">Sending…</button><button class="demo-b" style="align-self:center" data-act="famdemo">Demo: finish sending</button>`:
+     (send==='sending'?`<button class="btn" aria-busy="true" style="opacity:.75">Sending…</button><button class="demo-b" style="align-self:center" data-act="famdemo">Demo: finish sending</button>`:
      `<button class="btn" data-act="famsend" ${n<FAMQ.length?'disabled style="opacity:.45"':''}>Send answers</button>${n<FAMQ.length?`<span class="muted small" style="align-self:center">${n} of ${FAMQ.length} answered</span>`:''}`);
-   return hdr('Family Compatibility')+`<div class="pad grow" style="padding-bottom:16px;gap:12px"><p class="muted" style="margin:0">Now your families enter the conversation.</p><div class="lbl">${p.sh}, ${p.n}’s Shepherd, asks you</div>${qs}<div style="display:flex;flex-direction:column;gap:10px;margin-top:6px">${foot}</div></div>`;},
+   return hdr('Family Compatibility')+`<div class="pad grow" style="padding-bottom:16px;gap:12px"><p class="muted" style="margin:0">Now your families enter the conversation.</p><div class="lbl">${shepherd.named?`${shepherd.label}, ${p.n}’s Shepherd, asks you`:`${shepherd.label} asks you`}</div>${qs}<div style="display:flex;flex-direction:column;gap:10px;margin-top:6px">${foot}</div></div>`;},
  askpray(){const o=['For wisdom in my Journey with Esther','For patience while I wait','For my family to be at peace with my choice'];
    return hdr('Ask for prayer')+`<div class="pad grow" style="padding-bottom:16px">${S.prSend==='failed'?`<div class="errbar" role="alert"><span class="ei">!</span><span style="flex:1">Your prayer request didn’t send. Try again.</span><button class="btn ghost sm" data-act="sendpray">Try again</button></div>`:''}<p class="muted">Pastor David will see this and pray for you.</p>`+o.map((t,i)=>`<div class="opt" role="button" tabindex="0" aria-pressed="${S.askSel===i}" data-act="asksel" data-i="${i}">${t}</div>`).join('')+
    `<textarea id="praytext" placeholder="Or write your own" style="flex:1"></textarea>${S.prSend==='sending'?`<button class="btn" aria-busy="true" style="margin-top:auto;opacity:.75">Sending…</button><button class="demo-b" style="align-self:center" data-act="prdemo">Demo: finish sending</button>`:`<button class="btn" style="margin-top:auto" data-act="sendpray">Send to Pastor David</button>`}</div>`;},
- history(){return hdr('Ended Journeys')+`<div class="pad grow"><div class="card">`+S.history.map(id=>`<div class="li"><div class="tx"><b>${P(id).n}</b><span>Ended · Pastor David was told</span></div></div>`).join('')+`</div></div>`;},
+ history(){return hdr('Ended Journeys')+`<div class="pad grow"><div class="card">`+S.history.map(record=>`<div class="li"><div class="tx"><b>${P(historyId(record)).n}</b><span>Ended · Pastor David was told</span></div></div>`).join('')+`</div></div>`;},
  filters(){return hdr('Who you’d like to meet')+`<div class="pad grow" style="padding-bottom:16px"><div class="lbl">Church tradition</div><div class="chips">${['Any','Anglican','Baptist','Catholic','Methodist','Orthodox','Pentecostal','Presbyterian','Non-denominational'].map((d,i)=>`<span class="chip" style="${i===0?'background:var(--acc);color:var(--acc-ink)':''}">${d}</span>`).join('')}</div><div class="lbl">Church</div><div class="chips"><span class="chip">Weekly</span><span class="chip">Most weeks</span><span class="chip">Sometimes</span></div><p class="muted small">Filters are a later design step. These show the kinds of choices Selah will offer.</p><button class="btn" style="margin-top:auto" data-act="pop">Done</button></div>`;}
 };
 
@@ -537,7 +560,7 @@ function render(){
   else if(S.flow==='faith') inner=faith();
   else if(S.flow==='consent') inner=consent();
   else if(pg) inner=PAGES[pg.p](pg);
-  else{const f=S.flow==='seeker'?[browse,journeyTab,mySelah,shepTab,profileTab]:null;inner=(S.flow==='seeker'?f[S.tab]:({Dashboard:shDash,Network:shNet,Introduce:shIntro,Seekers:shSeekers,Profile:shProfile})[tabsFor('shepherd')[S.tab][0]])();}
+  else{const f=S.flow==='seeker'?[browse,journeyTab,mySelah,shepTab,profileTab]:null;inner=(S.flow==='seeker'?f[S.tab]:({Dashboard:shDash,Introduce:shIntro,Seekers:shSeekers,Profile:shProfile})[tabsFor('shepherd')[S.tab][0]])();}
   const full=(pg&&pg.p==='pause')||S.flow==='signup'||S.flow==='opening'||S.flow==='yvo'||S.flow==='dealb'||S.flow==='faith'||S.flow==='consent';
   scr.innerHTML=sbar()+`<div class="body">${inner}</div>`+(full?'':nav())+'<div class="toast" role="status"></div>';
   document.getElementById('dev').dataset.look=S.look;
@@ -557,18 +580,18 @@ function act(a,el){
    case 'bnext':S.bi=(S.bi+1)%Math.max(1,VIS().length);S.pi=0;render();break;
    case 'bprev':{const n=Math.max(1,VIS().length);S.bi=(S.bi-1+n)%n;}S.pi=0;render();break;
    case 'ask':{if(S.noShep){say('Add a Shepherd to request or accept a Journey.');break;}const V=VIS(),p=V[S.bi%V.length];if(S.journeys.length>=3){say('You already have three Journeys. End one before you ask someone new.');break;}open({p:'pause',kind:'ask',id:p.id});break;}
-   case 'sendask':S.journeys.push({id,stage:0,status:'pending'});S.updates.unshift(`You asked ${P(id).n} to begin. Pastor David was told.`);S.pages=[];S.bi=0;S.pi=0;render();say(`Request sent to ${P(id).n}. Pastor David has been told.`);break;
-   case 'demoaccept':{const j=S.journeys.find(x=>x.id===id);j.status='active';S.updates.unshift(`${P(id).n} accepted. Your Journey has begun.`);render();say(`${P(id).n} accepted. First greeting is open.`);break;}
-   case 'acceptreq':if(S.noShep){say('Add a Shepherd to request or accept a Journey.');break;}if(!S.shOk){say(`You can accept once ${fn()} accepts your invite.`);break;}if(S.journeys.length>=3){say('You already have three Journeys.');break;}open({p:'pause',kind:'accept',id});break;
-   case 'doaccept':S.incoming=S.incoming.filter(r=>r.id!==id);S.journeys.push({id,stage:0,status:'active'});S.updates.unshift(`You accepted ${P(id).n}. Both Shepherds were told.`);S.pages=[];S.tab=1;render();say(`Journey with ${P(id).n} has begun.`);break;
+   case 'sendask':S.journeys.push(journeyRecord(id,{ownYes:true}));S.updates.unshift(`You asked ${P(id).n} to begin. Pastor David was told.`);S.pages=[];S.bi=0;S.pi=0;render();say(`Request sent to ${P(id).n}. Pastor David has been told.`);break;
+   case 'demoaccept':{const j=currentJourneyFor(SELF_SEEKER_ID,id);if(!j||j.attemptId!==el.dataset.attempt||j.status!=='pending'||!hasAgreementRecord(j,SELF_SEEKER_ID,id)||j.agreement.ownYes!==true)break;j.agreement=Object.freeze({...j.agreement,peerYes:true});j.status='active';S.updates.unshift(`${P(id).n} accepted. Your Journey has begun.`);render();say(`${P(id).n} accepted. First greeting is open.`);break;}
+   case 'acceptreq':if(!S.incoming.some(r=>r.id===id&&r.ownerId===SELF_SEEKER_ID&&r.attemptId===el.dataset.attempt))break;if(S.noShep){say('Add a Shepherd to request or accept a Journey.');break;}if(!S.shOk){say(`You can accept once ${fn()} accepts your invite.`);break;}if(S.journeys.length>=3){say('You already have three Journeys.');break;}open({p:'pause',kind:'accept',id});break;
+   case 'doaccept':{const r=S.incoming.find(r=>r.id===id&&r.ownerId===SELF_SEEKER_ID&&r.attemptId===el.dataset.attempt);if(!hasAgreementRecord(r,SELF_SEEKER_ID,id)||r.agreement.peerYes!==true||currentJourneyFor(SELF_SEEKER_ID,id))break;S.incoming=S.incoming.filter(x=>x!==r);S.journeys.push({...r,status:'active',stage:0,agreement:Object.freeze({...r.agreement,ownYes:true})});S.updates.unshift(`You accepted ${P(id).n}. Both Shepherds were told.`);S.pages=[];S.tab=1;render();say(`Journey with ${P(id).n} has begun.`);break;}
    case 'decline':S.incoming=S.incoming.filter(r=>r.id!==id);S.updates.unshift(`You declined ${P(id).n} kindly.`);render();say(`Declined. ${P(id).n} will be told kindly.`);break;
    case 'openj':{const j=S.journeys.find(x=>x.id===id);if(j.status==='pending'){say(`Waiting for ${P(id).n} to answer.`);break;}open({p:'journey',id});break;}
-   case 'famopen':{S.famA=S.famA||FAMSAMPLE.slice();S.pages.push({p:'fam',id});render();break;}
-   case 'famsend':{const a=S.famA||[];if(FAMQ.some((q,i)=>!(a[i]||'').trim()))break;S.famSend='sending';render();break;}
-   case 'famdemo':{S.famSend=null;S.famSent=true;render();say('Answers sent.');break;}
+   case 'famopen':{const context=familyContextFor(id);if(S.famContext!==context){S.famA=null;S.famSend=null;S.famSent=false;}S.famContext=context;S.famA=S.famA||(context?FAMSAMPLE.slice():[]);S.pages.push({p:'fam',id});render();break;}
+   case 'famsend':{if(!familyContextCurrent(page()?.id))break;const a=S.famA||[];if(FAMQ.some((q,i)=>!(a[i]||'').trim()))break;S.famSend='sending';render();break;}
+   case 'famdemo':{if(!familyContextCurrent(page()?.id))break;S.famSend=null;S.famSent=true;render();say('Answers sent.');break;}
    case 'nextstage':{const j=S.journeys.find(x=>x.id===id);if(j.stage<NST()-1){j.stage++;render();say(`Moved to ${STAGES[j.stage][0]}.`);}else say('Your Journey has reached Open Conversation.');break;}
    case 'endj':open({p:'pause',kind:'end',id});break;
-   case 'doend':S.journeys=S.journeys.filter(x=>x.id!==id);S.history.push(id);S.updates.unshift(`Your Journey with ${P(id).n} ended. Pastor David was told.`);S.pages=[];render();say('Journey ended. Pastor David will check in with you.');break;
+   case 'doend':{const j=currentJourneyFor(SELF_SEEKER_ID,id);if(!j||j.attemptId!==el.dataset.attempt)break;S.journeys=S.journeys.filter(x=>x!==j);S.history.push(archiveJourney(j));S.updates.unshift(`Your Journey with ${P(id).n} ended. Pastor David was told.`);S.pages=[];render();say('Journey ended. Pastor David will check in with you.');break;}
    case 'history':open({p:'history'});break;
    case 'perm':S.perms[el.dataset.k]=!S.perms[el.dataset.k];render();say(S.perms[el.dataset.k]?'Pastor David can now see this.':'Pastor David can no longer see this.');break;
    case 'askpray':open({p:'askpray'});break;
@@ -616,7 +639,7 @@ function act(a,el){
    case 'askwait':say(`You can request a Journey once ${fn()} accepts your invite.`);break;
    case 'invyes':S.pages=[];S.tab=0;render();say('You are now James’s Shepherd.');break;
    case 'invno':S.pages=[];render();say('James will be told kindly. You can accept later from the message.');break;
-   case 'doreplace':{const pg=page();const e=pg.end;S.journeys=S.journeys.filter(x=>x.id!==e);S.history.push(e);S.incoming=S.incoming.filter(r=>r.id!==id);S.journeys.push({id,stage:0,status:'active'});S.updates.unshift(`You ended your Journey with ${P(e).n} and accepted ${P(id).n}. Both Shepherds were told.`);S.pages=[];S.tab=1;render();say(`Journey with ${P(id).n} has begun.`);break;}
+   case 'doreplace':{const pg=page();const e=pg?.end;const j=currentJourneyFor(SELF_SEEKER_ID,e);const r=S.incoming.find(r=>r.id===id&&r.ownerId===SELF_SEEKER_ID&&r.attemptId===el.dataset.attempt);if(!j||j.attemptId!==el.dataset.endAttempt||!hasAgreementRecord(r,SELF_SEEKER_ID,id)||r.agreement.peerYes!==true||currentJourneyFor(SELF_SEEKER_ID,id))break;S.journeys=S.journeys.filter(x=>x!==j);S.history.push(archiveJourney(j));S.incoming=S.incoming.filter(x=>x!==r);S.journeys.push({...r,status:'active',stage:0,agreement:Object.freeze({...r.agreement,ownYes:true})});S.updates.unshift(`You ended your Journey with ${P(e).n} and accepted ${P(id).n}. Both Shepherds were told.`);S.pages=[];S.tab=1;render();say(`Journey with ${P(id).n} has begun.`);break;}
    case 'pdemo':S.pSend=null;act(el.dataset.k,el);break;
    case 'mpstep':{const i=+el.dataset.i;S.mpDone=S.mpDone.includes(i)?S.mpDone.filter(x=>x!==i):S.mpDone.concat(i);render();say(S.mpDone.includes(i)?'Marked done.':'Unmarked.');break;}
    case 'mpretry':S.mpFail=false;render();say('Saved.');break;
@@ -637,7 +660,7 @@ scr.addEventListener('click',e=>{
   const t=e.target.closest('[data-tab]');if(t){S.pages=[];S.state=null;S.tab=+t.dataset.tab;render();return;}
   const a=e.target.closest('[data-act]');if(a&&!a.disabled)act(a.dataset.act,a);
 });
-scr.addEventListener('input',e=>{if(e.target.dataset&&e.target.dataset.fam!=null){S.famA=S.famA||[];S.famA[+e.target.dataset.fam]=e.target.value;const c=e.target.nextElementSibling;if(c)c.textContent=e.target.value.trim().length+' of 400';const n=FAMQ.filter((q,i)=>(S.famA[i]||'').trim()).length;const b=scr.querySelector('[data-act="famsend"]');if(b){if(n===FAMQ.length){b.removeAttribute('disabled');b.style.opacity='';}else{b.setAttribute('disabled','');b.style.opacity='.45';}}}if(e.target.id==='fwords'){const n=e.target.value.length,c=document.getElementById('fcount');if(c){c.textContent=n+' of 150';c.style.color=n>150?'var(--warm)':'';}}});
+scr.addEventListener('input',e=>{if(e.target.dataset&&e.target.dataset.fam!=null){if(!familyContextCurrent(page()?.id))return;S.famA=S.famA||[];S.famA[+e.target.dataset.fam]=e.target.value;const c=e.target.nextElementSibling;if(c)c.textContent=e.target.value.trim().length+' of 400';const n=FAMQ.filter((q,i)=>(S.famA[i]||'').trim()).length;const b=scr.querySelector('[data-act="famsend"]');if(b){if(n===FAMQ.length){b.removeAttribute('disabled');b.style.opacity='';}else{b.setAttribute('disabled','');b.style.opacity='.45';}}}if(e.target.id==='fwords'){const n=e.target.value.length,c=document.getElementById('fcount');if(c){c.textContent=n+' of 150';c.style.color=n>150?'var(--warm)':'';}}});
 scr.addEventListener('keydown',e=>{if((e.key==='Enter'||e.key===' ')&&e.target.matches('[data-act][role="button"]')){e.preventDefault();act(e.target.dataset.act,e.target);}});
 document.getElementById('back').onclick=()=>{S.pages.pop();render();};
 
@@ -664,7 +687,7 @@ const STATES=[
   ['Family Compatibility · sending',()=>{famAt({pages:[{p:'journey',id:'esther'},{p:'fam',id:'esther'}],famA:FAMFULL.slice(),famSend:'sending'});}],
   ['Family Compatibility · didn’t send',()=>{famAt({pages:[{p:'journey',id:'esther'},{p:'fam',id:'esther'}],famA:FAMFULL.slice(),famSend:'failed'});}],
   ['Family Compatibility · sent, waiting for Esther',()=>{famAt({pages:[{p:'journey',id:'esther'},{p:'fam',id:'esther'}],famA:FAMFULL.slice(),famSent:true});}],
-  ['Request from Naomi',()=>{S.flow='seeker';S.tab=2;S.pages=[];if(!S.incoming.length)S.incoming=[{id:'naomi'}];}],
+  ['Request from Naomi',()=>{S.flow='seeker';S.tab=2;S.pages=[];if(!S.incoming.length)S.incoming=[incomingRequest('naomi')];}],
   ['My Shepherd · what he sees',()=>{S.flow='seeker';S.tab=3;S.pages=[];S.jaState=null;S.shRecent=fresh().shRecent;S.journeys.forEach(x=>{if(x.id==='esther')x.status='active';});}],
   ['My Shepherd · Journey access loading',()=>{S.flow='seeker';S.tab=3;S.pages=[];S.jaState='loading';S.journeys.forEach(x=>{if(x.id==='esther')x.status='active';});}],
   ['My Shepherd · Journey access didn’t load',()=>{S.flow='seeker';S.tab=3;S.pages=[];S.jaState='error';S.journeys.forEach(x=>{if(x.id==='esther')x.status='active';});}],
@@ -678,7 +701,7 @@ const STATES=[
   ['Browse · loading',()=>{S.flow='seeker';S.tab=0;S.pages=[];S.state='loading';}],
   ['Browse · didn’t load',()=>{S.flow='seeker';S.tab=0;S.pages=[];S.state='error';}],
   ['Journeys · loading',()=>{S.flow='seeker';S.tab=1;S.pages=[];S.state='loading';}],
-  ['My Selah · action failed',()=>{S.flow='seeker';S.tab=2;S.pages=[];S.state='banner';if(!S.incoming.length)S.incoming=[{id:'naomi'}];}]]],
+  ['My Selah · action failed',()=>{S.flow='seeker';S.tab=2;S.pages=[];S.state='banner';if(!S.incoming.length)S.incoming=[incomingRequest('naomi')];}]]],
  ['Shepherd',[
   ['Dashboard',()=>{S.flow='shepherd';S.tab=0;S.pages=[];}],
   ['Dashboard · no prayer requests',()=>{S.flow='shepherd';S.tab=0;S.pages=[];S.prayers=[];}],
@@ -758,7 +781,7 @@ function showFocus(){const el=document.getElementById('focus');if(!FOCUS){el.hid
 document.getElementById('focus').addEventListener('click',e=>{const o=e.target.closest('[data-fo]');if(o){S[o.dataset.fk||FOCUS.opt.key]=o.dataset.fo;if(FOCUS.after)FOCUS.after();render();return;}const b=e.target.closest('[data-fs]');if(b)go(+b.dataset.fs);});
 const sel=document.getElementById('demo');
 sel.innerHTML=SCREENS.map((x,i)=>`<option value="${i}">${x[0]}</option>`).join('')+`<option value="reset">Start again</option>`;
-function go(i){S.state=null;S.famA=null;S.famSend=null;S.famSent=false;S.pSend=null;S.sec='faith';S.noShep=false;S.needsNone=false;if(i==='reset'){STATES.find(g=>g[0]==='Reset')[1][0][1]();i=0;}else{i=(+i+SCREENS.length)%SCREENS.length;SCREENS[i][1]();}S.si=i;render();}
+function go(i){S.state=null;S.famContext=null;S.famA=null;S.famSend=null;S.famSent=false;S.pSend=null;S.sec='faith';S.noShep=false;S.needsNone=false;if(i==='reset'){STATES.find(g=>g[0]==='Reset')[1][0][1]();i=0;}else{i=(+i+SCREENS.length)%SCREENS.length;SCREENS[i][1]();}S.si=i;render();}
 sel.onchange=()=>go(sel.value);
 document.getElementById('prev').onclick=()=>go(S.si-1);
 document.getElementById('next').onclick=()=>go(S.si+1);

@@ -4,7 +4,7 @@ type: PLAN
 status: CURRENT
 feature: JOURNEY_STAGES
 purpose: Build brief for LOCK 21 - 7 Journey stages; the Shepherd support stage leaves the app, the server map is untouched
-links: [DOC-SELAH-0069, DOC-SELAH-0020, OA-SELAH-003, AD-AIOS-123]
+links: [AD-AIOS-129, DOC-SELAH-0069, DOC-SELAH-0020, OA-SELAH-003, AD-AIOS-123]
 owner: SELAH chat
 ---
 
@@ -16,7 +16,7 @@ Queue line 26. Build after: 25. ROADMAP row: **SELAH's own identity and private 
 
 | # | Step | Detail |
 |---|---|---|
-| 1 | Read | `JOURNEY_STAGES/RECORD/SELAH_JOURNEY_STAGES_SPEC_CURRENT_VERSION_V2.md`, its LOCK_RECORD, the re-rendered masters in `LOOK/MASTERS` (5 listed in spec §2) and `MARRIAGE_PREP/MASTERS/L09_*`, `lib/data/selah_journey_stages.dart`, `journey_flow_screen.dart`, `selah_journey_service.dart`. |
+| 1 | Read | `JOURNEY_STAGES/RECORD/SELAH_JOURNEY_STAGES_SPEC_CURRENT_VERSION_V3.md`, its LOCK_RECORD, the re-rendered masters in `LOOK/MASTERS` (5 listed in spec §2) and `MARRIAGE_PREP/MASTERS/L09_*`, `lib/data/selah_journey_stages.dart`, `journey_flow_screen.dart`, `selah_journey_service.dart`. |
 | 2 | Stage list | `SelahJourneyStages.all` = the 7 stages of spec §1, in order; `order` and `count` follow (count 7). `of('mentor_gate')` must still resolve without a crash (legacy value, not in `all`, displays as Faith & Values). Update the file's header notes to say 7 and why (LOCK 21). |
 | 3 | Pass-through | After `advanceStage(id,'compatibility_reveal')` returns stage `mentor_gate`, call `advanceStage(id,'mentor_gate')` at once. Opening a Journey stored at `mentor_gate` does the same. `stage_moved` = already moved (fine). Any other refusal → existing "That didn't save. Try again." state, and write the reason in the task note. Do not change the RPC or any SQL. |
 | 4 | Remove | `_MentorGateView` and its Shepherd reveal / greeting steps from the flow; `mentor_gate` branches in `selah_shepherd_dashboard_resolver.dart`, `selah_shepherd_seeker_roster_resolver.dart`, `selah_mentor_journey_service.dart` (treat as Faith & Values, no "waiting" item); dev scenario / test-control entries that open that stage (same rule as queue line 16). List anything left unreachable. |
@@ -26,8 +26,15 @@ Queue line 26. Build after: 25. ROADMAP row: **SELAH's own identity and private 
 | 7 | Compare | `COMPARE/SELAH_MASTER_COMPARE_ROUTE_CURRENT_VERSION_V1.md`; 9 beside images (5 L01 + 4 L09) in `JOURNEY_STAGES/BUILT/V1/`. |
 | 8 | Task note + queue | "Built from", files, removed code, screenshots, Disk, public checks A-F; mark line 26 BUILT or FAILED. |
 
-## Update 2026-11-06 (answers QUESTIONS row 15; spec V2)
+## Current clarification (QUESTIONS row 15; name rule amended 7 Nov 2026 by AD-AIOS-129, spec V3)
 | # | Change |
 |---|---|
-| a | Shepherd names: spec §2a - draft-only fixture field for the 4 demo Seekers; everyone else and the real app "<Name>’s Shepherd"; your own Main Shepherd's display name; no Shepherd → header "Stage n of 7" only. No paid lookup, no server or contract change. |
+| a | Shepherd names follow spec V3 §2a: show the other Main Shepherd's real display name only after these same two Seekers have genuinely said yes to this Journey. Before that, or if agreement/name is unavailable, "<Name>'s Shepherd". Same rule for admitted draft Journey fixtures and the real app; no name from another pair, no payment/unlock authority, own Main unchanged; no own Shepherd → "Stage n of 7" only. No server or contract change in this task. |
 | b | Shepherd Seekers caption stays "Stage n · <label>" (master L01_shepherd_seekers). "of 7" is for Seeker screens only. |
+
+## Founder amendment — 7 Nov 2026 (AD-AIOS-129)
+The current spec above carries the direct Founder name-rule amendment. Earliest peer-name eligibility is the same two
+Seekers' genuine mutual yes to their Journey in the existing request/accept flow, including an already admitted Journey
+fixture; not a stage, readiness, Main link, payment or unlock. Before agreement, or when the eligible name is genuinely
+unavailable, show "<Name>'s Shepherd". Own Main display stays unchanged. This is a spec/prototype amendment only: do not
+rebuild the app/server, overwrite past master pictures or treat historical BUILT evidence as proof of this amendment.
