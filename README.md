@@ -55,6 +55,40 @@ The Browse pack has five applicable states; the retired active-Journey state doe
 
 Approved comparisons use real Flutter widgets at 430 × 932 and pixel ratio 3. Images live under each feature’s `APP/APPROVED/<FEATURE>/BUILT/<version>/` folder. The `APP/APPROVED/COMPARE/` standard explains capture and replay. These checks demonstrate layout and local states; phone installation and native behaviour remain separate.
 
+## Static source QA
+
+From the repository root, use an already installed Node executable:
+
+```bash
+cd SOURCE
+node tool/check_draft_boundaries.mjs
+```
+
+The boundary checker inspects draft source, native configuration and referenced
+assets. It prints JSON to standard output with `checks`, `passed` and `findings`;
+any finding returns exit status 1. Findings contain categories, paths and optional
+line numbers. The checker does not write a report file or launch Flutter, Dart
+or a native build.
+
+The separate direct analyzer requires its existing SDK at
+`/opt/homebrew/share/flutter/bin/cache/dart-sdk` and prepared package configuration:
+
+```bash
+node tool/analyze_cached.mjs
+```
+
+It analyzes Dart files under `lib/` and `test/`; standalone scripts under `tool/`
+are outside that scope. A completed run prints error, warning and info counts,
+then non-info diagnostics. Errors return exit status 1; warnings alone return 0,
+so inspect the counts and diagnostics before claiming a clean analysis.
+
+Each completed run overwrites
+`SYSTEM/RESOURCES/STATIC_ANALYSIS_2026_10_13.json` at the repository root, including
+its timestamp and diagnostics. The filename is fixed, not the run date. An
+interrupted or failed run can leave an older report in place; its presence does
+not prove the latest command completed. Neither static tool establishes runtime
+behavior, a successful build or phone delivery.
+
 ## Draft-boundary tokenizer checks
 
 Run the focused tokenizer tests with Node's built-in test runner:
