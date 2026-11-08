@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:selah/models/selah_prayer.dart';
 
 void runPrayerModelChecks(void Function(bool, String) check) {
+  _runRequestOrderingChecks(check);
   final now = DateTime.utc(2026, 11, 6, 12);
   var clockReads = 0;
   final store = SelahPrayerStore.seeded(
@@ -331,6 +332,67 @@ void runPrayerModelChecks(void Function(bool, String) check) {
   check(
     store.requestsFor(david).isEmpty && store.updatesFor('draft-self').isEmpty,
     'owner-lifetime reset clears only this local store',
+  );
+}
+
+void _runRequestOrderingChecks(void Function(bool, String) check) {
+  const firstShepherd = 'ordering-first';
+  const secondShepherd = 'ordering-second';
+  var now = DateTime.utc(2026, 11, 6, 12, 20);
+  final store = SelahPrayerStore(clock: () => now);
+
+  SelahPrayerRequest send(String text, Set<String> recipients) => store.send(
+    seekerId: 'ordering-seeker',
+    seekerFirstName: 'Test',
+    text: text,
+    recipientShepherdIds: recipients,
+    shepherdName: 'Test',
+  )!;
+
+  final late = send('Late request', {firstShepherd});
+  now = DateTime.utc(2026, 11, 6, 12, 10);
+  final early = send('Early request', {firstShepherd});
+  now = DateTime.utc(2026, 11, 6, 12, 20);
+  final tiedLater = send('Tied request sent later', {firstShepherd});
+  now = DateTime.utc(2026, 11, 6, 12, 30);
+  final otherRecipient = send('Other recipient', {secondShepherd});
+  now = DateTime.utc(2026, 11, 6, 12, 15);
+  final shared = send('Shared request', {firstShepherd, secondShepherd});
+
+  bool hasOrder(String shepherdId, List<SelahPrayerRequest> expected) =>
+      store.requestsFor(shepherdId).map((row) => row.id).join(',') ==
+      expected.map((row) => row.id).join(',');
+
+  check(
+    hasOrder(firstShepherd, [tiedLater, late, shared, early]),
+    'mixed request times sort newest first, with later sends first on ties',
+  );
+  check(
+    hasOrder(secondShepherd, [otherRecipient, shared]),
+    'each recipient sees only their own requests in timestamp order',
+  );
+  check(
+    store.requestsFor('ordering-unrelated').isEmpty,
+    'an unrelated reader sees none of the interleaved requests',
+  );
+
+  now = DateTime.utc(2026, 11, 6, 12, 40);
+  check(
+    store.pray(
+      requestId: early.id,
+      shepherdId: firstShepherd,
+      shepherdName: 'Test',
+    ),
+    'a recipient can pray for the oldest request',
+  );
+  check(
+    hasOrder(firstShepherd, [tiedLater, late, shared, early]) &&
+        hasOrder(secondShepherd, [otherRecipient, shared]),
+    'a later prayer does not move a request in either recipient list',
+  );
+  check(
+    store.requestById(early.id)!.sentAt == DateTime.utc(2026, 11, 6, 12, 10),
+    'a later prayer preserves the original request timestamp',
   );
 }
 

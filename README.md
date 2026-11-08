@@ -66,6 +66,23 @@ node --test tool/dart_tokens.test.mjs
 
 These in-memory tests cover quoted literals, raw and triple-quoted strings, escapes, comments and token positions. They need no packages or Flutter and read no backend or configuration files.
 
+## Pure prayer model checks
+
+In an already prepared checkout, use the native Dart VM from the pinned
+Flutter 3.44.2 / Dart 3.12.2 SDK. Set `DART_VM` to that SDK's
+`bin/cache/dart-sdk/bin/dart` executable, then run:
+
+```bash
+cd SOURCE
+"$DART_VM" --packages=.dart_tool/package_config.json tool/test_prayer_models.dart
+```
+
+The retained package configuration must already exist; this command does not
+resolve dependencies. The checks use in-memory requests and an injected clock
+to cover recipient isolation, newest-first request order, equal-time ties and
+stable request positions after prayer actions, alongside the existing model
+checks. They do not launch Flutter or native plugins.
+
 ## Private delivery route
 
 `SOURCE/run.sh` is a specialized private iPhone delivery route. It depends on a prepared local environment, a reviewed signed native base and matching local signing/provisioning material. It is not a fresh-clone setup script. The separately approved 6 November repair rebuilt that base with the existing iPhoneOS 27.2 SDK and the pinned Flutter/Dart tools. Dart dependencies came from the offline cache; the eight locked Swift checkouts were restored from Xcode's cache. No tool, SDK or package version was upgraded.
