@@ -55,6 +55,17 @@ The Browse pack has five applicable states; the retired active-Journey state doe
 
 Approved comparisons use real Flutter widgets at 430 × 932 and pixel ratio 3. Images live under each feature’s `APP/APPROVED/<FEATURE>/BUILT/<version>/` folder. The `APP/APPROVED/COMPARE/` standard explains capture and replay. These checks demonstrate layout and local states; phone installation and native behaviour remain separate.
 
+## Draft-boundary tokenizer checks
+
+Run the focused tokenizer tests with Node's built-in test runner:
+
+```bash
+cd SOURCE
+node --test tool/dart_tokens.test.mjs
+```
+
+These in-memory tests cover quoted literals, raw and triple-quoted strings, escapes, comments and token positions. They need no packages or Flutter and read no backend or configuration files.
+
 ## Private delivery route
 
 `SOURCE/run.sh` is a specialized private iPhone delivery route. It depends on a prepared local environment, a reviewed signed native base and matching local signing/provisioning material. It is not a fresh-clone setup script. The separately approved 6 November repair rebuilt that base with the existing iPhoneOS 27.2 SDK and the pinned Flutter/Dart tools. Dart dependencies came from the offline cache; the eight locked Swift checkouts were restored from Xcode's cache. No tool, SDK or package version was upgraded.
