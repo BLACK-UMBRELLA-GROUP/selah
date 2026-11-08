@@ -19,9 +19,11 @@ Export `SELAH_SIGN_ID` with your existing Apple development signing identity,
 `SELAH_TEAM_ID` with your Apple development team and `SELAH_DEVICE` with
 your paired-device identifier before `./run.sh`. `--device` overrides the device
 variable. `./run.sh --help` needs no private inputs. `./run.sh --build-only`
-requires the signing identity and team but does not require a device; it performs the artifact checks
-and stops before device access. These are shell environment variables; the
-route does not read a dotenv file. Public preparation does not authorize a run.
+requires the signing identity, team and intended paired-device ID. It checks
+that the unexpired embedded development profile includes that ID and stops
+before querying the phone, installing the app or launching it. These are shell
+environment variables. The route does not read a dotenv file. Public
+preparation does not authorize a run.
 
 ## What the route does
 
