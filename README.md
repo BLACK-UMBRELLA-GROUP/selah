@@ -83,6 +83,24 @@ to cover recipient isolation, newest-first request order, equal-time ties and
 stable request positions after prayer actions, alongside the existing model
 checks. They do not launch Flutter or native plugins.
 
+## Pure Journey progression checks
+
+Use the same pinned `DART_VM` and existing package configuration described
+above. From the repository root, run:
+
+```bash
+cd SOURCE
+"$DART_VM" --packages=.dart_tool/package_config.json tool/test_journey_stages.dart
+"$DART_VM" --packages=.dart_tool/package_config.json tool/test_journey_legacy_pass_through.dart
+"$DART_VM" --packages=.dart_tool/package_config.json tool/test_family_stage.dart
+```
+
+These in-memory checks cover the seven-stage order and progression guards,
+legacy-stage advancement and refusal with authoritative destination checks,
+and independent Family Compatibility answer sets, validation, send/retry and
+progression guards. They resolve no dependencies and do not launch Flutter or
+native plugins; passing them does not establish phone delivery.
+
 ## Private delivery route
 
 `SOURCE/run.sh` is a specialized private iPhone delivery route. It depends on a prepared local environment, a reviewed signed native base and matching local signing/provisioning material. It is not a fresh-clone setup script. The separately approved 6 November repair rebuilt that base with the existing iPhoneOS 27.2 SDK and the pinned Flutter/Dart tools. Dart dependencies came from the offline cache; the eight locked Swift checkouts were restored from Xcode's cache. No tool, SDK or package version was upgraded.
