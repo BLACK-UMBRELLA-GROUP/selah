@@ -251,6 +251,53 @@ class MachOContentDigestTests(unittest.TestCase):
         self.assertIn(b"Mach-O digest failed:", result.stderr)
         self.assertNotIn(b"Traceback", result.stderr)
 
+    def test_cli_normalizes_uuid_when_explicitly_requested(self):
+        helper = Path(__file__).with_name("macho_content_digest.py")
+        for data in (_image(), _fat(offset=16384, alignment=14)):
+            with self.subTest(size=len(data)):
+                result = subprocess.run(
+                    [
+                        sys.executable,
+                        "-B",
+                        str(helper),
+                        "--expected-size",
+                        str(len(data)),
+                        "--normalize-uuid",
+                        "/dev/stdin",
+                    ],
+                    input=data,
+                    capture_output=True,
+                    check=False,
+                )
+                self.assertEqual(result.returncode, 0, result.stderr)
+                self.assertEqual(
+                    result.stdout.decode(), self.digest(data, normalize_uuid=True) + "\n"
+                )
+                self.assertNotEqual(result.stdout.decode(), self.digest(data) + "\n")
+                self.assertEqual(result.stderr, b"")
+
+    def test_cli_uuid_normalization_rejects_missing_uuid_without_stdout(self):
+        data = _image([_segment()])
+        helper = Path(__file__).with_name("macho_content_digest.py")
+        result = subprocess.run(
+            [
+                sys.executable,
+                "-B",
+                str(helper),
+                "--expected-size",
+                str(len(data)),
+                "--normalize-uuid",
+                "/dev/stdin",
+            ],
+            input=data,
+            capture_output=True,
+            check=False,
+        )
+        self.assertEqual(result.returncode, 1)
+        self.assertEqual(result.stdout, b"")
+        self.assertIn(b"UUID normalization requires exactly one LC_UUID", result.stderr)
+        self.assertNotIn(b"Traceback", result.stderr)
+
 
 if __name__ == "__main__":
     unittest.main()
