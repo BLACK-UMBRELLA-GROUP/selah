@@ -98,6 +98,7 @@ Only the Founder approves. Only Codex runs git, within core rule 2 (AD-AIOS-114)
 
 | Step | Who | Where |
 |---|---|---|
+| Queue start and dispatch | Codex | GO and 01:00 receivers only dispatch each eligible WAITING line to one new normal owner chat; never reuse a conversation or build in the receiver. If native fresh-chat creation fails, file QUESTION and continue independent work. Each owner runs `python3 "../BLACK UMBRELLA GROUP/SYSTEM/TOOLS/start_pack.py" "SELAH" "<DEVELOPMENT-relative brief path>"`, then reads only brief-named files. Task note: start_pack total bytes and named reads; `Conversation: new (started HH:MM)`; actual line tokens from read-only usage records. Verify its note and commit before archiving under standing authority (OA-AIOS-426). |
 | Brief | Shakeel | SELAH chat (Claude) - the **lead designer** |
 | 2-5 options, one picture at a time, each with "what changed"; shown in the business's **one interactive prototype** (Artifact page Shakeel can tap through) | SELAH chat | Chat + prototype |
 | Pick and tweak, then `LOCK`; the other options leave the prototype the same day | Shakeel | Chat |
