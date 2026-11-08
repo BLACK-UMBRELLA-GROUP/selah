@@ -85,6 +85,51 @@ Future<void> main() async {
     if (!correctExit || !correctOutput || !correctError) failures.add(label);
   }
 
+  for (final mode in <(String, List<String>, String)>[
+    ('device', [device], 'requires the exact intended device UDID'),
+    ('install', [bundle], 'install requires expected bundle ID'),
+    ('launch', [container], 'launch requires expected container'),
+    (
+      'apps',
+      [bundle, 'Selah', '1.2.3', '45'],
+      'apps requires bundle ID, name, version and build',
+    ),
+    (
+      'processes',
+      [container, '$pid'],
+      'processes requires expected container and PID',
+    ),
+  ]) {
+    await expectReceipt(
+      '${mode.$1} rejects a missing expected argument',
+      mode.$1,
+      receipt({}),
+      mode.$2.sublist(0, mode.$2.length - 1),
+      error: mode.$3,
+    );
+    await expectReceipt(
+      '${mode.$1} rejects an extra expected argument',
+      mode.$1,
+      receipt({}),
+      [...mode.$2, 'unexpected'],
+      error: mode.$3,
+    );
+  }
+  await expectReceipt(
+    'whitespace-only expected device refuses',
+    'device',
+    receipt({}),
+    [' \t '],
+    error: 'requires the exact intended device UDID',
+  );
+  await expectReceipt(
+    'post-query rejects a nonnumeric expected PID',
+    'processes',
+    receipt({}),
+    [container, 'not-a-pid'],
+    error: 'expected process ID is invalid',
+  );
+
   await expectReceipt(
     'missing file refuses',
     'lock',
