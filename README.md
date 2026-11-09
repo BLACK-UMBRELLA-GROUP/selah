@@ -53,7 +53,11 @@ flutter test --no-pub --dart-define=SELAH_DRAFT_LOCAL_ONLY=true
 
 The Browse pack has five applicable states; the retired active-Journey state does not change discovery eligibility. The 320 × 568 layout at double text size remains deferred until its Larger Text design is locked; its header currently overflows.
 
-Approved comparisons use real Flutter widgets at 430 × 932 and pixel ratio 3. Images live under each feature’s `APP/APPROVED/<FEATURE>/BUILT/<version>/` folder. The `APP/APPROVED/COMPARE/` standard explains capture and replay. These checks demonstrate layout and local states; phone installation and native behaviour remain separate.
+The command above compares against the saved golden images. The tests in `test/masters/` render real Flutter widgets at 430 × 932 with a pixel ratio of 3. They compare the built screen and the render beside its locked master against the PNGs in each feature’s `APP/APPROVED/<FEATURE>/BUILT/<version>/` folder.
+
+A pixel mismatch can produce diagnostic PNGs in the test file’s `failures/` directory. Inspect those images alongside the locked master. The `--update-goldens` flag writes the baseline PNGs. Follow the [master comparison standard](APP/APPROVED/COMPARE/SELAH_MASTER_COMPARE_ROUTE_CURRENT_VERSION_V1.md) for an approved recapture.
+
+These checks cover layout and local states. Phone installation and native behaviour need separate verification.
 
 ## Static source QA
 
