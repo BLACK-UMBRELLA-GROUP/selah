@@ -191,9 +191,12 @@ Delivery regression checks use existing tools:
 ```bash
 cd SOURCE
 python3 -B -m unittest tooling.test_macho_content_digest
+python3 -B -m unittest tooling.test_dart_layer_guards
 ./tooling/flutter_env.sh # verifies the pinned cached tool identity
 /opt/homebrew/Caskroom/flutter/3.44.2/flutter/bin/cache/dart-sdk/bin/dart tool/test_delivery_receipts.dart
 ```
+
+The tests exercise the shell guards directly, covering Git rejection, pinned `xcrun` tool and SDK lookups, and rejection of unsupported requests.
 
 ## How work is done
 
