@@ -100,6 +100,25 @@ node --test tool/dart_tokens.test.mjs
 
 These in-memory tests cover quoted literals, raw and triple-quoted strings, escapes, comments and token positions. They need no packages or Flutter and read no backend or configuration files.
 
+## Local model regression suite
+
+Run the aggregate suite for the offline draft from the repository root.
+Use the native Dart 3.12.2 VM from the pinned Flutter 3.44.2 SDK and an
+existing `SOURCE/.dart_tool/package_config.json`. Set `DART_VM` to that
+SDK's `bin/cache/dart-sdk/bin/dart` executable.
+
+```bash
+cd SOURCE
+"$DART_VM" --packages=.dart_tool/package_config.json tool/test_models.dart
+```
+
+The suite covers the local request lifecycle, Browse history, question-bank
+and compatibility mappings, and the Shepherd and Journey models. It prints
+a `PASS:` line with the check count on success and stops at the first failed
+assertion with its label. Use the focused commands below to check individual
+areas. The aggregate suite uses local fixtures and runs without dependency
+resolution, the Flutter engine or native plugins.
+
 ## Pure prayer model checks
 
 In an already prepared checkout, use the native Dart VM from the pinned
