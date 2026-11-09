@@ -12,7 +12,7 @@ owner: SELAH
 
 **Overall:** roughly **150 hours** of work to give SELAH its own identity and product (content, onboarding, Shepherd flows, backend, tests). The table below is the first slice.
 
-Status: demo; active again from 3 November 2026 - SELAH's own identity is being designed and built (Founder decision, 3 Nov 2026). Updated 3 November 2026.
+Status: demo. Work on SELAH's own identity resumed on 3 November 2026 under Founder decision AD-AIOS-123. Delivery status updated 9 November 2026.
 
 The current source is a ZYRA-derived local demo. From 3 November 2026 it moves away from ZYRA wherever SELAH differs; any later sharing of an engine with ZYRA is a separate decision. Nothing below authorizes development, deployment, incorporation, spending or publication.
 
@@ -29,9 +29,13 @@ These are tentative engineering/preparation estimates for major unfinished work 
 
 ## Current boundaries
 
-SELAH is active from 3 November 2026 under Founder decision AD-AIOS-123; every app change still needs locked designs and a named build brief. The repository-preparation task changes documentation and approved identifier/configuration hygiene only. It does not start the roadmap, run the installer, build native code, change SDKs or activate live services.
+Each app change needs a locked design and a named build brief. The demo uses local fixtures and has no configured member services.
 
-History: an earlier corrected device delivery was not executed because the intended phone was unavailable. Its compiled/signed result and static/model checks remain evidence of that snapshot. Private delivery to the Founder’s iPhone worked on 6 November 2026. Founder visual acceptance and live services are not established; Android remains held on Question 17. Historical records are not new test results.
+## Private delivery status
+
+The [6 November private delivery](README.md#private-delivery-route) recorded installation on the paired iPhone, a rendered Flutter screen and the same process after 22 seconds. Later private deliveries included the Journey and Family Compatibility updates and the rebuilt iPhone icon and launch screen.
+
+Unplugged cold launch and Founder visual acceptance remain open for the private delivery work stream. Android remains held on Question 17 because this checkout has no Android host.
 
 ## Before implementation
 
