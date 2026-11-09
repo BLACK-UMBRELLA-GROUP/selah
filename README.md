@@ -198,6 +198,19 @@ python3 -B -m unittest tooling.test_dart_layer_guards
 
 The tests exercise the shell guards directly, covering Git rejection, pinned `xcrun` tool and SDK lookups, and rejection of unsupported requests.
 
+From `SOURCE/`, run the cache-gate regression check with the pinned Dart VM and
+a new directory under your own scratch location. The check retains its fixtures
+there for inspection.
+
+```bash
+python3 -B tooling/test_cached_version.py \
+  /opt/homebrew/Caskroom/flutter/3.44.2/flutter/bin/cache/dart-sdk/bin/dart \
+  /path/to/scratch/selah-cache-gate
+```
+
+It checks that the gate refuses a missing manifest, a changed engine revision,
+and a missing Dart tool even when the manifest matches the pin.
+
 ## How work is done
 
 The Founder designs with an AI design assistant and locks each design under `APP/APPROVED/<FEATURE>/` (real-size pictures, every state, a measured specification, a lock record in his words). An AI coding assistant builds only from those locked files; every change is a line in `APP/APPROVED/BUILD_QUEUE.md` pointing at its brief. See `ROADMAP.md` for what comes next.
