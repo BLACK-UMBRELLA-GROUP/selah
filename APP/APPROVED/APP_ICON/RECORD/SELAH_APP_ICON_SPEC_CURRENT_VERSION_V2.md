@@ -8,7 +8,7 @@ links: [OA-SELAH-003, AD-AIOS-123, DOC-SELAH-0009]
 owner: SELAH chat
 ---
 
-# SELAH APP ICON AND SPLASH — SPEC — CURRENT VERSION V1 (LOCK 23)
+# SELAH APP ICON AND SPLASH — SPEC — CURRENT VERSION V2 (LOCK 23)
 
 Founder, 6 Nov 2026: "A · Light — LOCK it" (prototype V51, cleaned as V52). Look: LOOK spec V2.
 ROADMAP row: **SELAH's own identity and private delivery acceptance**.
@@ -41,6 +41,13 @@ before the LOOK LOCK survives. Codex builds from LOCKed masters, so it was draft
 | Dark mode | same light splash (the app has no dark look yet) |
 | Master | `MASTERS/L23_splash.png` |
 
+## 3. Platforms (answers QUESTIONS row 17)
+
+| Platform | Scope |
+|---|---|
+| iPhone (iOS) | §1 and §2 in full - the app SELAH has today |
+| Android | Not built now: `SOURCE/android` does not exist, and creating an Android app is its own decision (new host, manifest, bundle settings), not part of this LOCK. The Android rows of §1 and §2 and the masters `L23_icon_android_foreground_1024.png` / `L23_splash_wordmark_3x.png` stay ready for the brief that adds an Android app, if one is ever approved |
+
 ## Must not change
 App name "Selah" under the icon (WORDING V1) · bundle ids · the look of every in-app screen.
 
@@ -48,3 +55,4 @@ App name "Selah" under the icon (WORDING V1) · bundle ids · the look of every 
 | Date | Version | Change |
 |---|---|---|
 | 2026-11-06 | V1 | LOCK 23 - Founder: "A · Light — LOCK it" |
+| 2026-11-08 | V2 | QUESTIONS row 17 (no Founder decision needed): iOS only; Android waits for a separately approved Android app (none exists). The V1 brief assumed an `android` folder without checking - SELAH chat error. V1 archived |

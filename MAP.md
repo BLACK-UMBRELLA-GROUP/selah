@@ -24,10 +24,10 @@ re-run the tool.
 | ID | File | KB |
 |---|---|---|
 | DOC-SELAH-0001 | `APP/OVERVIEW/Summary.md` | 6 |
-| DOC-SELAH-0002 | `APP/FIRST_DRAFT/SELAH_FIRST_DRAFT_SPEC_CURRENT_VERSION_V1.md` | 2 |
+| DOC-SELAH-0002 | `APP/FIRST_DRAFT/SELAH_FIRST_DRAFT_SPEC_CURRENT_VERSION_V1.md` | 3 |
 | DOC-SELAH-0003 | `SYSTEM/DOCUMENTS/SELAH_FIRST_DRAFT_BUILD_CONTRACT_CURRENT_VERSION_V1.md` | 4 |
 | DOC-SELAH-0004 | `SYSTEM/DOCUMENTS/SELAH_FIRST_DRAFT_HANDOVER_CURRENT_VERSION_V1.md` | 17 |
-| DOC-SELAH-0005 (register - search by ID) | `SYSTEM/OUTSTANDING_ACTIONS/OUTSTANDING_ACTIONS_V1.md` | 7 |
+| DOC-SELAH-0005 (register - search by ID) | `SYSTEM/OUTSTANDING_ACTIONS/OUTSTANDING_ACTIONS_V1.md` | 8 |
 
 _Stop here unless you need to look up another ID._
 
@@ -46,7 +46,7 @@ _Stop here unless you need to look up another ID._
 
 | ID | File | Type | Purpose | Links | KB |
 |---|---|---|---|---|---|
-| DOC-SELAH-0075 | `APP/APPROVED/APP_ICON/RECORD/SELAH_APP_ICON_SPEC_CURRENT_VERSION_V1.md` | SPEC | Selah's app icon and launch (splash) screen in the LOOK - pale water background, Cormorant "S" in ink with… | OA-SELAH-003, AD-AIOS-123, DOC-SELAH-0009 | 2 |
+| DOC-SELAH-0075 | `APP/APPROVED/APP_ICON/RECORD/SELAH_APP_ICON_SPEC_CURRENT_VERSION_V2.md` | SPEC | Selah's app icon and launch (splash) screen in the LOOK - pale water background, Cormorant "S" in ink with… | OA-SELAH-003, AD-AIOS-123, DOC-SELAH-0009 | 3 |
 | DOC-SELAH-0076 | `APP/APPROVED/APP_ICON/RECORD/LOCK_RECORD.md` | REGISTER | LOCK record for the SELAH app icon and splash - each LOCK with the Founder's exact words |  | 1 |
 | DOC-SELAH-0077 | `APP/APPROVED/APP_ICON/BRIEFS/BUILD_BRIEF_2026-11-06_V1.md` | PLAN | Build brief for LOCK 23 - new app icon (all sizes, iOS and Android) and launch screens from the masters | DOC-SELAH-0075, DOC-SELAH-0020, OA-SELAH-003, AD-AIOS-123 | 2 |
 
@@ -120,8 +120,8 @@ _Stop here unless you need to look up another ID._
 
 | ID | File | Type | Purpose | Links | KB |
 |---|---|---|---|---|---|
-| DOC-SELAH-0006 | `APP/APPROVED/BUILD_QUEUE.md` | REGISTER | Build queue - every LOCKed brief waits here; Codex builds WAITING lines at 01:00 or on GO (charters rule 9) | AD-AIOS-115 | 13 |
-| DOC-SELAH-0007 | `APP/APPROVED/QUESTIONS.md` | REGISTER | Codex's questions for the SELAH chat - Codex never asks Shakeel in chat; he files the question here, marks… | AD-AIOS-116 | 21 |
+| DOC-SELAH-0006 | `APP/APPROVED/BUILD_QUEUE.md` | REGISTER | Build queue - every LOCKed brief waits here; Codex builds WAITING lines at 01:00 or on GO (charters rule 9) | AD-AIOS-115 | 14 |
+| DOC-SELAH-0007 | `APP/APPROVED/QUESTIONS.md` | REGISTER | Codex's questions for the SELAH chat - Codex never asks Shakeel in chat; he files the question here, marks… | AD-AIOS-116 | 22 |
 | DOC-SELAH-0008 | `ROADMAP.md` | PLAN | Approval-gated roadmap for SELAH - its own identity from 3 Nov 2026, then member services and launch… | OA-SELAH-001, OA-SELAH-002, OA-SELAH-003, OA-SELAH-004, OA-AIOS-414 | 4 |
 | INDEX-OUTSTANDING_ACTIONS_V1 | `SYSTEM/OUTSTANDING_ACTIONS/OUTSTANDING_ACTIONS_V1_INDEX.md` | INDEX | Generated one-line index of OUTSTANDING_ACTIONS_V1.md; find the ID here, then search the register for it |  | 1 |
 
@@ -202,7 +202,7 @@ _Stop here unless you need to look up another ID._
 |---|---|---|---|---|---|
 | DOC-SELAH-0029 | `APP/APPROVED/SELAH_PAUSE/RECORD/SELAH_PAUSE_SPEC_CURRENT_VERSION_V5.md` | SPEC | The Selah pause - SELAH's calm full-screen moment before asking someone to begin a Journey, accepting a… | AD-AIOS-129, OA-SELAH-003, AD-AIOS-123, DOC-SELAH-0009 | 7 |
 | DOC-SELAH-0030 | `APP/APPROVED/SELAH_PAUSE/RECORD/LOCK_RECORD.md` | REGISTER | LOCK record for the Selah pause - each LOCK with the Founder's exact words |  | 1 |
-| DOC-SELAH-0031 | `APP/APPROVED/SELAH_PAUSE/BRIEFS/BUILD_BRIEF_2026-11-06_V1.md` | PLAN | Build brief for LOCK 7 - the Selah pause before sending, accepting and ending a Journey | DOC-SELAH-0029, DOC-SELAH-0020, OA-SELAH-003, AD-AIOS-123 | 3 |
+| DOC-SELAH-0031 | `APP/APPROVED/SELAH_PAUSE/BRIEFS/BUILD_BRIEF_2026-11-06_V1.md` | PLAN | Build brief for LOCK 7 - the Selah pause before sending, accepting and ending a Journey | AD-AIOS-129, DOC-SELAH-0029, DOC-SELAH-0020, OA-SELAH-003, AD-AIOS-123 | 4 |
 
 ### SERVER_PLAN
 

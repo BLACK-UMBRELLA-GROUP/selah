@@ -67,11 +67,23 @@ existing first-phone-draft action. No source-product action is changed here.
 
 Owner: Codex designs; Founder approves exact separate setup/deployment.
 Status: NOT STARTED — local draft has no live member environment.
+Update 7 Nov 2026 (Fable): Founder "Plan now, build after trip (Recommended)" (AD-AIOS-129).
+Queue line 30 (DOC-SELAH-0079): Codex writes the server plan only. Building starts after 14 Dec,
+each setup step on its own Founder yes.
 Scope: independent auth, database, photo storage/moderation, verification,
 safety/reporting, messaging permissions, real request lifecycle, compatibility
 consent/scoring and receipt/credit authority. No source-company endpoints,
 accounts, tokens, provider identities or records may be reused.
 No external setup, migration or deployment is authorized by the first draft.
+Server work collected from the SELAH chat notes, 4-6 Nov 2026 (Fable, 7 Nov). Each
+LOCK below is built in the offline draft only; the real app keeps the old behaviour
+until this OA delivers the server side:
+| LOCK / row | Server change needed | Ships together with |
+|---|---|---|
+| LOCK 19 Introduce (line 24, row 16) | suggestion-create service and stored suggestions | removing the old Network family requests from the real HomeShell - never one without the other |
+| LOCK 21 Journey stages (line 26) | remove `mentor_gate` from `selah_advance_stage()` and the `matches.journey_stage` CHECK; move stored rows | real-app 7-stage Journey |
+| LOCK 18 Deal-breakers (line 22) | `score_candidates()` reads ch4_hard_requirements only; no partner-screen data | real-app scoring |
+| Row 10 Replace (line 8) | Connections server takeover | real-app Replace |
 
 ## OA-SELAH-003 — Christian content and release-asset readiness
 
@@ -93,6 +105,10 @@ Scope: company formation, Selah domain/trademark/App Store availability,
 independent legal/privacy/support identity, chosen pricing/products and real
 commerce configuration. No filing, domain purchase, legal registration, public
 release or commercial commitment occurred in this draft.
+Decided 7 Nov 2026 (AD-AIOS-129): the other Main Shepherd's real name is shown only after both
+Seekers say yes to a Journey - never sold, never part of an unlock (Founder: "After both agree
+(Recommended)"). Products and prices stay open; the questions are kept in the private group
+repository (DOC-BUG-0048, moved 8 Nov 2026 - public repos hold no pricing, AD-AIOS-121).
 
 ## OA-SELAH-005 — Demo cast still uses ZYRA-community names
 
@@ -125,4 +141,4 @@ while Shakeel is abroad).
 
 NEXT IDENTIFIER: OA-SELAH-008
 Register version: V1
-Last updated: 2026-11-05 (Fable: OA-SELAH-007 run route)
+Last updated: 2026-11-08 (Fable: OA-SELAH-004 pricing lines moved to the private group repo, DOC-BUG-0048)
