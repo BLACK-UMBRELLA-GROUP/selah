@@ -31,10 +31,10 @@ document, overlay or AD says otherwise, this block wins.
 3. **Never touch `PRIVATE — API KEYS — DO NOT SYNC`** — never open, list,
    copy or quote it, wherever it lives. Never put keys, tokens or
    credentials in a conversation.
-4. **Never delete.** Move unwanted files to `~/_to_delete/<WHAT>_<date>/` on the Mac,
-   or `BLACK UMBRELLA GROUP/tmp/_to_delete/<BUSINESS>_<date>/` for repo files;
-   **never a `_to_delete` inside a business repo** (S22). The Founder empties it.
-   If the folder is missing, create it.
+4. **Never delete.** Move unwanted files to `~/_to_delete/<WHAT>_<date>/` on the Mac -
+   the ONE delete folder (Founder, 10 Nov: "I DONT WANNA HAVE TO DELETE 2 FODLERS");
+   **never a `_to_delete` or `tmp/_to_delete` inside any repo** (S22, S25). The Founder
+   empties it. If the folder is missing, create it.
 5. **Findings become actions** — every finding gets an OA number or a
    written refusal.
 6. **One CURRENT_VERSION per document system.** Register entries append
