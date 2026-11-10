@@ -4,6 +4,8 @@ SELAH is a Christian marriage application concept. This repository contains a de
 
 Each change is designed and approved (locked) before it is built; see `APP/APPROVED/BUILD_QUEUE.md`.
 
+**Paused since 8 November 2026:** every queued line is built and checked; no new design or queue lines until the owner restarts SELAH. Maintenance only (tests, fixes, documentation and tooling) continues.
+
 ## What the demo does
 
 The Flutter demo opens a local Browse experience with Journey, My Selah, Shepherd and Profile presentations. It includes local request and cancellation examples, readiness and Journey progress, viewing history, Christian onboarding questions and sample profile editing. These are fixture-driven demonstrations; displayed requests, messages, scores, credits and settings do not establish live services or commercial products.

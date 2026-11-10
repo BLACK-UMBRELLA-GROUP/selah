@@ -12,7 +12,7 @@ owner: SELAH
 
 **Overall:** roughly **150 hours** of work to give SELAH its own identity and product (content, onboarding, Shepherd flows, backend, tests). The table below is the first slice.
 
-Status: demo; active again from 3 November 2026 - SELAH's own identity is being designed and built (Founder decision, 3 Nov 2026). Updated 3 November 2026.
+Status: demo; paused from 8 November 2026 - lines 1-30 are built and checked; no new design or queue lines until the owner restarts SELAH. Maintenance only (tests, fixes, documentation and tooling) continues. Updated 9 November 2026.
 
 The current source is a ZYRA-derived local demo. From 3 November 2026 it moves away from ZYRA wherever SELAH differs; any later sharing of an engine with ZYRA is a separate decision. Nothing below authorizes development, deployment, incorporation, spending or publication.
 
