@@ -138,7 +138,7 @@ _Stop here unless you need to look up another ID._
 | ID | File | Type | Purpose | Links | KB |
 |---|---|---|---|---|---|
 | DOC-SELAH-0009 | `APP/APPROVED/LOOK/RECORD/SELAH_LOOK_SPEC_CURRENT_VERSION_V2.md` | SPEC | SELAH's own look (LOCK 1, Still Water) - colours, type, shapes and the docked tab bar every SELAH screen uses | OA-SELAH-003, OA-AIOS-414, AD-AIOS-123 | 7 |
-| DOC-SELAH-0010 | `APP/APPROVED/LOOK/BRIEFS/BUILD_BRIEF_2026-11-03_V1.md` | PLAN | Build brief for LOCK 1 - give SELAH its own look (Still Water) in place of the copied purple/gold look | DOC-SELAH-0009, OA-SELAH-003, AD-AIOS-123 | 4 |
+| DOC-SELAH-0010 | `APP/APPROVED/LOOK/BRIEFS/BUILD_BRIEF_2026-11-03_V1.md` | PLAN | Build brief for LOCK 1 - give SELAH its own look (Still Water) in place of the copied purple/gold look | DOC-SELAH-0009, OA-SELAH-003, AD-AIOS-123 | 3 |
 | DOC-SELAH-0011 | `APP/APPROVED/LOOK/RECORD/LOCK_RECORD.md` | REGISTER | LOCK record for SELAH look - each LOCK with the Founder's exact words |  | 1 |
 
 ### MARRIAGE_PREP

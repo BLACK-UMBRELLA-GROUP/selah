@@ -75,6 +75,10 @@ Fable holds an active seat. Any line elsewhere saying "Fable/Claude is
 retired" or "no Claude/Fable bootstrap is active" is superseded.
 <!-- BLACK-UMBRELLA-CORE-RULES v4 END -->
 
+## Backend readiness (AD-AIOS-142)
+
+Read `BLACK UMBRELLA GROUP/SYSTEM/DOCUMENTS/MASTER_STANDARDS/BACKEND_READINESS_STANDARD_CURRENT_VERSION_V1.md` (DOC-BUG-0057) when your trigger in its §2 may be met. SELAH's copied Supabase code stays switched off. Its own server plan exists (queue line 30); setup starts only on or after 15 Dec 2026, one Founder yes per step. One server per business, never shared. AIs write plans only; every account, cost, key and live connection waits for the Founder's own yes.
+
 ## Public repository (AD-AIOS-121, Founder 2 Nov 2026)
 
 This repository is public on GitHub under Apache 2.0. Every push is visible to anyone. Before and after each push:
