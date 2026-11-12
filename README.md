@@ -2,9 +2,9 @@
 
 SELAH is a Christian marriage application concept. This repository contains a demo that began on 13 October 2026 as a copy of ZYRA (the same owner's matrimonial app) with names and faith content replaced. **Since 3 November 2026 SELAH is being given its own identity** - Christian content and questions, its own look, and its Shepherd and onboarding flows - so its code moves away from ZYRA wherever SELAH differs.
 
-Each change is designed and approved (locked) before it is built; see `APP/APPROVED/BUILD_QUEUE.md`.
+Each change is designed and approved (locked) before it is built.
 
-**Paused since 8 November 2026:** every queued line is built and checked; no new design or queue lines until the owner restarts SELAH. Maintenance only (tests, fixes, documentation and tooling) continues.
+**Paused since 8 November 2026:** the [build queue](APP/APPROVED/BUILD_QUEUE.md) records lines 1–30 as BUILT and line 31, the approved opening hand-over fix, as FAILED. No new design or queue lines until the owner restarts SELAH. Maintenance only (tests, fixes, documentation and tooling) continues.
 
 ## What the demo does
 
