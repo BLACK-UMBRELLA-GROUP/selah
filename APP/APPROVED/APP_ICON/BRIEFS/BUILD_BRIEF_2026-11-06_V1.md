@@ -16,7 +16,7 @@ Queue line 28. Build after: 27. ROADMAP row: **SELAH's own identity and private 
 
 | # | Step | Detail |
 |---|---|---|
-| 1 | Read | `APP_ICON/RECORD/SELAH_APP_ICON_SPEC_CURRENT_VERSION_V2.md`, its LOCK_RECORD, all `APP_ICON/MASTERS/L23_*`. |
+| 1 | Read | `APP_ICON/RECORD/SELAH_APP_ICON_SPEC_CURRENT_VERSION_V4.md`, its LOCK_RECORD, all `APP_ICON/MASTERS/L23_*`. |
 | 2 | iOS icon | Replace `ios/Runner/Assets.xcassets/AppIcon.appiconset/Selah-1024.png` with `L23_icon_1024.png` (keep the file name and `Contents.json` unless a size is missing; list any you add). Replace `assets/icon/icon.png` with the same file. |
 | 3 | Android icon | Every `android/app/src/main/res/mipmap-*` launcher icon from `L23_icon_1024.png`; adaptive icon = background `#EEF1F0` + foreground `L23_icon_android_foreground_1024.png`. If an icon-generator package is already in `pubspec.yaml`, use it; do not add a new dependency without reporting it. |
 | 4 | iOS launch | `LaunchScreen.storyboard`: background `#EEF1F0` (sRGB 0.933/0.945/0.941), the purple and gold text removed, centred image from `L23_splash_wordmark_3x.png` (@1x/@2x/@3x at 260×80 pt) in a new image set. |

@@ -185,3 +185,23 @@ pass. Device install/launch did not execute because the physical Founder iPhone
 was unavailable/offline (CoreDevice 4016). Founder GO remains recorded;
 post-launch checks, unplugged launch and Founder visual acceptance are PENDING.
 No App Store/TestFlight/public release is authorized by this draft.
+
+## Public check before you finish (AD-AIOS-146)
+This is a public repo. Before ending any session (business chat or Codex line owner), run
+`BLACK UMBRELLA GROUP/SYSTEM/TOOLS/fable_public_check.py` on every file you wrote or changed here, and move or reword any
+hit first (private material goes to `BLACK UMBRELLA GROUP/BUSINESS/<BUSINESS>/`). Founder, 12 Nov 2026: "Yes, make it
+required (Recommended)".
+
+## Blockers found mid-run: hand them to Claude at once (AD-AIOS-147)
+Founder, 12 Nov 2026: "all codex chats ... if they find issues that block anything mid process ... show me what to paste
+to claude so they can continue working ... rather than showing at end of the run. i want every codex chat to learn this."
+1. The moment you find something that blocks, or will block, any line (a gap or clash in a brief or LOCK, a missing server
+   contract, an unclear design detail), **stop only that part** and at once show Shakeel, in the chat, a ready-to-paste
+   message headed **"Paste this to <name> Claude chat"**: **SELAH Claude chat** for design, LOCK, spec, app-brief and
+   wording questions; **Fable - BLACK UMBRELLA GROUP Claude chat** for server-design questions (scoring, storage, data
+   protection, server briefs) - Founder 12 Nov "Fable answers server (Recommended)". Plain words, exact questions, the file and line it is about.
+2. Also file the `QUESTIONS.md` row as usual, then **keep working** on every line and step that is not blocked. Never wait
+   for the end of the run to report a blocker.
+3. When the Claude chat's answer lands (row ANSWERED, brief updated), pick the blocked part back up in the same run.
+4. Unattended runs (01:00, nobody watching): put every paste message in the first lines of the report, under
+   "Paste to Claude", before anything else.

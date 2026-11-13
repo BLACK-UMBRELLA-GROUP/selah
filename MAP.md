@@ -46,10 +46,10 @@ _Stop here unless you need to look up another ID._
 
 | ID | File | Type | Purpose | Links | KB |
 |---|---|---|---|---|---|
-| DOC-SELAH-0075 | `APP/APPROVED/APP_ICON/RECORD/SELAH_APP_ICON_SPEC_CURRENT_VERSION_V3.md` | SPEC | Selah's app icon, launch (splash) screen and the opening hand-over in the LOOK - pale water background,… | OA-SELAH-003, AD-AIOS-123, DOC-SELAH-0009 | 4 |
+| DOC-SELAH-0075 | `APP/APPROVED/APP_ICON/RECORD/SELAH_APP_ICON_SPEC_CURRENT_VERSION_V4.md` | SPEC | Selah's app icon, launch (splash) screen and the opening hand-over in the LOOK - pale water background,… | OA-SELAH-003, AD-AIOS-123, DOC-SELAH-0009 | 5 |
 | DOC-SELAH-0076 | `APP/APPROVED/APP_ICON/RECORD/LOCK_RECORD.md` | REGISTER | LOCK record for the SELAH app icon and splash - each LOCK with the Founder's exact words |  | 1 |
 | DOC-SELAH-0077 | `APP/APPROVED/APP_ICON/BRIEFS/BUILD_BRIEF_2026-11-06_V1.md` | PLAN | Build brief for LOCK 23 - new app icon (all sizes, iOS and Android) and launch screens from the masters | DOC-SELAH-0075, DOC-SELAH-0020, OA-SELAH-003, AD-AIOS-123 | 2 |
-| DOC-SELAH-0081 | `APP/APPROVED/APP_ICON/BRIEFS/BUILD_BRIEF_2026-11-11_LOCK24_V1.md` | PLAN | Build brief for LOCK 24 - the app holds the launch wordmark 1 s from its first frame, then fades 0.45 s into… | DOC-SELAH-0075, DOC-SELAH-0078, DOC-SELAH-0020, AD-AIOS-131 | 2 |
+| DOC-SELAH-0081 | `APP/APPROVED/APP_ICON/BRIEFS/BUILD_BRIEF_2026-11-11_LOCK24_V1.md` | PLAN | Build brief for LOCK 24 - the app holds the launch wordmark 1 s from its first frame, then fades 0.45 s into… | DOC-SELAH-0075, DOC-SELAH-0078, DOC-SELAH-0020, AD-AIOS-131 | 3 |
 
 ### BASELINE
 

@@ -8,7 +8,7 @@ links: [OA-SELAH-003, AD-AIOS-123, DOC-SELAH-0009]
 owner: SELAH chat
 ---
 
-# SELAH APP ICON AND SPLASH — SPEC — CURRENT VERSION V3 (LOCK 23, LOCK 24)
+# SELAH APP ICON AND SPLASH — SPEC — CURRENT VERSION V4 (LOCK 23, LOCK 24)
 
 Founder, 6 Nov 2026: "A · Light — LOCK it" (prototype V51, cleaned as V52). Look: LOOK spec V2.
 ROADMAP row: **SELAH's own identity and private delivery acceptance**.
@@ -56,7 +56,7 @@ screen "App icon · Opening the app").
 | Reduce Motion | Same 1.0 s hold, then the wordmark is removed without a fade |
 | During the hold | Taps are ignored; screen readers do not announce it (decorative); the first screen underneath is not announced until the fade ends |
 | Every launch | Cold start only (app opened from closed). Returning from the background shows no hold |
-| Master | Held frame = `MASTERS/L23_splash.png`; behaviour = prototype screen "App icon · Opening the app" |
+| Master | Held frame = `MASTERS/L23_splash.png`, re-rendered 12 Nov from the native asset itself: `L23_splash_wordmark_3x.png` (260×80 pt) centred in the full screen exactly as `LaunchScreen.storyboard` centres it (0 px difference in the wordmark area). Behaviour = prototype screen "App icon · Opening the app" (V55 uses the same asset) |
 
 ## 3. Platforms (answers QUESTIONS row 17)
 
@@ -74,3 +74,4 @@ App name "Selah" under the icon (WORDING V1) · bundle ids · the look of every 
 | 2026-11-06 | V1 | LOCK 23 - Founder: "A · Light — LOCK it" |
 | 2026-11-08 | V2 | QUESTIONS row 17 (no Founder decision needed): iOS only; Android waits for a separately approved Android app (none exists). The V1 brief assumed an `android` folder without checking - SELAH chat error. V1 archived |
 | 2026-11-11 | V3 | LOCK 24 - Founder: "A · Hold, then fade — LOCK it" (opening hand-over §2b). V2 archived |
+| 2026-11-12 | V4 | Codex line 31 FAILED at design check: the old L23_splash master drew the wordmark as text, 3 px right and 9 px down of the native placement. Master re-rendered from the native asset at the native centre (old in `ARCHIVE/MASTERS_LOCK24_OFFCENTRE/`); §2b Master row says so. SELAH chat error. V3 archived |
