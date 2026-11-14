@@ -6,13 +6,14 @@
 These rules sit above every other instruction in this tree. Where any older
 document, overlay or AD says otherwise, this block wins.
 
-> **BUILD FREEZE — Founder, 24 Oct 2026; updated 3 Nov 2026.** Builds come only from LOCKed
-> designs (rule 11) and work Shakeel names. **Building: THE FOUR GATES** (2 Nov) and **SELAH**
-> (3 Nov: "work on SELAH to change as much as we can" - its own identity). **ZYRA: new design
-> paused** (3 Nov) - only lines already WAITING (44, 73) finish; no new ZYRA lines until Shakeel
-> restarts it. **AZMARA and WAFA stay frozen** until Shakeel lifts each in writing. At most two
-> businesses are worked at a time (Mac memory, Founder 3 Nov). Allowed while frozen: review,
-> documentation, and fixes Shakeel approves one by one. Tracked as OA-AIOS-406, AD-AIOS-123.
+> **BUILD FREEZE — Founder, 24 Oct 2026; updated 13 Nov 2026.** Builds come only from LOCKed
+> designs (rule 11) and work Shakeel names. **Building: THE FOUR GATES and WAFA** (WAFA unfrozen
+> 8 Nov, AD-AIOS-131; THE FOUR GATES at night, AD-AIOS-141). **ZYRA: fixes only** - lines already
+> WAITING finish; no new feature LOCKs until the app is connected to its server (AD-AIOS-149).
+> **SELAH paused** after its checks (AD-AIOS-131, -145). **AZMARA stays frozen** until Shakeel lifts
+> it in writing. Quiet mode 21 Nov-14 Dec (AD-AIOS-149). At most two businesses are worked at a time
+> (Mac memory, Founder 3 Nov). Allowed while frozen: review, documentation, and fixes Shakeel
+> approves one by one. Tracked as OA-AIOS-406, AD-AIOS-123.
 
 1. **Only the Founder (Shakeel) approves.** Agreement between AIs is never
    approval. His direct instruction in conversation is approval.
@@ -205,3 +206,5 @@ to claude so they can continue working ... rather than showing at end of the run
 3. When the Claude chat's answer lands (row ANSWERED, brief updated), pick the blocked part back up in the same run.
 4. Unattended runs (01:00, nobody watching): put every paste message in the first lines of the report, under
    "Paste to Claude", before anything else.
+
+**Disk and trip (AD-AIOS-149, Founder 13 Nov):** start no new queue line when the Mac has under 15 GB free - report and stop. 21 Nov - 14 Dec is quiet mode: only work that needs no approvals and no downloads.
