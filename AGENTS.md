@@ -11,7 +11,7 @@ document, overlay or AD says otherwise, this block wins.
 > 8 Nov, AD-AIOS-131; THE FOUR GATES at night, AD-AIOS-141). **ZYRA: fixes only** - lines already
 > WAITING finish; no new feature LOCKs until the app is connected to its server (AD-AIOS-149).
 > **SELAH paused** after its checks (AD-AIOS-131, -145). **AZMARA stays frozen** until Shakeel lifts
-> it in writing. Quiet mode 21 Nov-14 Dec (AD-AIOS-149). At most two businesses are worked at a time
+> it in writing. Trip 21 Nov-14 Dec: normal work (AD-AIOS-149, 18 Nov). At most two businesses are worked at a time
 > (Mac memory, Founder 3 Nov). Allowed while frozen: review, documentation, and fixes Shakeel
 > approves one by one. Tracked as OA-AIOS-406, AD-AIOS-123.
 
@@ -207,4 +207,4 @@ to claude so they can continue working ... rather than showing at end of the run
 4. Unattended runs (01:00, nobody watching): put every paste message in the first lines of the report, under
    "Paste to Claude", before anything else.
 
-**Disk and trip (AD-AIOS-149, Founder 13 Nov):** start no new queue line when the Mac has under 15 GB free - report and stop. 21 Nov - 14 Dec is quiet mode: only work that needs no approvals and no downloads.
+**Disk and trip (AD-AIOS-149, Founder 13 Nov):** start no new queue line when the Mac has under 15 GB free - report and stop. Trip 21 Nov - 14 Dec (Founder 18 Nov, "Work as normal"): normal work - the Mac mini travels with the Founder, so night runs happen only while it is online; no upgrades or installs (Mac updates stay off).
