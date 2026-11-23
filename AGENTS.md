@@ -8,8 +8,8 @@ document, overlay or AD says otherwise, this block wins.
 
 > **BUILD FREEZE — Founder, 24 Oct 2026; updated 13 Nov 2026.** Builds come only from LOCKed
 > designs (rule 11) and work Shakeel names. **Building: THE FOUR GATES and WAFA** (WAFA unfrozen
-> 8 Nov, AD-AIOS-131; THE FOUR GATES at night, AD-AIOS-141). **ZYRA: fixes only** - lines already
-> WAITING finish; no new feature LOCKs until the app is connected to its server (AD-AIOS-149).
+> 8 Nov, AD-AIOS-131; THE FOUR GATES at night, AD-AIOS-141). **ZYRA: design to 100% first**
+> (Founder 22 Nov, AD-AIOS-157) - new designs may be LOCKed and built in the preview; the server comes after.
 > **SELAH paused** after its checks (AD-AIOS-131, -145). **AZMARA stays frozen** until Shakeel lifts
 > it in writing. Trip 21 Nov-14 Dec: normal work (AD-AIOS-149, 18 Nov). At most two businesses are worked at a time
 > (Mac memory, Founder 3 Nov). Allowed while frozen: review, documentation, and fixes Shakeel
@@ -78,7 +78,7 @@ retired" or "no Claude/Fable bootstrap is active" is superseded.
 
 ## Backend readiness (AD-AIOS-142)
 
-Read `BLACK UMBRELLA GROUP/SYSTEM/DOCUMENTS/MASTER_STANDARDS/BACKEND_READINESS_STANDARD_CURRENT_VERSION_V1.md` (DOC-BUG-0057) when your trigger in its §2 may be met. SELAH's copied Supabase code stays switched off. Its own server plan exists (queue line 30); setup starts only on or after 15 Dec 2026, one Founder yes per step. One server per business, never shared. AIs write plans only; every account, cost, key and live connection waits for the Founder's own yes.
+Read `BLACK UMBRELLA GROUP/SYSTEM/DOCUMENTS/MASTER_STANDARDS/BACKEND_READINESS_STANDARD_CURRENT_VERSION_V2.md` (DOC-BUG-0057) when your trigger in its §2 may be met. SELAH's copied Supabase code stays switched off. Its own server plan exists (queue line 30); setup starts only on or after 15 Dec 2026, one Founder yes per step. One server per business, never shared. AIs write plans only; every account, cost, key and live connection waits for the Founder's own yes.
 
 ## Public repository (AD-AIOS-121, Founder 2 Nov 2026)
 
@@ -207,4 +207,4 @@ to claude so they can continue working ... rather than showing at end of the run
 4. Unattended runs (01:00, nobody watching): put every paste message in the first lines of the report, under
    "Paste to Claude", before anything else.
 
-**Disk and trip (AD-AIOS-149, Founder 13 Nov):** start no new queue line when the Mac has under 15 GB free - report and stop. Trip 21 Nov - 14 Dec (Founder 18 Nov, "Work as normal"): normal work - the Mac mini travels with the Founder, so night runs happen only while it is online; no upgrades or installs (Mac updates stay off).
+**Disk and trip (AD-AIOS-149, Founder 13 Nov):** start no new queue line when the Mac has under 15 GB free - report and stop. Trip 21 Nov - 14 Dec (Founder 18 Nov, "Work as normal"): normal work - the Mac mini travels with the Founder, so night runs happen only while it is online; no upgrades or installs (Mac updates stay off), except a package named in a ZYRA launch-roadmap brief, one at a time, on the Founder's yes while he is at the Mac (AD-AIOS-157, 22 Nov).
